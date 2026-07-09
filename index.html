@@ -1,15 +1,182 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>TeachingHappensHere</title><link rel="manifest" href="manifest.json"/><link rel="stylesheet" href="style.css"/></head><body>
-<aside class="sidebar"><div class="brand"><div class="logo">♡</div><div><h1>TeachingHappensHere</h1><p>Teacher Operating System</p></div></div><nav>
-<button class="active" data-page="dashboard">🏠 Dashboard</button><button data-page="literacy">📚 Literacy / ELA</button><button data-page="opencourt">📖 Open Court Unit 1</button><button data-page="writing">✏️ Writing Studio</button><button data-page="science">🔬 Science Studio</button><button data-page="classroom">🏫 Classroom Systems</button><button data-page="assessment">📊 Assessment Center</button><button data-page="brain">🧠 Teacher Brain</button><button data-page="resources">📁 Resource Library</button><button data-page="planning">📅 Planning Studio</button></nav><div class="quote">“The influence of a good teacher can never be erased.”</div></aside>
-<main><header><button id="menu">☰</button><div class="search">🔎 Search everything...</div><div class="profile"><span>JP</span><strong>Mrs. Parrish</strong></div></header>
-<section class="page active" id="dashboard"><div class="hero"><div><p class="eyebrow">Version 0.2 Content Build</p><h2>Good morning, Mrs. Parrish! ☀️</h2><p>Today’s goal: make TeachingHappensHere feel like your classroom, not an empty shell.</p></div><button class="primary">Start My Day</button></div><div class="cards"><article><h3>📚 Open Court Unit 1</h3><p>6 lessons loaded with phonics, vocabulary, grammar, assessments, and lesson hubs.</p><button data-page="opencourt">Open Unit 1</button></article><article><h3>✏️ Writing Studio</h3><p>Building the Foundation structure is ready.</p><button data-page="writing">Open Writing</button></article><article><h3>🔬 Science Studio</h3><p>Science workbook section is ready for pages, standards, labs, and videos.</p><button data-page="science">Open Science</button></article><article><h3>🏫 Classroom Systems</h3><p>Beginning-of-year anchor charts and routines are now part of the app.</p><button data-page="classroom">Open Systems</button></article></div><div class="two-col"><div class="panel"><h3>Today at a Glance</h3><ul class="schedule"><li><b>8:20</b> Morning Meeting</li><li><b>8:30</b> Heggerty / Phonics</li><li><b>8:45</b> Open Court Reading</li><li><b>10:00</b> Writing Studio</li><li><b>12:05</b> Math</li><li><b>1:35</b> Social Studies</li><li><b>2:15</b> Science</li></ul></div><div class="panel"><h3>Teacher Brain Reminder</h3><p>⭐ Open Court packets matter because they hit skills and topics that may otherwise be missed.</p><p>⭐ Habitats in a Shoe Box is a yearly success and admin-praised.</p></div></div></section>
-<section class="page" id="literacy"><h2>📚 Literacy / ELA</h2><div class="module-grid"><article><h3>📖 Reading / Open Court</h3><p>Unit 1 lesson hubs are now loaded.</p><button data-page="opencourt">Open Unit 1</button></article><article><h3>🔤 Phonics</h3><p>Digraphs, closed syllables, inflectional endings, schwa, /er/, and /or/.</p></article><article><h3>📝 Vocabulary</h3><p>Unit 1 vocabulary is connected to each lesson.</p></article><article><h3>📐 Grammar / GUM</h3><p>Common/proper nouns, verbs, subject/predicate, capitalization, and mechanics.</p></article><article><h3>✏️ Writing Studio</h3><p>Writing uses Building the Foundation.</p></article><article><h3>🔎 UFLI Support</h3><p>UFLI Toolbox will be linked as intervention support.</p></article></div></section>
-<section class="page" id="opencourt"><h2>📖 Open Court Reading — Unit 1</h2><p class="subtitle">A working content hub for the beginning of the year.</p><div class="lesson-list" id="lessonList"></div></section>
-<section class="page" id="writing"><h2>✏️ Writing Studio</h2><div class="cards"><article><h3>Building the Foundation</h3><p>Sentence structure, complete thoughts, grammar integration, and writing routines.</p></article><article><h3>Informative Writing</h3><p>Planning, facts, details, organization, and publishing.</p></article><article><h3>Opinion Writing</h3><p>Opinion statement, reasons, examples, conclusion, and revising.</p></article><article><h3>Narrative Writing</h3><p>Characters, setting, events, sequencing, elaboration, and closure.</p></article></div></section>
-<section class="page" id="science"><h2>🔬 Science Studio</h2><div class="cards"><article><h3>Workbook Pages</h3><p>Science workbook pages will be organized by unit, topic, and Open Court connection.</p></article><article><h3>Textbook Supplement</h3><p>McGraw Hill Science textbook ISBN 9780022808624.</p></article><article><h3>Labs & Investigations</h3><p>Hands-on activities, materials lists, and reflection notes.</p></article><article><h3>Safe Videos</h3><p>Teacher-approved safe links.</p></article></div></section>
-<section class="page" id="classroom"><h2>🏫 Classroom Systems</h2><p class="subtitle">Beginning-of-year routines, anchor charts, and Mrs. Parrish’s classroom playbook.</p><div class="module-grid" id="anchorGrid"></div></section>
-<section class="page" id="assessment"><h2>📊 Assessment Center</h2><div class="cards"><article><h3>Open Court Weekly</h3><p>Phonics, vocabulary, comprehension, and GUM assessments.</p></article><article><h3>End of Unit 1</h3><p>Vocabulary, cold read, GUM, spelling, and phonics.</p></article><article><h3>DIBELS</h3><p>Benchmark, Maze, ORF, NWF, WRF, and progress monitoring.</p></article><article><h3>Writing Rubrics</h3><p>Rubrics and writing growth tracking.</p></article></div></section>
-<section class="page" id="brain"><h2>🧠 Teacher Brain</h2><div id="brainNotes" class="brain-list"></div><div class="panel"><h3>Add Future Notes</h3><textarea placeholder="Example: Students struggled with /er/ today. Use extra UFLI support next time."></textarea><button class="primary">Save Note</button></div></section>
-<section class="page" id="resources"><h2>📁 Resource Library</h2><div class="cards"><article><h3>Open Court</h3><p>Units, lessons, skills practice, assessments, and decodables.</p></article><article><h3>UFLI Toolbox</h3><p>Public official resources linked for intervention.</p></article><article><h3>DIBELS</h3><p>Benchmark and progress monitoring materials.</p></article><article><h3>TPT / Supplemental</h3><p>Purchased and teacher-selected resources.</p></article></div></section>
-<section class="page" id="planning"><h2>📅 Planning Studio</h2><div class="panel"><h3>Planbook-Ready Fields</h3><p>Objective, lesson/instruction, differentiation, homework/evidence, materials/resources, notes/reflection, standards, instructional strategies, attachments, and classwork.</p></div></section>
-<footer><button>📅 School Calendar</button><button>🏠 iDay Plans</button><button>📝 Homework Center</button><button>✉️ Parent Communication</button><button>📚 Beanstack</button><button>🐸 ClassDojo</button><button>👥 Intervention Groups</button></footer></main><script src="app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TeachingHappensHere | Lesson Hub Shell</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">♡</div>
+      <div>
+        <h1>TeachingHappensHere</h1>
+        <p>Teacher Operating System</p>
+      </div>
+    </div>
+
+    <nav>
+      <button class="active" data-page="dashboard">🏠 Dashboard</button>
+      <button data-page="lessonhub">📖 Lesson Hub</button>
+      <button data-page="opencourt">📚 Open Court Unit 1</button>
+      <button data-page="planning">📅 Planning Studio</button>
+      <button data-page="classroom">🏫 Classroom Systems</button>
+      <button data-page="assessment">📊 Assessment Center</button>
+      <button data-page="brain">🧠 Teacher Brain</button>
+    </nav>
+
+    <div class="quote">Version 0.3<br><strong>Lesson Hub Shell</strong></div>
+  </aside>
+
+  <main>
+    <header>
+      <button id="menu">☰</button>
+      <div class="search">🔎 Search lessons, standards, resources...</div>
+      <div class="profile"><span>JP</span><strong>Mrs. Parrish</strong></div>
+    </header>
+
+    <section class="page active" id="dashboard">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Version 0.3</p>
+          <h2>Lesson Hub Shell is Ready</h2>
+          <p>This version builds the first reusable lesson workspace for TeachingHappensHere.</p>
+        </div>
+        <button class="primary" data-page="lessonhub">Open Lesson Hub</button>
+      </div>
+
+      <div class="cards">
+        <article>
+          <h3>📖 Model Lesson</h3>
+          <p>Open Court Unit 1, Lesson 1: <em>The Mice Who Lived in a Shoe</em></p>
+        </article>
+        <article>
+          <h3>🧠 Teacher Brain</h3>
+          <p>Mrs. Parrish’s recommendations are now connected directly to the lesson.</p>
+        </article>
+        <article>
+          <h3>🖨 Print List</h3>
+          <p>The lesson hub now shows what needs to be copied or prepared.</p>
+        </article>
+        <article>
+          <h3>📅 Planbook Ready</h3>
+          <p>The shell includes the pieces needed for future Planbook lesson creation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="page" id="lessonhub">
+      <div class="lesson-hero">
+        <div>
+          <p class="eyebrow">Open Court • Unit 1 • Lesson 1</p>
+          <h2>The Mice Who Lived in a Shoe</h2>
+          <p>Model lesson hub for reading, phonics, vocabulary, grammar, writing, assessment, intervention, and Teacher Brain notes.</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="primary">Start Lesson</button>
+          <button class="secondary">Print List</button>
+          <button class="secondary">Send to Planning Studio</button>
+        </div>
+      </div>
+
+      <div class="lesson-grid">
+        <section class="panel wide">
+          <h3>🎯 Objective</h3>
+          <p>Students will read and discuss the story, use vocabulary in context, practice phonics patterns, identify common and proper nouns, and answer cause-and-effect comprehension questions.</p>
+        </section>
+
+        <section class="panel">
+          <h3>📚 Standards</h3>
+          <ul id="elaStandards"></ul>
+        </section>
+
+        <section class="panel">
+          <h3>🌎 WIDA Supports</h3>
+          <ul id="widaStandards"></ul>
+        </section>
+
+        <section class="panel">
+          <h3>🔤 Phonics Focus</h3>
+          <p>/ch/ spelled ch, /th/ spelled th, /sh/ spelled sh, /w/ spelled wh, /ar/ spelled ar</p>
+        </section>
+
+        <section class="panel">
+          <h3>📝 Vocabulary</h3>
+          <div id="vocabChips" class="chips"></div>
+        </section>
+
+        <section class="panel">
+          <h3>📐 Grammar / GUM</h3>
+          <p>Common nouns and proper nouns.</p>
+        </section>
+
+        <section class="panel">
+          <h3>✏️ Writing Connection</h3>
+          <p>Opinion writing: students practice giving an opinion, supporting it with reasons, and revising their work.</p>
+        </section>
+
+        <section class="panel">
+          <h3>🖨 Print Today</h3>
+          <ul id="printList"></ul>
+        </section>
+
+        <section class="panel">
+          <h3>📝 Assessments</h3>
+          <ul id="assessments"></ul>
+        </section>
+
+        <section class="panel">
+          <h3>🔎 UFLI Support</h3>
+          <ul id="ufliSupport"></ul>
+        </section>
+
+        <section class="panel wide recommend">
+          <h3>💜 Mrs. Parrish Recommends</h3>
+          <ul id="recommendations"></ul>
+        </section>
+
+        <section class="panel wide brain">
+          <h3>🧠 Teacher Brain</h3>
+          <ul id="brainNotes"></ul>
+        </section>
+
+        <section class="panel wide">
+          <h3>🪞 Reflection</h3>
+          <textarea placeholder="After teaching: What worked? What needs reteaching? What should Micayla know before teaching this lesson?"></textarea>
+          <button class="primary">Save Reflection</button>
+        </section>
+      </div>
+    </section>
+
+    <section class="page" id="opencourt">
+      <h2>📚 Open Court Unit 1</h2>
+      <div class="cards">
+        <article><h3>Lesson 1</h3><p>The Mice Who Lived in a Shoe</p><button data-page="lessonhub">Open Lesson Hub</button></article>
+        <article><h3>Lesson 2</h3><p>Ants and Aphids Work Together</p></article>
+        <article><h3>Lesson 3</h3><p>The Bat, Birds, and Beasts</p></article>
+        <article><h3>Lesson 4</h3><p>A Cherokee Stickball Game</p></article>
+        <article><h3>Lesson 5</h3><p>The Final Game</p></article>
+        <article><h3>Lesson 6</h3><p>Ellie's Long Walk</p></article>
+      </div>
+    </section>
+
+    <section class="page" id="planning"><h2>📅 Planning Studio</h2><div class="panel"><p>Lesson Hub will eventually send content here for Planbook-ready planning.</p></div></section>
+    <section class="page" id="classroom"><h2>🏫 Classroom Systems</h2><div class="panel"><p>Anchor charts and beginning-of-year routines will connect to lesson and dashboard reminders.</p></div></section>
+    <section class="page" id="assessment"><h2>📊 Assessment Center</h2><div class="panel"><p>Assessments from Lesson Hub will connect here for tracking and review.</p></div></section>
+    <section class="page" id="brain"><h2>🧠 Teacher Brain</h2><div class="panel"><p>Teacher Brain is now lesson-aware.</p></div></section>
+
+    <footer>
+      <button>📅 School Calendar</button>
+      <button>🏠 iDay Plans</button>
+      <button>📝 Homework Center</button>
+      <button>📚 Beanstack</button>
+      <button>🐸 ClassDojo</button>
+      <button>👥 Intervention Groups</button>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

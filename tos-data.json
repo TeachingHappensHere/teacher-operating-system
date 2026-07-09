@@ -1,154 +1,68 @@
 {
-  "version": "0.2",
-  "openCourtUnit1": [
-    {
-      "lesson": "Lesson 1",
-      "title": "The Mice Who Lived in a Shoe",
-      "phonics": "/ch/ ch, /th/ th, /sh/ sh, /w/ wh, /ar/ ar",
-      "vocabulary": [
-        "admired",
-        "fetched",
-        "gathered",
-        "huddled",
-        "merchant",
-        "observed",
-        "platform",
-        "safety",
-        "shelter",
-        "timber"
+  "version": "0.3",
+  "lessonHubModel": {
+    "unit": "Unit 1",
+    "lesson": "Lesson 1",
+    "title": "The Mice Who Lived in a Shoe",
+    "storyType": "Fiction",
+    "dailyFocus": [
+      "Phonics: /ch/, /th/, /sh/, /wh/, /ar/",
+      "Vocabulary: admired, fetched, gathered, huddled, merchant, observed, platform, safety, shelter, timber",
+      "Reading Skill: Cause and Effect",
+      "Grammar / GUM: Common and Proper Nouns",
+      "Writing Connection: Opinion Writing"
+    ],
+    "standards": {
+      "ela": [
+        "2.RL.1 Ask and answer questions to demonstrate understanding of a text.",
+        "2.RL.3 Describe how characters respond to major events and challenges.",
+        "2.RF.3 Know and apply grade-level phonics and word analysis skills.",
+        "2.L.1 Demonstrate command of conventions of standard English grammar and usage."
       ],
-      "grammar": "Common and proper nouns",
-      "readingSkill": "Cause and effect",
-      "assessments": [
-        "Phonics",
-        "Vocabulary",
-        "Comprehension",
-        "GUM"
+      "wida": [
+        "ELP Standard 1: Social and Instructional Language",
+        "ELP Standard 2: Language for Language Arts"
       ]
     },
-    {
-      "lesson": "Lesson 2",
-      "title": "Ants and Aphids Work Together",
-      "phonics": "Closed syllables; /j/ dge, /k/ ck, /ch/ tch",
-      "vocabulary": [
-        "colony",
-        "honeydew",
-        "liquid",
-        "partners",
-        "predators",
-        "relationship",
-        "scurry",
-        "shelter",
-        "symbiosis",
-        "team"
-      ],
-      "grammar": "Unit 1 grammar connection",
-      "readingSkill": "Informational text comprehension",
-      "assessments": [
-        "Skills Practice",
-        "Assessment pages"
-      ]
-    },
-    {
-      "lesson": "Lesson 3",
-      "title": "The Bat, Birds, and Beasts",
-      "phonics": "Inflectional endings -s, -es, and -ed",
-      "vocabulary": [
-        "accepted",
-        "annual",
-        "emphasize",
-        "inquired",
-        "loyal",
-        "strategy"
-      ],
-      "grammar": "GUM practice",
-      "readingSkill": "Vocabulary application and comprehension",
-      "assessments": [
-        "Skills Practice",
-        "Assessment pages"
-      ]
-    },
-    {
-      "lesson": "Lesson 4",
-      "title": "A Cherokee Stickball Game",
-      "phonics": "/ng/ ng, /nk/ nk, -ing; schwa /\u0259l/",
-      "vocabulary": [
-        "disappointed",
-        "furious",
-        "humbly",
-        "part",
-        "pity",
-        "roared"
-      ],
-      "grammar": "GUM practice",
-      "readingSkill": "Fable/folktale connection",
-      "assessments": [
-        "Skills Practice",
-        "Assessment pages"
-      ]
-    },
-    {
-      "lesson": "Lesson 5",
-      "title": "The Final Game",
-      "phonics": "/er/ er, ir, ur, ear; /or/ or, ore",
-      "vocabulary": [
-        "broke",
-        "checked",
-        "commotion",
-        "eagerness",
-        "grandstand",
-        "managed",
-        "opponent",
-        "piercing",
-        "sneered",
-        "tense"
-      ],
-      "grammar": "GUM practice",
-      "readingSkill": "Sports story comprehension",
-      "assessments": [
-        "Skills Practice",
-        "Assessment pages"
-      ]
-    },
-    {
-      "lesson": "Lesson 6",
-      "title": "Ellie's Long Walk",
-      "phonics": "Unit review and application",
-      "vocabulary": [
-        "startled",
-        "panic",
-        "slick",
-        "slope",
-        "journey"
-      ],
-      "grammar": "Unit review",
-      "readingSkill": "Comprehension and vocabulary review",
-      "assessments": [
-        "Vocabulary Assessment"
-      ]
-    }
-  ],
-  "teacherBrain": [
-    "Volcano assignment from Open Court packet works well because it covers topics students might not otherwise get.",
-    "Habitats in a Shoe Box is a yearly success. Students love it and admin praises it.",
-    "Preview videos before showing students.",
-    "Open Court packets are valuable because they hit skills and topics that may otherwise be missed.",
-    "iDays need a different planning workflow with MobyMax and Beanstack."
-  ],
-  "anchorCharts": [
-    "Entering the Classroom",
-    "Morning Routine",
-    "How to Line Up",
-    "Hallway Expectations",
-    "How to Sit on the Carpet",
-    "Pencil Procedures",
-    "Restroom Signal",
-    "Recess Expectations",
-    "Classroom Jobs",
-    "Partner Talk",
-    "Voice Levels",
-    "Track Me",
-    "Show Me Ready",
-    "Dismissal Routine"
-  ]
+    "materials": [
+      "Open Court Teacher Edition",
+      "Skills Practice pages",
+      "Vocabulary assessment",
+      "Phonics assessment",
+      "Comprehension assessment",
+      "GUM assessment",
+      "Vocabulary cards",
+      "Student notebooks",
+      "Pencils"
+    ],
+    "printList": [
+      "Skills Practice packet",
+      "Phonics assessment",
+      "Vocabulary assessment",
+      "Comprehension assessment",
+      "GUM assessment"
+    ],
+    "mrsParrishRecommends": [
+      "Teach vocabulary before reading so students are not stopped by unfamiliar words.",
+      "Spend extra time with merchant because many students do not use that word in daily speech.",
+      "Use partner talk before answering cause-and-effect questions.",
+      "Do not skip the skills practice pages; they reinforce what the assessment expects."
+    ],
+    "teacherBrain": [
+      "Open Court packets are valuable because they hit skills and topics that may otherwise be missed.",
+      "Use this lesson to model how characters respond to a problem.",
+      "Good place to introduce a cause/effect anchor chart."
+    ],
+    "assessments": [
+      "Phonics Assessment",
+      "Vocabulary Assessment",
+      "Comprehension Assessment",
+      "Grammar / GUM Assessment"
+    ],
+    "ufliSupport": [
+      "Use UFLI Toolbox as needed for digraph review.",
+      "Use blending board for /ch/, /th/, /sh/, and /wh/ review.",
+      "Use Elkonin boxes for students needing phoneme support."
+    ]
+  }
 }

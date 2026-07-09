@@ -1,14 +1,22 @@
 # TeachingHappensHere Teacher Operating System
 
-## Version 0.2 Content Build
+## Version 0.3 Lesson Hub Shell
 
-This version begins replacing empty shells with real classroom content.
+This version adds the first reusable lesson hub model.
+
+Model lesson:
+Open Court Unit 1, Lesson 1 — The Mice Who Lived in a Shoe
 
 Included:
-- Open Court Unit 1 lesson hubs
-- Phonics, vocabulary, grammar, reading skills, and assessment tags
-- Writing Studio structure
-- Science Studio structure
-- Classroom Systems anchor chart list
-- Assessment Center structure
-- Teacher Brain notes
+- Lesson objective
+- Standards shell
+- Phonics focus
+- Vocabulary chips
+- Grammar / GUM
+- Writing connection
+- Print list
+- Assessments
+- UFLI support
+- Mrs. Parrish Recommends
+- Teacher Brain
+- Reflection box
