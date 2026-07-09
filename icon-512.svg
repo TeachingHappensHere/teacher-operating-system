@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 192 192">
-<rect width="192" height="192" rx="42" fill="#6d4cc2"/>
-<circle cx="48" cy="48" r="18" fill="#f6c945"/>
-<text x="36" y="95" font-family="Arial" font-size="38" font-weight="700" fill="white">THH</text>
-<text x="46" y="132" font-family="Arial" font-size="28" font-weight="700" fill="#fff4bf">TOS</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 192 192"><rect width="512" height="512" rx="42" fill="#6d4cc2"/><path d="M96 155s-62-37-62-82c0-22 17-39 39-39 12 0 23 6 30 16 7-10 18-16 30-16 22 0 39 17 39 39 0 45-76 82-76 82z" fill="#ffc4e5"/><text x="50" y="105" font-family="Arial" font-size="30" font-weight="700" fill="#251b55">THH</text></svg>

@@ -1,9 +1,14 @@
 # TeachingHappensHere Teacher Operating System
 
-A Progressive Web App designed for curriculum planning, lesson design, assessment tracking, resource organization, and classroom management.
+## Version 0.2 Content Build
 
-## Sprint 1: PWA Shell
+This version begins replacing empty shells with real classroom content.
 
-This first version includes dashboard navigation, Literacy / ELA structure, Planning Studio, Assessment Center, Teacher Brain, Resource Library, manifest, service worker, and app icons.
-
-Designed to run on GitHub Pages for free.
+Included:
+- Open Court Unit 1 lesson hubs
+- Phonics, vocabulary, grammar, reading skills, and assessment tags
+- Writing Studio structure
+- Science Studio structure
+- Classroom Systems anchor chart list
+- Assessment Center structure
+- Teacher Brain notes
