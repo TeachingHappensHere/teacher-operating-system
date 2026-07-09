@@ -1,7 +1,6 @@
 {
-  "version": "2.0 Scholar System Dashboard",
+  "version": "2.1 Scholar System Dashboard",
   "teacherName": "Mrs. Parrish",
-  "systemName": "Mrs. Parrish\u2019s Scholar System",
   "quote": "The influence of a good teacher can never be erased.",
   "quoteAuthor": "Unknown",
   "date": "May 16, 2024",
@@ -58,43 +57,53 @@
   "curriculum": [
     [
       "\ud83d\udcd9",
-      "Open Court"
+      "Open Court",
+      "lessons"
     ],
     [
       "\ud83e\uddea",
-      "Science"
+      "Science",
+      "science"
     ],
     [
       "\ud83d\udd24",
-      "UFLI Foundations"
+      "UFLI Foundations",
+      "ufli"
     ],
     [
       "\ud83c\udf0e",
-      "Social Studies"
+      "Social Studies",
+      "social"
     ],
     [
       "\ud83d\udd35",
-      "MOWR"
+      "MOWR",
+      "mowr"
     ],
     [
       "\u2764\ufe0f",
-      "Health"
+      "Health",
+      "health"
     ],
     [
       "\ud83e\uddf1",
-      "Heggerty"
+      "Heggerty",
+      "heggerty"
     ],
     [
       "\ud83c\udfa8",
-      "Art"
+      "Art",
+      "art"
     ],
     [
       "\ud83d\udcd7",
-      "Eureka Math\u00b2"
+      "Eureka Math\u00b2",
+      "math"
     ],
     [
       "\ud83c\udfb5",
-      "Music"
+      "Music",
+      "music"
     ]
   ],
   "classroomLinks": [
@@ -107,14 +116,38 @@
     "Classroom Jobs"
   ],
   "teacherShortcuts": [
-    "Take Attendance",
-    "Print Center",
-    "Behavior Tracker",
-    "Timer",
-    "Student Notes",
-    "Random Grouping",
-    "Quick Email",
-    "Class Dojo"
+    [
+      "Take Attendance",
+      "attendance"
+    ],
+    [
+      "Print Center",
+      "print"
+    ],
+    [
+      "Behavior Tracker",
+      "behavior"
+    ],
+    [
+      "Timer",
+      "timer"
+    ],
+    [
+      "Student Notes",
+      "notes"
+    ],
+    [
+      "Random Grouping",
+      "groups"
+    ],
+    [
+      "Quick Email",
+      "email"
+    ],
+    [
+      "Class Dojo",
+      "dojo"
+    ]
   ],
   "importantLinks": [
     "Champion Schools Teacher Resources",
