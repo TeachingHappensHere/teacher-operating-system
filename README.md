@@ -1,20 +1,23 @@
 # TeachingHappensHere
 
-## Sprint 4 - Interactive Dashboard Patch
+## Dashboard Redesign Patch
 
-Patch ZIP only. Replace/add these files:
+This patch redesigns the dashboard to match the softer Mrs. Parrish’s Scholar System layout.
 
+### Files included
 - index.html
 - style.css
 - app.js
-- dashboard-data.json
+- dashboard-redesign.json
 - README.md
 
-Adds:
-- Interactive dashboard
-- Today's schedule
-- Print Center checklist
-- Quick action buttons
-- Teacher Brain reminders
-- Planning status cards
-- Teach Today routing
+### Design direction
+- Pastel pink/cream theme
+- Left sidebar navigation
+- Welcome panel
+- Classroom photo area
+- Today at a Glance
+- Teacher Shortcuts
+- Curriculum Resources
+- Classroom quick links
+- Lower dashboard cards

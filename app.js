@@ -1,64 +1,32 @@
-let dashboard = null;
-
 async function loadDashboard(){
-  const response = await fetch("dashboard-data.json");
-  dashboard = await response.json();
+  const res = await fetch("dashboard-redesign.json");
+  const data = await res.json();
 
-  document.getElementById("pillar").textContent = dashboard.currentPillar;
-  document.getElementById("lessonStatus").textContent = dashboard.today.lesson;
-  document.getElementById("printCount").textContent = dashboard.printCenter.length + " items";
-  document.getElementById("todaySummary").textContent = `${dashboard.today.focus} • ${dashboard.today.lesson}`;
+  document.getElementById("todayDate").textContent = data.date;
 
-  document.getElementById("scheduleList").innerHTML = dashboard.schedule
-    .map(item => `<li><strong>${item[0]}</strong> ${item[1]}</li>`)
+  document.getElementById("schedule").innerHTML = data.schedule
+    .map(row => `<div class="schedule-row"><strong>${row[0]}</strong><span>${row[1]}</span></div>`)
     .join("");
 
-  document.getElementById("printChecklist").innerHTML = dashboard.printCenter
-    .map(item => `<label class="check-item"><input type="checkbox"> ${item}</label>`)
+  document.getElementById("curriculum").innerHTML = data.curriculum
+    .map(item => `<div class="curriculum-item"><span>${item[0]}</span><span>${item[1]}</span></div>`)
     .join("");
 
-  document.getElementById("quickActions").innerHTML = dashboard.quickActions
-    .map(action => `<button data-page="${action.target}">${action.label}</button>`)
+  document.getElementById("classroomLinks").innerHTML = data.classroomLinks
+    .map(link => `<div>♡ ${link}</div>`)
     .join("");
 
-  document.getElementById("brainReminder").innerHTML = dashboard.teacherBrain
-    .slice(0,3)
-    .map(note => `<div class="brain-note">⭐ ${note}</div>`)
+  document.getElementById("shortcuts").innerHTML = data.shortcuts
+    .map(link => `<div>♡ ${link}</div>`)
     .join("");
 
-  const planningMarkup = dashboard.planningStatus
-    .map(p => `<div class="plan-card"><strong>${p.week}</strong><span>${p.status}</span></div>`)
+  document.getElementById("lowerCards").innerHTML = Object.entries(data.lowerCards)
+    .map(([title, items]) => `
+      <article class="lower-card">
+        <h3>${title}</h3>
+        ${items.map(item => `<div>♡ ${item}</div>`).join("")}
+      </article>
+    `)
     .join("");
-  document.getElementById("planningCards").innerHTML = planningMarkup;
-  document.getElementById("planningPageCards").innerHTML = planningMarkup;
-
-  document.getElementById("todayReading").textContent = dashboard.today.lesson;
-  document.getElementById("todayWriting").textContent = dashboard.today.writing;
-  document.getElementById("todayScience").textContent = dashboard.today.science;
-
-  document.getElementById("brainList").innerHTML = dashboard.teacherBrain
-    .map(note => `<div class="brain-note">⭐ ${note}</div>`)
-    .join("");
-
-  bindPageButtons();
 }
-
-function showPage(id){
-  document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === id));
-  document.querySelectorAll("[data-page]").forEach(b => b.classList.toggle("active", b.dataset.page === id));
-  document.querySelector(".sidebar")?.classList.remove("open");
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-function bindPageButtons(){
-  document.querySelectorAll("[data-page]").forEach(b => {
-    b.onclick = () => showPage(b.dataset.page);
-  });
-}
-
-document.getElementById("menu")?.addEventListener("click", () => document.querySelector(".sidebar")?.classList.toggle("open"));
-
-document.getElementById("topSearch")?.addEventListener("focus", () => showPage("search"));
-
-bindPageButtons();
 loadDashboard();

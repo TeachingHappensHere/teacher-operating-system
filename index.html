@@ -3,124 +3,114 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TeachingHappensHere | Interactive Dashboard</title>
+<title>Mrs. Parrish’s Scholar System</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<aside class="sidebar">
-  <div class="brand">
-    <div class="logo">♡</div>
-    <div>
-      <h1>TeachingHappensHere</h1>
-      <p>Teacher Operating System</p>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand-row">
+      <div class="brand-icon">📝</div>
+      <div>
+        <h1>Mrs. Parrish’s</h1>
+        <p>SCHOLAR SYSTEM ♡</p>
+      </div>
     </div>
-  </div>
-  <nav>
-    <button class="active" data-page="dashboard">🏠 Dashboard</button>
-    <button data-page="today">▶️ Teach Today</button>
-    <button data-page="library">📁 Document Library</button>
-    <button data-page="search">🔎 Universal Search</button>
-    <button data-page="attachments">📎 Lesson Attachments</button>
-    <button data-page="planning">📅 Planning Status</button>
-    <button data-page="brain">🧠 Teacher Brain</button>
-  </nav>
-  <div class="quote">Sprint 4<br><strong>Interactive Dashboard</strong></div>
-</aside>
 
-<main>
-<header>
-  <button id="menu">☰</button>
-  <input id="topSearch" placeholder="Search from dashboard...">
-  <div class="profile"><span>JP</span><strong>Mrs. Parrish</strong></div>
-</header>
+    <nav>
+      <button class="active">⌂ Home Dashboard</button>
+      <button>▭ Lesson Plans</button>
+      <button>♧ Small Groups</button>
+      <button>♙ Intervention</button>
+      <button>▥ Assessments & Data</button>
+      <button>▣ Classroom Management</button>
+      <button>♧ Students</button>
+      <button>✉ Communication</button>
+      <button>▦ Calendar</button>
+      <button>▭ Resources</button>
+      <button>▤ Forms & Printables</button>
+      <button>♙ Professional Learning</button>
+      <button>♡ Classroom Inspiration</button>
+      <button>▣ Teacher Toolbox</button>
+      <button>▤ My Notes</button>
+    </nav>
 
-<section class="page active" id="dashboard">
-  <div class="hero">
-    <div>
-      <p class="eyebrow">Interactive Dashboard</p>
-      <h2 id="goodMorning">Good morning, Mrs. Parrish! ☀️</h2>
-      <p id="todaySummary">Loading today’s focus...</p>
+    <div class="reminder-card">
+      <div class="heart">♡</div>
+      <h3>Today's Reminder</h3>
+      <p>You are making a difference every single day. Keep going!</p>
+      <div class="heart small">♡</div>
     </div>
-    <button class="primary" data-page="today">Start My Day</button>
-  </div>
 
-  <div class="status-row">
-    <article><strong>Current Pillar</strong><span id="pillar"></span></article>
-    <article><strong>Today’s Lesson</strong><span id="lessonStatus"></span></article>
-    <article><strong>Planning</strong><span>Ready to review</span></article>
-    <article><strong>Print Center</strong><span id="printCount"></span></article>
-  </div>
+    <button class="customize">⚙ Customize This Page</button>
+  </aside>
 
-  <div class="quick-actions" id="quickActions"></div>
+  <main>
+    <section class="top-grid">
+      <div class="welcome-card">
+        <h2>Welcome, Mrs. Parrish! ♡</h2>
+        <blockquote>“The influence of a good teacher<br>can never be erased.”</blockquote>
+        <p class="quote-author">– Unknown</p>
+        <div class="quick-icons">
+          <button>🍎<span>My Lesson Plans</span></button>
+          <button>👥<span>My Groups</span></button>
+          <button>📋<span>My Assessments</span></button>
+          <button>🗓<span>My Calendar</span></button>
+        </div>
+      </div>
 
-  <div class="dashboard-grid">
-    <section class="panel schedule-panel">
-      <h3>Today’s Schedule</h3>
-      <ul id="scheduleList"></ul>
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <span>Classroom Photo</span>
+          <small>Add your classroom picture here</small>
+        </div>
+      </div>
+
+      <div class="classroom-card">
+        <h3>Mrs. Parrish’s Classroom ♡</h3>
+        <div id="classroomLinks"></div>
+        <button class="gallery-btn">📷 View Photo Gallery</button>
+      </div>
     </section>
 
-    <section class="panel">
-      <h3>Print Center</h3>
-      <p class="muted">Copies and resources to prepare.</p>
-      <div id="printChecklist"></div>
+    <section class="middle-grid">
+      <div class="panel">
+        <div class="panel-title">
+          <h3>📅 Today at a Glance</h3>
+          <span id="todayDate"></span>
+        </div>
+        <div id="schedule"></div>
+        <button class="wide-btn">📅 View Full Schedule</button>
+      </div>
+
+      <div class="panel">
+        <h3>🔗 Teacher Shortcuts</h3>
+        <div id="shortcuts" class="shortcut-grid"></div>
+
+        <div class="important-links">
+          <h3>🔗 Important Links</h3>
+          <p>Champion Schools Teacher Resources ↗</p>
+          <p>Our Grade Level Google Drive ↗</p>
+          <p>School Website ↗</p>
+          <p>District Portal ↗</p>
+          <div class="script-note">All links open in a new tab ↗</div>
+        </div>
+      </div>
+
+      <div class="panel resources-panel">
+        <h3>📚 Curriculum Resources</h3>
+        <div id="curriculum" class="curriculum-grid"></div>
+        <button class="link-btn">All Curriculum Resources ↗</button>
+      </div>
     </section>
 
-    <section class="panel brain-panel">
-      <h3>Teacher Brain Reminder</h3>
-      <div id="brainReminder"></div>
-      <button class="secondary" data-page="brain">Open Teacher Brain</button>
-    </section>
+    <section class="bottom-grid" id="lowerCards"></section>
 
-    <section class="panel">
-      <h3>Planning Status</h3>
-      <div id="planningCards"></div>
-    </section>
-  </div>
-</section>
-
-<section class="page" id="today">
-  <h2>▶️ Teach Today</h2>
-  <div class="teach-flow">
-    <article><h3>1. Morning Launch</h3><p>Review schedule, copies, and priorities.</p></article>
-    <article><h3>2. Reading</h3><p id="todayReading"></p></article>
-    <article><h3>3. Writing</h3><p id="todayWriting"></p></article>
-    <article><h3>4. Science</h3><p id="todayScience"></p></article>
-    <article><h3>5. Reflection</h3><p>Record what worked and what to adjust next time.</p></article>
-  </div>
-</section>
-
-<section class="page" id="library">
-  <h2>📁 Document Library</h2>
-  <div class="panel">
-    <p>Document Library is connected from the dashboard. Use this as the engine for resources and attachments.</p>
-  </div>
-</section>
-
-<section class="page" id="search">
-  <h2>🔎 Universal Search</h2>
-  <input id="searchBox" placeholder="Try: merchant, main idea, DIBELS, habitat...">
-  <div class="panel">
-    <p>Search routing is connected from the Dashboard. Full library search continues to grow through document-library.json.</p>
-  </div>
-</section>
-
-<section class="page" id="attachments">
-  <h2>📎 Lesson Attachments</h2>
-  <div class="panel">
-    <p>Lesson attachments connect to printables, assessments, UFLI support, DIBELS connections, writing, and science resources.</p>
-  </div>
-</section>
-
-<section class="page" id="planning">
-  <h2>📅 Planning Status</h2>
-  <div class="panel" id="planningPageCards"></div>
-</section>
-
-<section class="page" id="brain">
-  <h2>🧠 Teacher Brain</h2>
-  <div id="brainList"></div>
-</section>
-</main>
+    <footer>
+      ♡ Plan your work. &nbsp; Work your plan. &nbsp; And remember why you started. ♡
+    </footer>
+  </main>
+</div>
 
 <script src="app.js"></script>
 </body>
