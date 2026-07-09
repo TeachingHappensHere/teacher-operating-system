@@ -2,31 +2,92 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>TeachingHappensHere | Sprint 2 Lesson Attachments</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TeachingHappensHere | Document Library</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>TeachingHappensHere</h1>
-  <p>Sprint 2: Lesson Attachments</p>
-</header>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo">♡</div>
+    <div>
+      <h1>TeachingHappensHere</h1>
+      <p>Teacher Operating System</p>
+    </div>
+  </div>
+  <nav>
+    <button class="active" data-page="dashboard">🏠 Dashboard</button>
+    <button data-page="library">📁 Document Library</button>
+    <button data-page="search">🔎 Universal Search</button>
+    <button data-page="literacy">📚 Literacy / ELA</button>
+    <button data-page="attachments">📎 Lesson Attachments</button>
+    <button data-page="brain">🧠 Teacher Brain</button>
+  </nav>
+  <div class="quote">Sprint 3<br><strong>Document Library Patch</strong></div>
+</aside>
 
 <main>
-  <section class="hero">
+<header>
+  <button id="menu">☰</button>
+  <input id="globalSearch" placeholder="Search documents, lessons, vocabulary, assessments...">
+  <div class="profile"><span>JP</span><strong>Mrs. Parrish</strong></div>
+</header>
+
+<section class="page active" id="dashboard">
+  <div class="hero">
     <div>
-      <p class="eyebrow">Sprint 2</p>
-      <h2>Lesson Attachments Center</h2>
-      <p>This sprint begins turning lesson pages into working teacher hubs by organizing printable pages, assessments, resources, and supports by lesson.</p>
+      <p class="eyebrow">Sprint 3</p>
+      <h2>Document Library is Live</h2>
+      <p>This creates the engine behind lesson attachments, printables, assessments, Teacher Brain notes, and Universal Search.</p>
     </div>
-  </section>
+  </div>
+  <div class="stats">
+    <article><strong id="docCount">0</strong><span>Documents indexed</span></article>
+    <article><strong>6</strong><span>Library categories</span></article>
+    <article><strong>Unit 1</strong><span>Open Court focus</span></article>
+    <article><strong>Ready</strong><span>Searchable resources</span></article>
+  </div>
+  <div class="panel">
+    <h3>Next classroom-ready step</h3>
+    <p>When we attach real file URLs later, these library cards will become one-click Open, Preview, and Print resources.</p>
+  </div>
+</section>
 
-  <section class="buckets" id="buckets"></section>
+<section class="page" id="library">
+  <h2>📁 Document Library</h2>
+  <div class="category-tabs" id="categoryTabs"></div>
+  <div id="libraryGrid" class="library-grid"></div>
+</section>
 
-  <section>
-    <h2>Open Court Unit 1 Attachments</h2>
-    <div id="lessons" class="lesson-list"></div>
-  </section>
+<section class="page" id="search">
+  <h2>🔎 Universal Search</h2>
+  <p class="sub">Search across Open Court, assessments, DIBELS, writing, classroom systems, and Teacher Brain.</p>
+  <input id="searchBox" placeholder="Try: merchant, main idea, DIBELS, habitat, line up...">
+  <div id="searchResults" class="library-grid"></div>
+</section>
+
+<section class="page" id="literacy">
+  <h2>📚 Literacy / ELA</h2>
+  <div class="panel">
+    <h3>Open Court Unit 1</h3>
+    <p>Lesson documents are now indexed in the Document Library and can be found through Universal Search.</p>
+  </div>
+  <div id="literacyDocs" class="library-grid"></div>
+</section>
+
+<section class="page" id="attachments">
+  <h2>📎 Lesson Attachments</h2>
+  <div class="panel">
+    <h3>Attachment engine</h3>
+    <p>Lesson attachments now pull from the Document Library instead of living as isolated placeholders.</p>
+  </div>
+  <div id="attachmentDocs" class="library-grid"></div>
+</section>
+
+<section class="page" id="brain">
+  <h2>🧠 Teacher Brain</h2>
+  <div id="brainDocs" class="library-grid"></div>
+</section>
 </main>
 
 <script src="app.js"></script>

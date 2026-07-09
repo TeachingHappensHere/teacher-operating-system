@@ -1,12 +1,18 @@
 # TeachingHappensHere
 
-## Sprint 2 - Lesson Attachments
+## Sprint 3 - Document Library Patch
 
-This sprint creates the first attachment center for lesson materials.
+Patch ZIP only. Replace/add these files:
 
-Included:
-- Attachment buckets
-- Open Court Unit 1 Lesson 1 attachments
-- Open Court Unit 1 Lesson 6 attachments
-- Print / Open / Preview buttons
-- Resource categories for future files
+- index.html
+- style.css
+- app.js
+- document-library.json
+- README.md
+
+Adds:
+- Document Library
+- Searchable indexed resources
+- Resource categories
+- Library-driven lesson attachments
+- Teacher Brain library cards
