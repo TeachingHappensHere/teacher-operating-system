@@ -1,102 +1,186 @@
 {
-  "version": "0.4",
-  "lesson": {
-    "unit": "Unit 1",
-    "lesson": "Lesson 1",
-    "title": "The Mice Who Lived in a Shoe",
-    "storyType": "Fiction",
-    "essentialQuestion": "How do characters work together to solve a problem?",
-    "objective": "Students will read and discuss the story, use vocabulary in context, practice target phonics patterns, identify common and proper nouns, and answer cause-and-effect comprehension questions.",
-    "phonics": [
-      "/ch/ spelled ch",
-      "/th/ spelled th",
-      "/sh/ spelled sh",
-      "/w/ spelled wh",
-      "/ar/ spelled ar"
+  "version": "Launch Candidate 0.5",
+  "teacher": "Mrs. Parrish",
+  "schedule": [
+    [
+      "7:45\u20138:10",
+      "Breakfast"
     ],
-    "vocabulary": [
-      "admired",
-      "fetched",
-      "gathered",
-      "huddled",
-      "merchant",
-      "observed",
-      "platform",
-      "safety",
-      "shelter",
-      "timber"
+    [
+      "8:10\u20138:20",
+      "Morning Work"
     ],
-    "grammar": "Common nouns and proper nouns",
-    "readingSkill": "Cause and effect",
-    "writingConnection": "Opinion writing: state an opinion, give reasons, revise, edit, and publish.",
-    "standards": [
-      "2.RL.1 Ask and answer questions to demonstrate understanding of a text.",
-      "2.RL.3 Describe how characters respond to major events and challenges.",
-      "2.RF.3 Know and apply grade-level phonics and word analysis skills.",
-      "2.L.1 Demonstrate command of conventions of standard English grammar and usage."
+    [
+      "8:20\u20138:30",
+      "Morning Meeting"
     ],
-    "wida": [
-      "ELP Standard 1: Social and Instructional Language",
-      "ELP Standard 2: Language for Language Arts"
+    [
+      "8:30\u20138:40",
+      "Heggerty"
     ],
-    "beforeReading": [
-      "Preview vocabulary with student-friendly examples.",
-      "Use pictures or gestures for merchant, timber, platform, and shelter.",
-      "Review phonics patterns before students encounter them in connected text.",
-      "Ask students to predict how the characters might solve a problem."
+    [
+      "8:45\u20139:30",
+      "MOWR / Reading Intervention"
     ],
-    "duringReading": [
-      "Pause to identify cause-and-effect relationships.",
-      "Ask: What happened? Why did it happen?",
-      "Use partner talk before whole-group responses.",
-      "Track character actions and responses."
+    [
+      "9:30\u20139:50",
+      "Phonics"
     ],
-    "afterReading": [
-      "Complete cause-and-effect discussion.",
-      "Review vocabulary in context.",
-      "Connect the story to opinion writing.",
-      "Prepare students for comprehension questions."
+    [
+      "9:50\u201310:00",
+      "Vocabulary"
     ],
-    "teachLikeMrsParrish": [
-      "Do not skip vocabulary before reading. It makes the story more accessible.",
-      "Spend extra time on merchant because most students do not use that word naturally.",
-      "Use partner talk before asking students to answer cause-and-effect questions.",
-      "The Open Court packet is worth using because it reinforces what the assessment expects.",
-      "This is a good lesson for modeling how characters respond when plans change."
+    [
+      "10:00\u201310:50",
+      "Open Court Reading"
     ],
-    "planbook": {
-      "objective": "Students will read and discuss The Mice Who Lived in a Shoe while practicing target phonics, vocabulary, grammar, and comprehension skills.",
-      "lessonInstruction": "I Do: Model vocabulary, phonics patterns, and cause/effect thinking. We Do: Read and discuss the text together using partner talk. You Do: Complete skills practice and respond to comprehension questions.",
-      "differentiation": "Use visuals, oral rehearsal, sentence frames, partner support, small-group reteach, and reduced response options as needed.",
-      "homeworkEvidence": "Skills practice, oral responses, comprehension questions, vocabulary use, and teacher observation.",
-      "materialsResources": "Open Court Teacher Edition, skills practice packet, vocabulary cards, phonics assessment, vocabulary assessment, comprehension assessment, GUM assessment, pencils, student notebooks.",
-      "notesReflection": "Record what worked, what needed reteaching, and what a co-teacher should know before teaching this lesson."
-    },
-    "printList": [
-      "Skills Practice packet",
-      "Phonics assessment",
-      "Vocabulary assessment",
-      "Comprehension assessment",
-      "GUM assessment",
-      "Cause-and-effect organizer"
+    [
+      "10:50\u201311:15",
+      "Lunch"
     ],
-    "assessments": [
-      "Phonics Assessment",
-      "Vocabulary Assessment",
-      "Comprehension Assessment",
-      "Grammar / GUM Assessment"
+    [
+      "11:15\u201311:35",
+      "Recess"
     ],
-    "intervention": [
-      "Use UFLI Toolbox for digraph review.",
-      "Use blending board for /ch/, /th/, /sh/, and /wh/ review.",
-      "Use Elkonin boxes for students needing phoneme segmentation support.",
-      "Use vocabulary picture support for EL students."
+    [
+      "11:35\u201312:05",
+      "Workout"
     ],
-    "reflectionPrompts": [
-      "What vocabulary words were hardest?",
-      "Did students understand cause and effect?",
-      "Which students need phonics reteach?",
-      "What should I remind Micayla before she teaches this lesson?"
+    [
+      "12:05\u20131:05",
+      "Math"
+    ],
+    [
+      "1:05\u20131:35",
+      "Writing"
+    ],
+    [
+      "1:35\u20132:00",
+      "Social Studies"
+    ],
+    [
+      "2:00\u20132:15",
+      "Recess"
+    ],
+    [
+      "2:15\u20132:35",
+      "Science"
+    ],
+    [
+      "2:40\u20133:00",
+      "Pack-up"
+    ],
+    [
+      "3:00\u20133:30",
+      "Dismissal"
     ]
-  }
+  ],
+  "unit1": [
+    {
+      "lesson": "Lesson 1",
+      "title": "The Mice Who Lived in a Shoe",
+      "phonics": "/ch/, /th/, /sh/, /wh/, /ar/",
+      "vocabulary": "admired, fetched, gathered, huddled, merchant, observed, platform, safety, shelter, timber",
+      "grammar": "Common and proper nouns",
+      "reading": "Cause and effect",
+      "writing": "Opinion writing connection",
+      "resources": [
+        "Skills Practice packet",
+        "Phonics assessment",
+        "Vocabulary assessment",
+        "Comprehension assessment",
+        "GUM assessment"
+      ]
+    },
+    {
+      "lesson": "Lesson 2",
+      "title": "Ants and Aphids Work Together",
+      "phonics": "Closed syllables; /j/ dge, /k/ ck, /ch/ tch",
+      "vocabulary": "colony, honeydew, liquid, partners, predators, relationship, scurry, shelter, symbiosis, team",
+      "grammar": "Unit 1 GUM connection",
+      "reading": "Informational text comprehension",
+      "writing": "Writing connection ready",
+      "resources": [
+        "Skills Practice",
+        "Assessment pages"
+      ]
+    },
+    {
+      "lesson": "Lesson 3",
+      "title": "The Bat, Birds, and Beasts",
+      "phonics": "Inflectional endings -s, -es, -ed",
+      "vocabulary": "accepted, annual, emphasize, inquired, loyal, strategy",
+      "grammar": "GUM practice",
+      "reading": "Vocabulary and comprehension",
+      "writing": "Writing connection ready",
+      "resources": [
+        "Skills Practice",
+        "Assessment pages"
+      ]
+    },
+    {
+      "lesson": "Lesson 4",
+      "title": "A Cherokee Stickball Game",
+      "phonics": "/ng/, /nk/, -ing, schwa /\u0259l/",
+      "vocabulary": "disappointed, furious, humbly, part, pity, roared",
+      "grammar": "GUM practice",
+      "reading": "Folktale / culture connection",
+      "writing": "Writing connection ready",
+      "resources": [
+        "Skills Practice",
+        "Assessment pages"
+      ]
+    },
+    {
+      "lesson": "Lesson 5",
+      "title": "The Final Game",
+      "phonics": "/er/ and /or/",
+      "vocabulary": "broke, checked, commotion, eagerness, grandstand, managed, opponent, piercing, sneered, tense",
+      "grammar": "GUM practice",
+      "reading": "Sports story comprehension",
+      "writing": "Writing connection ready",
+      "resources": [
+        "Skills Practice",
+        "Assessment pages"
+      ]
+    },
+    {
+      "lesson": "Lesson 6",
+      "title": "Ellie's Long Walk",
+      "phonics": "Unit review and application",
+      "vocabulary": "adopt, entire, face, inch, journey, panic, raged, slick, slope, startled, surface, turned",
+      "grammar": "Unit review",
+      "reading": "Main idea and details",
+      "writing": "Writing connection ready",
+      "resources": [
+        "Fluency pages 71\u201372",
+        "Vocabulary pages 73\u201374",
+        "Main idea/details pages 75\u201376",
+        "Vocabulary assessment"
+      ]
+    }
+  ],
+  "teacherBrain": [
+    "Volcano assignment from Open Court packet works well because it covers topics students might not otherwise get.",
+    "Habitats in a Shoe Box is a yearly success. Students love it and admin praises it.",
+    "Open Court packets are valuable because they hit skills/topics that may otherwise be missed.",
+    "Preview videos before showing them to students.",
+    "iDays need different planning with MobyMax and Beanstack."
+  ],
+  "classroomSystems": [
+    "Entering the Classroom",
+    "Morning Routine",
+    "How to Line Up",
+    "Hallway Expectations",
+    "How to Sit on the Carpet",
+    "Pencil Procedures",
+    "Restroom Signal",
+    "Recess Expectations",
+    "Classroom Jobs",
+    "Partner Talk",
+    "Voice Levels",
+    "Track Me",
+    "Show Me Ready",
+    "Dismissal Routine"
+  ]
 }

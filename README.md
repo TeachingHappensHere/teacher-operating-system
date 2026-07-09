@@ -1,19 +1,7 @@
-# TeachingHappensHere Teacher Operating System
+# TeachingHappensHere
 
-## Version 0.4 Complete Lesson 1 Workspace
+## Launch Candidate 0.5
 
-This version turns Open Court Unit 1, Lesson 1 into the first complete teaching workspace.
+Content-focused launch build for GitHub Pages.
 
-Included:
-- Lesson snapshot
-- Essential question
-- Objective
-- Standards and WIDA supports
-- Phonics and vocabulary chips
-- Before / During / After Reading
-- Teach It Like Mrs. Parrish
-- Planbook-ready fields
-- Print checklist
-- Assessment connections
-- Intervention / UFLI support
-- Reflection prompts
+Includes Dashboard, Teach Today, Literacy / Open Court Unit 1, Lesson 1 Workspace, Writing, Science, Classroom Systems, Assessment Center, Teacher Brain, and Planning Studio.
