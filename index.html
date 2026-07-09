@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TeachingHappensHere | Document Library</title>
+<title>TeachingHappensHere | Interactive Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,76 +17,108 @@
   </div>
   <nav>
     <button class="active" data-page="dashboard">🏠 Dashboard</button>
+    <button data-page="today">▶️ Teach Today</button>
     <button data-page="library">📁 Document Library</button>
     <button data-page="search">🔎 Universal Search</button>
-    <button data-page="literacy">📚 Literacy / ELA</button>
     <button data-page="attachments">📎 Lesson Attachments</button>
+    <button data-page="planning">📅 Planning Status</button>
     <button data-page="brain">🧠 Teacher Brain</button>
   </nav>
-  <div class="quote">Sprint 3<br><strong>Document Library Patch</strong></div>
+  <div class="quote">Sprint 4<br><strong>Interactive Dashboard</strong></div>
 </aside>
 
 <main>
 <header>
   <button id="menu">☰</button>
-  <input id="globalSearch" placeholder="Search documents, lessons, vocabulary, assessments...">
+  <input id="topSearch" placeholder="Search from dashboard...">
   <div class="profile"><span>JP</span><strong>Mrs. Parrish</strong></div>
 </header>
 
 <section class="page active" id="dashboard">
   <div class="hero">
     <div>
-      <p class="eyebrow">Sprint 3</p>
-      <h2>Document Library is Live</h2>
-      <p>This creates the engine behind lesson attachments, printables, assessments, Teacher Brain notes, and Universal Search.</p>
+      <p class="eyebrow">Interactive Dashboard</p>
+      <h2 id="goodMorning">Good morning, Mrs. Parrish! ☀️</h2>
+      <p id="todaySummary">Loading today’s focus...</p>
     </div>
+    <button class="primary" data-page="today">Start My Day</button>
   </div>
-  <div class="stats">
-    <article><strong id="docCount">0</strong><span>Documents indexed</span></article>
-    <article><strong>6</strong><span>Library categories</span></article>
-    <article><strong>Unit 1</strong><span>Open Court focus</span></article>
-    <article><strong>Ready</strong><span>Searchable resources</span></article>
+
+  <div class="status-row">
+    <article><strong>Current Pillar</strong><span id="pillar"></span></article>
+    <article><strong>Today’s Lesson</strong><span id="lessonStatus"></span></article>
+    <article><strong>Planning</strong><span>Ready to review</span></article>
+    <article><strong>Print Center</strong><span id="printCount"></span></article>
   </div>
-  <div class="panel">
-    <h3>Next classroom-ready step</h3>
-    <p>When we attach real file URLs later, these library cards will become one-click Open, Preview, and Print resources.</p>
+
+  <div class="quick-actions" id="quickActions"></div>
+
+  <div class="dashboard-grid">
+    <section class="panel schedule-panel">
+      <h3>Today’s Schedule</h3>
+      <ul id="scheduleList"></ul>
+    </section>
+
+    <section class="panel">
+      <h3>Print Center</h3>
+      <p class="muted">Copies and resources to prepare.</p>
+      <div id="printChecklist"></div>
+    </section>
+
+    <section class="panel brain-panel">
+      <h3>Teacher Brain Reminder</h3>
+      <div id="brainReminder"></div>
+      <button class="secondary" data-page="brain">Open Teacher Brain</button>
+    </section>
+
+    <section class="panel">
+      <h3>Planning Status</h3>
+      <div id="planningCards"></div>
+    </section>
+  </div>
+</section>
+
+<section class="page" id="today">
+  <h2>▶️ Teach Today</h2>
+  <div class="teach-flow">
+    <article><h3>1. Morning Launch</h3><p>Review schedule, copies, and priorities.</p></article>
+    <article><h3>2. Reading</h3><p id="todayReading"></p></article>
+    <article><h3>3. Writing</h3><p id="todayWriting"></p></article>
+    <article><h3>4. Science</h3><p id="todayScience"></p></article>
+    <article><h3>5. Reflection</h3><p>Record what worked and what to adjust next time.</p></article>
   </div>
 </section>
 
 <section class="page" id="library">
   <h2>📁 Document Library</h2>
-  <div class="category-tabs" id="categoryTabs"></div>
-  <div id="libraryGrid" class="library-grid"></div>
+  <div class="panel">
+    <p>Document Library is connected from the dashboard. Use this as the engine for resources and attachments.</p>
+  </div>
 </section>
 
 <section class="page" id="search">
   <h2>🔎 Universal Search</h2>
-  <p class="sub">Search across Open Court, assessments, DIBELS, writing, classroom systems, and Teacher Brain.</p>
-  <input id="searchBox" placeholder="Try: merchant, main idea, DIBELS, habitat, line up...">
-  <div id="searchResults" class="library-grid"></div>
-</section>
-
-<section class="page" id="literacy">
-  <h2>📚 Literacy / ELA</h2>
+  <input id="searchBox" placeholder="Try: merchant, main idea, DIBELS, habitat...">
   <div class="panel">
-    <h3>Open Court Unit 1</h3>
-    <p>Lesson documents are now indexed in the Document Library and can be found through Universal Search.</p>
+    <p>Search routing is connected from the Dashboard. Full library search continues to grow through document-library.json.</p>
   </div>
-  <div id="literacyDocs" class="library-grid"></div>
 </section>
 
 <section class="page" id="attachments">
   <h2>📎 Lesson Attachments</h2>
   <div class="panel">
-    <h3>Attachment engine</h3>
-    <p>Lesson attachments now pull from the Document Library instead of living as isolated placeholders.</p>
+    <p>Lesson attachments connect to printables, assessments, UFLI support, DIBELS connections, writing, and science resources.</p>
   </div>
-  <div id="attachmentDocs" class="library-grid"></div>
+</section>
+
+<section class="page" id="planning">
+  <h2>📅 Planning Status</h2>
+  <div class="panel" id="planningPageCards"></div>
 </section>
 
 <section class="page" id="brain">
   <h2>🧠 Teacher Brain</h2>
-  <div id="brainDocs" class="library-grid"></div>
+  <div id="brainList"></div>
 </section>
 </main>
 

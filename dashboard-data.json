@@ -1,0 +1,141 @@
+{
+  "version": "Sprint 4 - Interactive Dashboard",
+  "teacher": "Mrs. Parrish",
+  "currentPillar": "Heart",
+  "today": {
+    "focus": "Open Court Unit 1",
+    "lesson": "Lesson 1: The Mice Who Lived in a Shoe",
+    "writing": "Building the Foundation",
+    "science": "Science workbook / supplement ready",
+    "status": "Classroom Ready"
+  },
+  "schedule": [
+    [
+      "7:45\u20138:10",
+      "Breakfast"
+    ],
+    [
+      "8:10\u20138:20",
+      "Morning Work"
+    ],
+    [
+      "8:20\u20138:30",
+      "Morning Meeting"
+    ],
+    [
+      "8:30\u20138:40",
+      "Heggerty"
+    ],
+    [
+      "8:45\u20139:30",
+      "MOWR / Reading Intervention"
+    ],
+    [
+      "9:30\u20139:50",
+      "Phonics"
+    ],
+    [
+      "9:50\u201310:00",
+      "Vocabulary"
+    ],
+    [
+      "10:00\u201310:50",
+      "Open Court Reading"
+    ],
+    [
+      "10:50\u201311:15",
+      "Lunch"
+    ],
+    [
+      "11:15\u201311:35",
+      "Recess"
+    ],
+    [
+      "11:35\u201312:05",
+      "Workout"
+    ],
+    [
+      "12:05\u20131:05",
+      "Math"
+    ],
+    [
+      "1:05\u20131:35",
+      "Writing"
+    ],
+    [
+      "1:35\u20132:00",
+      "Social Studies"
+    ],
+    [
+      "2:00\u20132:15",
+      "Recess"
+    ],
+    [
+      "2:15\u20132:35",
+      "Science"
+    ],
+    [
+      "2:40\u20133:00",
+      "Pack-up"
+    ],
+    [
+      "3:00\u20133:30",
+      "Dismissal"
+    ]
+  ],
+  "printCenter": [
+    "Open Court Skills Practice",
+    "Phonics Assessment",
+    "Vocabulary Assessment",
+    "Comprehension Assessment",
+    "GUM Assessment",
+    "Cause and Effect Organizer"
+  ],
+  "quickActions": [
+    {
+      "label": "Teach Today",
+      "target": "today"
+    },
+    {
+      "label": "Document Library",
+      "target": "library"
+    },
+    {
+      "label": "Universal Search",
+      "target": "search"
+    },
+    {
+      "label": "Lesson Attachments",
+      "target": "attachments"
+    },
+    {
+      "label": "Teacher Brain",
+      "target": "brain"
+    }
+  ],
+  "teacherBrain": [
+    "Teach vocabulary before reading.",
+    "Spend extra time on merchant.",
+    "Use partner talk before cause/effect questions.",
+    "Open Court packets are worth using because they reinforce assessment skills.",
+    "Preview videos before showing students."
+  ],
+  "planningStatus": [
+    {
+      "week": "This Week",
+      "status": "Ready to review"
+    },
+    {
+      "week": "Next Week",
+      "status": "Needs lesson selection"
+    },
+    {
+      "week": "iDay Plans",
+      "status": "MobyMax + Beanstack reminder"
+    },
+    {
+      "week": "Classroom Systems",
+      "status": "Beginning-of-year routines ready"
+    }
+  ]
+}

@@ -1,13 +1,46 @@
-let library = null;
-let currentCategory = "All";
+let dashboard = null;
 
-async function loadLibrary(){
-  const response = await fetch("document-library.json");
-  library = await response.json();
-  document.getElementById("docCount").textContent = library.documents.length;
-  renderCategories();
-  renderLibrary();
-  renderFilteredSections();
+async function loadDashboard(){
+  const response = await fetch("dashboard-data.json");
+  dashboard = await response.json();
+
+  document.getElementById("pillar").textContent = dashboard.currentPillar;
+  document.getElementById("lessonStatus").textContent = dashboard.today.lesson;
+  document.getElementById("printCount").textContent = dashboard.printCenter.length + " items";
+  document.getElementById("todaySummary").textContent = `${dashboard.today.focus} • ${dashboard.today.lesson}`;
+
+  document.getElementById("scheduleList").innerHTML = dashboard.schedule
+    .map(item => `<li><strong>${item[0]}</strong> ${item[1]}</li>`)
+    .join("");
+
+  document.getElementById("printChecklist").innerHTML = dashboard.printCenter
+    .map(item => `<label class="check-item"><input type="checkbox"> ${item}</label>`)
+    .join("");
+
+  document.getElementById("quickActions").innerHTML = dashboard.quickActions
+    .map(action => `<button data-page="${action.target}">${action.label}</button>`)
+    .join("");
+
+  document.getElementById("brainReminder").innerHTML = dashboard.teacherBrain
+    .slice(0,3)
+    .map(note => `<div class="brain-note">⭐ ${note}</div>`)
+    .join("");
+
+  const planningMarkup = dashboard.planningStatus
+    .map(p => `<div class="plan-card"><strong>${p.week}</strong><span>${p.status}</span></div>`)
+    .join("");
+  document.getElementById("planningCards").innerHTML = planningMarkup;
+  document.getElementById("planningPageCards").innerHTML = planningMarkup;
+
+  document.getElementById("todayReading").textContent = dashboard.today.lesson;
+  document.getElementById("todayWriting").textContent = dashboard.today.writing;
+  document.getElementById("todayScience").textContent = dashboard.today.science;
+
+  document.getElementById("brainList").innerHTML = dashboard.teacherBrain
+    .map(note => `<div class="brain-note">⭐ ${note}</div>`)
+    .join("");
+
+  bindPageButtons();
 }
 
 function showPage(id){
@@ -17,68 +50,15 @@ function showPage(id){
   window.scrollTo({top:0, behavior:"smooth"});
 }
 
-document.querySelectorAll("[data-page]").forEach(b => b.addEventListener("click", () => showPage(b.dataset.page)));
+function bindPageButtons(){
+  document.querySelectorAll("[data-page]").forEach(b => {
+    b.onclick = () => showPage(b.dataset.page);
+  });
+}
+
 document.getElementById("menu")?.addEventListener("click", () => document.querySelector(".sidebar")?.classList.toggle("open"));
 
-function renderCategories(){
-  const cats = ["All", ...library.categories];
-  document.getElementById("categoryTabs").innerHTML = cats.map(cat => `<button class="${cat===currentCategory?'active':''}" data-cat="${cat}">${cat}</button>`).join("");
-  document.querySelectorAll("[data-cat]").forEach(btn => btn.addEventListener("click", () => {
-    currentCategory = btn.dataset.cat;
-    renderCategories();
-    renderLibrary();
-  }));
-}
+document.getElementById("topSearch")?.addEventListener("focus", () => showPage("search"));
 
-function docCard(doc){
-  return `<article class="doc-card">
-    <h3>${doc.title}</h3>
-    <div class="meta">${doc.category} • ${doc.unit} • ${doc.lesson}</div>
-    <span class="badge">${doc.type}</span>
-    <span class="badge">${doc.status}</span>
-    <div>${doc.tags.slice(0,5).map(t => `<span class="badge">${t}</span>`).join("")}</div>
-    <div class="actions">
-      <button class="primary">Open</button>
-      <button class="secondary">Preview</button>
-      <button class="secondary">Print</button>
-    </div>
-  </article>`;
-}
-
-function renderLibrary(){
-  const docs = currentCategory === "All" ? library.documents : library.documents.filter(d => d.category === currentCategory);
-  document.getElementById("libraryGrid").innerHTML = docs.map(docCard).join("");
-}
-
-function searchDocs(term){
-  const q = term.toLowerCase().trim();
-  if(!q) return library.documents;
-  return library.documents.filter(d =>
-    d.title.toLowerCase().includes(q) ||
-    d.category.toLowerCase().includes(q) ||
-    d.unit.toLowerCase().includes(q) ||
-    d.lesson.toLowerCase().includes(q) ||
-    d.type.toLowerCase().includes(q) ||
-    d.tags.some(t => t.toLowerCase().includes(q))
-  );
-}
-
-function runSearch(term){
-  document.getElementById("searchResults").innerHTML = searchDocs(term).map(docCard).join("") || "<p>No matches yet.</p>";
-}
-
-document.getElementById("searchBox")?.addEventListener("input", e => runSearch(e.target.value));
-document.getElementById("globalSearch")?.addEventListener("input", e => {
-  showPage("search");
-  document.getElementById("searchBox").value = e.target.value;
-  runSearch(e.target.value);
-});
-
-function renderFilteredSections(){
-  document.getElementById("literacyDocs").innerHTML = library.documents.filter(d => d.category === "Open Court Reading").map(docCard).join("");
-  document.getElementById("attachmentDocs").innerHTML = library.documents.filter(d => ["Open Court Reading","Assessment Center"].includes(d.category)).map(docCard).join("");
-  document.getElementById("brainDocs").innerHTML = library.documents.filter(d => d.category === "Teacher Brain").map(docCard).join("");
-  runSearch("");
-}
-
-loadLibrary();
+bindPageButtons();
+loadDashboard();

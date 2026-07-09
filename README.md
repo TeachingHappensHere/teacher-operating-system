@@ -1,18 +1,20 @@
 # TeachingHappensHere
 
-## Sprint 3 - Document Library Patch
+## Sprint 4 - Interactive Dashboard Patch
 
 Patch ZIP only. Replace/add these files:
 
 - index.html
 - style.css
 - app.js
-- document-library.json
+- dashboard-data.json
 - README.md
 
 Adds:
-- Document Library
-- Searchable indexed resources
-- Resource categories
-- Library-driven lesson attachments
-- Teacher Brain library cards
+- Interactive dashboard
+- Today's schedule
+- Print Center checklist
+- Quick action buttons
+- Teacher Brain reminders
+- Planning status cards
+- Teach Today routing
