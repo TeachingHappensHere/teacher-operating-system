@@ -1,6 +1,7 @@
 {
-  "version": "Launch Candidate 0.5",
+  "version": "1.0 Classroom Ready",
   "teacher": "Mrs. Parrish",
+  "currentPillar": "Heart",
   "schedule": [
     [
       "7:45\u20138:10",
@@ -80,7 +81,18 @@
       "lesson": "Lesson 1",
       "title": "The Mice Who Lived in a Shoe",
       "phonics": "/ch/, /th/, /sh/, /wh/, /ar/",
-      "vocabulary": "admired, fetched, gathered, huddled, merchant, observed, platform, safety, shelter, timber",
+      "vocabulary": [
+        "admired",
+        "fetched",
+        "gathered",
+        "huddled",
+        "merchant",
+        "observed",
+        "platform",
+        "safety",
+        "shelter",
+        "timber"
+      ],
       "grammar": "Common and proper nouns",
       "reading": "Cause and effect",
       "writing": "Opinion writing connection",
@@ -90,65 +102,136 @@
         "Vocabulary assessment",
         "Comprehension assessment",
         "GUM assessment"
+      ],
+      "tips": [
+        "Teach vocabulary before reading.",
+        "Spend extra time on merchant.",
+        "Use partner talk before cause/effect questions.",
+        "Do not skip the Open Court packet."
       ]
     },
     {
       "lesson": "Lesson 2",
       "title": "Ants and Aphids Work Together",
       "phonics": "Closed syllables; /j/ dge, /k/ ck, /ch/ tch",
-      "vocabulary": "colony, honeydew, liquid, partners, predators, relationship, scurry, shelter, symbiosis, team",
+      "vocabulary": [
+        "colony",
+        "honeydew",
+        "liquid",
+        "partners",
+        "predators",
+        "relationship",
+        "scurry",
+        "shelter",
+        "symbiosis",
+        "team"
+      ],
       "grammar": "Unit 1 GUM connection",
       "reading": "Informational text comprehension",
       "writing": "Writing connection ready",
       "resources": [
         "Skills Practice",
         "Assessment pages"
+      ],
+      "tips": [
+        "Use visuals for animal relationships.",
+        "Connect to working together and interdependence."
       ]
     },
     {
       "lesson": "Lesson 3",
       "title": "The Bat, Birds, and Beasts",
       "phonics": "Inflectional endings -s, -es, -ed",
-      "vocabulary": "accepted, annual, emphasize, inquired, loyal, strategy",
+      "vocabulary": [
+        "accepted",
+        "annual",
+        "emphasize",
+        "inquired",
+        "loyal",
+        "strategy"
+      ],
       "grammar": "GUM practice",
       "reading": "Vocabulary and comprehension",
       "writing": "Writing connection ready",
       "resources": [
         "Skills Practice",
         "Assessment pages"
+      ],
+      "tips": [
+        "Model how endings change word meaning.",
+        "Use oral rehearsal before written responses."
       ]
     },
     {
       "lesson": "Lesson 4",
       "title": "A Cherokee Stickball Game",
       "phonics": "/ng/, /nk/, -ing, schwa /\u0259l/",
-      "vocabulary": "disappointed, furious, humbly, part, pity, roared",
+      "vocabulary": [
+        "disappointed",
+        "furious",
+        "humbly",
+        "part",
+        "pity",
+        "roared"
+      ],
       "grammar": "GUM practice",
       "reading": "Folktale / culture connection",
       "writing": "Writing connection ready",
       "resources": [
         "Skills Practice",
         "Assessment pages"
+      ],
+      "tips": [
+        "Connect to social studies culture discussions.",
+        "Preview cultural context before reading."
       ]
     },
     {
       "lesson": "Lesson 5",
       "title": "The Final Game",
       "phonics": "/er/ and /or/",
-      "vocabulary": "broke, checked, commotion, eagerness, grandstand, managed, opponent, piercing, sneered, tense",
+      "vocabulary": [
+        "broke",
+        "checked",
+        "commotion",
+        "eagerness",
+        "grandstand",
+        "managed",
+        "opponent",
+        "piercing",
+        "sneered",
+        "tense"
+      ],
       "grammar": "GUM practice",
       "reading": "Sports story comprehension",
       "writing": "Writing connection ready",
       "resources": [
         "Skills Practice",
         "Assessment pages"
+      ],
+      "tips": [
+        "Champion sports connection fits naturally here.",
+        "Use movement or team examples for vocabulary."
       ]
     },
     {
       "lesson": "Lesson 6",
       "title": "Ellie's Long Walk",
       "phonics": "Unit review and application",
-      "vocabulary": "adopt, entire, face, inch, journey, panic, raged, slick, slope, startled, surface, turned",
+      "vocabulary": [
+        "adopt",
+        "entire",
+        "face",
+        "inch",
+        "journey",
+        "panic",
+        "raged",
+        "slick",
+        "slope",
+        "startled",
+        "surface",
+        "turned"
+      ],
       "grammar": "Unit review",
       "reading": "Main idea and details",
       "writing": "Writing connection ready",
@@ -157,6 +240,11 @@
         "Vocabulary pages 73\u201374",
         "Main idea/details pages 75\u201376",
         "Vocabulary assessment"
+      ],
+      "tips": [
+        "Use the fluency checklist before reading A Trip.",
+        "Connect journey/slope/surface to real-world visuals.",
+        "Have students cite details from the text."
       ]
     }
   ],
@@ -165,7 +253,8 @@
     "Habitats in a Shoe Box is a yearly success. Students love it and admin praises it.",
     "Open Court packets are valuable because they hit skills/topics that may otherwise be missed.",
     "Preview videos before showing them to students.",
-    "iDays need different planning with MobyMax and Beanstack."
+    "iDays need different planning with MobyMax and Beanstack.",
+    "Social Studies lessons should connect to Open Court stories whenever possible."
   ],
   "classroomSystems": [
     "Entering the Classroom",
@@ -182,5 +271,29 @@
     "Track Me",
     "Show Me Ready",
     "Dismissal Routine"
+  ],
+  "writing": [
+    "Building the Foundation",
+    "Informative Writing",
+    "Opinion Writing",
+    "Narrative Writing",
+    "Writing Conferences",
+    "Writing Rubrics"
+  ],
+  "science": [
+    "Workbook Pages",
+    "Textbook Supplement",
+    "Labs & Investigations",
+    "Safe Videos",
+    "Arizona Science Standards",
+    "Open Court Connections"
+  ],
+  "assessments": [
+    "Open Court Weekly",
+    "End of Unit 1",
+    "DIBELS",
+    "Writing Rubrics",
+    "Science Checks",
+    "Math Assessments"
   ]
 }

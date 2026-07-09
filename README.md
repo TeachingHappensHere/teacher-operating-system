@@ -1,7 +1,7 @@
 # TeachingHappensHere
 
-## Launch Candidate 0.5
+## Classroom Ready 1.0
 
-Content-focused launch build for GitHub Pages.
+This is the first classroom-ready build for GitHub Pages.
 
-Includes Dashboard, Teach Today, Literacy / Open Court Unit 1, Lesson 1 Workspace, Writing, Science, Classroom Systems, Assessment Center, Teacher Brain, and Planning Studio.
+Includes Dashboard, Teach Today, Literacy / Open Court Unit 1, Lesson Workspace, Writing, Science, Classroom Systems, Assessment Center, Teacher Brain, and Planning Studio.
