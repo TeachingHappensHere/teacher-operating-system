@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TeachingHappensHere | Lesson Hub Shell</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TeachingHappensHere | Version 0.4</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <aside class="sidebar">
@@ -16,109 +16,111 @@
         <p>Teacher Operating System</p>
       </div>
     </div>
-
     <nav>
       <button class="active" data-page="dashboard">🏠 Dashboard</button>
-      <button data-page="lessonhub">📖 Lesson Hub</button>
-      <button data-page="opencourt">📚 Open Court Unit 1</button>
-      <button data-page="planning">📅 Planning Studio</button>
-      <button data-page="classroom">🏫 Classroom Systems</button>
-      <button data-page="assessment">📊 Assessment Center</button>
-      <button data-page="brain">🧠 Teacher Brain</button>
+      <button data-page="lesson">📖 Lesson 1 Workspace</button>
+      <button data-page="planbook">📅 Planbook View</button>
+      <button data-page="intervention">🔎 Intervention</button>
+      <button data-page="assessment">📊 Assessments</button>
+      <button data-page="reflection">🧠 Reflection</button>
     </nav>
-
-    <div class="quote">Version 0.3<br><strong>Lesson Hub Shell</strong></div>
+    <div class="quote">Version 0.4<br><strong>Complete Lesson 1 Workspace</strong></div>
   </aside>
 
   <main>
     <header>
       <button id="menu">☰</button>
-      <div class="search">🔎 Search lessons, standards, resources...</div>
+      <div class="search">🔎 Search lesson content...</div>
       <div class="profile"><span>JP</span><strong>Mrs. Parrish</strong></div>
     </header>
 
     <section class="page active" id="dashboard">
       <div class="hero">
         <div>
-          <p class="eyebrow">Version 0.3</p>
-          <h2>Lesson Hub Shell is Ready</h2>
-          <p>This version builds the first reusable lesson workspace for TeachingHappensHere.</p>
+          <p class="eyebrow">Version 0.4</p>
+          <h2>Complete Lesson 1 Workspace</h2>
+          <p>Open Court Unit 1, Lesson 1 is now built as a reusable model for future lessons.</p>
         </div>
-        <button class="primary" data-page="lessonhub">Open Lesson Hub</button>
+        <button class="primary" data-page="lesson">Open Lesson 1</button>
       </div>
 
       <div class="cards">
-        <article>
-          <h3>📖 Model Lesson</h3>
-          <p>Open Court Unit 1, Lesson 1: <em>The Mice Who Lived in a Shoe</em></p>
-        </article>
-        <article>
-          <h3>🧠 Teacher Brain</h3>
-          <p>Mrs. Parrish’s recommendations are now connected directly to the lesson.</p>
-        </article>
-        <article>
-          <h3>🖨 Print List</h3>
-          <p>The lesson hub now shows what needs to be copied or prepared.</p>
-        </article>
-        <article>
-          <h3>📅 Planbook Ready</h3>
-          <p>The shell includes the pieces needed for future Planbook lesson creation.</p>
-        </article>
+        <article><h3>📖 Lesson Hub</h3><p>Objective, standards, phonics, vocabulary, grammar, writing, and reading skill.</p></article>
+        <article><h3>💜 Teach It Like Mrs. Parrish</h3><p>Practical guidance for you and Micayla before teaching.</p></article>
+        <article><h3>📅 Planbook View</h3><p>I Do, We Do, You Do and required planning fields.</p></article>
+        <article><h3>🔎 Intervention</h3><p>UFLI support, blending board, Elkonin boxes, and vocabulary visuals.</p></article>
       </div>
     </section>
 
-    <section class="page" id="lessonhub">
+    <section class="page" id="lesson">
       <div class="lesson-hero">
         <div>
           <p class="eyebrow">Open Court • Unit 1 • Lesson 1</p>
-          <h2>The Mice Who Lived in a Shoe</h2>
-          <p>Model lesson hub for reading, phonics, vocabulary, grammar, writing, assessment, intervention, and Teacher Brain notes.</p>
+          <h2 id="lessonTitle">The Mice Who Lived in a Shoe</h2>
+          <p id="essentialQuestion"></p>
         </div>
         <div class="lesson-actions">
           <button class="primary">Start Lesson</button>
-          <button class="secondary">Print List</button>
-          <button class="secondary">Send to Planning Studio</button>
+          <button class="secondary" data-page="planbook">Planbook View</button>
+          <button class="secondary">Print Checklist</button>
         </div>
+      </div>
+
+      <div class="top-strip">
+        <div><strong>Story Type</strong><span id="storyType"></span></div>
+        <div><strong>Reading Skill</strong><span id="readingSkill"></span></div>
+        <div><strong>Grammar</strong><span id="grammar"></span></div>
+        <div><strong>Writing</strong><span id="writingConnection"></span></div>
       </div>
 
       <div class="lesson-grid">
         <section class="panel wide">
           <h3>🎯 Objective</h3>
-          <p>Students will read and discuss the story, use vocabulary in context, practice phonics patterns, identify common and proper nouns, and answer cause-and-effect comprehension questions.</p>
+          <p id="objective"></p>
         </section>
 
         <section class="panel">
-          <h3>📚 Standards</h3>
-          <ul id="elaStandards"></ul>
+          <h3>📚 Arizona ELA Standards</h3>
+          <ul id="standards"></ul>
         </section>
 
         <section class="panel">
           <h3>🌎 WIDA Supports</h3>
-          <ul id="widaStandards"></ul>
+          <ul id="wida"></ul>
         </section>
 
         <section class="panel">
-          <h3>🔤 Phonics Focus</h3>
-          <p>/ch/ spelled ch, /th/ spelled th, /sh/ spelled sh, /w/ spelled wh, /ar/ spelled ar</p>
+          <h3>🔤 Phonics</h3>
+          <div id="phonics" class="chips"></div>
         </section>
 
         <section class="panel">
           <h3>📝 Vocabulary</h3>
-          <div id="vocabChips" class="chips"></div>
+          <div id="vocab" class="chips"></div>
+        </section>
+
+        <section class="panel recommend">
+          <h3>💜 Teach It Like Mrs. Parrish</h3>
+          <ul id="teachTips"></ul>
         </section>
 
         <section class="panel">
-          <h3>📐 Grammar / GUM</h3>
-          <p>Common nouns and proper nouns.</p>
+          <h3>🌅 Before Reading</h3>
+          <ul id="beforeReading"></ul>
         </section>
 
         <section class="panel">
-          <h3>✏️ Writing Connection</h3>
-          <p>Opinion writing: students practice giving an opinion, supporting it with reasons, and revising their work.</p>
+          <h3>📖 During Reading</h3>
+          <ul id="duringReading"></ul>
         </section>
 
         <section class="panel">
-          <h3>🖨 Print Today</h3>
+          <h3>✅ After Reading</h3>
+          <ul id="afterReading"></ul>
+        </section>
+
+        <section class="panel">
+          <h3>🖨 Print Checklist</h3>
           <ul id="printList"></ul>
         </section>
 
@@ -128,52 +130,46 @@
         </section>
 
         <section class="panel">
-          <h3>🔎 UFLI Support</h3>
-          <ul id="ufliSupport"></ul>
-        </section>
-
-        <section class="panel wide recommend">
-          <h3>💜 Mrs. Parrish Recommends</h3>
-          <ul id="recommendations"></ul>
-        </section>
-
-        <section class="panel wide brain">
-          <h3>🧠 Teacher Brain</h3>
-          <ul id="brainNotes"></ul>
-        </section>
-
-        <section class="panel wide">
-          <h3>🪞 Reflection</h3>
-          <textarea placeholder="After teaching: What worked? What needs reteaching? What should Micayla know before teaching this lesson?"></textarea>
-          <button class="primary">Save Reflection</button>
+          <h3>🔎 Intervention / UFLI</h3>
+          <ul id="interventionList"></ul>
         </section>
       </div>
     </section>
 
-    <section class="page" id="opencourt">
-      <h2>📚 Open Court Unit 1</h2>
-      <div class="cards">
-        <article><h3>Lesson 1</h3><p>The Mice Who Lived in a Shoe</p><button data-page="lessonhub">Open Lesson Hub</button></article>
-        <article><h3>Lesson 2</h3><p>Ants and Aphids Work Together</p></article>
-        <article><h3>Lesson 3</h3><p>The Bat, Birds, and Beasts</p></article>
-        <article><h3>Lesson 4</h3><p>A Cherokee Stickball Game</p></article>
-        <article><h3>Lesson 5</h3><p>The Final Game</p></article>
-        <article><h3>Lesson 6</h3><p>Ellie's Long Walk</p></article>
+    <section class="page" id="planbook">
+      <h2>📅 Planbook View</h2>
+      <div class="planbook-grid" id="planbookGrid"></div>
+    </section>
+
+    <section class="page" id="intervention">
+      <h2>🔎 Intervention Support</h2>
+      <div class="panel">
+        <ul id="interventionPageList"></ul>
       </div>
     </section>
 
-    <section class="page" id="planning"><h2>📅 Planning Studio</h2><div class="panel"><p>Lesson Hub will eventually send content here for Planbook-ready planning.</p></div></section>
-    <section class="page" id="classroom"><h2>🏫 Classroom Systems</h2><div class="panel"><p>Anchor charts and beginning-of-year routines will connect to lesson and dashboard reminders.</p></div></section>
-    <section class="page" id="assessment"><h2>📊 Assessment Center</h2><div class="panel"><p>Assessments from Lesson Hub will connect here for tracking and review.</p></div></section>
-    <section class="page" id="brain"><h2>🧠 Teacher Brain</h2><div class="panel"><p>Teacher Brain is now lesson-aware.</p></div></section>
+    <section class="page" id="assessment">
+      <h2>📊 Assessment Center Connection</h2>
+      <div class="cards" id="assessmentCards"></div>
+    </section>
+
+    <section class="page" id="reflection">
+      <h2>🧠 Reflection</h2>
+      <div class="panel">
+        <h3>Reflection Prompts</h3>
+        <ul id="reflectionPrompts"></ul>
+        <textarea placeholder="What worked? What needs reteaching? What should Micayla know before teaching this lesson?"></textarea>
+        <button class="primary">Save Reflection</button>
+      </div>
+    </section>
 
     <footer>
-      <button>📅 School Calendar</button>
+      <button>📅 Calendar</button>
       <button>🏠 iDay Plans</button>
-      <button>📝 Homework Center</button>
+      <button>🖨 Print</button>
       <button>📚 Beanstack</button>
       <button>🐸 ClassDojo</button>
-      <button>👥 Intervention Groups</button>
+      <button>👥 Intervention</button>
     </footer>
   </main>
 

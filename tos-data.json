@@ -1,57 +1,84 @@
 {
-  "version": "0.3",
-  "lessonHubModel": {
+  "version": "0.4",
+  "lesson": {
     "unit": "Unit 1",
     "lesson": "Lesson 1",
     "title": "The Mice Who Lived in a Shoe",
     "storyType": "Fiction",
-    "dailyFocus": [
-      "Phonics: /ch/, /th/, /sh/, /wh/, /ar/",
-      "Vocabulary: admired, fetched, gathered, huddled, merchant, observed, platform, safety, shelter, timber",
-      "Reading Skill: Cause and Effect",
-      "Grammar / GUM: Common and Proper Nouns",
-      "Writing Connection: Opinion Writing"
+    "essentialQuestion": "How do characters work together to solve a problem?",
+    "objective": "Students will read and discuss the story, use vocabulary in context, practice target phonics patterns, identify common and proper nouns, and answer cause-and-effect comprehension questions.",
+    "phonics": [
+      "/ch/ spelled ch",
+      "/th/ spelled th",
+      "/sh/ spelled sh",
+      "/w/ spelled wh",
+      "/ar/ spelled ar"
     ],
-    "standards": {
-      "ela": [
-        "2.RL.1 Ask and answer questions to demonstrate understanding of a text.",
-        "2.RL.3 Describe how characters respond to major events and challenges.",
-        "2.RF.3 Know and apply grade-level phonics and word analysis skills.",
-        "2.L.1 Demonstrate command of conventions of standard English grammar and usage."
-      ],
-      "wida": [
-        "ELP Standard 1: Social and Instructional Language",
-        "ELP Standard 2: Language for Language Arts"
-      ]
+    "vocabulary": [
+      "admired",
+      "fetched",
+      "gathered",
+      "huddled",
+      "merchant",
+      "observed",
+      "platform",
+      "safety",
+      "shelter",
+      "timber"
+    ],
+    "grammar": "Common nouns and proper nouns",
+    "readingSkill": "Cause and effect",
+    "writingConnection": "Opinion writing: state an opinion, give reasons, revise, edit, and publish.",
+    "standards": [
+      "2.RL.1 Ask and answer questions to demonstrate understanding of a text.",
+      "2.RL.3 Describe how characters respond to major events and challenges.",
+      "2.RF.3 Know and apply grade-level phonics and word analysis skills.",
+      "2.L.1 Demonstrate command of conventions of standard English grammar and usage."
+    ],
+    "wida": [
+      "ELP Standard 1: Social and Instructional Language",
+      "ELP Standard 2: Language for Language Arts"
+    ],
+    "beforeReading": [
+      "Preview vocabulary with student-friendly examples.",
+      "Use pictures or gestures for merchant, timber, platform, and shelter.",
+      "Review phonics patterns before students encounter them in connected text.",
+      "Ask students to predict how the characters might solve a problem."
+    ],
+    "duringReading": [
+      "Pause to identify cause-and-effect relationships.",
+      "Ask: What happened? Why did it happen?",
+      "Use partner talk before whole-group responses.",
+      "Track character actions and responses."
+    ],
+    "afterReading": [
+      "Complete cause-and-effect discussion.",
+      "Review vocabulary in context.",
+      "Connect the story to opinion writing.",
+      "Prepare students for comprehension questions."
+    ],
+    "teachLikeMrsParrish": [
+      "Do not skip vocabulary before reading. It makes the story more accessible.",
+      "Spend extra time on merchant because most students do not use that word naturally.",
+      "Use partner talk before asking students to answer cause-and-effect questions.",
+      "The Open Court packet is worth using because it reinforces what the assessment expects.",
+      "This is a good lesson for modeling how characters respond when plans change."
+    ],
+    "planbook": {
+      "objective": "Students will read and discuss The Mice Who Lived in a Shoe while practicing target phonics, vocabulary, grammar, and comprehension skills.",
+      "lessonInstruction": "I Do: Model vocabulary, phonics patterns, and cause/effect thinking. We Do: Read and discuss the text together using partner talk. You Do: Complete skills practice and respond to comprehension questions.",
+      "differentiation": "Use visuals, oral rehearsal, sentence frames, partner support, small-group reteach, and reduced response options as needed.",
+      "homeworkEvidence": "Skills practice, oral responses, comprehension questions, vocabulary use, and teacher observation.",
+      "materialsResources": "Open Court Teacher Edition, skills practice packet, vocabulary cards, phonics assessment, vocabulary assessment, comprehension assessment, GUM assessment, pencils, student notebooks.",
+      "notesReflection": "Record what worked, what needed reteaching, and what a co-teacher should know before teaching this lesson."
     },
-    "materials": [
-      "Open Court Teacher Edition",
-      "Skills Practice pages",
-      "Vocabulary assessment",
-      "Phonics assessment",
-      "Comprehension assessment",
-      "GUM assessment",
-      "Vocabulary cards",
-      "Student notebooks",
-      "Pencils"
-    ],
     "printList": [
       "Skills Practice packet",
       "Phonics assessment",
       "Vocabulary assessment",
       "Comprehension assessment",
-      "GUM assessment"
-    ],
-    "mrsParrishRecommends": [
-      "Teach vocabulary before reading so students are not stopped by unfamiliar words.",
-      "Spend extra time with merchant because many students do not use that word in daily speech.",
-      "Use partner talk before answering cause-and-effect questions.",
-      "Do not skip the skills practice pages; they reinforce what the assessment expects."
-    ],
-    "teacherBrain": [
-      "Open Court packets are valuable because they hit skills and topics that may otherwise be missed.",
-      "Use this lesson to model how characters respond to a problem.",
-      "Good place to introduce a cause/effect anchor chart."
+      "GUM assessment",
+      "Cause-and-effect organizer"
     ],
     "assessments": [
       "Phonics Assessment",
@@ -59,10 +86,17 @@
       "Comprehension Assessment",
       "Grammar / GUM Assessment"
     ],
-    "ufliSupport": [
-      "Use UFLI Toolbox as needed for digraph review.",
+    "intervention": [
+      "Use UFLI Toolbox for digraph review.",
       "Use blending board for /ch/, /th/, /sh/, and /wh/ review.",
-      "Use Elkonin boxes for students needing phoneme support."
+      "Use Elkonin boxes for students needing phoneme segmentation support.",
+      "Use vocabulary picture support for EL students."
+    ],
+    "reflectionPrompts": [
+      "What vocabulary words were hardest?",
+      "Did students understand cause and effect?",
+      "Which students need phonics reteach?",
+      "What should I remind Micayla before she teaches this lesson?"
     ]
   }
 }
