@@ -1,5 +1,6 @@
 :root{
   --pink:#ffd7dc;
+  --pink-deep:#ff7f98;
   --pink-soft:#fff1f2;
   --peach:#fff6ed;
   --cream:#fffaf4;
@@ -13,16 +14,20 @@
   --shadow:0 12px 30px rgba(122,73,73,.10);
 }
 *{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
 body{
-  margin:0;
   background:#fff7f5;
   color:var(--ink);
-  font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+  font-family:"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
 }
 button{font:inherit;cursor:pointer}
-.app{display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+.app-shell{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  min-height:100vh;
+}
 .sidebar{
-  background:linear-gradient(180deg,#ffe3e5,#fffaf4 55%,#fff7f3);
+  background:linear-gradient(180deg,#ffe3e5,#fffaf4 56%,#fff7f3);
   border-right:1px solid var(--line);
   padding:22px 18px;
   position:sticky;
@@ -30,35 +35,37 @@ button{font:inherit;cursor:pointer}
   height:100vh;
   overflow:auto;
 }
-.brand-row{
+.brand{
   display:flex;
   align-items:center;
   gap:12px;
   margin-bottom:22px;
 }
-.brand-icon{font-size:34px}
-.brand-row h1{
+.brand-icon{font-size:35px}
+.brand h1{
   font-family:"Comic Sans MS","Segoe Print",cursive;
   font-size:31px;
   line-height:1;
   margin:0;
   font-weight:500;
 }
-.brand-row p{
-  margin:3px 0 0;
+.brand p{
+  margin:4px 0 0;
   letter-spacing:.08em;
   font-size:15px;
 }
-nav{display:grid;gap:8px}
-nav button{
+.side-nav{display:grid;gap:8px}
+.side-nav button{
   border:0;
   background:transparent;
   text-align:left;
   padding:11px 14px;
   border-radius:10px;
   font-size:15px;
+  color:var(--ink);
 }
-nav button.active,nav button:hover{
+.side-nav button.active,
+.side-nav button:hover{
   background:#ffcfd2;
 }
 .reminder-card{
@@ -69,9 +76,13 @@ nav button.active,nav button:hover{
   text-align:center;
   background:linear-gradient(135deg,#fff,#fff2ec);
 }
-.heart{font-size:30px;color:#ff7890}
+.heart{font-size:30px;color:var(--pink-deep)}
 .heart.small{font-size:24px}
-.reminder-card h3{text-transform:uppercase;font-size:14px}
+.reminder-card h3{
+  text-transform:uppercase;
+  font-size:14px;
+  margin:8px 0 10px;
+}
 .reminder-card p{font-size:14px;line-height:1.5}
 .customize{
   margin-top:20px;
@@ -81,40 +92,52 @@ nav button.active,nav button:hover{
   border-radius:10px;
   padding:12px;
 }
-main{padding:12px}
+.main-content{padding:10px}
 .top-grid{
   display:grid;
-  grid-template-columns:1.1fr .85fr 240px;
+  grid-template-columns:1.12fr .86fr 240px;
   gap:12px;
 }
-.welcome-card,.photo-card,.classroom-card,.panel,.lower-card{
+.welcome-card,
+.photo-card,
+.classroom-card,
+.panel,
+.lower-card{
   background:rgba(255,255,255,.88);
   border:1px solid var(--line);
   border-radius:14px;
   box-shadow:var(--shadow);
 }
 .welcome-card{
-  padding:20px 28px;
+  padding:18px 28px 16px;
   text-align:center;
 }
 .welcome-card h2{
   font-family:"Comic Sans MS","Segoe Print",cursive;
   font-size:46px;
+  line-height:1.05;
   font-weight:400;
-  margin:0 0 10px;
+  margin:0 0 12px;
 }
 blockquote{
   font-family:"Comic Sans MS","Segoe Print",cursive;
   font-size:19px;
-  line-height:1.6;
+  line-height:1.55;
   margin:0;
 }
-.quote-author{margin:5px 0 18px}
+.quote-author{margin:4px 0 4px;color:var(--muted)}
+.pink-squiggle{
+  color:var(--pink-deep);
+  font-family:"Comic Sans MS","Segoe Print",cursive;
+  font-size:22px;
+  margin:2px 0 12px;
+}
 .quick-icons{
   display:flex;
   justify-content:center;
   gap:34px;
-  margin-top:12px;
+  margin-top:6px;
+  flex-wrap:wrap;
 }
 .quick-icons button{
   border:0;
@@ -122,45 +145,65 @@ blockquote{
   display:grid;
   gap:8px;
   justify-items:center;
-}
-.quick-icons button::first-line{font-size:30px}
-.quick-icons button{
-  font-size:32px;
-}
-.quick-icons span{
   font-size:14px;
-  color:var(--ink);
 }
-.quick-icons button:nth-child(1)::before,
-.quick-icons button:nth-child(2)::before,
-.quick-icons button:nth-child(3)::before,
-.quick-icons button:nth-child(4)::before{
-  content:"";
-  width:62px;height:62px;border-radius:16px;
-  position:absolute;
+.icon-box{
+  width:62px;
+  height:62px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  font-size:30px;
 }
+.icon-box.pink{background:#ffdfe3}
+.icon-box.gold{background:#fff0ce}
+.icon-box.green{background:#e8f2da}
+.icon-box.lavender{background:#eee9f8}
 .photo-card{padding:12px}
-.photo-placeholder{
+.classroom-photo{
   min-height:330px;
   border-radius:8px;
-  background:linear-gradient(135deg,#e4d2c2,#8b735d);
+  background:
+    linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.15)),
+    linear-gradient(135deg,#d6c0a9,#8f755d);
   display:grid;
   place-items:center;
   color:white;
   text-align:center;
+  overflow:hidden;
 }
-.photo-placeholder span{
-  font-size:34px;
+.classroom-photo strong{
+  display:block;
   font-family:"Comic Sans MS","Segoe Print",cursive;
+  font-size:34px;
+  text-shadow:0 2px 8px rgba(0,0,0,.3);
 }
-.photo-placeholder small{display:block;font-size:15px}
+.classroom-photo span{
+  display:block;
+  margin-top:8px;
+  font-size:15px;
+}
 .classroom-card{padding:18px}
-.classroom-card h3{margin:0 0 16px;font-size:19px}
-.classroom-card div div{
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+.card-header h3{
+  margin:0 0 14px;
+  font-size:19px;
+}
+.card-header span{
+  color:var(--pink-deep);
+  font-size:28px;
+}
+.classroom-links div{
   padding:8px 0;
   font-size:14px;
 }
-.gallery-btn,.wide-btn,.link-btn{
+.gallery-button,
+.wide-button,
+.link-button{
   width:100%;
   border:0;
   background:#ffcfd2;
@@ -180,11 +223,20 @@ blockquote{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:8px;
 }
-.panel h3{margin:0 0 12px;text-transform:uppercase;font-size:15px}
+.panel h3{
+  margin:0 0 12px;
+  text-transform:uppercase;
+  font-size:15px;
+}
+.heart-mark{
+  color:var(--pink-deep);
+  font-size:26px;
+}
 .schedule-row{
   display:grid;
-  grid-template-columns:95px 1fr;
+  grid-template-columns:96px 1fr;
   padding:7px 10px;
   font-size:14px;
 }
@@ -205,11 +257,14 @@ blockquote{
   padding:14px;
   margin-top:12px;
 }
-.important-links p{margin:8px 0;font-size:14px}
+.important-links p{
+  margin:8px 0;
+  font-size:14px;
+}
 .script-note{
   text-align:right;
   font-family:"Comic Sans MS","Segoe Print",cursive;
-  color:#ff7f98;
+  color:var(--pink-deep);
   font-size:18px;
 }
 .curriculum-grid{
@@ -242,8 +297,15 @@ blockquote{
   margin-top:12px;
 }
 .lower-card{padding:16px}
-.lower-card h3{font-size:14px;margin:0 0 12px;text-transform:uppercase}
-.lower-card div{font-size:13px;padding:5px 0}
+.lower-card h3{
+  font-size:14px;
+  margin:0 0 12px;
+  text-transform:uppercase;
+}
+.lower-card div{
+  font-size:13px;
+  padding:5px 0;
+}
 footer{
   margin-top:12px;
   background:#ffcfd2;
@@ -253,9 +315,8 @@ footer{
   font-family:"Comic Sans MS","Segoe Print",cursive;
   letter-spacing:.1em;
 }
-@media(max-width:1100px){
-  .app{grid-template-columns:1fr}
+@media(max-width:1150px){
+  .app-shell{grid-template-columns:1fr}
   .sidebar{position:relative;height:auto}
   .top-grid,.middle-grid,.bottom-grid{grid-template-columns:1fr}
-  .quick-icons{flex-wrap:wrap}
 }

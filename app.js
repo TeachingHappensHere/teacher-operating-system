@@ -1,14 +1,17 @@
-async function loadDashboard(){
-  const res = await fetch("dashboard-redesign.json");
+async function loadScholarDashboard(){
+  const res = await fetch("scholar-dashboard.json", { cache: "no-store" });
   const data = await res.json();
 
+  document.getElementById("welcomeTitle").textContent = `Welcome, ${data.teacherName}! ♡`;
+  document.getElementById("quoteText").innerHTML = `“${data.quote}<br>”`;
+  document.getElementById("quoteAuthor").textContent = `– ${data.quoteAuthor}`;
   document.getElementById("todayDate").textContent = data.date;
 
-  document.getElementById("schedule").innerHTML = data.schedule
+  document.getElementById("scheduleList").innerHTML = data.schedule
     .map(row => `<div class="schedule-row"><strong>${row[0]}</strong><span>${row[1]}</span></div>`)
     .join("");
 
-  document.getElementById("curriculum").innerHTML = data.curriculum
+  document.getElementById("curriculumGrid").innerHTML = data.curriculum
     .map(item => `<div class="curriculum-item"><span>${item[0]}</span><span>${item[1]}</span></div>`)
     .join("");
 
@@ -16,8 +19,12 @@ async function loadDashboard(){
     .map(link => `<div>♡ ${link}</div>`)
     .join("");
 
-  document.getElementById("shortcuts").innerHTML = data.shortcuts
+  document.getElementById("shortcutGrid").innerHTML = data.teacherShortcuts
     .map(link => `<div>♡ ${link}</div>`)
+    .join("");
+
+  document.getElementById("importantLinks").innerHTML = data.importantLinks
+    .map(link => `<p>${link} ↗</p>`)
     .join("");
 
   document.getElementById("lowerCards").innerHTML = Object.entries(data.lowerCards)
@@ -29,4 +36,9 @@ async function loadDashboard(){
     `)
     .join("");
 }
-loadDashboard();
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js").catch(console.error);
+}
+
+loadScholarDashboard();

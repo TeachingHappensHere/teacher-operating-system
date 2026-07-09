@@ -1,15 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mrs. Parrish’s Scholar System</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mrs. Parrish’s Scholar System</title>
+  <meta name="theme-color" content="#ffd7dc">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="app">
+<div class="app-shell">
   <aside class="sidebar">
-    <div class="brand-row">
+    <div class="brand">
       <div class="brand-icon">📝</div>
       <div>
         <h1>Mrs. Parrish’s</h1>
@@ -17,7 +19,7 @@
       </div>
     </div>
 
-    <nav>
+    <nav class="side-nav">
       <button class="active">⌂ Home Dashboard</button>
       <button>▭ Lesson Plans</button>
       <button>♧ Small Groups</button>
@@ -45,63 +47,67 @@
     <button class="customize">⚙ Customize This Page</button>
   </aside>
 
-  <main>
+  <main class="main-content">
     <section class="top-grid">
-      <div class="welcome-card">
-        <h2>Welcome, Mrs. Parrish! ♡</h2>
-        <blockquote>“The influence of a good teacher<br>can never be erased.”</blockquote>
-        <p class="quote-author">– Unknown</p>
+      <article class="welcome-card">
+        <h2 id="welcomeTitle">Welcome, Mrs. Parrish! ♡</h2>
+        <blockquote id="quoteText"></blockquote>
+        <p class="quote-author" id="quoteAuthor"></p>
+        <div class="pink-squiggle">────── ♡</div>
         <div class="quick-icons">
-          <button>🍎<span>My Lesson Plans</span></button>
-          <button>👥<span>My Groups</span></button>
-          <button>📋<span>My Assessments</span></button>
-          <button>🗓<span>My Calendar</span></button>
+          <button><span class="icon-box pink">🍎</span><span>My Lesson Plans</span></button>
+          <button><span class="icon-box gold">👥</span><span>My Groups</span></button>
+          <button><span class="icon-box green">📋</span><span>My Assessments</span></button>
+          <button><span class="icon-box lavender">🗓</span><span>My Calendar</span></button>
         </div>
-      </div>
+      </article>
 
-      <div class="photo-card">
-        <div class="photo-placeholder">
-          <span>Classroom Photo</span>
-          <small>Add your classroom picture here</small>
+      <article class="photo-card">
+        <div class="classroom-photo">
+          <div>
+            <strong>Classroom Photo</strong>
+            <span>Replace this placeholder with your classroom image</span>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <div class="classroom-card">
-        <h3>Mrs. Parrish’s Classroom ♡</h3>
-        <div id="classroomLinks"></div>
-        <button class="gallery-btn">📷 View Photo Gallery</button>
-      </div>
+      <article class="classroom-card">
+        <div class="card-header">
+          <h3>Mrs. Parrish’s<br>Classroom</h3>
+          <span>♡</span>
+        </div>
+        <div id="classroomLinks" class="classroom-links"></div>
+        <button class="gallery-button">📷 View Photo Gallery</button>
+      </article>
     </section>
 
     <section class="middle-grid">
-      <div class="panel">
+      <article class="panel schedule-panel">
         <div class="panel-title">
           <h3>📅 Today at a Glance</h3>
           <span id="todayDate"></span>
+          <span class="heart-mark">♡</span>
         </div>
-        <div id="schedule"></div>
-        <button class="wide-btn">📅 View Full Schedule</button>
-      </div>
+        <div id="scheduleList"></div>
+        <button class="wide-button">📅 View Full Schedule</button>
+      </article>
 
-      <div class="panel">
+      <article class="panel shortcuts-panel">
         <h3>🔗 Teacher Shortcuts</h3>
-        <div id="shortcuts" class="shortcut-grid"></div>
+        <div id="shortcutGrid" class="shortcut-grid"></div>
 
         <div class="important-links">
           <h3>🔗 Important Links</h3>
-          <p>Champion Schools Teacher Resources ↗</p>
-          <p>Our Grade Level Google Drive ↗</p>
-          <p>School Website ↗</p>
-          <p>District Portal ↗</p>
-          <div class="script-note">All links open in a new tab ↗</div>
+          <div id="importantLinks"></div>
+          <p class="script-note">All links open in a new tab ↗</p>
         </div>
-      </div>
+      </article>
 
-      <div class="panel resources-panel">
+      <article class="panel resources-panel">
         <h3>📚 Curriculum Resources</h3>
-        <div id="curriculum" class="curriculum-grid"></div>
-        <button class="link-btn">All Curriculum Resources ↗</button>
-      </div>
+        <div id="curriculumGrid" class="curriculum-grid"></div>
+        <button class="link-button">All Curriculum Resources ↗</button>
+      </article>
     </section>
 
     <section class="bottom-grid" id="lowerCards"></section>
