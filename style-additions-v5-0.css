@@ -1,0 +1,156 @@
+
+/* Version 5.0 Launch Candidate & Installation Center */
+.launch-candidate-open{overflow:hidden}
+.launch-candidate-button{
+  width:100%;
+  margin:8px 0 4px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border:1px solid var(--line,#f1d7d7);
+  background:linear-gradient(135deg,#fff,#fff4dc);
+  color:var(--ink,#1e1820);
+  border-radius:11px;
+  padding:10px 12px;
+}
+.launch-candidate-button>span{
+  width:24px;height:24px;display:grid;place-items:center;border-radius:50%;
+  background:#fff0ce;color:#8c5b00;font-weight:900
+}
+.launch-candidate-button strong{margin-right:auto}
+.launch-candidate-button small{color:#6f636b}
+.launch-candidate-overlay{
+  display:none;position:fixed;inset:0;z-index:23000;padding:2vh 16px;
+  background:rgba(41,25,45,.52);backdrop-filter:blur(9px)
+}
+.launch-candidate-overlay.open{display:block}
+.launch-candidate-dialog{
+  width:min(1100px,100%);max-height:96vh;margin:auto;overflow:auto;
+  background:#fffaf8;border:1px solid #f1d7d7;border-radius:24px;
+  box-shadow:0 32px 100px rgba(50,20,35,.32)
+}
+.launch-candidate-header{
+  display:flex;justify-content:space-between;gap:18px;padding:23px;
+  background:linear-gradient(135deg,#fff,#fff1f2);border-bottom:1px solid #f1d7d7
+}
+.launch-candidate-header h2{margin:4px 0 6px;font-size:32px}
+.launch-candidate-header p:last-child{margin:0;color:#6f636b}
+#closeLaunchCandidate{
+  width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;
+  border:0;border-radius:50%;background:#fff;color:#a52b44;font-size:28px
+}
+.launch-candidate-hero{
+  margin:16px 22px;display:grid;grid-template-columns:auto 1fr auto;
+  gap:14px;align-items:center;padding:16px;border-radius:17px;
+  background:linear-gradient(135deg,#fff1f2,#fff8e8);border:1px solid #f1d7d7
+}
+.launch-candidate-logo{
+  width:62px;height:62px;display:grid;place-items:center;border-radius:18px;
+  background:#ffcfd2;color:#9e2942;font-size:20px;font-weight:900;letter-spacing:.05em
+}
+.launch-candidate-hero strong{display:block;font-size:20px}
+.launch-candidate-hero span{display:block;margin-top:4px;color:#6f636b}
+.launch-candidate-hero button,.launch-primary-action{
+  border:0;border-radius:10px;background:#c4314d;color:#fff;padding:11px 15px;font-weight:800
+}
+.launch-candidate-tabs{
+  display:flex;flex-wrap:wrap;gap:8px;margin:0 22px 14px
+}
+.launch-candidate-tabs button{
+  border:1px solid #f1d7d7;background:#fff;border-radius:999px;padding:9px 13px;font-weight:800
+}
+.launch-candidate-tabs button.active{background:#ffcfd2;color:#a52b44}
+.launch-tab-panel.hidden{display:none}
+.launch-candidate-section{
+  margin:14px 22px;padding:18px;background:#fff;border:1px solid #f1d7d7;border-radius:17px
+}
+.launch-candidate-section h3{margin-top:0}
+.launch-setup-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:9px
+}
+.launch-setup-grid label{
+  display:flex;gap:9px;align-items:flex-start;padding:11px;border-radius:11px;background:#fff7f5
+}
+.launch-setup-grid label:has(input:checked){opacity:.68;text-decoration:line-through}
+.launch-order{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:10px
+}
+.launch-order article{padding:13px;border-radius:13px;background:#fff7f5}
+.launch-order b{
+  width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:#ffdfe3;color:#a52b44
+}
+.launch-order strong,.launch-order span{display:block;margin-top:7px}
+.launch-order span{color:#6f636b;font-size:13px}
+.install-status-card{
+  display:flex;gap:12px;align-items:center;padding:14px;border-radius:14px;background:#fff1df
+}
+.install-status-card.installed{background:#e9f4e2}
+.install-status-card>span{
+  width:42px;height:42px;display:grid;place-items:center;border-radius:50%;
+  background:#fff;color:#a52b44;font-size:24px;font-weight:900
+}
+.install-status-card strong{display:block;font-size:18px}
+.install-status-card p{margin:4px 0 0;color:#6f636b}
+.installation-steps{padding-left:25px}
+.installation-steps li{padding:7px 0;line-height:1.45}
+.launch-after-install{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:9px
+}
+.launch-after-install p{margin:0;padding:12px;border-radius:11px;background:#fff7f5}
+.launch-feature-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px
+}
+.launch-feature-grid article{
+  display:flex;gap:10px;padding:12px;border-radius:12px;background:#fff7f5
+}
+.launch-feature-grid article>span{
+  width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;border-radius:50%;
+  background:#e9f4e2;color:#356b2f;font-weight:900
+}
+.launch-feature-grid strong{display:block}
+.launch-feature-grid p{margin:4px 0 0;color:#6f636b;font-size:13px}
+.launch-readiness-score{
+  display:flex;align-items:end;gap:10px;margin-bottom:14px
+}
+.launch-readiness-score strong{font-size:38px;color:#c4314d}
+.launch-readiness-score span{padding-bottom:6px;color:#6f636b;font-weight:700}
+.launch-readiness-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px
+}
+.launch-readiness-grid article{
+  display:grid;grid-template-columns:auto 1fr;gap:3px 9px;padding:12px;border-radius:12px;background:#fff7f5
+}
+.launch-readiness-grid article>span{
+  grid-row:1/3;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;font-weight:900
+}
+.launch-readiness-grid .ready>span{background:#e9f4e2;color:#356b2f}
+.launch-readiness-grid .needs-attention>span{background:#fff1df;color:#8c4a00}
+.launch-readiness-grid small{color:#6f636b}
+.launch-readiness-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.launch-readiness-actions button{
+  border:0;border-radius:9px;background:#ffcfd2;color:#a52b44;padding:9px 12px;font-weight:800
+}
+.launch-candidate-footer{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:14px 22px 20px;color:#6f636b;font-size:12px;font-weight:700
+}
+.launch-candidate-footer>div{display:flex;flex-wrap:wrap;gap:8px}
+.launch-candidate-footer button{
+  border:0;border-radius:9px;padding:10px 13px;font-weight:800;background:#fff1f2;color:#a52b44
+}
+.launch-candidate-footer #openMyClassroom{background:#c4314d;color:#fff}
+@media(max-width:850px){
+  .launch-order{grid-template-columns:1fr 1fr}
+  .launch-candidate-hero{grid-template-columns:auto 1fr}
+  .launch-candidate-hero button{grid-column:1/3}
+}
+@media(max-width:600px){
+  .launch-candidate-overlay{padding:0}
+  .launch-candidate-dialog{min-height:100vh;max-height:100vh;border-radius:0}
+  .launch-candidate-header h2{font-size:26px}
+  .launch-order,.launch-after-install{grid-template-columns:1fr}
+  .launch-candidate-footer{align-items:flex-start;flex-direction:column}
+}
+@media print{
+  .launch-candidate-button,.launch-candidate-overlay{display:none!important}
+}
