@@ -1,29 +1,33 @@
 # TeachingHappensHere
 
-## Version 4.5 - Parent Communication Hub
+## Version 4.6 — Saved Progress & Personalization Engine
 
-Patch files:
-- communication-hub.json
-- communication-hub-viewer.js
-- style-additions-v4-5.css
-- service-worker.js
-- README.md
+### Upload/add
 
-### Add this script to index.html
+- `saved-progress.js`
+- `style-additions-v4-6.css`
+- `service-worker.js`
+- `README.md`
 
-Place it after the existing resource and student viewer scripts:
+### Add this script to `index.html`
 
-<script src="communication-hub-viewer.js"></script>
+Place it after the other viewer scripts and immediately before `</body>`:
+
+```html
+<script src="saved-progress.js"></script>
+```
 
 ### Features
 
-- Parent message templates
-- Class Dojo-ready messages
-- Academic updates
-- Behavior follow-up template
-- Attendance reminders
-- Intervention updates
-- Conference notes
-- Weekly newsletter builder
-- Parent contact log structure
-- Quick-copy messages
+- Saves checklist completion on the current device
+- Saves lesson reflections
+- Saves communication drafts
+- Saves student notes
+- Remembers selected lesson, workspace lesson, classroom system, launch day, and Teach My Day block
+- Adds a Save Now button
+- Adds a Reset Saved Progress control
+- Uses browser local storage; no student information is uploaded to a server
+
+### Privacy note
+
+This version saves information only in the browser on the device being used. Avoid entering sensitive student information on shared or unsecured devices.

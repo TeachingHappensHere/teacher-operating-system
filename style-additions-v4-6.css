@@ -1,0 +1,64 @@
+
+/* Version 4.6 Saved Progress & Personalization */
+.saved-progress-toolbar{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px;
+  background:rgba(255,255,255,.96);
+  border:1px solid var(--line,#f1d7d7);
+  border-radius:14px;
+  box-shadow:0 12px 32px rgba(90,45,60,.18);
+  backdrop-filter:blur(10px);
+}
+.saved-progress-toolbar > div{
+  display:grid;
+  min-width:110px;
+}
+.saved-progress-toolbar strong{
+  font-size:13px;
+  color:#c4314d;
+}
+.saved-progress-toolbar span{
+  font-size:12px;
+  color:#6f636b;
+}
+.saved-progress-toolbar button{
+  border:0;
+  border-radius:9px;
+  padding:8px 10px;
+  font-weight:700;
+  background:#ffcfd2;
+  color:#a52b44;
+}
+.saved-progress-toolbar #resetSavedProgress{
+  background:#fff1f2;
+}
+.saved-progress-toolbar input:checked + span,
+.teach-check:has(input:checked),
+.launch-check:has(input:checked),
+.print-item:has(input:checked){
+  opacity:.7;
+}
+.teach-check:has(input:checked),
+.launch-check:has(input:checked){
+  text-decoration:line-through;
+}
+@media(max-width:700px){
+  .saved-progress-toolbar{
+    right:8px;
+    bottom:8px;
+    left:8px;
+    justify-content:flex-end;
+  }
+  .saved-progress-toolbar > div{
+    margin-right:auto;
+  }
+}
+@media print{
+  .saved-progress-toolbar{display:none!important}
+}
