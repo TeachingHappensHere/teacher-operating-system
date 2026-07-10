@@ -1,0 +1,10 @@
+
+/* Version 4.2 Live Teaching Workspace additions */
+.workspace-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.classroom-mode .sidebar{display:none}
+.classroom-mode .app-shell{grid-template-columns:1fr}
+.classroom-mode .main-content{padding:22px}
+.classroom-mode #workspace .lesson-list{display:none}
+.classroom-mode #workspace .lesson-layout{grid-template-columns:1fr}
+.classroom-mode #workspace h2{font-size:44px}
+.classroom-mode #workspace .system-section{font-size:20px}

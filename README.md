@@ -1,28 +1,24 @@
 # TeachingHappensHere
 
-## Version 4.1 - Resource Attachment Engine
+## Version 4.2 - Live Teaching Workspace
 
 Patch files:
-- resource-files.json
+- index.html
+- app.js
+- service-worker.js
+- teaching-workspace.json
+- style-additions-v4-2.css
 - README.md
 
-This version adds the master resource attachment map.
-
-It creates upload-ready slots for:
-- Open Court Unit 1 Lesson 1 files
-- Open Court Unit 1 Lesson 6 files
-- Writing curriculum
-- Science workbook pages
-- DIBELS materials
-- Classroom systems printables
-- Favorite projects
-
-### Recommended GitHub folders
-
-- resources/open-court/unit-1/lesson-1
-- resources/open-court/unit-1/lesson-6
-- resources/writing
-- resources/science
-- resources/dibels
-- resources/classroom-systems
-- resources/projects
+Adds:
+- Live Teaching Workspace page
+- One-screen lesson teaching view
+- Objective / I Do / We Do / You Do
+- Materials checklist
+- Teacher Brain reminders
+- Small-group recommendations
+- Assessment reminders
+- Print checklist
+- Exit ticket
+- Reflection box
+- Classroom Mode toggle

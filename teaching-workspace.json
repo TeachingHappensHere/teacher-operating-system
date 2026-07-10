@@ -1,0 +1,101 @@
+{
+  "version": "4.2 Live Teaching Workspace",
+  "defaultLessonId": "u1l6",
+  "workspaceSections": [
+    "Current Lesson",
+    "Objective",
+    "I Do",
+    "We Do",
+    "You Do",
+    "Vocabulary",
+    "Phonics",
+    "Grammar",
+    "Writing Connection",
+    "Teacher Brain",
+    "Small Groups",
+    "Assessment",
+    "Print Checklist",
+    "Materials",
+    "Exit Ticket",
+    "Reflection"
+  ],
+  "lessons": [
+    {
+      "id": "u1l1",
+      "lesson": "Lesson 1",
+      "title": "The Mice Who Lived in a Shoe",
+      "objective": "Students will read and discuss the story, use vocabulary in context, practice target phonics patterns, identify common and proper nouns, and answer cause-and-effect questions.",
+      "iDo": "Model vocabulary thinking, phonics decoding, and a cause-and-effect example from the story.",
+      "weDo": "Read a section together, identify one cause and effect, and practice using vocabulary orally.",
+      "youDo": "Students complete the connected skills practice and respond to a cause-and-effect prompt.",
+      "exitTicket": "Write one cause and one effect from today's reading.",
+      "materials": [
+        "Teacher Edition",
+        "Vocabulary cards",
+        "Skills Practice",
+        "Cause and Effect organizer",
+        "Pencils"
+      ],
+      "smallGroups": [
+        "Red: digraph review and blending",
+        "Yellow: vocabulary and rereading",
+        "Blue: fluency with expression",
+        "Green: text evidence extension"
+      ],
+      "assessment": [
+        "Phonics",
+        "Vocabulary",
+        "Comprehension",
+        "GUM"
+      ],
+      "printChecklist": [
+        "Skills Practice Packet",
+        "Phonics Assessment",
+        "Vocabulary Assessment",
+        "Comprehension Assessment",
+        "Cause and Effect Organizer"
+      ]
+    },
+    {
+      "id": "u1l6",
+      "lesson": "Lesson 6",
+      "title": "Ellie's Long Walk",
+      "objective": "Students will identify main idea and details, practice fluency, use vocabulary in context, and connect text evidence to comprehension.",
+      "iDo": "Model how to find the main idea by asking what the section is mostly about.",
+      "weDo": "Read a short passage together and choose details that support the main idea.",
+      "youDo": "Students complete the main idea and details practice pages and fluency reflection.",
+      "exitTicket": "Write the main idea of the passage and two supporting details.",
+      "materials": [
+        "Fluency pages 71\u201372",
+        "Vocabulary pages 73\u201374",
+        "Main Idea pages 75\u201376",
+        "Vocabulary cards",
+        "Highlighters"
+      ],
+      "smallGroups": [
+        "Red: vocabulary visuals and decoding support",
+        "Yellow: repeated reading",
+        "Blue: fluency and expression",
+        "Green: cite details from text"
+      ],
+      "assessment": [
+        "Vocabulary Assessment",
+        "Main Idea and Details",
+        "Fluency Reflection"
+      ],
+      "printChecklist": [
+        "Fluency pp. 71\u201372",
+        "Vocabulary pp. 73\u201374",
+        "Main Idea & Details pp. 75\u201376",
+        "Vocabulary Assessment"
+      ]
+    }
+  ],
+  "teacherMoves": [
+    "Use partner talk before written responses.",
+    "Pause for vocabulary visuals before reading.",
+    "Ask students to cite details from the text.",
+    "Keep I Do / We Do / You Do visible.",
+    "End with a quick reflection note for Future Jennifer."
+  ]
+}
