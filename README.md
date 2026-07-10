@@ -1,15 +1,21 @@
-# Version 3.7 - Planner & Calendar Engine
+# TeachingHappensHere
 
-Replace:
+## Version 4.0 - Complete Lesson Builder
+
+Patch files:
+- index.html
 - app.js
-- planner-engine.json
 - service-worker.js
+- lesson-builder.json
 - README.md
 
-Features:
-- Day / Week / Month planner
-- Morning checklist
-- Dismissal checklist
-- Weekly priorities
-- Upcoming events
-- Foundation for automatic lesson scheduling
+Adds:
+- Complete Lesson Builder page
+- Open Court lesson build workflow
+- Build steps checklist
+- Lesson template structure
+- Teacher Brain pull-ins
+- Small group support pull-ins
+- Assessment pull-ins
+- Print list pull-ins
+- Send to Teach My Day button

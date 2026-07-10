@@ -1,0 +1,88 @@
+{
+  "version": "4.0 Complete Lesson Builder",
+  "templates": [
+    {
+      "id": "open-court",
+      "title": "Open Court Lesson Builder",
+      "sections": [
+        "Lesson Overview",
+        "Objective",
+        "Standards",
+        "Vocabulary",
+        "Phonics",
+        "Reading Skill",
+        "Grammar / GUM",
+        "Writing Connection",
+        "Teacher Brain",
+        "Small Groups",
+        "Assessment",
+        "Print Center",
+        "Teach My Day"
+      ]
+    },
+    {
+      "id": "science",
+      "title": "Science Lesson Builder",
+      "sections": [
+        "Lesson Topic",
+        "Vocabulary",
+        "Materials",
+        "Workbook Pages",
+        "Investigation",
+        "Video / Safe Link",
+        "Exit Ticket",
+        "Teacher Brain"
+      ]
+    },
+    {
+      "id": "writing",
+      "title": "Writing Lesson Builder",
+      "sections": [
+        "Writing Type",
+        "Mini Lesson",
+        "Model",
+        "Guided Practice",
+        "Independent Writing",
+        "Conference Notes",
+        "Rubric",
+        "Teacher Brain"
+      ]
+    }
+  ],
+  "openCourtBuild": {
+    "defaultLesson": "u1l1",
+    "buildSteps": [
+      "Choose Open Court lesson",
+      "Review lesson focus",
+      "Confirm vocabulary and phonics",
+      "Add Teacher Brain reminders",
+      "Select small-group supports",
+      "Choose assessments",
+      "Generate print list",
+      "Send to Teach My Day"
+    ],
+    "teacherReminder": "Build the lesson around what students need, not just what the curriculum lists."
+  },
+  "smallGroupPullIns": [
+    "Red Group: UFLI + blending + decodable support",
+    "Yellow Group: fluency reread + vocabulary support",
+    "Blue Group: expression + comprehension",
+    "Green Group: text evidence + extension"
+  ],
+  "assessmentPullIns": [
+    "Phonics",
+    "Vocabulary",
+    "Comprehension",
+    "GUM",
+    "DIBELS connection",
+    "Reteach flag"
+  ],
+  "printPullIns": [
+    "Skills Practice",
+    "Vocabulary page",
+    "Graphic organizer",
+    "Assessment",
+    "Small-group support page",
+    "Exit ticket"
+  ]
+}
