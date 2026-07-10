@@ -1,25 +1,12 @@
-# TeachingHappensHere
+# Version 4.4 Student Dashboard
 
-## Version 4.3 - Resource Library Viewer
-
-Patch files:
-- resource-files-viewer.js
-- style-additions-v4-3.css
+Files:
+- student-dashboard.json
+- student-dashboard-viewer.js
+- style-additions-v4-4.css
 - service-worker.js
 - README.md
 
-### Important one-line HTML update
+Add this line after the other viewer scripts:
 
-In index.html, add this line right after the existing app.js script:
-
-<script src="resource-files-viewer.js"></script>
-
-This lets the Resources page display the Resource Attachment Engine from resource-files.json.
-
-Adds:
-- Resource Library Viewer
-- File status dashboard
-- Folder structure display
-- Resource search
-- Upload status cards
-- Connection chips
+<script src="student-dashboard-viewer.js"></script>
