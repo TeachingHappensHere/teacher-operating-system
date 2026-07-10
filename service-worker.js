@@ -1,34 +1,15 @@
 
-const CACHE_NAME = "teaching-happens-here-v47-universal-search";
+const CACHE_NAME = "teaching-happens-here-v48-app-health";
 const ASSETS = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./style-additions-v4-2.css",
-  "./style-additions-v4-3.css",
-  "./style-additions-v4-4.css",
-  "./style-additions-v4-5.css",
-  "./style-additions-v4-6.css",
-  "./style-additions-v4-7.css",
-  "./app.js",
-  "./resource-files-viewer.js",
-  "./student-dashboard-viewer.js",
-  "./communication-hub-viewer.js",
-  "./saved-progress.js",
-  "./universal-search.js",
-  "./manifest.json"
+  "./","./index.html","./style.css","./app.js","./manifest.json",
+  "./saved-progress.js","./universal-search.js","./app-health.js",
+  "./style-additions-v4-6.css","./style-additions-v4-7.css","./style-additions-v4-8.css"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache =>
-      Promise.all(
-        ASSETS.map(asset =>
-          cache.add(asset).catch(error => {
-            console.warn("Optional asset was not cached:", asset, error);
-          })
-        )
-      )
+      Promise.all(ASSETS.map(asset => cache.add(asset).catch(() => null)))
     )
   );
   self.skipWaiting();
@@ -37,11 +18,7 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(
-        keys.map(key =>
-          key !== CACHE_NAME ? caches.delete(key) : Promise.resolve()
-        )
-      )
+      Promise.all(keys.map(key => key !== CACHE_NAME ? caches.delete(key) : null))
     )
   );
   self.clients.claim();
@@ -49,7 +26,6 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
-
   event.respondWith(
     fetch(event.request)
       .then(response => {

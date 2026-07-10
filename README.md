@@ -1,35 +1,30 @@
 # TeachingHappensHere
 
-## Version 4.7 — Universal Search & Command Center
+## Version 4.8 — App Health & Launch Readiness Center
 
-### Upload/add
+Upload/add:
 
-- `universal-search.js`
-- `style-additions-v4-7.css`
+- `app-health.js`
+- `style-additions-v4-8.css`
 - `service-worker.js`
 - `README.md`
 
-### Add this script to `index.html`
-
-Place it after `saved-progress.js` and immediately before `</body>`:
+Add this line to `index.html` after `universal-search.js` and before `</body>`:
 
 ```html
-<script src="universal-search.js"></script>
+<script src="app-health.js"></script>
 ```
 
-### Features
+Commit message:
 
-- Searches lessons, vocabulary, phonics, and reading skills
-- Searches classroom routines and anchor-chart content
-- Searches Teacher Brain notes
-- Searches resources and attachment status
-- Searches assessments and reteach areas
-- Searches small groups and intervention tools
-- Searches communication templates
-- Searches Teach My Day, Classroom Launch, and planner items
-- Opens the correct operating-system section from a search result
-- Keyboard shortcut: `Ctrl + K` on Windows or `Command + K` on Mac/iPad keyboard
+`Version 4.8 - App Health and Launch Readiness`
 
-### Notes
+Features:
 
-The search engine reads the JSON files already in the repository. Missing optional files are ignored instead of breaking the application.
+- Checks required and optional project files
+- Validates JSON files
+- Checks HTTPS, manifest, service worker, Saved Progress, and Universal Search
+- Provides a complete launch checklist
+- Clears old caches without deleting saved browser notes
+- Copies a troubleshooting report
+- Shortcut: `Ctrl + Shift + H` or `Command + Shift + H`
