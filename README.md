@@ -1,22 +1,23 @@
 # TeachingHappensHere
 
-## Version 3.0 - Teach My Day
+## Version 3.1 - Classroom Systems Content Build
 
 Patch files:
-- index.html
-- style.css
-- app.js
+- classroom-systems.json
 - service-worker.js
-- teach-my-day.json
 - README.md
 
-Adds:
-- Teach My Day page
-- Daily guided teaching timeline
-- Current block / next block status
-- Start Teaching button
-- Materials checklists
-- Print / prep reminders
-- Teacher Brain reminders by block
-- End-of-day reflection prompts
-- Print Center now includes Teach My Day print needs
+This content build deepens the operating system with complete classroom procedure modules.
+
+Each system now includes:
+- Objective
+- Materials
+- Printable anchor chart language
+- I Do
+- We Do
+- You Do
+- Teacher language
+- What to praise
+- Common mistakes
+- Reteach moments
+- Micayla notes
