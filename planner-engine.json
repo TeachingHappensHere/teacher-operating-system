@@ -1,0 +1,54 @@
+{
+  "version": "3.7 Planner & Calendar Engine",
+  "views": [
+    "Day",
+    "Week",
+    "Month"
+  ],
+  "sections": [
+    {
+      "title": "Today",
+      "items": [
+        "Morning Meeting",
+        "Reading Block",
+        "MOWR",
+        "Math",
+        "Writing",
+        "Science",
+        "Social Studies"
+      ]
+    },
+    {
+      "title": "Weekly Priorities",
+      "items": [
+        "Prepare Open Court materials",
+        "Print assessments",
+        "Update DIBELS notes",
+        "Contact families"
+      ]
+    },
+    {
+      "title": "Upcoming Events",
+      "items": [
+        "Pillar Assembly",
+        "iDay",
+        "Benchmark Window",
+        "Parent Conferences"
+      ]
+    }
+  ],
+  "checklists": {
+    "Morning": [
+      "Open Teach My Day",
+      "Print needed pages",
+      "Open Lesson Engine",
+      "Review Small Groups"
+    ],
+    "Dismissal": [
+      "Prep tomorrow",
+      "Reflect",
+      "Charge devices",
+      "Reset classroom"
+    ]
+  }
+}

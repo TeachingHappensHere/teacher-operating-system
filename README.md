@@ -1,18 +1,15 @@
-# TeachingHappensHere
+# Version 3.7 - Planner & Calendar Engine
 
-## Version 3.6 - Assessments & Data Engine
-
-Patch files:
+Replace:
 - app.js
-- assessment-data.json
+- planner-engine.json
 - service-worker.js
 - README.md
 
-Adds:
-- Assessments & Data page content
-- DIBELS assessment structure
-- Open Court weekly assessments
-- Unit 1 assessment map
-- Data flags connected to small groups
-- Progress monitoring plan
-- Reteach watch areas
+Features:
+- Day / Week / Month planner
+- Morning checklist
+- Dismissal checklist
+- Weekly priorities
+- Upcoming events
+- Foundation for automatic lesson scheduling
