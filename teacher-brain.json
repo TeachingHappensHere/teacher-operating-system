@@ -1,0 +1,194 @@
+{
+  "version": "3.4 Teacher Brain Integration",
+  "sections": [
+    {
+      "id": "lesson-notes",
+      "title": "Lesson Notes",
+      "notes": [
+        {
+          "title": "Open Court packets matter",
+          "category": "Open Court",
+          "connectedTo": "All Open Court Lessons",
+          "note": "Open Court packets are valuable because they hit skills and topics students might not otherwise practice.",
+          "tags": [
+            "Open Court",
+            "skills practice",
+            "assessment",
+            "lesson planning"
+          ]
+        },
+        {
+          "title": "Preteach vocabulary",
+          "category": "Reading",
+          "connectedTo": "Lesson 1: The Mice Who Lived in a Shoe",
+          "note": "Teach vocabulary before reading so students are not stopped by unfamiliar words.",
+          "tags": [
+            "vocabulary",
+            "merchant",
+            "reading",
+            "Open Court"
+          ]
+        },
+        {
+          "title": "Merchant needs extra support",
+          "category": "Vocabulary",
+          "connectedTo": "Lesson 1",
+          "note": "Spend extra time on merchant because many students do not use that word in daily speech.",
+          "tags": [
+            "merchant",
+            "vocabulary",
+            "visual support"
+          ]
+        },
+        {
+          "title": "Lesson 6 fluency",
+          "category": "Fluency",
+          "connectedTo": "Lesson 6: Ellie's Long Walk",
+          "note": "Use the fluency checklist before reading A Trip. Have students listen for rate, accuracy, expression, and punctuation.",
+          "tags": [
+            "fluency",
+            "Ellie's Long Walk",
+            "A Trip"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "classroom-systems",
+      "title": "Classroom Systems Notes",
+      "notes": [
+        {
+          "title": "Routines save instruction",
+          "category": "Classroom Systems",
+          "connectedTo": "Classroom Launch Mode",
+          "note": "Teach fewer routines deeply rather than many routines quickly.",
+          "tags": [
+            "routines",
+            "first week",
+            "classroom launch"
+          ]
+        },
+        {
+          "title": "Line up practice matters",
+          "category": "Transitions",
+          "connectedTo": "How to Line Up",
+          "note": "If you spend ten minutes teaching line-up expectations, you save hours of transition time later.",
+          "tags": [
+            "line up",
+            "transitions",
+            "first week"
+          ]
+        },
+        {
+          "title": "Dismissal needs extra time",
+          "category": "Dismissal",
+          "connectedTo": "Dismissal Routine",
+          "note": "Start dismissal earlier than you think during the first week. Calm dismissal is taught.",
+          "tags": [
+            "dismissal",
+            "first week",
+            "end of day"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "favorite-projects",
+      "title": "Favorite Projects",
+      "notes": [
+        {
+          "title": "Habitats in a Shoebox",
+          "category": "Science Project",
+          "connectedTo": "Science / Habitats",
+          "note": "This is a yearly success. Students love it and admin praises the implementation.",
+          "tags": [
+            "habitats",
+            "shoebox",
+            "science",
+            "project"
+          ]
+        },
+        {
+          "title": "Volcano assignment",
+          "category": "Open Court / Science Connection",
+          "connectedTo": "Open Court Packet",
+          "note": "The volcano assignment works well because it covers topics students might not otherwise get from the main lesson.",
+          "tags": [
+            "volcano",
+            "science",
+            "Open Court",
+            "project"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "future-jennifer",
+      "title": "Future Jennifer",
+      "notes": [
+        {
+          "title": "Preview videos",
+          "category": "Technology",
+          "connectedTo": "Videos / Safe Links",
+          "note": "Preview videos before showing them to students.",
+          "tags": [
+            "videos",
+            "SafeShare",
+            "student safety"
+          ]
+        },
+        {
+          "title": "iDay planning",
+          "category": "Planning",
+          "connectedTo": "iDay Plans",
+          "note": "iDays need a different planning workflow with MobyMax and Beanstack.",
+          "tags": [
+            "iDay",
+            "MobyMax",
+            "Beanstack",
+            "planning"
+          ]
+        },
+        {
+          "title": "Connect Social Studies to Open Court",
+          "category": "Cross-Curricular",
+          "connectedTo": "Social Studies",
+          "note": "Social Studies lessons should connect to Open Court stories whenever possible.",
+          "tags": [
+            "social studies",
+            "Open Court",
+            "integration"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "micayla-notes",
+      "title": "Micayla Coaching Notes",
+      "notes": [
+        {
+          "title": "Model before expecting",
+          "category": "Co-Teaching",
+          "connectedTo": "Classroom Systems",
+          "note": "Do not assume students know routines. Model it, practice it, praise it, and repeat.",
+          "tags": [
+            "Micayla",
+            "procedures",
+            "modeling"
+          ]
+        },
+        {
+          "title": "Partner talk setup",
+          "category": "Discussion",
+          "connectedTo": "Partner Talk",
+          "note": "Assign Partner A and Partner B clearly or students lose time deciding.",
+          "tags": [
+            "Micayla",
+            "partner talk",
+            "discussion"
+          ]
+        }
+      ]
+    }
+  ]
+}

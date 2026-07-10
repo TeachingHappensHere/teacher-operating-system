@@ -1,19 +1,19 @@
 # TeachingHappensHere
 
-## Version 3.3 - Smart Print Center
+## Version 3.4 - Teacher Brain Integration
 
 Patch files:
 - app.js
-- print-center.json
+- teacher-brain.json
 - service-worker.js
 - README.md
 
 Adds:
-- Smart Print Center data file
-- Print Today section
-- Open Court Unit 1 printables
-- Classroom Launch printables
-- Copy counts
-- Status labels
-- Print checklist cards
-- Print Center connected to Teach My Day and Classroom Launch
+- Teacher Brain data file
+- Searchable Teacher Brain page
+- Connected notes inside Lesson Engine
+- Connected notes inside Classroom Systems
+- Connected notes inside Teach My Day
+- Connected notes inside Classroom Launch Mode
+- Future Jennifer notes
+- Micayla coaching notes
