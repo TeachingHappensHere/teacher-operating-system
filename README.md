@@ -1,12 +1,29 @@
-# Version 4.4 Student Dashboard
+# TeachingHappensHere
 
-Files:
-- student-dashboard.json
-- student-dashboard-viewer.js
-- style-additions-v4-4.css
+## Version 4.5 - Parent Communication Hub
+
+Patch files:
+- communication-hub.json
+- communication-hub-viewer.js
+- style-additions-v4-5.css
 - service-worker.js
 - README.md
 
-Add this line after the other viewer scripts:
+### Add this script to index.html
 
-<script src="student-dashboard-viewer.js"></script>
+Place it after the existing resource and student viewer scripts:
+
+<script src="communication-hub-viewer.js"></script>
+
+### Features
+
+- Parent message templates
+- Class Dojo-ready messages
+- Academic updates
+- Behavior follow-up template
+- Attendance reminders
+- Intervention updates
+- Conference notes
+- Weekly newsletter builder
+- Parent contact log structure
+- Quick-copy messages

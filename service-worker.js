@@ -1,1 +1,31 @@
-const CACHE_NAME='teaching-happens-here-v44-students';self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('fetch',e=>{});
+const CACHE_NAME='teaching-happens-here-v45-parent-communication';
+const ASSETS=[
+'./',
+'./index.html',
+'./style.css',
+'./style-additions-v4-2.css',
+'./style-additions-v4-3.css',
+'./style-additions-v4-4.css',
+'./style-additions-v4-5.css',
+'./app.js',
+'./resource-files-viewer.js',
+'./student-dashboard-viewer.js',
+'./communication-hub-viewer.js',
+'./communication-hub.json',
+'./manifest.json'
+];
+self.addEventListener('install',event=>{
+  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(ASSETS)));
+  self.skipWaiting();
+});
+self.addEventListener('activate',event=>{
+  event.waitUntil(
+    caches.keys().then(keys=>Promise.all(
+      keys.map(key=>key!==CACHE_NAME?caches.delete(key):null)
+    ))
+  );
+  self.clients.claim();
+});
+self.addEventListener('fetch',event=>{
+  event.respondWith(fetch(event.request).catch(()=>caches.match(event.request)));
+});
