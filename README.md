@@ -1,30 +1,38 @@
 # TeachingHappensHere
 
-## Version 4.8 — App Health & Launch Readiness Center
+## Version 4.9 — Backup, Export & Device Transfer Center
 
-Upload/add:
+### Upload/add
 
-- `app-health.js`
-- `style-additions-v4-8.css`
+- `backup-export.js`
+- `style-additions-v4-9.css`
 - `service-worker.js`
 - `README.md`
 
-Add this line to `index.html` after `universal-search.js` and before `</body>`:
+### Add this script to `index.html`
+
+Place it after `app-health.js` and immediately before `</body>`:
 
 ```html
-<script src="app-health.js"></script>
+<script src="backup-export.js"></script>
 ```
 
-Commit message:
+### Commit message
 
-`Version 4.8 - App Health and Launch Readiness`
+`Version 4.9 - Backup Export and Device Transfer`
 
-Features:
+### Features
 
-- Checks required and optional project files
-- Validates JSON files
-- Checks HTTPS, manifest, service worker, Saved Progress, and Universal Search
-- Provides a complete launch checklist
-- Clears old caches without deleting saved browser notes
-- Copies a troubleshooting report
-- Shortcut: `Ctrl + Shift + H` or `Command + Shift + H`
+- Downloads a full JSON backup of TeachingHappensHere browser data
+- Imports that backup on another computer, iPad, or browser
+- Preserves saved notes, drafts, checklists, and current selections
+- Downloads a readable status report without exposing full saved note content
+- Shows saved record counts and browser-storage size
+- Shows the current saved location in the operating system
+- Clears only saved progress or all app browser data
+- Does not delete or modify GitHub repository files
+- Shortcut: `Ctrl + Shift + B` or `Command + Shift + B`
+
+### Privacy
+
+The JSON backup may contain saved notes and drafts. Store it in a private location and do not share it publicly.

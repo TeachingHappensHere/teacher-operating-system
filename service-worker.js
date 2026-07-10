@@ -1,15 +1,27 @@
 
-const CACHE_NAME = "teaching-happens-here-v48-app-health";
+const CACHE_NAME = "teaching-happens-here-v49-backup-export";
 const ASSETS = [
-  "./","./index.html","./style.css","./app.js","./manifest.json",
-  "./saved-progress.js","./universal-search.js","./app-health.js",
-  "./style-additions-v4-6.css","./style-additions-v4-7.css","./style-additions-v4-8.css"
+  "./",
+  "./index.html",
+  "./style.css",
+  "./app.js",
+  "./manifest.json",
+  "./saved-progress.js",
+  "./universal-search.js",
+  "./app-health.js",
+  "./backup-export.js",
+  "./style-additions-v4-6.css",
+  "./style-additions-v4-7.css",
+  "./style-additions-v4-8.css",
+  "./style-additions-v4-9.css"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache =>
-      Promise.all(ASSETS.map(asset => cache.add(asset).catch(() => null)))
+      Promise.all(
+        ASSETS.map(asset => cache.add(asset).catch(() => null))
+      )
     )
   );
   self.skipWaiting();
@@ -18,7 +30,9 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.map(key => key !== CACHE_NAME ? caches.delete(key) : null))
+      Promise.all(
+        keys.map(key => key !== CACHE_NAME ? caches.delete(key) : null)
+      )
     )
   );
   self.clients.claim();
@@ -26,6 +40,7 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+
   event.respondWith(
     fetch(event.request)
       .then(response => {
