@@ -1,19 +1,18 @@
 # TeachingHappensHere
 
-## Version 3.5 - Small Groups + Intervention Engine
+## Version 3.6 - Assessments & Data Engine
 
 Patch files:
 - app.js
-- small-groups.json
+- assessment-data.json
 - service-worker.js
 - README.md
 
 Adds:
-- Red / Yellow / Blue / Green group structure
-- MOWR daily flow
-- Center rotation structure
-- DIBELS connections
-- UFLI intervention tools
-- Teacher table priorities
-- Print/prep items by group
-- Intervention page content
+- Assessments & Data page content
+- DIBELS assessment structure
+- Open Court weekly assessments
+- Unit 1 assessment map
+- Data flags connected to small groups
+- Progress monitoring plan
+- Reteach watch areas
