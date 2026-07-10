@@ -1,24 +1,25 @@
 # TeachingHappensHere
 
-## Version 4.2 - Live Teaching Workspace
+## Version 4.3 - Resource Library Viewer
 
 Patch files:
-- index.html
-- app.js
+- resource-files-viewer.js
+- style-additions-v4-3.css
 - service-worker.js
-- teaching-workspace.json
-- style-additions-v4-2.css
 - README.md
 
+### Important one-line HTML update
+
+In index.html, add this line right after the existing app.js script:
+
+<script src="resource-files-viewer.js"></script>
+
+This lets the Resources page display the Resource Attachment Engine from resource-files.json.
+
 Adds:
-- Live Teaching Workspace page
-- One-screen lesson teaching view
-- Objective / I Do / We Do / You Do
-- Materials checklist
-- Teacher Brain reminders
-- Small-group recommendations
-- Assessment reminders
-- Print checklist
-- Exit ticket
-- Reflection box
-- Classroom Mode toggle
+- Resource Library Viewer
+- File status dashboard
+- Folder structure display
+- Resource search
+- Upload status cards
+- Connection chips
