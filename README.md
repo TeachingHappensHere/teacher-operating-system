@@ -1,19 +1,19 @@
 # TeachingHappensHere
 
-## Version 3.4 - Teacher Brain Integration
+## Version 3.5 - Small Groups + Intervention Engine
 
 Patch files:
 - app.js
-- teacher-brain.json
+- small-groups.json
 - service-worker.js
 - README.md
 
 Adds:
-- Teacher Brain data file
-- Searchable Teacher Brain page
-- Connected notes inside Lesson Engine
-- Connected notes inside Classroom Systems
-- Connected notes inside Teach My Day
-- Connected notes inside Classroom Launch Mode
-- Future Jennifer notes
-- Micayla coaching notes
+- Red / Yellow / Blue / Green group structure
+- MOWR daily flow
+- Center rotation structure
+- DIBELS connections
+- UFLI intervention tools
+- Teacher table priorities
+- Print/prep items by group
+- Intervention page content
