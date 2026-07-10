@@ -1,20 +1,19 @@
 # TeachingHappensHere
 
-## Version 3.2 - Classroom Launch Mode
+## Version 3.3 - Smart Print Center
 
 Patch files:
-- index.html
-- style.css
 - app.js
+- print-center.json
 - service-worker.js
-- classroom-launch.json
 - README.md
 
 Adds:
-- Classroom Launch Mode
-- First-week guided procedure teaching
-- Daily launch sequence
-- Launch checklist
-- Coach notes
-- Teach / Practice / Complete flow
-- Print Center integration for launch prep
+- Smart Print Center data file
+- Print Today section
+- Open Court Unit 1 printables
+- Classroom Launch printables
+- Copy counts
+- Status labels
+- Print checklist cards
+- Print Center connected to Teach My Day and Classroom Launch
