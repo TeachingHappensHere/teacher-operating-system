@@ -1,23 +1,20 @@
 # TeachingHappensHere
 
-## Version 3.1 - Classroom Systems Content Build
+## Version 3.2 - Classroom Launch Mode
 
 Patch files:
-- classroom-systems.json
+- index.html
+- style.css
+- app.js
 - service-worker.js
+- classroom-launch.json
 - README.md
 
-This content build deepens the operating system with complete classroom procedure modules.
-
-Each system now includes:
-- Objective
-- Materials
-- Printable anchor chart language
-- I Do
-- We Do
-- You Do
-- Teacher language
-- What to praise
-- Common mistakes
-- Reteach moments
-- Micayla notes
+Adds:
+- Classroom Launch Mode
+- First-week guided procedure teaching
+- Daily launch sequence
+- Launch checklist
+- Coach notes
+- Teach / Practice / Complete flow
+- Print Center integration for launch prep

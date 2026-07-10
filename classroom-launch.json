@@ -1,0 +1,92 @@
+{
+  "version": "3.2 Classroom Launch Mode",
+  "title": "Classroom Launch Mode",
+  "subtitle": "First-week coaching for routines, procedures, and classroom culture.",
+  "teacher": "Mrs. Parrish",
+  "launchDays": [
+    {
+      "day": "Day 1",
+      "focus": "Enter, Belong, Learn the Room",
+      "goal": "Students learn how to enter the classroom, unpack, gather on the carpet, and begin building classroom community.",
+      "systems": [
+        "Entering the Classroom",
+        "Morning Routine",
+        "How to Sit on the Carpet",
+        "Restroom Signal",
+        "How to Line Up",
+        "Dismissal Routine"
+      ],
+      "teacherBrain": "Day 1 is not about rushing curriculum. It is about teaching the room."
+    },
+    {
+      "day": "Day 2",
+      "focus": "Practice Transitions",
+      "goal": "Students practice moving safely and respectfully through classroom and school spaces.",
+      "systems": [
+        "How to Line Up",
+        "Hallway Expectations",
+        "Recess Expectations",
+        "Voice Levels",
+        "Pencil Procedures"
+      ],
+      "teacherBrain": "Practice transitions before you need them. Do not wait for chaos to teach expectations."
+    },
+    {
+      "day": "Day 3",
+      "focus": "Build Independence",
+      "goal": "Students begin using routines with fewer teacher reminders.",
+      "systems": [
+        "Morning Routine",
+        "Classroom Jobs",
+        "Partner Talk",
+        "Pencil Procedures",
+        "Restroom Signal"
+      ],
+      "teacherBrain": "Praise independence out loud. Students repeat what gets noticed."
+    },
+    {
+      "day": "Day 4",
+      "focus": "Academic Routines",
+      "goal": "Students practice listening, speaking, partner work, and materials routines during short lessons.",
+      "systems": [
+        "Partner Talk",
+        "Voice Levels",
+        "How to Sit on the Carpet",
+        "Pencil Procedures"
+      ],
+      "teacherBrain": "Academic success depends on procedure success."
+    },
+    {
+      "day": "Day 5",
+      "focus": "Review, Celebrate, Reteach",
+      "goal": "Students review routines, celebrate growth, and identify what still needs practice.",
+      "systems": [
+        "Entering the Classroom",
+        "How to Line Up",
+        "Hallway Expectations",
+        "Recess Expectations",
+        "Dismissal Routine"
+      ],
+      "teacherBrain": "End Week 1 by celebrating routines that are becoming habits."
+    }
+  ],
+  "launchChecklist": [
+    "Print beginning-of-year anchor charts",
+    "Post morning routine visual",
+    "Prepare folder turn-in location",
+    "Prepare pencil system",
+    "Prepare restroom pass",
+    "Choose classroom jobs",
+    "Plan first morning meeting prompt",
+    "Practice line-up route",
+    "Review dismissal procedures",
+    "Prepare Micayla notes"
+  ],
+  "coachNotes": [
+    "Teach fewer routines deeply rather than many routines quickly.",
+    "Model incorrectly, let students notice, then model correctly.",
+    "Practice routines when students are calm.",
+    "Narrate the behavior you want repeated.",
+    "Do not treat reteaching as failure. Reteaching is part of classroom culture."
+  ]
+}
