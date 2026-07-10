@@ -1,63 +1,18 @@
-<!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mrs. Parrish’s Scholar System</title>
-<meta name="theme-color" content="#ffd7dc">
-<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css">
-</head><body>
-<div class="app-shell">
-<aside class="sidebar">
-<div class="brand"><div class="brand-icon">📝</div><div><h1>Mrs. Parrish’s</h1><p>SCHOLAR SYSTEM ♡</p></div></div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mrs. Parrish’s Scholar System</title><meta name="theme-color" content="#ffd7dc"><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css"></head><body>
+<div class="app-shell"><aside class="sidebar"><div class="brand"><div class="brand-icon">📝</div><div><h1>Mrs. Parrish’s</h1><p>SCHOLAR SYSTEM ♡</p></div></div>
 <nav class="side-nav">
-<button class="active" data-page="dashboard">⌂ Home Dashboard</button>
-<button data-page="lessons">▭ Lesson Plans</button>
-<button data-page="smallgroups">♧ Small Groups</button>
-<button data-page="intervention">♙ Intervention</button>
-<button data-page="assessments">▥ Assessments & Data</button>
-<button data-page="classroom">▣ Classroom Management</button>
-<button data-page="students">♧ Students</button>
-<button data-page="communication">✉ Communication</button>
-<button data-page="calendar">▦ Calendar</button>
-<button data-page="resources">▭ Resources</button>
-<button data-page="print">▤ Forms & Printables</button>
-<button data-page="brain">♡ Teacher Brain</button>
-</nav>
-<div class="reminder-card"><div class="heart">♡</div><h3>Today's Reminder</h3><p>You are making a difference every single day. Keep going!</p><div class="heart small">♡</div></div>
-<button class="customize">⚙ Customize This Page</button>
-</aside>
-
+<button class="active" data-page="dashboard">⌂ Home Dashboard</button><button data-page="teachday">▶ Teach My Day</button><button data-page="lessons">▭ Lesson Plans</button><button data-page="smallgroups">♧ Small Groups</button><button data-page="intervention">♙ Intervention</button><button data-page="assessments">▥ Assessments & Data</button><button data-page="classroom">▣ Classroom Systems</button><button data-page="students">♧ Students</button><button data-page="communication">✉ Communication</button><button data-page="calendar">▦ Calendar</button><button data-page="resources">▭ Resources</button><button data-page="print">▤ Forms & Printables</button><button data-page="brain">♡ Teacher Brain</button>
+</nav><div class="reminder-card"><div class="heart">♡</div><h3>Today's Reminder</h3><p>You are making a difference every single day. Keep going!</p><div class="heart small">♡</div></div><button class="customize">⚙ Customize This Page</button></aside>
 <main class="main-content">
 <section class="page active" id="dashboard">
-<section class="top-grid">
-<article class="welcome-card"><h2 id="welcomeTitle">Welcome, Mrs. Parrish! ♡</h2><blockquote id="quoteText"></blockquote><p class="quote-author" id="quoteAuthor"></p><div class="pink-squiggle">────── ♡</div><div class="quick-icons">
-<button data-page="lessons"><span class="icon-box pink">🍎</span><span>My Lesson Plans</span></button>
-<button data-page="smallgroups"><span class="icon-box gold">👥</span><span>My Groups</span></button>
-<button data-page="assessments"><span class="icon-box green">📋</span><span>My Assessments</span></button>
-<button data-page="calendar"><span class="icon-box lavender">🗓</span><span>My Calendar</span></button>
-</div></article>
-<article class="photo-card"><div class="classroom-photo"><div><strong>Classroom Photo</strong><span>Replace this placeholder with your classroom image</span></div></div></article>
-<article class="classroom-card"><div class="card-header"><h3>Mrs. Parrish’s<br>Classroom</h3><span>♡</span></div><div id="classroomLinks" class="classroom-links"></div><button class="gallery-button" data-page="classroom">📷 View Photo Gallery</button></article>
-</section>
+<section class="top-grid"><article class="welcome-card"><h2 id="welcomeTitle">Welcome, Mrs. Parrish! ♡</h2><blockquote id="quoteText"></blockquote><p class="quote-author" id="quoteAuthor"></p><div class="pink-squiggle">────── ♡</div><div class="quick-icons"><button data-page="teachday"><span class="icon-box pink">▶</span><span>Teach My Day</span></button><button data-page="lessons"><span class="icon-box gold">🍎</span><span>My Lessons</span></button><button data-page="assessments"><span class="icon-box green">📋</span><span>Assessments</span></button><button data-page="calendar"><span class="icon-box lavender">🗓</span><span>Calendar</span></button></div></article><article class="photo-card"><div class="classroom-photo"><div><strong>Classroom Photo</strong><span>Replace this placeholder with your classroom image</span></div></div></article><article class="classroom-card"><div class="card-header"><h3>Mrs. Parrish’s<br>Classroom</h3><span>♡</span></div><div id="classroomLinks" class="classroom-links"></div><button class="gallery-button" data-page="classroom">📷 View Photo Gallery</button></article></section>
+<section class="middle-grid"><article class="panel schedule-panel"><div class="panel-title"><h3>📅 Today at a Glance</h3><span id="todayDate"></span><span class="heart-mark">♡</span></div><div id="scheduleList"></div><button class="wide-button" data-page="teachday">▶ Start Teaching</button></article><article class="panel shortcuts-panel"><h3>🔗 Teacher Shortcuts</h3><div id="shortcutGrid" class="shortcut-grid"></div><div class="important-links"><h3>🔗 Important Links</h3><div id="importantLinks"></div><p class="script-note">All links open in a new tab ↗</p></div></article><article class="panel resources-panel"><h3>📚 Curriculum Resources</h3><div id="curriculumGrid" class="curriculum-grid"></div><button class="link-button" data-page="resources">All Curriculum Resources ↗</button></article></section>
+<section class="bottom-grid" id="lowerCards"></section><footer>♡ Plan your work. &nbsp; Work your plan. &nbsp; And remember why you started. ♡</footer></section>
 
-<section class="middle-grid">
-<article class="panel schedule-panel"><div class="panel-title"><h3>📅 Today at a Glance</h3><span id="todayDate"></span><span class="heart-mark">♡</span></div><div id="scheduleList"></div><button class="wide-button" data-page="calendar">📅 View Full Schedule</button></article>
-<article class="panel shortcuts-panel"><h3>🔗 Teacher Shortcuts</h3><div id="shortcutGrid" class="shortcut-grid"></div><div class="important-links"><h3>🔗 Important Links</h3><div id="importantLinks"></div><p class="script-note">All links open in a new tab ↗</p></div></article>
-<article class="panel resources-panel"><h3>📚 Curriculum Resources</h3><div id="curriculumGrid" class="curriculum-grid"></div><button class="link-button" data-page="resources">All Curriculum Resources ↗</button></article>
-</section>
-<section class="bottom-grid" id="lowerCards"></section>
-<footer>♡ Plan your work. &nbsp; Work your plan. &nbsp; And remember why you started. ♡</footer>
-</section>
+<section class="page" id="teachday"><div class="teach-hero"><div><p class="eyebrow">Version 3.0</p><h2>Teach My Day</h2><p id="teachMessage">Start with calm, confidence, and purpose.</p></div><button class="gallery-button" id="startTeachingBtn">▶ Start Teaching</button></div><div class="teach-status"><article><strong id="currentBlockTitle">Ready</strong><span>Current Block</span></article><article><strong id="nextBlockTitle">Morning Launch</strong><span>Next Step</span></article><article><strong id="printNeedCount">0</strong><span>Print Items</span></article></div><div class="teach-layout"><aside class="teach-timeline" id="teachTimeline"></aside><article class="teach-detail" id="teachDetail"></article></div></section>
 
 <section class="page" id="lessons"><h2>Lesson Engine</h2><div class="lesson-layout"><aside class="lesson-list" id="lessonList"></aside><article class="lesson-detail" id="lessonDetail"></article></div></section>
-<section class="page" id="print"><h2>Print Center</h2><div id="printCenter" class="cards"></div></section>
-<section class="page" id="resources"><h2>Curriculum Resources</h2><div class="cards" id="resourceCards"></div></section>
-<section class="page" id="brain"><h2>Teacher Brain</h2><div class="panel"><p>Teacher Brain notes will connect to each lesson as we continue building.</p></div></section>
-<section class="page placeholder" id="smallgroups"><h2>Small Groups</h2><p>Coming next: group planning and intervention rotations.</p></section>
-<section class="page placeholder" id="intervention"><h2>Intervention</h2><p>Coming next: UFLI, DIBELS, and MOWR group support.</p></section>
-<section class="page placeholder" id="assessments"><h2>Assessments & Data</h2><p>Coming next: DIBELS and Open Court assessment tracking.</p></section>
-<section class="page placeholder" id="classroom"><h2>Classroom Management</h2><p>Classroom systems, procedures, anchor charts, and routines will live here.</p></section>
-<section class="page placeholder" id="students"><h2>Students</h2><p>Coming next: student profiles and notes.</p></section>
-<section class="page placeholder" id="communication"><h2>Communication</h2><p>Coming next: parent communication templates.</p></section>
-<section class="page placeholder" id="calendar"><h2>Calendar</h2><p>Calendar and iDay planning will live here.</p></section>
-</main></div>
-<script src="app.js"></script></body></html>
+<section class="page" id="classroom"><div class="systems-hero"><p class="eyebrow">Classroom Systems</p><h2>Beginning-of-Year Procedures & Anchor Charts</h2><p>Teach routines, support Micayla, and keep classroom expectations consistent all year.</p></div><div class="systems-toolbar"><input id="systemsSearch" placeholder="Search routines, procedures, anchor charts..."><select id="systemsCategory"></select></div><div class="systems-layout"><aside class="systems-list" id="systemsList"></aside><article class="system-detail" id="systemDetail"></article></div></section>
+<section class="page" id="print"><h2>Print Center</h2><div id="printCenter" class="cards"></div></section><section class="page" id="resources"><h2>Curriculum Resources</h2><div class="cards" id="resourceCards"></div></section><section class="page" id="brain"><h2>Teacher Brain</h2><div class="panel"><p>Teacher Brain notes will connect to each lesson and teaching block as we continue building.</p></div></section>
+<section class="page placeholder" id="smallgroups"><h2>Small Groups</h2><p>Coming next: group planning and intervention rotations.</p></section><section class="page placeholder" id="intervention"><h2>Intervention</h2><p>Coming next: UFLI, DIBELS, and MOWR group support.</p></section><section class="page placeholder" id="assessments"><h2>Assessments & Data</h2><p>Coming next: DIBELS and Open Court assessment tracking.</p></section><section class="page placeholder" id="students"><h2>Students</h2><p>Coming next: student profiles and notes.</p></section><section class="page placeholder" id="communication"><h2>Communication</h2><p>Coming next: parent communication templates.</p></section><section class="page placeholder" id="calendar"><h2>Calendar</h2><p>Calendar and iDay planning will live here.</p></section>
+</main></div><script src="app.js"></script></body></html>

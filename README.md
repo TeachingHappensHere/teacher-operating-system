@@ -1,20 +1,22 @@
 # TeachingHappensHere
 
-## Version 2.1 - Dashboard Routing + Lesson Engine
+## Version 3.0 - Teach My Day
 
 Patch files:
 - index.html
 - style.css
 - app.js
 - service-worker.js
-- scholar-dashboard.json
-- lesson-engine.json
+- teach-my-day.json
 - README.md
 
 Adds:
-- Clickable dashboard routing
-- Lesson Engine for Open Court Unit 1
-- Lesson selector
-- Lesson detail renderer
-- Attachment cards by lesson
-- Print Center generated from lesson attachments
+- Teach My Day page
+- Daily guided teaching timeline
+- Current block / next block status
+- Start Teaching button
+- Materials checklists
+- Print / prep reminders
+- Teacher Brain reminders by block
+- End-of-day reflection prompts
+- Print Center now includes Teach My Day print needs

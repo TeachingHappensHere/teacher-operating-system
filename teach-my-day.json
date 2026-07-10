@@ -1,0 +1,240 @@
+{
+  "version": "3.0 Teach My Day",
+  "teacher": "Mrs. Parrish",
+  "dayTitle": "Teach My Day",
+  "morningMessage": "Start with calm, confidence, and purpose.",
+  "blocks": [
+    {
+      "time": "7:45\u20138:10",
+      "title": "Breakfast",
+      "type": "Routine",
+      "goal": "Students eat, settle in, and prepare for the day.",
+      "materials": [
+        "Breakfast procedures",
+        "Morning expectations"
+      ],
+      "teacherBrain": "Use this time to greet students and set a calm tone.",
+      "print": []
+    },
+    {
+      "time": "8:10\u20138:20",
+      "title": "Morning Work",
+      "type": "Routine",
+      "goal": "Students complete independent morning work while you handle attendance and setup.",
+      "materials": [
+        "Morning work packet",
+        "Pencils"
+      ],
+      "teacherBrain": "Keep this routine predictable so students can begin without reminders.",
+      "print": [
+        "Morning Work"
+      ]
+    },
+    {
+      "time": "8:20\u20138:30",
+      "title": "Morning Meeting",
+      "type": "Classroom Community",
+      "goal": "Build community, review expectations, and set the day\u2019s focus.",
+      "materials": [
+        "Morning meeting prompt",
+        "Pillar reminder"
+      ],
+      "teacherBrain": "Connect the current pillar to real classroom choices.",
+      "print": []
+    },
+    {
+      "time": "8:30\u20138:40",
+      "title": "Heggerty",
+      "type": "Phonemic Awareness",
+      "goal": "Complete daily phonemic awareness lesson.",
+      "materials": [
+        "Heggerty manual"
+      ],
+      "teacherBrain": "Keep pacing quick and energetic.",
+      "print": []
+    },
+    {
+      "time": "8:45\u20139:30",
+      "title": "MOWR / Reading Intervention",
+      "type": "Small Group",
+      "goal": "Run reading intervention rotations and support decoding/fluency.",
+      "materials": [
+        "UFLI support",
+        "Decodables",
+        "Fluency folders"
+      ],
+      "teacherBrain": "Prioritize Red and Yellow groups first.",
+      "print": [
+        "Decodable practice",
+        "Fluency tracker"
+      ]
+    },
+    {
+      "time": "9:30\u20139:50",
+      "title": "Phonics",
+      "type": "Open Court",
+      "goal": "Teach current Open Court phonics focus.",
+      "materials": [
+        "Open Court",
+        "Whiteboards",
+        "Word cards"
+      ],
+      "teacherBrain": "Use quick blending and dictation before independent work.",
+      "print": [
+        "Phonics assessment if needed"
+      ]
+    },
+    {
+      "time": "9:50\u201310:00",
+      "title": "Vocabulary",
+      "type": "Open Court",
+      "goal": "Preview vocabulary before reading.",
+      "materials": [
+        "Vocabulary cards",
+        "Visuals"
+      ],
+      "teacherBrain": "Preteach difficult vocabulary before students encounter it in the story.",
+      "print": [
+        "Vocabulary page"
+      ]
+    },
+    {
+      "time": "10:00\u201310:50",
+      "title": "Open Court Reading",
+      "type": "Literacy",
+      "goal": "Teach Open Court Unit 1 lesson using the Lesson Engine.",
+      "lessonId": "u1l1",
+      "materials": [
+        "Teacher Edition",
+        "Skills Practice",
+        "Comprehension questions"
+      ],
+      "teacherBrain": "Use partner talk before cause-and-effect questions.",
+      "print": [
+        "Skills Practice packet",
+        "Comprehension assessment",
+        "Cause and Effect organizer"
+      ]
+    },
+    {
+      "time": "10:50\u201311:15",
+      "title": "Lunch",
+      "type": "Routine",
+      "goal": "Transition safely and calmly to lunch.",
+      "materials": [
+        "Lunch count",
+        "Line-up routine"
+      ],
+      "teacherBrain": "Review line expectations before leaving.",
+      "print": []
+    },
+    {
+      "time": "11:15\u201311:35",
+      "title": "Recess",
+      "type": "Routine",
+      "goal": "Students play safely and return ready to learn.",
+      "materials": [
+        "Recess expectations"
+      ],
+      "teacherBrain": "Review freeze and line-up expectations.",
+      "print": []
+    },
+    {
+      "time": "11:35\u201312:05",
+      "title": "Workout",
+      "type": "Movement",
+      "goal": "Students participate in safe, structured physical activity.",
+      "materials": [
+        "Workout plan",
+        "Water reminder"
+      ],
+      "teacherBrain": "Watch heat-sensitive students carefully.",
+      "print": []
+    },
+    {
+      "time": "12:05\u20131:05",
+      "title": "Math",
+      "type": "Eureka Math\u00b2",
+      "goal": "Teach math lesson and recap.",
+      "materials": [
+        "Eureka Math\u00b2",
+        "Manipulatives",
+        "Whiteboards"
+      ],
+      "teacherBrain": "Use I Do, We Do, You Do structure.",
+      "print": [
+        "Math exit ticket"
+      ]
+    },
+    {
+      "time": "1:05\u20131:35",
+      "title": "Writing",
+      "type": "Writing Studio",
+      "goal": "Teach writing using Building the Foundation.",
+      "materials": [
+        "Writing slides",
+        "Student notebooks"
+      ],
+      "teacherBrain": "Use oral rehearsal before written responses.",
+      "print": [
+        "Writing organizer"
+      ]
+    },
+    {
+      "time": "1:35\u20132:00",
+      "title": "Social Studies",
+      "type": "Content",
+      "goal": "Connect content learning to literacy and classroom discussion.",
+      "materials": [
+        "Social Studies resource",
+        "Vocabulary support"
+      ],
+      "teacherBrain": "Connect to Open Court whenever possible.",
+      "print": []
+    },
+    {
+      "time": "2:15\u20132:35",
+      "title": "Science",
+      "type": "Science Studio",
+      "goal": "Use workbook pages, science vocabulary, and hands-on connection.",
+      "materials": [
+        "Science workbook",
+        "Science notebook"
+      ],
+      "teacherBrain": "Preview science videos before students see them.",
+      "print": [
+        "Science workbook page"
+      ]
+    },
+    {
+      "time": "2:40\u20133:00",
+      "title": "Pack-up",
+      "type": "Routine",
+      "goal": "Students pack calmly and clean the classroom.",
+      "materials": [
+        "Dismissal routine"
+      ],
+      "teacherBrain": "Start early during the first week.",
+      "print": []
+    },
+    {
+      "time": "3:00\u20133:30",
+      "title": "Dismissal",
+      "type": "Routine",
+      "goal": "Dismiss safely and calmly.",
+      "materials": [
+        "Dismissal list",
+        "Transportation notes"
+      ],
+      "teacherBrain": "End with calm. Do not rush the routine.",
+      "print": []
+    }
+  ],
+  "endOfDayReflection": [
+    "What went well today?",
+    "What needs reteaching tomorrow?",
+    "Which students need follow-up?",
+    "What should Future Jennifer remember?",
+    "What should Micayla know?"
+  ]
+}
