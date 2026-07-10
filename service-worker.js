@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "teaching-happens-here-v50-launch-candidate";
+const CACHE_NAME = "teaching-happens-here-v51-instructional-content";
 const ASSETS = [
   "./",
   "./index.html",
@@ -11,11 +11,14 @@ const ASSETS = [
   "./app-health.js",
   "./backup-export.js",
   "./launch-candidate.js",
+  "./instructional-content-v5-1.js",
+  "./instructional-content-v5-1.json",
   "./style-additions-v4-6.css",
   "./style-additions-v4-7.css",
   "./style-additions-v4-8.css",
   "./style-additions-v4-9.css",
-  "./style-additions-v5-0.css"
+  "./style-additions-v5-0.css",
+  "./style-additions-v5-1.css"
 ];
 
 self.addEventListener("install", event => {
@@ -38,7 +41,6 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
-
   event.respondWith(
     fetch(event.request)
       .then(response => {
