@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "teaching-happens-here-v46-saved-progress";
+const CACHE_NAME = "teaching-happens-here-v47-universal-search";
 const ASSETS = [
   "./",
   "./index.html",
@@ -9,11 +9,13 @@ const ASSETS = [
   "./style-additions-v4-4.css",
   "./style-additions-v4-5.css",
   "./style-additions-v4-6.css",
+  "./style-additions-v4-7.css",
   "./app.js",
   "./resource-files-viewer.js",
   "./student-dashboard-viewer.js",
   "./communication-hub-viewer.js",
   "./saved-progress.js",
+  "./universal-search.js",
   "./manifest.json"
 ];
 
@@ -36,7 +38,9 @@ self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys.map(key => key !== CACHE_NAME ? caches.delete(key) : Promise.resolve())
+        keys.map(key =>
+          key !== CACHE_NAME ? caches.delete(key) : Promise.resolve()
+        )
       )
     )
   );

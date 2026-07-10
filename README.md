@@ -1,33 +1,35 @@
 # TeachingHappensHere
 
-## Version 4.6 — Saved Progress & Personalization Engine
+## Version 4.7 — Universal Search & Command Center
 
 ### Upload/add
 
-- `saved-progress.js`
-- `style-additions-v4-6.css`
+- `universal-search.js`
+- `style-additions-v4-7.css`
 - `service-worker.js`
 - `README.md`
 
 ### Add this script to `index.html`
 
-Place it after the other viewer scripts and immediately before `</body>`:
+Place it after `saved-progress.js` and immediately before `</body>`:
 
 ```html
-<script src="saved-progress.js"></script>
+<script src="universal-search.js"></script>
 ```
 
 ### Features
 
-- Saves checklist completion on the current device
-- Saves lesson reflections
-- Saves communication drafts
-- Saves student notes
-- Remembers selected lesson, workspace lesson, classroom system, launch day, and Teach My Day block
-- Adds a Save Now button
-- Adds a Reset Saved Progress control
-- Uses browser local storage; no student information is uploaded to a server
+- Searches lessons, vocabulary, phonics, and reading skills
+- Searches classroom routines and anchor-chart content
+- Searches Teacher Brain notes
+- Searches resources and attachment status
+- Searches assessments and reteach areas
+- Searches small groups and intervention tools
+- Searches communication templates
+- Searches Teach My Day, Classroom Launch, and planner items
+- Opens the correct operating-system section from a search result
+- Keyboard shortcut: `Ctrl + K` on Windows or `Command + K` on Mac/iPad keyboard
 
-### Privacy note
+### Notes
 
-This version saves information only in the browser on the device being used. Avoid entering sensitive student information on shared or unsecured devices.
+The search engine reads the JSON files already in the repository. Missing optional files are ignored instead of breaking the application.
