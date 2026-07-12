@@ -1,0 +1,47 @@
+{
+  "version": "5.7 Daily Command Center & Action Queue",
+  "releaseStatus": "Teaching, planning, assessment, student support, communication, standards, and preparation are summarized in one daily workspace.",
+  "defaultSections": [
+    "Today's Teaching",
+    "Priority Actions",
+    "Print & Prep",
+    "Student Follow-Ups",
+    "Assessment & Reteach",
+    "Standards Evidence",
+    "Family Communication",
+    "End-of-Day Reflection"
+  ],
+  "priorityRules": [
+    {
+      "id": "reteach",
+      "title": "Reteach Needed",
+      "sourceKey": "thh-v54:teachday-next-step",
+      "priority": "High"
+    },
+    {
+      "id": "student-follow-up",
+      "title": "Student Follow-Up",
+      "sourceKey": "thh-v55:teachday-support",
+      "priority": "High"
+    },
+    {
+      "id": "standard-evidence",
+      "title": "Standards Evidence",
+      "sourceKey": "thh-v56:assessment-standard",
+      "priority": "Medium"
+    },
+    {
+      "id": "weekly-plan",
+      "title": "Weekly Plan",
+      "sourceKey": "thh-v53:active-week",
+      "priority": "Medium"
+    }
+  ],
+  "reflectionPrompts": [
+    "What worked especially well today?",
+    "Which students need follow-up tomorrow?",
+    "What should be retaught?",
+    "What materials should be prepared before leaving?",
+    "What should Future Jennifer remember?"
+  ]
+}

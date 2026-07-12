@@ -1,10 +1,10 @@
 
-const CACHE_NAME="teaching-happens-here-v56-standards-reporting";
+const CACHE_NAME="teaching-happens-here-v57-daily-command-center";
 const ASSETS=[
 "./","./index.html","./style.css","./app.js","./manifest.json",
-"./student-support-family-v5-5.js","./student-support-family-v5-5.json",
 "./standards-reporting-v5-6.js","./standards-reporting-v5-6.json",
-"./style-additions-v5-5.css","./style-additions-v5-6.css"
+"./daily-command-center-v5-7.js","./daily-command-center-v5-7.json",
+"./style-additions-v5-6.css","./style-additions-v5-7.css"
 ];
 
 self.addEventListener("install",event=>{
