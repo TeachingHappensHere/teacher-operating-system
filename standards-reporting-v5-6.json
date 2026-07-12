@@ -1,0 +1,149 @@
+{
+  "version": "5.6 Standards, Evidence & Progress Reporting Sync",
+  "releaseStatus": "Standards coverage, instructional evidence, progress summaries, and reporting comments are connected.",
+  "subjectAreas": [
+    "Reading Literature",
+    "Reading Informational",
+    "Foundational Reading",
+    "Writing",
+    "Language / Grammar",
+    "Speaking & Listening",
+    "Mathematics",
+    "Science",
+    "Social Studies",
+    "Classroom Habits"
+  ],
+  "evidenceTypes": [
+    "Teacher observation",
+    "Class discussion",
+    "Exit ticket",
+    "Skills-practice page",
+    "Weekly assessment",
+    "Unit assessment",
+    "DIBELS",
+    "Fluency check",
+    "Writing sample",
+    "Project",
+    "Conference note",
+    "Student reflection"
+  ],
+  "progressLevels": [
+    "Not Yet Assessed",
+    "Beginning",
+    "Developing",
+    "Approaching",
+    "Secure",
+    "Extending"
+  ],
+  "defaultStandards": [
+    {
+      "id": "reading-questions",
+      "subject": "Reading Literature",
+      "code": "Add current Arizona standard code",
+      "title": "Ask and answer questions about a text",
+      "description": "Students use key details to demonstrate understanding.",
+      "status": "Not Yet Assessed",
+      "lessons": [],
+      "evidence": []
+    },
+    {
+      "id": "reading-main-idea",
+      "subject": "Reading Informational",
+      "code": "Add current Arizona standard code",
+      "title": "Identify a main topic and supporting details",
+      "description": "Students explain what a text is mostly about and identify supporting information.",
+      "status": "Not Yet Assessed",
+      "lessons": [
+        "Ellie's Long Walk",
+        "A River of Ice"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "reading-fluency",
+      "subject": "Foundational Reading",
+      "code": "Add current Arizona standard code",
+      "title": "Read with accuracy, appropriate rate, and expression",
+      "description": "Students read connected text with accuracy, phrasing, punctuation, and expression.",
+      "status": "Not Yet Assessed",
+      "lessons": [],
+      "evidence": []
+    },
+    {
+      "id": "writing-explanatory",
+      "subject": "Writing",
+      "code": "Add current Arizona standard code",
+      "title": "Write an explanatory response",
+      "description": "Students introduce a topic, provide information, and create a concluding statement.",
+      "status": "Not Yet Assessed",
+      "lessons": [],
+      "evidence": []
+    },
+    {
+      "id": "language-grammar",
+      "subject": "Language / Grammar",
+      "code": "Add current Arizona standard code",
+      "title": "Apply grade-level language conventions",
+      "description": "Students use grammar, capitalization, punctuation, and spelling in context.",
+      "status": "Not Yet Assessed",
+      "lessons": [],
+      "evidence": []
+    },
+    {
+      "id": "math-problem-solving",
+      "subject": "Mathematics",
+      "code": "Add current Arizona standard code",
+      "title": "Represent and solve grade-level problems",
+      "description": "Students select strategies, explain thinking, and check solutions.",
+      "status": "Not Yet Assessed",
+      "lessons": [],
+      "evidence": []
+    },
+    {
+      "id": "science-explanation",
+      "subject": "Science",
+      "code": "Add current Arizona standard code",
+      "title": "Use evidence to explain a science concept",
+      "description": "Students observe, record, and explain patterns or cause-and-effect relationships.",
+      "status": "Not Yet Assessed",
+      "lessons": [
+        "A River of Ice"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "classroom-independence",
+      "subject": "Classroom Habits",
+      "code": "Classroom expectation",
+      "title": "Demonstrate independence and responsible classroom habits",
+      "description": "Students follow routines, use materials responsibly, and complete tasks with growing independence.",
+      "status": "Not Yet Assessed",
+      "lessons": [
+        "Classroom Launch Week"
+      ],
+      "evidence": []
+    }
+  ],
+  "commentTemplates": {
+    "Secure": [
+      "[Student Name] consistently demonstrates understanding of [skill] and applies the skill independently.",
+      "[Student Name] is secure with [skill] and uses evidence or strategies to explain thinking."
+    ],
+    "Approaching": [
+      "[Student Name] is approaching proficiency with [skill] and benefits from occasional prompting or guided practice.",
+      "[Student Name] shows growing understanding of [skill] and is working toward independent application."
+    ],
+    "Developing": [
+      "[Student Name] is developing understanding of [skill] and benefits from explicit modeling, guided practice, and feedback.",
+      "[Student Name] continues to build [skill] through small-group instruction and repeated opportunities to practice."
+    ],
+    "Beginning": [
+      "[Student Name] is beginning to develop [skill] and currently requires targeted support and frequent teacher guidance.",
+      "[Student Name] benefits from visual supports, oral rehearsal, and reduced steps while learning [skill]."
+    ],
+    "Extending": [
+      "[Student Name] exceeds current expectations in [skill] and applies learning to more complex tasks.",
+      "[Student Name] demonstrates advanced understanding of [skill] and explains thinking with strong evidence."
+    ]
+  }
+}
