@@ -1,0 +1,489 @@
+{
+  "version": "5.3 Weekly Instructional Planner & Teach My Day Sync",
+  "releaseStatus": "Weekly planning, curriculum mapping, print preparation, and Teach My Day synchronization are connected.",
+  "templates": [
+    {
+      "id": "regular-week",
+      "title": "Regular Instructional Week",
+      "description": "Monday through Thursday instruction with Friday assessment, reflection, and reteach.",
+      "days": [
+        {
+          "day": "Monday",
+          "focus": "Launch the lesson and build background knowledge",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "8:30\u20138:40",
+              "subject": "Heggerty",
+              "task": "Current Bridge lesson and phonemic-awareness warm-up"
+            },
+            {
+              "time": "8:45\u20139:30",
+              "subject": "MOWR",
+              "task": "UFLI review, Teacher Table, and three centers"
+            },
+            {
+              "time": "9:30\u20139:50",
+              "subject": "Phonics",
+              "task": "Introduce the Open Court phonics focus"
+            },
+            {
+              "time": "9:50\u201310:00",
+              "subject": "Vocabulary",
+              "task": "Preteach vocabulary with visuals and oral examples"
+            },
+            {
+              "time": "10:00\u201310:50",
+              "subject": "Reading",
+              "task": "Preview, read, and model the weekly comprehension skill"
+            },
+            {
+              "time": "12:05\u20131:05",
+              "subject": "Math",
+              "task": "Current Eureka Math\u00b2 lesson"
+            },
+            {
+              "time": "1:05\u20131:35",
+              "subject": "Writing",
+              "task": "Building the Foundation mini lesson and oral rehearsal"
+            },
+            {
+              "time": "1:35\u20132:00",
+              "subject": "Social Studies",
+              "task": "Connect to the Open Court theme when appropriate"
+            },
+            {
+              "time": "2:15\u20132:35",
+              "subject": "Science",
+              "task": "Introduce vocabulary and workbook concept"
+            }
+          ],
+          "smallGroups": [
+            "Red Group daily",
+            "Yellow Group priority",
+            "Blue independent fluency",
+            "Green extension response"
+          ],
+          "printNeeds": [
+            "Skills practice",
+            "Vocabulary visuals",
+            "Monday writing organizer"
+          ],
+          "assessment": "Informal observation and vocabulary check"
+        },
+        {
+          "day": "Tuesday",
+          "focus": "Deepen comprehension and guided practice",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "8:30\u20138:40",
+              "subject": "Heggerty",
+              "task": "Current Bridge lesson"
+            },
+            {
+              "time": "8:45\u20139:30",
+              "subject": "MOWR",
+              "task": "Red and Yellow Teacher Table priority"
+            },
+            {
+              "time": "9:30\u20139:50",
+              "subject": "Phonics",
+              "task": "Guided word reading and word mapping"
+            },
+            {
+              "time": "9:50\u201310:00",
+              "subject": "Vocabulary",
+              "task": "Use vocabulary in partner sentences"
+            },
+            {
+              "time": "10:00\u201310:50",
+              "subject": "Reading",
+              "task": "Reread and complete We Do comprehension work"
+            },
+            {
+              "time": "12:05\u20131:05",
+              "subject": "Math",
+              "task": "Current Eureka Math\u00b2 lesson"
+            },
+            {
+              "time": "1:05\u20131:35",
+              "subject": "Writing",
+              "task": "Model and guided writing"
+            },
+            {
+              "time": "2:15\u20132:35",
+              "subject": "Science",
+              "task": "Workbook investigation or demonstration"
+            }
+          ],
+          "smallGroups": [
+            "Red Group daily",
+            "Yellow Group fluency",
+            "Blue vocabulary and rereading",
+            "Green evidence response"
+          ],
+          "printNeeds": [
+            "Word mapping page",
+            "Comprehension organizer",
+            "Science workbook page"
+          ],
+          "assessment": "Quick phonics and comprehension check"
+        },
+        {
+          "day": "Wednesday",
+          "focus": "Independent application and fluency",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "8:30\u20138:40",
+              "subject": "Heggerty",
+              "task": "Current Bridge lesson"
+            },
+            {
+              "time": "8:45\u20139:30",
+              "subject": "MOWR",
+              "task": "Red and Blue Teacher Table priority"
+            },
+            {
+              "time": "9:30\u20139:50",
+              "subject": "Phonics",
+              "task": "Dictation and application"
+            },
+            {
+              "time": "9:50\u201310:00",
+              "subject": "Vocabulary",
+              "task": "Vocabulary review and context practice"
+            },
+            {
+              "time": "10:00\u201310:50",
+              "subject": "Reading",
+              "task": "You Do skills practice and fluency"
+            },
+            {
+              "time": "12:05\u20131:05",
+              "subject": "Math",
+              "task": "Current Eureka Math\u00b2 lesson"
+            },
+            {
+              "time": "1:05\u20131:35",
+              "subject": "Writing",
+              "task": "Independent drafting with conference support"
+            },
+            {
+              "time": "2:15\u20132:35",
+              "subject": "Science",
+              "task": "Explain observations using vocabulary"
+            }
+          ],
+          "smallGroups": [
+            "Red Group daily",
+            "Blue Group fluency",
+            "Yellow independent reread",
+            "Green prosody and extension"
+          ],
+          "printNeeds": [
+            "Fluency passage",
+            "Independent skills page",
+            "Writing draft paper"
+          ],
+          "assessment": "Fluency reflection and writing conference notes"
+        },
+        {
+          "day": "Thursday",
+          "focus": "Review, transfer, and prepare for assessment",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "8:30\u20138:40",
+              "subject": "Heggerty",
+              "task": "Current Bridge lesson"
+            },
+            {
+              "time": "8:45\u20139:30",
+              "subject": "MOWR",
+              "task": "Yellow and Green Teacher Table priority"
+            },
+            {
+              "time": "9:30\u20139:50",
+              "subject": "Phonics",
+              "task": "Review and error correction"
+            },
+            {
+              "time": "9:50\u201310:00",
+              "subject": "Vocabulary",
+              "task": "Assessment review without over-teaching"
+            },
+            {
+              "time": "10:00\u201310:50",
+              "subject": "Reading",
+              "task": "Apply the skill to a new short passage"
+            },
+            {
+              "time": "12:05\u20131:05",
+              "subject": "Math",
+              "task": "Current Eureka Math\u00b2 lesson"
+            },
+            {
+              "time": "1:05\u20131:35",
+              "subject": "Writing",
+              "task": "Revise and edit"
+            },
+            {
+              "time": "2:15\u20132:35",
+              "subject": "Science",
+              "task": "Review and complete explanation"
+            }
+          ],
+          "smallGroups": [
+            "Red targeted review",
+            "Yellow fluency correction",
+            "Blue comprehension",
+            "Green transfer task"
+          ],
+          "printNeeds": [
+            "Review page",
+            "Assessment packets",
+            "Friday reflection sheet"
+          ],
+          "assessment": "Teacher-created quick check and reteach flag"
+        },
+        {
+          "day": "Friday",
+          "focus": "Assess, reflect, celebrate, and plan next steps",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "Morning",
+              "subject": "Reading Assessments",
+              "task": "Phonics, vocabulary, comprehension, and GUM checks"
+            },
+            {
+              "time": "MOWR",
+              "subject": "Progress Monitoring",
+              "task": "ORF, Maze, or targeted progress monitoring"
+            },
+            {
+              "time": "Math",
+              "subject": "Math Check",
+              "task": "Weekly exit ticket or assessment"
+            },
+            {
+              "time": "Writing",
+              "subject": "Writing Assessment",
+              "task": "Weekly writing or GUM application"
+            },
+            {
+              "time": "Science",
+              "subject": "Science Check",
+              "task": "Vocabulary and concept understanding"
+            },
+            {
+              "time": "Closing",
+              "subject": "Reflection",
+              "task": "Compliment circle and Future Jennifer notes"
+            }
+          ],
+          "smallGroups": [
+            "Progress monitoring",
+            "Brief reteach conferences",
+            "Make-up assessments"
+          ],
+          "printNeeds": [
+            "Assessment packet",
+            "ORF or Maze forms",
+            "Student reflection"
+          ],
+          "assessment": "Record data flags and update next week's groups"
+        }
+      ]
+    },
+    {
+      "id": "launch-week",
+      "title": "First Week Classroom Launch",
+      "description": "A lighter academic week that prioritizes routines, belonging, safety, and classroom independence.",
+      "days": [
+        {
+          "day": "Monday",
+          "focus": "Enter, belong, and learn the room",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "Morning",
+              "subject": "Classroom Launch",
+              "task": "Entering, unpacking, breakfast, carpet, restroom, line-up"
+            },
+            {
+              "time": "Reading",
+              "subject": "Reading Sample",
+              "task": "Short read aloud and partner talk practice"
+            },
+            {
+              "time": "Math",
+              "subject": "Math Routines",
+              "task": "Materials and discussion procedures"
+            },
+            {
+              "time": "Dismissal",
+              "subject": "Dismissal Practice",
+              "task": "Pack, clean, wait, and dismiss safely"
+            }
+          ],
+          "smallGroups": [
+            "No formal rotations; observe students and collect baseline notes"
+          ],
+          "printNeeds": [
+            "Morning Routine",
+            "Carpet Expectations",
+            "Line-Up",
+            "Dismissal"
+          ],
+          "assessment": "Observation only"
+        },
+        {
+          "day": "Tuesday",
+          "focus": "Practice transitions and voice levels",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "Morning",
+              "subject": "Classroom Launch",
+              "task": "Hallway, voice levels, recess, pencil procedures"
+            },
+            {
+              "time": "Reading",
+              "subject": "Reading Routine",
+              "task": "Model listening and responding"
+            },
+            {
+              "time": "Writing",
+              "subject": "Writing Routine",
+              "task": "How to get materials and begin"
+            },
+            {
+              "time": "Dismissal",
+              "subject": "Reset",
+              "task": "Practice dismissal again"
+            }
+          ],
+          "smallGroups": [
+            "Brief teacher-table introductions"
+          ],
+          "printNeeds": [
+            "Hallway Expectations",
+            "Voice Levels",
+            "Pencil Procedures"
+          ],
+          "assessment": "Transition checklist"
+        },
+        {
+          "day": "Wednesday",
+          "focus": "Build independence",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "Morning",
+              "subject": "Morning Routine",
+              "task": "Complete with fewer reminders"
+            },
+            {
+              "time": "Reading",
+              "subject": "Partner Talk",
+              "task": "Partner A and Partner B"
+            },
+            {
+              "time": "MOWR",
+              "subject": "Center Practice",
+              "task": "Practice one center at a time"
+            },
+            {
+              "time": "Classroom Jobs",
+              "subject": "Responsibility",
+              "task": "Introduce jobs and materials care"
+            }
+          ],
+          "smallGroups": [
+            "Practice rotation movement, not full intervention"
+          ],
+          "printNeeds": [
+            "Partner Talk",
+            "Classroom Jobs",
+            "Center Directions"
+          ],
+          "assessment": "Independence observation"
+        },
+        {
+          "day": "Thursday",
+          "focus": "Practice academic routines",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "Reading",
+              "subject": "I Do / We Do / You Do",
+              "task": "Practice a short complete lesson"
+            },
+            {
+              "time": "MOWR",
+              "subject": "Center Rotation",
+              "task": "Practice two or three centers"
+            },
+            {
+              "time": "Math",
+              "subject": "Partner Math",
+              "task": "Practice voice level and materials"
+            },
+            {
+              "time": "Writing",
+              "subject": "Independent Work",
+              "task": "Practice stamina and help signals"
+            }
+          ],
+          "smallGroups": [
+            "Begin short baseline reading checks"
+          ],
+          "printNeeds": [
+            "Short skills page",
+            "Center checklist",
+            "Help signal chart"
+          ],
+          "assessment": "Baseline notes"
+        },
+        {
+          "day": "Friday",
+          "focus": "Review, celebrate, and reteach",
+          "openCourtLessonId": "u1l1",
+          "blocks": [
+            {
+              "time": "Morning",
+              "subject": "Routine Review",
+              "task": "Practice high-need procedures"
+            },
+            {
+              "time": "Reading",
+              "subject": "Community Read Aloud",
+              "task": "Discuss classroom belonging"
+            },
+            {
+              "time": "Reflection",
+              "subject": "Class Reflection",
+              "task": "What we learned about being scholars"
+            },
+            {
+              "time": "Closing",
+              "subject": "Celebration",
+              "task": "Compliment circle and Week 1 celebration"
+            }
+          ],
+          "smallGroups": [
+            "Finish baseline checks as needed"
+          ],
+          "printNeeds": [
+            "Routine review checklist",
+            "Student reflection"
+          ],
+          "assessment": "Identify procedures to reteach Monday"
+        }
+      ]
+    }
+  ]
+}
