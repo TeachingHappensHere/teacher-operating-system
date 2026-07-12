@@ -1,51 +1,37 @@
 # TeachingHappensHere
 
-## Version 5.1 — Complete Instructional Content Release
+## Version 5.2 — Curriculum & Resource Integration Release
 
-This is a consolidated instructional-content release. It combines the Unit 1 lesson structure, instructional supports, small groups, differentiation, assessments, print needs, attachment mapping, Teacher Brain, and Live Workspace connection.
+Upload/add:
 
-### Upload/add
-
-- `instructional-content-v5-1.json`
-- `instructional-content-v5-1.js`
-- `style-additions-v5-1.css`
+- `curriculum-resource-integration-v5-2.json`
+- `curriculum-resource-integration-v5-2.js`
+- `style-additions-v5-2.css`
 - `service-worker.js`
 - `README.md`
 
-### Add this script to `index.html`
-
-Place it after `launch-candidate.js` and immediately before `</body>`:
+Add this line after `instructional-content-v5-1.js` and before `</body>`:
 
 ```html
-<script src="instructional-content-v5-1.js"></script>
+<script src="curriculum-resource-integration-v5-2.js"></script>
 ```
 
-### Commit message
+Commit message:
 
-`Version 5.1 - Complete Instructional Content Release`
+`Version 5.2 - Curriculum and Resource Integration Release`
 
-### Included
+Included:
 
-- Open Court Unit 1 Lessons 1–8
-- Objectives
-- Learning targets
-- Success criteria
-- Standards-alignment fields
-- I Do / We Do / You Do
-- Vocabulary support
-- Phonics placeholders tied to teacher materials
-- Reading and grammar focus
-- Writing connection
-- Teacher Brain reminders
-- Red / Yellow / Blue / Green small-group supports
-- EL, IEP/504, and extension supports
-- Assessment map
-- Print needs
-- Attachment paths
-- Live Teaching Workspace button
-- Search and print support
-- Saved-progress-compatible checklists
+- Open Court Unit 1 attachment paths
+- Writing curriculum folders and file slots
+- Science workbook and project structure
+- UFLI public toolbox link
+- Heggerty and fluency resource slots
+- DIBELS and assessment folders
+- Classroom systems anchor-chart slots
+- Search and status filtering
+- Copyable GitHub paths
+- One-click deployed-file checks
+- Printable curriculum resource lists
 
-### Important accuracy note
-
-Exact phonics sequences, high-frequency words, GUM skills, Arizona standard codes, and worksheet filenames should be confirmed against the teacher edition and uploaded materials before classroom use. The release intentionally avoids inventing curriculum details that have not yet been supplied.
+This release maps and checks resources. It does not redistribute copyrighted curriculum files.
