@@ -1,0 +1,247 @@
+{
+  "version": "5.4 Assessment, Reteach & Small-Group Sync",
+  "releaseStatus": "Assessment results can now drive reteach plans, group recommendations, and Teach My Day next steps.",
+  "skillAreas": [
+    {
+      "id": "phonics",
+      "title": "Phonics & Decoding",
+      "description": "Sound-symbol knowledge, blending, word reading, and spelling patterns.",
+      "thresholds": {
+        "secure": 80,
+        "developing": 65
+      },
+      "recommendations": {
+        "secure": {
+          "group": "Green",
+          "action": "Extension word work, morphology, and connected-text application.",
+          "tools": [
+            "Word chains",
+            "Vocabulary extension",
+            "Text application"
+          ]
+        },
+        "developing": {
+          "group": "Yellow",
+          "action": "Guided blending, word mapping, dictation, and immediate correction.",
+          "tools": [
+            "UFLI review",
+            "Blending board",
+            "Whiteboards",
+            "Word mapping"
+          ]
+        },
+        "reteach": {
+          "group": "Red",
+          "action": "Explicit UFLI intervention with phoneme-grapheme mapping and decodable practice.",
+          "tools": [
+            "UFLI Toolbox",
+            "Elkonin boxes",
+            "Counters",
+            "Decodable text"
+          ]
+        }
+      }
+    },
+    {
+      "id": "fluency",
+      "title": "Fluency",
+      "description": "Accuracy, rate, phrasing, punctuation, and expression.",
+      "thresholds": {
+        "secure": 80,
+        "developing": 65
+      },
+      "recommendations": {
+        "secure": {
+          "group": "Green",
+          "action": "Prosody, performance reading, and meaning-based expression.",
+          "tools": [
+            "Reader's theater",
+            "Discussion cards",
+            "Prosody rubric"
+          ]
+        },
+        "developing": {
+          "group": "Blue",
+          "action": "Modeled reading, echo reading, partner practice, and repeated reading.",
+          "tools": [
+            "Fluency passage",
+            "Timer",
+            "Partner checklist"
+          ]
+        },
+        "reteach": {
+          "group": "Yellow",
+          "action": "Short repeated reading with immediate correction and phrase marking.",
+          "tools": [
+            "Decodable passage",
+            "Phrase-cued text",
+            "Teacher feedback"
+          ]
+        }
+      }
+    },
+    {
+      "id": "vocabulary",
+      "title": "Vocabulary",
+      "description": "Student-friendly meanings, oral use, context, and transfer to reading and writing.",
+      "thresholds": {
+        "secure": 80,
+        "developing": 65
+      },
+      "recommendations": {
+        "secure": {
+          "group": "Green",
+          "action": "Use words in discussion, writing, comparison, and word relationships.",
+          "tools": [
+            "Semantic map",
+            "Writing prompt",
+            "Discussion cards"
+          ]
+        },
+        "developing": {
+          "group": "Blue",
+          "action": "Review words with examples, nonexamples, context, and partner talk.",
+          "tools": [
+            "Vocabulary cards",
+            "Sentence frames",
+            "Context sentences"
+          ]
+        },
+        "reteach": {
+          "group": "Yellow",
+          "action": "Teach with pictures, gestures, oral rehearsal, and repeated exposure.",
+          "tools": [
+            "Picture cards",
+            "Gestures",
+            "Bilingual support",
+            "Word bank"
+          ]
+        }
+      }
+    },
+    {
+      "id": "comprehension",
+      "title": "Reading Comprehension",
+      "description": "Main idea, details, cause and effect, sequence, character response, and text evidence.",
+      "thresholds": {
+        "secure": 80,
+        "developing": 65
+      },
+      "recommendations": {
+        "secure": {
+          "group": "Green",
+          "action": "Higher-order questions, text evidence, comparison, and written explanation.",
+          "tools": [
+            "Text evidence frame",
+            "Discussion prompts",
+            "Extension response"
+          ]
+        },
+        "developing": {
+          "group": "Blue",
+          "action": "Guided rereading, graphic organizer, partner explanation, and evidence selection.",
+          "tools": [
+            "Graphic organizer",
+            "Highlighted text",
+            "Sentence frame"
+          ]
+        },
+        "reteach": {
+          "group": "Yellow",
+          "action": "Use a shorter passage, explicit modeling, pictures, and oral retell before writing.",
+          "tools": [
+            "Chunked text",
+            "Picture sequence",
+            "Teacher think-aloud",
+            "Oral response"
+          ]
+        }
+      }
+    },
+    {
+      "id": "grammar",
+      "title": "Grammar / GUM",
+      "description": "Weekly grammar skill and application in sentences and writing.",
+      "thresholds": {
+        "secure": 80,
+        "developing": 65
+      },
+      "recommendations": {
+        "secure": {
+          "group": "Green",
+          "action": "Apply the skill during revision and editing.",
+          "tools": [
+            "Editing checklist",
+            "Sentence expansion",
+            "Writing application"
+          ]
+        },
+        "developing": {
+          "group": "Blue",
+          "action": "Model, sort, practice, and apply in one supported sentence.",
+          "tools": [
+            "Sentence sort",
+            "Color coding",
+            "Guided practice"
+          ]
+        },
+        "reteach": {
+          "group": "Yellow",
+          "action": "Use concrete examples, oral sentences, manipulatives, and immediate feedback.",
+          "tools": [
+            "Word cards",
+            "Sentence frames",
+            "Pocket-chart sort"
+          ]
+        }
+      }
+    },
+    {
+      "id": "writing",
+      "title": "Writing",
+      "description": "Ideas, organization, sentence structure, conventions, and revision.",
+      "thresholds": {
+        "secure": 80,
+        "developing": 65
+      },
+      "recommendations": {
+        "secure": {
+          "group": "Green",
+          "action": "Revision, craft, elaboration, and publication.",
+          "tools": [
+            "Revision checklist",
+            "Author's craft prompt",
+            "Publishing page"
+          ]
+        },
+        "developing": {
+          "group": "Blue",
+          "action": "Oral rehearsal, modeled sentence, graphic organizer, and guided drafting.",
+          "tools": [
+            "Writing organizer",
+            "Sentence frame",
+            "Teacher conference"
+          ]
+        },
+        "reteach": {
+          "group": "Yellow",
+          "action": "Use drawing, oral storytelling, dictation, and one-sentence success criteria.",
+          "tools": [
+            "Picture plan",
+            "Oral rehearsal",
+            "Dictation",
+            "Reduced writing load"
+          ]
+        }
+      }
+    }
+  ],
+  "assessmentSources": [
+    "Open Court weekly assessments",
+    "DIBELS benchmark and progress monitoring",
+    "Teacher observation",
+    "Fluency checks",
+    "Writing rubrics",
+    "Science and math exit tickets"
+  ]
+}

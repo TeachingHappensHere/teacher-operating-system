@@ -1,35 +1,35 @@
 # TeachingHappensHere
 
-## Version 5.3 — Weekly Instructional Planner & Teach My Day Sync
+## Version 5.4 — Assessment, Reteach & Small-Group Sync
 
 Upload/add:
 
-- `weekly-planner-v5-3.json`
-- `weekly-planner-v5-3.js`
-- `style-additions-v5-3.css`
+- `assessment-reteach-v5-4.json`
+- `assessment-reteach-v5-4.js`
+- `style-additions-v5-4.css`
 - `service-worker.js`
 - `README.md`
 
-Add this line after `curriculum-resource-integration-v5-2.js` and before `</body>`:
+Add this line after `weekly-planner-v5-3.js` and before `</body>`:
 
 ```html
-<script src="weekly-planner-v5-3.js"></script>
+<script src="assessment-reteach-v5-4.js"></script>
 ```
 
 Commit message:
 
-`Version 5.3 - Weekly Instructional Planner and Teach My Day Sync`
+`Version 5.4 - Assessment Reteach and Small Group Sync`
 
 Included:
 
-- Regular instructional week template
-- First-week classroom launch template
-- Monday–Friday instructional blocks
-- Heggerty, MOWR, UFLI, phonics, vocabulary, reading, math, writing, science, and social studies planning
-- Small-group priorities
-- Print and preparation checklists
-- Assessment and progress-monitoring planning
-- Saved teacher notes and reflections
-- Send Week to Teach My Day
-- Print-ready weekly plan
-- Shortcut: Ctrl/Command + Shift + W
+- Phonics, fluency, vocabulary, comprehension, grammar, and writing analysis
+- Secure, developing, and needs-reteach decision bands
+- Red, Yellow, Blue, and Green group recommendations
+- UFLI, fluency, vocabulary, comprehension, grammar, and writing tools
+- Next-step intervention checklists
+- Teacher notes
+- Send results to Weekly Planner
+- Send results to Teach My Day
+- Printable reteach plan
+- Saved-progress-compatible fields
+- Shortcut: Ctrl/Command + Shift + A
