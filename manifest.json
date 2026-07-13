@@ -1,11 +1,11 @@
 {
-  "name": "TeachingHappensHere Teacher Operating System",
-  "short_name": "TeachingHappensHere",
+  "name": "Mrs. Parrish's Teacher Operating System",
+  "short_name": "Teacher OS",
   "start_url": "./",
-  "scope": "./",
   "display": "standalone",
-  "background_color": "#fbf8ff",
-  "theme_color": "#6d4cc2",
+  "background_color": "#fffaf8",
+  "theme_color": "#f7cbd2",
+  "description": "Unified classroom planning and teacher workflow system.",
   "icons": [
     {
       "src": "icon-192.svg",
