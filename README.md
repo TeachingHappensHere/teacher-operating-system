@@ -1,48 +1,43 @@
 # TeachingHappensHere
 
-## Version 5.8 — School Calendar, Deadlines & Event Sync
+## Version 5.9 — Notifications, Reminders & Follow-Up Center
 
-### Upload/add
+Upload/add:
 
-- `school-calendar-v5-8.json`
-- `school-calendar-v5-8.js`
-- `style-additions-v5-8.css`
+- `notifications-reminders-v5-9.json`
+- `notifications-reminders-v5-9.js`
+- `style-additions-v5-9.css`
 - `service-worker.js`
 - `README.md`
 
-### Add this script to `index.html`
-
-Place it after `daily-command-center-v5-7.js` and immediately before `</body>`:
+Add this line after `school-calendar-v5-8.js` and before `</body>`:
 
 ```html
-<script src="school-calendar-v5-8.js"></script>
+<script src="notifications-reminders-v5-9.js"></script>
 ```
 
-### Commit message
+Commit message:
 
-`Version 5.8 - School Calendar Deadlines and Event Sync`
+`Version 5.9 - Notifications Reminders and Follow Up Center`
 
-### Included
+Included:
 
-- Monthly school calendar
-- Agenda and upcoming-events view
-- iDays and no-school dates
-- Assessment deadlines
-- Parent conferences
-- Pillar assemblies
-- Curriculum deadlines
-- Classroom events
-- Professional development
-- Event priorities
-- Preparation checklists
+- Calendar-event reminders
+- Due-today and overdue alerts
+- Student follow-up reminders
+- Assessment and reteach reminders
+- Standards-evidence reminders
+- Family communication reminders
+- Weekly planning reminders
+- Custom reminders
+- Snooze, complete, dismiss, restore, edit, and delete controls
+- Reminder history
 - Connected-system buttons
-- Event countdowns
-- Dashboard calendar card
-- Upcoming-event synchronization for other systems
-- Printable calendar
+- Dashboard reminder card
+- Sidebar urgent-reminder badge
+- Search and category filters
+- Printable reminder list
 - Local browser storage
-- Shortcut: `Ctrl/Command + Shift + C`
+- Shortcut: Ctrl/Command + Shift + N
 
-### Important
-
-Sample events are intentionally undated. Add the current school-year dates inside the Calendar after installation.
+Choose Refresh Sources to pull current actions from Calendar, Assessment & Reteach, Student Support, and Standards.
