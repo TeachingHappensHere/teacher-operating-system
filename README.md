@@ -1,43 +1,54 @@
 # TeachingHappensHere
 
-## Version 5.9 — Notifications, Reminders & Follow-Up Center
+## RC1 — Classroom Launch Candidate
 
-Upload/add:
+RC1 replaces the visible legacy Version 3.2 Classroom Launch entry with one Release Candidate launch path.
 
-- `notifications-reminders-v5-9.json`
-- `notifications-reminders-v5-9.js`
-- `style-additions-v5-9.css`
+### Upload/add
+
+- `release-candidate-rc1.json`
+- `release-candidate-rc1.js`
+- `style-additions-rc1.css`
 - `service-worker.js`
 - `README.md`
 
-Add this line after `school-calendar-v5-8.js` and before `</body>`:
+### Add this script to `index.html`
+
+Place it after `classroom-launch-v6-0.js` and immediately before `</body>`:
 
 ```html
-<script src="notifications-reminders-v5-9.js"></script>
+<script src="release-candidate-rc1.js"></script>
 ```
 
-Commit message:
+### Commit message
 
-`Version 5.9 - Notifications Reminders and Follow Up Center`
+`RC1 - Classroom Launch Candidate`
 
-Included:
+### RC1 changes
 
-- Calendar-event reminders
-- Due-today and overdue alerts
-- Student follow-up reminders
-- Assessment and reteach reminders
-- Standards-evidence reminders
-- Family communication reminders
-- Weekly planning reminders
-- Custom reminders
-- Snooze, complete, dismiss, restore, edit, and delete controls
-- Reminder history
-- Connected-system buttons
-- Dashboard reminder card
-- Sidebar urgent-reminder badge
-- Search and category filters
-- Printable reminder list
-- Local browser storage
-- Shortcut: Ctrl/Command + Shift + N
+- Hides the visible Version 3.2 Classroom Launch navigation entry
+- Hides the old Version 3.2 launch page
+- Creates one RC1 Classroom Launch button
+- Creates one RC1 dashboard banner
+- Routes Monday Planning and First Day into Version 6.0
+- Adds a clearly visible Health tab
+- Highlights Health inside Version 6.0
+- Adds script and JSON health checks
+- Checks core navigation controls
+- Consolidates the service worker cache
+- Keeps the existing modules and saved browser data intact
+- Keyboard shortcut for Health: `Ctrl/Command + Shift + H`
 
-Choose Refresh Sources to pull current actions from Calendar, Assessment & Reteach, Student Support, and Standards.
+### After deployment
+
+1. Hard refresh the GitHub Pages site.
+2. Open `RC1 Classroom Launch` in the sidebar.
+3. Select `Health`.
+4. Confirm all checks pass.
+5. Open `Monday Planning`.
+6. Test Weekly Planner, Unit 1, Daily Command Center, Calendar, and Reminders.
+7. Test once on desktop and once on iPad.
+
+### Important
+
+RC1 hides the old launch interface at runtime rather than deleting the older source code. Permanent source cleanup should happen after RC1 passes testing.

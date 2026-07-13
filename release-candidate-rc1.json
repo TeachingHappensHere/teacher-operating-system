@@ -1,0 +1,34 @@
+{
+  "version": "RC1 Classroom Launch Candidate",
+  "releaseStatus": "Release candidate focused on replacing the legacy launch screen, consolidating navigation, exposing Health, and verifying launch readiness.",
+  "legacyLaunchLabels": [
+    "Classroom Launch",
+    "Classroom Launch Mode",
+    "Version 3.2"
+  ],
+  "requiredScripts": [
+    "instructional-content-v5-1.js",
+    "curriculum-resource-integration-v5-2.js",
+    "weekly-planner-v5-3.js",
+    "assessment-reteach-v5-4.js",
+    "student-support-family-v5-5.js",
+    "standards-reporting-v5-6.js",
+    "daily-command-center-v5-7.js",
+    "school-calendar-v5-8.js",
+    "notifications-reminders-v5-9.js",
+    "classroom-launch-v6-0.js",
+    "release-candidate-rc1.js"
+  ],
+  "requiredData": [
+    "instructional-content-v5-1.json",
+    "curriculum-resource-integration-v5-2.json",
+    "weekly-planner-v5-3.json",
+    "assessment-reteach-v5-4.json",
+    "student-support-family-v5-5.json",
+    "standards-reporting-v5-6.json",
+    "daily-command-center-v5-7.json",
+    "school-calendar-v5-8.json",
+    "notifications-reminders-v5-9.json",
+    "classroom-launch-v6-0.json"
+  ]
+}
