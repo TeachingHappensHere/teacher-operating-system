@@ -1,6 +1,6 @@
 {
-  "version": "7.1 Launch Stabilization & Data Bridge",
-  "releaseStatus": "Launch stabilization for installation, backup/import, legacy-data review, responsive iPad use, and final classroom readiness.",
+  "version": "7.2 Dashboard & Classroom Launch Refinement",
+  "releaseStatus": "Refined dashboard and first-week classroom launch center with teacher-focused resources, visible Health access, materials, printables, and teacher scripts.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -86,6 +86,11 @@
       "\u2302"
     ],
     [
+      "live-workspace",
+      "Live Workspace",
+      "\u2605"
+    ],
+    [
       "teachday",
       "Teach My Day",
       "\u25b6"
@@ -96,14 +101,14 @@
       "\u2726"
     ],
     [
-      "classroom-launch",
-      "Classroom Launch",
-      "\u2661"
-    ],
-    [
       "lesson-plans",
       "Lesson Plans",
       "\u25b1"
+    ],
+    [
+      "classroom-launch",
+      "Classroom Launch",
+      "\u2661"
     ],
     [
       "small-groups",
@@ -113,7 +118,7 @@
     [
       "intervention",
       "Intervention",
-      "\u265f"
+      "\u25ce"
     ],
     [
       "assessments",
@@ -158,7 +163,7 @@
     [
       "health",
       "Health",
-      "\u2713"
+      "\u2665"
     ],
     [
       "settings",
@@ -254,5 +259,118 @@
     "App has been tested on iPad",
     "App has been tested on phone",
     "Offline opening has been tested"
+  ],
+  "dashboardCurriculum": [
+    [
+      "Open Court",
+      "ELA"
+    ],
+    [
+      "UFLI Foundations",
+      "Foundational Reading"
+    ],
+    [
+      "MOWR",
+      "Reading Intervention"
+    ],
+    [
+      "Heggerty",
+      "Phonemic Awareness"
+    ],
+    [
+      "Eureka Math\u00b2",
+      "Mathematics"
+    ],
+    [
+      "Science",
+      "Science"
+    ],
+    [
+      "Social Studies",
+      "Social Studies"
+    ],
+    [
+      "Health",
+      "Health"
+    ],
+    [
+      "Morning Meeting",
+      "SEL"
+    ],
+    [
+      "Pillar Resources",
+      "Heart"
+    ]
+  ],
+  "classroomLaunchMaterials": [
+    "Beginning-of-Year Anchor Charts",
+    "Morning Routine Visual",
+    "Folder Turn-In Labels",
+    "Pencil Procedure Chart",
+    "Restroom Signal Poster",
+    "Line-Up Expectations",
+    "Dismissal Checklist",
+    "Classroom Jobs Cards",
+    "Family Welcome Letter",
+    "First-Week Teacher Script"
+  ],
+  "classroomLaunchDays": [
+    {
+      "day": "Day 1",
+      "title": "Enter, Belong, Learn the Room",
+      "goal": "Students learn how to enter, unpack, gather on the carpet, and begin building classroom community.",
+      "routines": [
+        "Entering the Classroom",
+        "Morning Routine",
+        "How to Sit on the Carpet",
+        "Restroom Signal",
+        "How to Line Up",
+        "Dismissal Routine"
+      ]
+    },
+    {
+      "day": "Day 2",
+      "title": "Practice Transitions",
+      "goal": "Students practice moving safely and efficiently between classroom spaces and activities.",
+      "routines": [
+        "Voice Levels",
+        "Pencil Procedures",
+        "Partner Talk",
+        "Hallway Expectations"
+      ]
+    },
+    {
+      "day": "Day 3",
+      "title": "Build Independence",
+      "goal": "Students begin completing familiar routines with fewer teacher reminders.",
+      "routines": [
+        "Classroom Jobs",
+        "Help Signals",
+        "Center Practice",
+        "Materials Care"
+      ]
+    },
+    {
+      "day": "Day 4",
+      "title": "Academic Routines",
+      "goal": "Students practice lesson participation, partner work, independent work, and small-group movement.",
+      "routines": [
+        "I Do / We Do / You Do",
+        "Small Groups",
+        "Independent Work",
+        "Partner Math"
+      ]
+    },
+    {
+      "day": "Day 5",
+      "title": "Review, Celebrate, Reteach",
+      "goal": "Students review routines, celebrate growth, and practice procedures that still need support.",
+      "routines": [
+        "Routine Review",
+        "Compliment Circle",
+        "Student Reflection",
+        "Reteach High-Need Procedures"
+      ]
+    }
   ]
 }
