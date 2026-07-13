@@ -1,6 +1,6 @@
 {
-  "version": "7.2 Dashboard & Classroom Launch Refinement",
-  "releaseStatus": "Refined dashboard and first-week classroom launch center with teacher-focused resources, visible Health access, materials, printables, and teacher scripts.",
+  "version": "7.3 Weekly Planning & First-Week Production Studio",
+  "releaseStatus": "Weekly planning for Open Court Unit 1, foundational reading, small groups, differentiation, preparation, and Teach My Day.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -372,5 +372,36 @@
         "Reteach High-Need Procedures"
       ]
     }
-  ]
+  ],
+  "unit1Lessons": [
+    "Lesson 1 \u2014 The Mice Who Lived in a Shoe",
+    "Lesson 2 \u2014 Ants and Aphids Work Together",
+    "Lesson 3 \u2014 The Bat, Birds, and Beasts",
+    "Lesson 4 \u2014 A Cherokee Stickball Game",
+    "Lesson 5 \u2014 The Final Game",
+    "Lesson 6 \u2014 Ellie\u2019s Long Walk",
+    "Lesson 7 \u2014 Mattland",
+    "Lesson 8 \u2014 A River of Ice"
+  ],
+  "defaultSupports": [
+    "Picture-word cards",
+    "Sentence frames",
+    "Echo reading",
+    "Oral rehearsal",
+    "Partner support",
+    "Graphic organizer",
+    "Elkonin boxes",
+    "Word mapping",
+    "Visual timer",
+    "Reduced response load",
+    "Quiet testing",
+    "Manipulatives"
+  ],
+  "firstWeekDailyFocus": {
+    "Monday": "Enter, Belong, Learn the Room",
+    "Tuesday": "Practice Transitions",
+    "Wednesday": "Build Independence",
+    "Thursday": "Academic Routines",
+    "Friday": "Review, Celebrate, Reteach"
+  }
 }
