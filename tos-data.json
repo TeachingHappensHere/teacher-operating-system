@@ -1,6 +1,6 @@
 {
-  "version": "7.3 Weekly Planning & First-Week Production Studio",
-  "releaseStatus": "Weekly planning for Open Court Unit 1, foundational reading, small groups, differentiation, preparation, and Teach My Day.",
+  "version": "7.4 Lesson Attachments, Print Center & Resource Linking",
+  "releaseStatus": "Connect weekly lessons to curriculum links, printable pages, preparation tasks, and a consolidated print center.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -403,5 +403,76 @@
     "Wednesday": "Build Independence",
     "Thursday": "Academic Routines",
     "Friday": "Review, Celebrate, Reteach"
-  }
+  },
+  "attachmentCategories": [
+    "Open Court",
+    "UFLI",
+    "Heggerty",
+    "MOWR",
+    "Eureka Math\u00b2",
+    "Writing / GUM",
+    "Science",
+    "Social Studies",
+    "Classroom Launch",
+    "Assessment",
+    "Family Communication",
+    "Other"
+  ],
+  "attachmentTypes": [
+    "PDF",
+    "Google Drive",
+    "Google Slides",
+    "Website",
+    "Video",
+    "Printable Page",
+    "Teacher Guide",
+    "Student Page",
+    "Anchor Chart",
+    "Assessment",
+    "Other"
+  ],
+  "defaultAttachmentTemplates": [
+    {
+      "title": "Open Court Teacher Guide",
+      "category": "Open Court",
+      "type": "Teacher Guide",
+      "url": "",
+      "notes": "Add the lesson-specific teacher guide or curriculum path."
+    },
+    {
+      "title": "Open Court Student Pages",
+      "category": "Open Court",
+      "type": "Student Page",
+      "url": "",
+      "notes": "Add workbook, practice, or anthology pages."
+    },
+    {
+      "title": "UFLI Lesson Resources",
+      "category": "UFLI",
+      "type": "Printable Page",
+      "url": "https://ufli.education.ufl.edu/foundations/toolbox/",
+      "notes": "Open the UFLI Foundations Toolbox."
+    },
+    {
+      "title": "Heggerty Daily Lesson",
+      "category": "Heggerty",
+      "type": "Teacher Guide",
+      "url": "",
+      "notes": "Add the current Heggerty week and lesson."
+    },
+    {
+      "title": "Eureka Math\u00b2 Lesson",
+      "category": "Eureka Math\u00b2",
+      "type": "Teacher Guide",
+      "url": "",
+      "notes": "Add the current module and lesson resources."
+    },
+    {
+      "title": "Classroom Launch Printable",
+      "category": "Classroom Launch",
+      "type": "Anchor Chart",
+      "url": "",
+      "notes": "Connect the routine poster or first-week printable."
+    }
+  ]
 }

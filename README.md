@@ -1,14 +1,44 @@
 # TeachingHappensHere
 
-## Version 7.3 — Weekly Planning & First-Week Production Studio
+## Version 7.4 — Lesson Attachments, Print Center & Resource Linking
 
-Replace:
-- app.js
-- style.css
-- service-worker.js
-- tos-data.json
-- README.md
+### Replace these files
 
-Commit message: `Version 7.3 - Weekly Planning and First Week Production Studio`
+- `app.js`
+- `style.css`
+- `service-worker.js`
+- `tos-data.json`
+- `README.md`
 
-Includes Monday–Friday planning, Open Court Unit 1 selection, I Do/We Do/You Do, Heggerty, UFLI, MOWR, phonics, vocabulary, reading, writing, Eureka Math², science, social studies, small groups, differentiation, assessment, print queue, Teach My Day sync, and iPad navigation.
+No change to `index.html` is required.
+
+### Commit message
+
+`Version 7.4 - Lesson Attachments Print Center and Resource Linking`
+
+### Included
+
+- Lesson Attachments page
+- Monday–Friday resource assignment
+- Curriculum categories and resource types
+- URL and GitHub path fields
+- Lesson connections and copy counts
+- Missing-link alerts
+- Attachment search and filters
+- Consolidated Print & Preparation Center
+- Weekly Planning print-queue integration
+- Dashboard and planning summaries
+- Resource Health checks
+
+### Important
+
+The application stores resource links and metadata. The actual file must exist at the entered public URL or GitHub path.
+
+### After deployment
+
+1. Hard-refresh the site.
+2. Open Lesson Attachments.
+3. Add Monday’s Open Court, Heggerty, UFLI, and Eureka resources.
+4. Mark needed files for printing.
+5. Build the Print Center.
+6. Test every link before Monday.
