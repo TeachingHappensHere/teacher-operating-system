@@ -1,6 +1,6 @@
 {
-  "version": "8.3 Writing, Science & Social Studies Daily Studios",
-  "releaseStatus": "Completes the afternoon instructional workflow by connecting Writing, Science, and Social Studies to Weekly Planning, Live Teaching, Daily Lesson Packets, attachments, assessments, and printing.",
+  "version": "9.0 Automatic Lesson Generator & Full-Day Builder",
+  "releaseStatus": "Generates a complete second-grade teaching day from selected Open Court, Eureka Math\u00b2, foundational reading, writing, science, social studies, and classroom-launch inputs.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1394,5 +1394,97 @@
     "Oral response option",
     "Chunked text",
     "Bilingual support"
-  ]
+  ],
+  "generatorDefaults": {
+    "universalSupports": [
+      "Visuals and gestures",
+      "Choral or echo response",
+      "Partner talk",
+      "Sentence frames",
+      "Chunked directions",
+      "Word bank",
+      "Graphic organizer",
+      "Visual timer"
+    ],
+    "elSupports": [
+      "Picture-word cards",
+      "Oral rehearsal",
+      "Echo reading",
+      "Sentence frames",
+      "Bilingual support when available"
+    ],
+    "iep504Supports": [
+      "Reduced response load",
+      "Quiet testing",
+      "Oral response option",
+      "Manipulatives",
+      "Repeated directions",
+      "Extended processing time"
+    ]
+  },
+  "generatorTemplates": {
+    "morningWork": [
+      "Students will enter, unpack, and begin an independent task using the established routine.",
+      "Model arrival and where completed work belongs.",
+      "Practice the routine together.",
+      "Students complete the routine independently.",
+      "Teacher observation checklist."
+    ],
+    "heggerty": [
+      "Students will practice phonemic-awareness skills through oral response.",
+      "Model each sound task with motions.",
+      "Complete examples chorally.",
+      "Students respond independently.",
+      "Immediate oral-response checks."
+    ],
+    "phonics": [
+      "Students will read and spell words using the target pattern.",
+      "Model sound-spelling mapping.",
+      "Blend and map words together.",
+      "Students read and write words independently.",
+      "Word reading or dictation check."
+    ],
+    "vocabulary": [
+      "Students will determine and use weekly vocabulary.",
+      "Introduce words with definitions and context.",
+      "Use words in oral examples.",
+      "Students use words in sentences.",
+      "Quick vocabulary check."
+    ],
+    "reading": [
+      "Students will read and discuss the selection using text evidence.",
+      "Model fluent reading and comprehension strategy.",
+      "Read and discuss together.",
+      "Students respond independently or with a partner.",
+      "Comprehension response or lesson assessment."
+    ],
+    "writing": [
+      "Students will apply the writing focus in a complete response.",
+      "Model the writing process.",
+      "Compose or revise together.",
+      "Students write independently.",
+      "Writing sample or rubric."
+    ],
+    "math": [
+      "Students will solve problems using the selected Eureka strategy.",
+      "Model with representations and precise language.",
+      "Solve guided examples.",
+      "Students solve independently and complete the exit ticket.",
+      "Exit ticket and observation."
+    ],
+    "science": [
+      "Students will investigate a phenomenon and explain with evidence.",
+      "Introduce the phenomenon and model observation.",
+      "Investigate together.",
+      "Students record evidence and conclusions.",
+      "Notebook response or exit ticket."
+    ],
+    "socialStudies": [
+      "Students will explain the selected civics, history, geography, or economics concept.",
+      "Model analysis of a source or question.",
+      "Analyze and discuss together.",
+      "Students complete the task independently.",
+      "Student task or exit ticket."
+    ]
+  }
 }
