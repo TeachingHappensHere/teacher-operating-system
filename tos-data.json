@@ -1,6 +1,6 @@
 {
-  "version": "8.2 Eureka Math\u00b2 Daily Math Studio & Module 1 Integration",
-  "releaseStatus": "Connects the Grade 2 Eureka Math\u00b2 teacher portal to weekly planning, the 60-minute math block, the 20-minute Math 2 block, lesson packets, exit tickets, assessment notes, and differentiated support.",
+  "version": "8.3 Writing, Science & Social Studies Daily Studios",
+  "releaseStatus": "Completes the afternoon instructional workflow by connecting Writing, Science, and Social Studies to Weekly Planning, Live Teaching, Daily Lesson Packets, attachments, assessments, and printing.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1281,5 +1281,118 @@
       "Fluency Check",
       "Teacher Observation"
     ]
-  }
+  },
+  "afternoonStudios": {
+    "writing": {
+      "title": "Writing / GUM Studio",
+      "schedule": "11:10\u201311:40",
+      "program": "Building the Foundation / Open Court GUM",
+      "lessonComponents": [
+        "Mini-Lesson",
+        "Teacher Model",
+        "Shared or Guided Writing",
+        "Independent Writing",
+        "Grammar, Usage & Mechanics",
+        "Conference Focus",
+        "Publishing or Sharing",
+        "Assessment / Rubric"
+      ],
+      "genres": [
+        "Narrative",
+        "Informative / Explanatory",
+        "Opinion",
+        "Response to Reading",
+        "Research",
+        "Poetry",
+        "Letter Writing",
+        "Journal Writing"
+      ]
+    },
+    "science": {
+      "title": "Science Studio",
+      "schedule": "1:40\u20132:15",
+      "program": "Arizona Science Standards",
+      "lessonComponents": [
+        "Phenomenon / Engage",
+        "Question",
+        "Investigation / Explore",
+        "Teacher Explanation",
+        "Student Evidence",
+        "Vocabulary",
+        "Notebook Response",
+        "Assessment / Exit Ticket"
+      ],
+      "units": [
+        "Matter",
+        "Earthquakes",
+        "Glaciers",
+        "Weather & Severe Weather",
+        "Life Science",
+        "Plants & Animals",
+        "Engineering Solutions",
+        "Custom Unit"
+      ]
+    },
+    "socialStudies": {
+      "title": "Social Studies Studio",
+      "schedule": "2:15\u20132:55",
+      "program": "Arizona Social Studies / iCivics / 180 Days",
+      "lessonComponents": [
+        "Essential Question",
+        "Background Knowledge",
+        "Vocabulary",
+        "Primary or Secondary Source",
+        "Teacher Model",
+        "Guided Practice",
+        "Student Task",
+        "Assessment / Reflection"
+      ],
+      "units": [
+        "Civics & Community",
+        "Maps & Geography",
+        "History Detectives",
+        "Economics",
+        "Arizona",
+        "National Symbols",
+        "Neighborhood Good",
+        "Custom Unit"
+      ]
+    }
+  },
+  "writingSupports": [
+    "Oral rehearsal",
+    "Sentence frames",
+    "Word bank",
+    "Graphic organizer",
+    "Shared writing",
+    "Scribe or dictation",
+    "Reduced writing load",
+    "Paragraph frame",
+    "Editing checklist",
+    "Teacher conference"
+  ],
+  "scienceSupports": [
+    "Visual vocabulary",
+    "Real objects or models",
+    "Partner investigation",
+    "Chunked directions",
+    "Notebook sentence frames",
+    "Oral response option",
+    "Diagram labeling",
+    "Video or demonstration",
+    "Preteach vocabulary",
+    "Reduced response load"
+  ],
+  "socialStudiesSupports": [
+    "Map or timeline visual",
+    "Picture vocabulary",
+    "Read-aloud support",
+    "Partner reading",
+    "Sentence frames",
+    "Graphic organizer",
+    "Primary-source observation frame",
+    "Oral response option",
+    "Chunked text",
+    "Bilingual support"
+  ]
 }

@@ -456,3 +456,87 @@ textarea{min-height:115px;resize:vertical}
   .v82-layout{display:block}
   .v82-section{break-inside:avoid}
 }
+
+
+/* Version 8.3 — Writing, Science & Social Studies Daily Studios */
+.v83-studio-tabs{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px
+}
+.v83-studio-tabs button{
+  border:1px solid var(--line);border-radius:11px;background:#fff;padding:12px;text-align:left
+}
+.v83-studio-tabs button.active{background:#f3eefb;border-color:#c7b2df}
+.v83-studio-tabs strong,.v83-studio-tabs span{display:block}
+.v83-studio-tabs span{margin-top:4px;color:var(--muted);font-size:11px}
+.v83-lesson-selector{
+  display:grid;grid-template-columns:150px 1fr 180px auto;gap:10px;align-items:end;margin-bottom:12px
+}
+.v83-lesson-selector label{display:grid;gap:6px;font-weight:700}
+.v83-layout{display:grid;grid-template-columns:220px minmax(0,1fr) 240px;gap:12px}
+.v83-section-nav,.v83-summary{position:sticky;top:72px;height:max-content}
+.v83-section-nav{display:grid;gap:6px}
+.v83-section-nav button{
+  border:0;border-radius:8px;background:var(--surface-soft);color:var(--accent-dark);
+  padding:9px;text-align:left;font-weight:800
+}
+.v83-main{display:grid;gap:12px;min-width:0}
+.v83-section{scroll-margin-top:84px}
+.v83-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v83-form-grid label{display:grid;gap:6px;font-weight:700}
+.v83-form-grid .wide{grid-column:1/3}
+.v83-form-grid textarea{min-height:130px}
+.v83-support-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.v83-support-chips button{
+  border:1px solid var(--line);border-radius:999px;background:#fff7f5;
+  color:var(--accent-dark);padding:7px 9px
+}
+.v83-summary{display:grid;gap:8px}
+.v83-summary article{padding:9px;border-radius:9px;background:#f3eefb}
+.v83-summary span,.v83-summary strong{display:block}
+.v83-summary span{font-size:10px;color:#7255a4;font-weight:900}
+.v83-summary strong{margin-top:3px}
+.v83-results{display:grid;gap:7px;margin-top:12px}
+.v83-results article{padding:9px;border-radius:8px;background:#fff8ed}
+.v83-results strong,.v83-results span{display:block}
+.v83-results span{margin-top:3px;color:var(--muted);font-size:11px}
+.v83-injected-card,.v83-dashboard-card{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:14px 16px;border:1px solid #dfd4ed;border-radius:14px;
+  background:#f3eefb;margin-bottom:12px
+}
+.v83-injected-card p,.v83-dashboard-card p{
+  margin:0;color:#7255a4;font-size:11px;font-weight:900
+}
+.v83-injected-card h3,.v83-dashboard-card h3{margin:4px 0}
+.v83-injected-card span,.v83-dashboard-card span{color:var(--muted)}
+.v83-injected-card button,.v83-dashboard-card button{
+  border:0;border-radius:9px;background:#7255a4;color:#fff;padding:10px 12px;font-weight:800
+}
+.v83-health-panel{margin-top:12px}
+@media(max-width:1150px){
+  .v83-layout{grid-template-columns:180px minmax(0,1fr)}
+  .v83-summary{position:static;grid-column:1/3}
+  .v83-lesson-selector{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .v83-studio-tabs{display:flex;overflow:auto}
+  .v83-studio-tabs button{min-width:170px}
+  .v83-lesson-selector,.v83-form-grid{grid-template-columns:1fr}
+  .v83-form-grid .wide{grid-column:auto}
+  .v83-layout{display:block}
+  .v83-section-nav{
+    position:sticky;top:58px;z-index:20;display:flex;overflow:auto;
+    margin-bottom:10px;padding:8px
+  }
+  .v83-section-nav h3{display:none}
+  .v83-section-nav button{white-space:nowrap}
+  .v83-summary{grid-column:auto;margin-top:10px}
+  .v83-injected-card,.v83-dashboard-card{align-items:flex-start;flex-direction:column}
+}
+@media print{
+  .sidebar,.topbar,.mobile-nav,.v83-studio-tabs,.v83-section-nav,
+  .page-header button,.v83-dashboard-card,.v83-injected-card,
+  .v83-summary button,.v83-support-chips{display:none!important}
+  .v83-layout{display:block}
+  .v83-section{break-inside:avoid}
+}

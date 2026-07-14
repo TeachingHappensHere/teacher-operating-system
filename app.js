@@ -2594,3 +2594,836 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
+
+
+/* Version 8.3 — Writing, Science & Social Studies Daily Studios */
+(() => {
+  "use strict";
+
+  const STATE_KEY = "thh-v83:afternoon-studios";
+  const WEEK_KEY = "thh-v73:weekly-plan";
+  const ATTACHMENT_KEY = "thh-v74:attachments";
+  const TEACH_DAY_KEY = "thh-v73:teach-day";
+
+  let config = null;
+  let state = {
+    activeStudio: "writing",
+    lessons: {
+      writing: {},
+      science: {},
+      socialStudies: {}
+    },
+    selectedLessons: {
+      writing: 1,
+      science: 1,
+      socialStudies: 1
+    },
+    assessmentResults: []
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+      try {
+        state = { ...state, ...JSON.parse(localStorage.getItem(STATE_KEY) || "{}") };
+      } catch {}
+      ensureLesson("writing");
+      ensureLesson("science");
+      ensureLesson("socialStudies");
+      waitForShell();
+    } catch (error) {
+      console.warn("Version 8.3 could not start.", error);
+    }
+  }
+
+  function save() {
+    localStorage.setItem(STATE_KEY, JSON.stringify(state));
+  }
+
+  function lessonKey(studio, lessonNumber = state.selectedLessons[studio]) {
+    return `${studio}-lesson-${lessonNumber}`;
+  }
+
+  function blankLesson(studio, number) {
+    const common = {
+      studio,
+      lessonNumber: number,
+      title: `${studioTitle(studio)} Lesson ${number}`,
+      date: "",
+      objective: "",
+      standards: "",
+      vocabulary: "",
+      materials: "",
+      attachments: "",
+      differentiation: "",
+      assessment: "",
+      teacherNotes: "",
+      complete: false
+    };
+
+    if (studio === "writing") {
+      return {
+        ...common,
+        genre: "Narrative",
+        prompt: "",
+        mentorText: "",
+        miniLesson: "",
+        teacherModel: "",
+        guidedWriting: "",
+        independentWriting: "",
+        gum: "",
+        conferenceFocus: "",
+        publishing: "",
+        rubric: ""
+      };
+    }
+
+    if (studio === "science") {
+      return {
+        ...common,
+        unit: "Matter",
+        phenomenon: "",
+        question: "",
+        investigation: "",
+        explanation: "",
+        studentEvidence: "",
+        notebookResponse: "",
+        safety: ""
+      };
+    }
+
+    return {
+      ...common,
+      unit: "Civics & Community",
+      essentialQuestion: "",
+      backgroundKnowledge: "",
+      source: "",
+      teacherModel: "",
+      guidedPractice: "",
+      studentTask: "",
+      reflection: ""
+    };
+  }
+
+  function ensureLesson(studio) {
+    state.lessons[studio] = state.lessons[studio] || {};
+    const key = lessonKey(studio);
+    if (!state.lessons[studio][key]) {
+      state.lessons[studio][key] = blankLesson(studio, state.selectedLessons[studio] || 1);
+    }
+    save();
+  }
+
+  function currentLesson(studio = state.activeStudio) {
+    ensureLesson(studio);
+    return state.lessons[studio][lessonKey(studio)];
+  }
+
+  function studioTitle(studio) {
+    return config.afternoonStudios?.[studio]?.title || studio;
+  }
+
+  function weeklyPlan() {
+    try {
+      return JSON.parse(localStorage.getItem(WEEK_KEY) || "null");
+    } catch {
+      return null;
+    }
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    addNavigation();
+    window.addEventListener("hashchange", route);
+
+    new MutationObserver(() => {
+      const current = location.hash.replace("#","") || "dashboard";
+      if (current === "afternoon-studios" && !$("#v83Studios")) renderStudio();
+      if (current === "lesson-plans") setTimeout(injectPlanningCard, 0);
+      if (current === "teachday") setTimeout(injectTeachDayCards, 0);
+      if (current === "production") setTimeout(injectPacketCard, 0);
+      if (current === "assessments") setTimeout(injectAssessmentCard, 0);
+      if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+      if (current === "health") setTimeout(injectHealth, 0);
+    }).observe($("#pageHost"), { childList: true, subtree: true });
+
+    route();
+  }
+
+  function addNavigation() {
+    if ($('[data-route="afternoon-studios"]')) return;
+
+    const math = $('[data-route="eureka-math"]');
+    const button = document.createElement("button");
+    button.className = "nav-button";
+    button.dataset.route = "afternoon-studios";
+    button.innerHTML = "<span>✎</span><strong>Writing, Science & SS</strong>";
+    button.addEventListener("click", () => location.hash = "afternoon-studios");
+
+    if (math) math.insertAdjacentElement("afterend", button);
+    else $("#mainNav").appendChild(button);
+  }
+
+  function route() {
+    const current = location.hash.replace("#","") || "dashboard";
+    if (current === "afternoon-studios") setTimeout(renderStudio, 0);
+    if (current === "lesson-plans") setTimeout(injectPlanningCard, 0);
+    if (current === "teachday") setTimeout(injectTeachDayCards, 0);
+    if (current === "production") setTimeout(injectPacketCard, 0);
+    if (current === "assessments") setTimeout(injectAssessmentCard, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "health") setTimeout(injectHealth, 0);
+  }
+
+  function renderStudio() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const studio = state.activeStudio;
+    const lesson = currentLesson(studio);
+    const studioConfig = config.afternoonStudios[studio];
+
+    host.innerHTML = `
+      <section id="v83Studios">
+        <section class="page-header">
+          <div>
+            <p>VERSION 8.3</p>
+            <h2>Writing, Science & Social Studies Daily Studios</h2>
+            <span>Plan the complete afternoon instructional sequence and connect it to the rest of the Teacher Operating System.</span>
+          </div>
+          <div class="button-row">
+            <button id="v83SendPlanning" class="secondary-button">Send to Weekly Planning</button>
+            <button id="v83SendTeachDay" class="primary-button">Send to Teach My Day</button>
+          </div>
+        </section>
+
+        <nav class="v83-studio-tabs">
+          ${[
+            ["writing","Writing / GUM","11:10–11:40"],
+            ["science","Science","1:40–2:15"],
+            ["socialStudies","Social Studies","2:15–2:55"]
+          ].map(([id,label,time]) => `
+            <button data-v83-studio="${id}" class="${id === studio ? "active" : ""}">
+              <strong>${label}</strong>
+              <span>${time}</span>
+            </button>`).join("")}
+        </nav>
+
+        <section class="v83-lesson-selector panel">
+          <label>
+            <span>Lesson Number</span>
+            <input id="v83LessonNumber" type="number" min="1" max="200" value="${esc(state.selectedLessons[studio])}">
+          </label>
+          <label class="wide">
+            <span>Lesson Title</span>
+            <input data-v83-field="title" value="${esc(lesson.title)}">
+          </label>
+          <label>
+            <span>Status</span>
+            <select id="v83Status">
+              <option ${!lesson.complete ? "selected" : ""}>In Progress</option>
+              <option ${lesson.complete ? "selected" : ""}>Ready to Teach</option>
+            </select>
+          </label>
+          <button id="v83LoadLesson" class="secondary-button">Load Lesson</button>
+        </section>
+
+        <section class="v83-layout">
+          <aside class="panel v83-section-nav">
+            <h3>${esc(studioConfig.title)}</h3>
+            ${sectionLinks(studio)}
+          </aside>
+
+          <main class="v83-main">
+            ${commonOverview(lesson, studio)}
+            ${studio === "writing" ? writingSections(lesson) : ""}
+            ${studio === "science" ? scienceSections(lesson) : ""}
+            ${studio === "socialStudies" ? socialStudiesSections(lesson) : ""}
+            ${supportSection(lesson, studio)}
+            ${assessmentSection(lesson, studio)}
+          </main>
+
+          <aside class="panel v83-summary">
+            <h3>Lesson Summary</h3>
+            <article><span>Studio</span><strong>${esc(studioConfig.title)}</strong></article>
+            <article><span>Schedule</span><strong>${esc(studioConfig.schedule)}</strong></article>
+            <article><span>Lesson</span><strong>${esc(state.selectedLessons[studio])}</strong></article>
+            <article><span>Status</span><strong>${lesson.complete ? "Ready" : "In Progress"}</strong></article>
+            <article><span>Program</span><strong>${esc(studioConfig.program)}</strong></article>
+            <button id="v83AddAttachment" class="secondary-button">Add to Attachments</button>
+            <button id="v83PrintLesson" class="primary-button">Print Lesson</button>
+          </aside>
+        </section>
+      </section>
+    `;
+
+    wireStudio();
+  }
+
+  function sectionLinks(studio) {
+    const links = [["overview","Overview"]];
+    if (studio === "writing") {
+      links.push(
+        ["mini","Mini-Lesson"],
+        ["model","Model & Guided Writing"],
+        ["independent","Independent Writing"],
+        ["gum","Grammar / GUM"],
+        ["conference","Conference & Publishing"]
+      );
+    } else if (studio === "science") {
+      links.push(
+        ["engage","Phenomenon & Question"],
+        ["investigate","Investigation"],
+        ["explain","Explanation & Evidence"],
+        ["notebook","Notebook & Vocabulary"]
+      );
+    } else {
+      links.push(
+        ["question","Essential Question"],
+        ["source","Background & Source"],
+        ["instruction","Model & Guided Practice"],
+        ["task","Student Task & Reflection"]
+      );
+    }
+    links.push(["support","Differentiation"],["assessment","Assessment"]);
+    return links.map(([id,label]) => `<button data-v83-section="${id}">${esc(label)}</button>`).join("");
+  }
+
+  function commonOverview(lesson, studio) {
+    const studioConfig = config.afternoonStudios[studio];
+    let extra = "";
+
+    if (studio === "writing") {
+      extra = `
+        <label><span>Genre</span><select data-v83-field="genre">
+          ${studioConfig.genres.map(item => `<option ${item === lesson.genre ? "selected" : ""}>${esc(item)}</option>`).join("")}
+        </select></label>
+        <label><span>Writing Prompt</span><input data-v83-field="prompt" value="${esc(lesson.prompt)}"></label>`;
+    } else {
+      extra = `
+        <label><span>Unit</span><select data-v83-field="unit">
+          ${studioConfig.units.map(item => `<option ${item === lesson.unit ? "selected" : ""}>${esc(item)}</option>`).join("")}
+        </select></label>`;
+    }
+
+    return section("overview","Lesson Overview",`
+      <div class="v83-form-grid">
+        <label><span>Date</span><input data-v83-field="date" type="date" value="${esc(lesson.date)}"></label>
+        ${extra}
+        ${field("objective","Objective",lesson.objective,"wide")}
+        ${field("standards","Arizona Standards",lesson.standards,"wide")}
+        ${field("materials","Materials",lesson.materials)}
+        ${field("vocabulary","Vocabulary",lesson.vocabulary)}
+        ${field("teacherNotes","Teacher Notes",lesson.teacherNotes,"wide")}
+      </div>
+    `);
+  }
+
+  function writingSections(lesson) {
+    return `
+      ${section("mini","Mini-Lesson",`
+        <div class="v83-form-grid">
+          ${field("mentorText","Mentor Text or Model",lesson.mentorText)}
+          ${field("miniLesson","Teaching Point / Mini-Lesson",lesson.miniLesson)}
+        </div>
+      `)}
+      ${section("model","Teacher Model & Guided Writing",`
+        <div class="v83-form-grid">
+          ${field("teacherModel","Teacher Model",lesson.teacherModel)}
+          ${field("guidedWriting","Shared or Guided Writing",lesson.guidedWriting)}
+        </div>
+      `)}
+      ${section("independent","Independent Writing",`
+        <div class="v83-form-grid">
+          ${field("independentWriting","Independent Writing Task",lesson.independentWriting,"wide")}
+        </div>
+      `)}
+      ${section("gum","Grammar, Usage & Mechanics",`
+        <div class="v83-form-grid">
+          ${field("gum","GUM Skill, Model, and Practice",lesson.gum,"wide")}
+        </div>
+      `)}
+      ${section("conference","Conference, Publishing & Sharing",`
+        <div class="v83-form-grid">
+          ${field("conferenceFocus","Conference Focus",lesson.conferenceFocus)}
+          ${field("publishing","Publishing or Sharing",lesson.publishing)}
+          ${field("rubric","Rubric or Success Criteria",lesson.rubric,"wide")}
+        </div>
+      `)}
+    `;
+  }
+
+  function scienceSections(lesson) {
+    return `
+      ${section("engage","Phenomenon & Question",`
+        <div class="v83-form-grid">
+          ${field("phenomenon","Phenomenon / Engage",lesson.phenomenon)}
+          ${field("question","Investigation Question",lesson.question)}
+          ${field("safety","Safety Considerations",lesson.safety,"wide")}
+        </div>
+      `)}
+      ${section("investigate","Investigation / Explore",`
+        <div class="v83-form-grid">
+          ${field("investigation","Investigation, Materials, and Student Actions",lesson.investigation,"wide")}
+        </div>
+      `)}
+      ${section("explain","Explanation & Student Evidence",`
+        <div class="v83-form-grid">
+          ${field("explanation","Teacher Explanation",lesson.explanation)}
+          ${field("studentEvidence","Student Evidence / Claim",lesson.studentEvidence)}
+        </div>
+      `)}
+      ${section("notebook","Science Notebook & Vocabulary",`
+        <div class="v83-form-grid">
+          ${field("notebookResponse","Notebook Response",lesson.notebookResponse,"wide")}
+        </div>
+      `)}
+    `;
+  }
+
+  function socialStudiesSections(lesson) {
+    return `
+      ${section("question","Essential Question",`
+        <div class="v83-form-grid">
+          ${field("essentialQuestion","Essential Question",lesson.essentialQuestion,"wide")}
+        </div>
+      `)}
+      ${section("source","Background Knowledge & Source",`
+        <div class="v83-form-grid">
+          ${field("backgroundKnowledge","Background Knowledge",lesson.backgroundKnowledge)}
+          ${field("source","Primary or Secondary Source",lesson.source)}
+        </div>
+      `)}
+      ${section("instruction","Teacher Model & Guided Practice",`
+        <div class="v83-form-grid">
+          ${field("teacherModel","Teacher Model",lesson.teacherModel)}
+          ${field("guidedPractice","Guided Practice",lesson.guidedPractice)}
+        </div>
+      `)}
+      ${section("task","Student Task & Reflection",`
+        <div class="v83-form-grid">
+          ${field("studentTask","Student Task",lesson.studentTask)}
+          ${field("reflection","Reflection / Discussion",lesson.reflection)}
+        </div>
+      `)}
+    `;
+  }
+
+  function supportSection(lesson, studio) {
+    const supports = studio === "writing"
+      ? config.writingSupports
+      : studio === "science"
+        ? config.scienceSupports
+        : config.socialStudiesSupports;
+
+    return section("support","Differentiation & Access",`
+      <div class="v83-form-grid">
+        ${field("differentiation","EL, IEP, 504, and Universal Supports",lesson.differentiation,"wide")}
+      </div>
+      <div class="v83-support-chips">
+        ${supports.map(item => `<button type="button" data-v83-support="${esc(item)}">${esc(item)}</button>`).join("")}
+      </div>
+    `);
+  }
+
+  function assessmentSection(lesson, studio) {
+    const results = state.assessmentResults.filter(item =>
+      item.studio === studio &&
+      item.lessonNumber === Number(state.selectedLessons[studio])
+    );
+
+    return section("assessment","Assessment & Evidence",`
+      <div class="v83-form-grid">
+        ${field("assessment","Assessment, Rubric, Exit Ticket, or Evidence",lesson.assessment,"wide")}
+        <label><span>Class Average or Score %</span><input id="v83Score" type="number" min="0" max="100"></label>
+      </div>
+      <div class="button-row">
+        <button id="v83SaveAssessment" class="primary-button">Save Result</button>
+        <button id="v83AssessmentAttachment" class="secondary-button">Add Assessment to Attachments</button>
+      </div>
+      <div class="v83-results">
+        ${results.length ? results.map(item => `
+          <article><strong>${esc(item.score)}%</strong><span>${new Date(item.date).toLocaleString()}</span></article>
+        `).join("") : "<p>No scores saved for this lesson.</p>"}
+      </div>
+    `);
+  }
+
+  function section(id, title, body) {
+    return `<section id="v83-${id}" class="panel v83-section"><h3>${esc(title)}</h3>${body}</section>`;
+  }
+
+  function field(key, label, value, className = "") {
+    return `<label class="${className}"><span>${esc(label)}</span><textarea data-v83-field="${key}">${esc(value)}</textarea></label>`;
+  }
+
+  function wireStudio() {
+    const studio = state.activeStudio;
+
+    $$("[data-v83-studio]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.activeStudio = button.dataset.v83Studio;
+        ensureLesson(state.activeStudio);
+        save();
+        renderStudio();
+      });
+    });
+
+    $$("[data-v83-section]").forEach(button => {
+      button.addEventListener("click", () => {
+        $(`#v83-${button.dataset.v83Section}`)?.scrollIntoView({ behavior:"smooth", block:"start" });
+      });
+    });
+
+    $$("[data-v83-field]").forEach(control => {
+      const update = () => {
+        currentLesson()[control.dataset.v83Field] = control.value;
+        save();
+      };
+      control.addEventListener("input", update);
+      control.addEventListener("change", update);
+    });
+
+    $$("[data-v83-support]").forEach(button => {
+      button.addEventListener("click", () => {
+        const field = $('[data-v83-field="differentiation"]');
+        const current = field.value.trim();
+        field.value = current ? `${current}\n• ${button.dataset.v83Support}` : `• ${button.dataset.v83Support}`;
+        currentLesson().differentiation = field.value;
+        save();
+      });
+    });
+
+    $("#v83LoadLesson")?.addEventListener("click", () => {
+      state.selectedLessons[studio] = Math.max(1, Number($("#v83LessonNumber").value) || 1);
+      ensureLesson(studio);
+      save();
+      renderStudio();
+    });
+
+    $("#v83Status")?.addEventListener("change", event => {
+      currentLesson().complete = event.target.value === "Ready to Teach";
+      save();
+      renderStudio();
+    });
+
+    $("#v83SendPlanning")?.addEventListener("click", sendToWeeklyPlanning);
+    $("#v83SendTeachDay")?.addEventListener("click", sendToTeachDay);
+    $("#v83AddAttachment")?.addEventListener("click", () => addAttachment(false));
+    $("#v83AssessmentAttachment")?.addEventListener("click", () => addAttachment(true));
+    $("#v83PrintLesson")?.addEventListener("click", () => window.print());
+    $("#v83SaveAssessment")?.addEventListener("click", saveAssessment);
+  }
+
+  function sendToWeeklyPlanning() {
+    const week = weeklyPlan();
+    if (!week?.days) {
+      toast("Build Weekly Planning first.");
+      setTimeout(() => location.hash = "lesson-plans", 700);
+      return;
+    }
+
+    const day = prompt("Send this lesson to which day?", "Monday");
+    if (!day || !week.days[day]) return;
+
+    const studio = state.activeStudio;
+    const lesson = currentLesson();
+
+    if (studio === "writing") {
+      week.days[day].writing = buildWritingText(lesson);
+    } else if (studio === "science") {
+      week.days[day].science = buildScienceText(lesson);
+    } else {
+      week.days[day].socialStudies = buildSocialText(lesson);
+    }
+
+    week.days[day].standards = [week.days[day].standards, lesson.standards].filter(Boolean).join("\n");
+    week.days[day].materials = [week.days[day].materials, lesson.materials].filter(Boolean).join("\n");
+    week.days[day].differentiation = [week.days[day].differentiation, lesson.differentiation].filter(Boolean).join("\n");
+    week.days[day].assessment = [week.days[day].assessment, lesson.assessment].filter(Boolean).join("\n");
+
+    localStorage.setItem(WEEK_KEY, JSON.stringify(week));
+    toast(`${studioTitle(studio)} sent to ${day}.`);
+    setTimeout(() => location.hash = "lesson-plans", 600);
+  }
+
+  function sendToTeachDay() {
+    let current = {};
+    try {
+      current = JSON.parse(localStorage.getItem(TEACH_DAY_KEY) || "{}");
+    } catch {}
+
+    const studio = state.activeStudio;
+    const lesson = currentLesson();
+
+    if (studio === "writing") current.writing = buildWritingText(lesson);
+    if (studio === "science") current.science = buildScienceText(lesson);
+    if (studio === "socialStudies") current.socialStudies = buildSocialText(lesson);
+
+    current[`${studio}LessonTitle`] = lesson.title;
+    current[`${studio}Materials`] = lesson.materials;
+    current[`${studio}Assessment`] = lesson.assessment;
+    current.sentAt = new Date().toISOString();
+
+    localStorage.setItem(TEACH_DAY_KEY, JSON.stringify(current));
+    toast(`${studioTitle(studio)} sent to Teach My Day.`);
+    setTimeout(() => location.hash = "teachday", 500);
+  }
+
+  function buildWritingText(lesson) {
+    return [
+      lesson.title,
+      lesson.genre ? `Genre: ${lesson.genre}` : "",
+      lesson.prompt ? `Prompt: ${lesson.prompt}` : "",
+      lesson.miniLesson ? `Mini-Lesson: ${lesson.miniLesson}` : "",
+      lesson.teacherModel ? `Teacher Model: ${lesson.teacherModel}` : "",
+      lesson.guidedWriting ? `Guided Writing: ${lesson.guidedWriting}` : "",
+      lesson.independentWriting ? `Independent Writing: ${lesson.independentWriting}` : "",
+      lesson.gum ? `GUM: ${lesson.gum}` : "",
+      lesson.conferenceFocus ? `Conference Focus: ${lesson.conferenceFocus}` : ""
+    ].filter(Boolean).join("\n\n");
+  }
+
+  function buildScienceText(lesson) {
+    return [
+      lesson.title,
+      lesson.unit ? `Unit: ${lesson.unit}` : "",
+      lesson.phenomenon ? `Phenomenon: ${lesson.phenomenon}` : "",
+      lesson.question ? `Question: ${lesson.question}` : "",
+      lesson.investigation ? `Investigation: ${lesson.investigation}` : "",
+      lesson.explanation ? `Explanation: ${lesson.explanation}` : "",
+      lesson.studentEvidence ? `Evidence: ${lesson.studentEvidence}` : "",
+      lesson.notebookResponse ? `Notebook: ${lesson.notebookResponse}` : ""
+    ].filter(Boolean).join("\n\n");
+  }
+
+  function buildSocialText(lesson) {
+    return [
+      lesson.title,
+      lesson.unit ? `Unit: ${lesson.unit}` : "",
+      lesson.essentialQuestion ? `Essential Question: ${lesson.essentialQuestion}` : "",
+      lesson.backgroundKnowledge ? `Background: ${lesson.backgroundKnowledge}` : "",
+      lesson.source ? `Source: ${lesson.source}` : "",
+      lesson.teacherModel ? `Teacher Model: ${lesson.teacherModel}` : "",
+      lesson.guidedPractice ? `Guided Practice: ${lesson.guidedPractice}` : "",
+      lesson.studentTask ? `Student Task: ${lesson.studentTask}` : "",
+      lesson.reflection ? `Reflection: ${lesson.reflection}` : ""
+    ].filter(Boolean).join("\n\n");
+  }
+
+  function addAttachment(assessmentOnly) {
+    let items = [];
+    try {
+      items = JSON.parse(localStorage.getItem(ATTACHMENT_KEY) || "[]");
+    } catch {}
+
+    const studio = state.activeStudio;
+    const lesson = currentLesson();
+    const category = studio === "writing" ? "Writing / GUM" : studio === "science" ? "Science" : "Social Studies";
+
+    items.unshift({
+      id: `v83-${Date.now()}`,
+      day: "Monday",
+      lesson: lesson.title,
+      title: assessmentOnly ? `${lesson.title} — Assessment` : lesson.title,
+      category: assessmentOnly ? "Assessment" : category,
+      type: assessmentOnly ? "Assessment" : "Printable Page",
+      url: "",
+      notes: assessmentOnly ? lesson.assessment : lesson.attachments,
+      print: true,
+      copies: 1,
+      status: "Missing"
+    });
+
+    localStorage.setItem(ATTACHMENT_KEY, JSON.stringify(items));
+    toast("Added to Lesson Attachments.");
+    setTimeout(() => location.hash = "attachments", 500);
+  }
+
+  function saveAssessment() {
+    const score = Number($("#v83Score").value);
+    if (!Number.isFinite(score) || score < 0 || score > 100) {
+      toast("Enter a score from 0 to 100.");
+      return;
+    }
+
+    state.assessmentResults.unshift({
+      id: Date.now(),
+      studio: state.activeStudio,
+      lessonNumber: Number(state.selectedLessons[state.activeStudio]),
+      title: currentLesson().title,
+      score,
+      date: new Date().toISOString()
+    });
+    save();
+    renderStudio();
+    toast("Assessment result saved.");
+  }
+
+  function injectPlanningCard() {
+    const studio = $("#v73PlanningStudio");
+    if (!studio || $("#v83PlanningCard")) return;
+
+    const ready = ["writing","science","socialStudies"].filter(type => currentLesson(type).complete).length;
+    const card = document.createElement("section");
+    card.id = "v83PlanningCard";
+    card.className = "v83-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>AFTERNOON CURRICULUM STUDIOS</p>
+        <h3>${ready}/3 selected lessons ready</h3>
+        <span>Writing, Science, and Social Studies planning.</span>
+      </div>
+      <button>Open Studios</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "afternoon-studios";
+    $(".v73-planning-header", studio)?.insertAdjacentElement("afterend", card);
+  }
+
+  function injectTeachDayCards() {
+    const host = $("#pageHost");
+    if (!host || $("#v83TeachDayCard")) return;
+
+    const header = $(".page-header", host);
+    if (!header) return;
+
+    const card = document.createElement("section");
+    card.id = "v83TeachDayCard";
+    card.className = "v83-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>AFTERNOON INSTRUCTION</p>
+        <h3>Writing, Science & Social Studies</h3>
+        <span>Open the selected daily lesson studios and connected resources.</span>
+      </div>
+      <button>Open Studios</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "afternoon-studios";
+    header.insertAdjacentElement("afterend", card);
+  }
+
+  function injectPacketCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v83PacketCard")) return;
+
+    const header = $(".page-header", host);
+    if (!header) return;
+
+    const card = document.createElement("section");
+    card.id = "v83PacketCard";
+    card.className = "v83-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>AFTERNOON PACKET CONTENT</p>
+        <h3>Writing, Science & Social Studies lesson records</h3>
+        <span>Send completed studio lessons into Weekly Planning to include them in Daily Lesson Packets.</span>
+      </div>
+      <button>Open Studios</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "afternoon-studios";
+    header.insertAdjacentElement("afterend", card);
+  }
+
+  function injectAssessmentCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v83AssessmentCard")) return;
+
+    const header = $(".page-header", host);
+    if (!header) return;
+
+    const results = state.assessmentResults;
+    const average = results.length
+      ? Math.round(results.reduce((sum,item) => sum + item.score, 0) / results.length)
+      : 0;
+
+    const card = document.createElement("section");
+    card.id = "v83AssessmentCard";
+    card.className = "v83-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>WRITING, SCIENCE & SOCIAL STUDIES DATA</p>
+        <h3>${results.length} result(s) saved</h3>
+        <span>${results.length ? `Average recorded score: ${average}%` : "No results saved yet."}</span>
+      </div>
+      <button>Open Studios</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "afternoon-studios";
+    header.insertAdjacentElement("afterend", card);
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v83DashboardCard")) return;
+
+    const ready = ["writing","science","socialStudies"].filter(type => currentLesson(type).complete).length;
+    const card = document.createElement("section");
+    card.id = "v83DashboardCard";
+    card.className = "v83-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>AFTERNOON CURRICULUM STUDIOS</p>
+        <h3>${ready}/3 selected lessons ready</h3>
+        <span>Writing 11:10 • Science 1:40 • Social Studies 2:15</span>
+      </div>
+      <button>Open Studios</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "afternoon-studios";
+    dashboard.prepend(card);
+  }
+
+  function injectHealth() {
+    const host = $("#pageHost");
+    if (!host || $("#v83Health")) return;
+
+    const lessonCount = Object.values(state.lessons)
+      .reduce((sum, group) => sum + Object.keys(group || {}).length, 0);
+    const readyCount = Object.values(state.lessons)
+      .flatMap(group => Object.values(group || {}))
+      .filter(item => item.complete).length;
+
+    const panel = document.createElement("section");
+    panel.id = "v83Health";
+    panel.className = "panel v83-health-panel";
+    panel.innerHTML = `
+      <h3>Version 8.3 Afternoon Curriculum Health</h3>
+      <div class="health-grid">
+        ${healthItem("Writing Studio", true, "11:10–11:40")}
+        ${healthItem("Science Studio", true, "1:40–2:15")}
+        ${healthItem("Social Studies Studio", true, "2:15–2:55")}
+        ${healthItem("Saved lesson records", lessonCount > 0, `${lessonCount} saved • ${readyCount} ready`)}
+      </div>
+      <button class="secondary-button">Open Studios</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "afternoon-studios";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div><span>${esc(title)}</span><small>${esc(detail)}</small></div>
+      </article>`;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1800);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
