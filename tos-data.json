@@ -1,6 +1,6 @@
 {
-  "version": "8.4 Stable First-Week Builder",
-  "releaseStatus": "Completes the afternoon instructional workflow by connecting Writing, Science, and Social Studies to Weekly Planning, Live Teaching, Daily Lesson Packets, attachments, assessments, and printing.",
+  "version": "8.5 Polished Command Center & Compact Dashboard",
+  "releaseStatus": "Polishes the verified Teacher Operating System with a compact dashboard command center, grouped navigation, improved spacing, and stronger desktop/iPad/phone layouts.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1468,5 +1468,31 @@
       "Pack-up checklist",
       "Family welcome letter"
     ]
-  }
+  },
+  "dashboardGroups": [
+    {
+      "title": "Today",
+      "routes": [
+        "teachday",
+        "lesson-plans",
+        "first-week-builder"
+      ]
+    },
+    {
+      "title": "Curriculum",
+      "routes": [
+        "open-court",
+        "eureka-math",
+        "afternoon-studios"
+      ]
+    },
+    {
+      "title": "Production",
+      "routes": [
+        "attachments",
+        "forms",
+        "production"
+      ]
+    }
+  ]
 }

@@ -3462,3 +3462,264 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   function toast(m){const t=$("#toast");if(!t)return;t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
+
+/* Version 8.5 — Polished Command Center & Compact Dashboard */
+(() => {
+  "use strict";
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+  function start() {
+    waitForShell();
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    polishNavigation();
+    window.addEventListener("hashchange", route);
+
+    new MutationObserver(() => {
+      polishNavigation();
+      route();
+    }).observe(document.body, { childList: true, subtree: true });
+
+    route();
+  }
+
+  function route() {
+    const route = location.hash.replace("#", "") || "dashboard";
+    document.body.dataset.currentRoute = route;
+
+    if (route === "dashboard") {
+      setTimeout(polishDashboard, 30);
+    } else {
+      setTimeout(polishPageHeader, 30);
+    }
+  }
+
+  function polishNavigation() {
+    const nav = $("#mainNav");
+    if (!nav || nav.dataset.v85Polished === "true") return;
+
+    const groups = [
+      {
+        title: "Today",
+        routes: ["dashboard", "live-workspace", "teachday", "calendar"]
+      },
+      {
+        title: "Planning",
+        routes: [
+          "lesson-builder", "lesson-plans", "production",
+          "classroom-launch", "first-week-builder"
+        ]
+      },
+      {
+        title: "Curriculum",
+        routes: ["open-court", "eureka-math", "afternoon-studios"]
+      },
+      {
+        title: "Students & Data",
+        routes: [
+          "small-groups", "intervention", "assessments",
+          "students", "communication"
+        ]
+      },
+      {
+        title: "Resources",
+        routes: [
+          "classroom-systems", "attachments", "resources",
+          "forms", "teacher-brain", "health", "settings"
+        ]
+      }
+    ];
+
+    const buttons = new Map();
+    $$("[data-route]", nav).forEach(button => {
+      buttons.set(button.dataset.route, button);
+    });
+
+    const fragment = document.createDocumentFragment();
+
+    groups.forEach((group, index) => {
+      const section = document.createElement("section");
+      section.className = "v85-nav-group";
+      section.dataset.group = group.title.toLowerCase().replace(/\W+/g, "-");
+
+      const heading = document.createElement("button");
+      heading.type = "button";
+      heading.className = "v85-nav-heading";
+      heading.innerHTML = `
+        <span>${group.title}</span>
+        <b>${index < 2 ? "−" : "+"}</b>
+      `;
+
+      const body = document.createElement("div");
+      body.className = "v85-nav-body";
+      if (index >= 2) body.hidden = true;
+
+      group.routes.forEach(route => {
+        const button = buttons.get(route);
+        if (button) body.appendChild(button);
+      });
+
+      heading.addEventListener("click", () => {
+        body.hidden = !body.hidden;
+        heading.querySelector("b").textContent = body.hidden ? "+" : "−";
+      });
+
+      section.append(heading, body);
+      fragment.appendChild(section);
+    });
+
+    // Append any route buttons not listed above.
+    const leftovers = [...buttons.entries()]
+      .filter(([, button]) => !button.parentElement || button.parentElement === nav)
+      .map(([, button]) => button);
+
+    if (leftovers.length) {
+      const section = document.createElement("section");
+      section.className = "v85-nav-group";
+
+      const heading = document.createElement("button");
+      heading.type = "button";
+      heading.className = "v85-nav-heading";
+      heading.innerHTML = "<span>More</span><b>+</b>";
+
+      const body = document.createElement("div");
+      body.className = "v85-nav-body";
+      body.hidden = true;
+
+      leftovers.forEach(button => body.appendChild(button));
+      heading.addEventListener("click", () => {
+        body.hidden = !body.hidden;
+        heading.querySelector("b").textContent = body.hidden ? "+" : "−";
+      });
+
+      section.append(heading, body);
+      fragment.appendChild(section);
+    }
+
+    nav.innerHTML = "";
+    nav.appendChild(fragment);
+    nav.dataset.v85Polished = "true";
+  }
+
+  function polishDashboard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v85CommandCenter")) return;
+
+    const injectedCards = [
+      $("#v80DashboardLive"),
+      $("#v73DashboardPlanning"),
+      $("#v84DashboardCard"),
+      $("#v81Dashboard"),
+      $("#v82DashboardCard"),
+      $("#v83DashboardCard"),
+      $("#v74DashboardAttachmentCard"),
+      $("#v75DashboardCard")
+    ].filter(Boolean);
+
+    const command = document.createElement("section");
+    command.id = "v85CommandCenter";
+    command.className = "v85-command-center";
+
+    const heading = document.createElement("div");
+    heading.className = "v85-command-heading";
+    heading.innerHTML = `
+      <div>
+        <p>TEACHER COMMAND CENTER</p>
+        <h2>Today, Planning, Curriculum & Production</h2>
+        <span>Everything important is visible without scrolling through full-width status cards.</span>
+      </div>
+      <button id="v85CustomizeDashboard">Customize Dashboard</button>
+    `;
+
+    const grid = document.createElement("div");
+    grid.className = "v85-command-grid";
+
+    injectedCards.forEach(card => {
+      card.classList.add("v85-command-card");
+      grid.appendChild(card);
+    });
+
+    command.append(heading, grid);
+    dashboard.prepend(command);
+
+    $("#v85CustomizeDashboard")?.addEventListener("click", () => {
+      document.body.classList.toggle("v85-focus-mode");
+    });
+
+    compactWelcome(dashboard);
+    updateDashboardLabels();
+  }
+
+  function compactWelcome(dashboard) {
+    const welcome = $(".v72-welcome", dashboard);
+    if (!welcome || welcome.dataset.v85Compact === "true") return;
+
+    welcome.dataset.v85Compact = "true";
+    welcome.classList.add("v85-welcome");
+
+    const intro = welcome.firstElementChild;
+    if (intro) {
+      const quote = $("blockquote", intro);
+      if (quote) quote.classList.add("v85-quote");
+    }
+
+    const photo = $(".v72-photo-panel", welcome);
+    if (photo) photo.classList.add("v85-photo");
+
+    const classLinks = $(".v72-classroom-links", welcome);
+    if (classLinks) classLinks.classList.add("v85-class-links");
+  }
+
+  function updateDashboardLabels() {
+    const cards = $$(".v85-command-card");
+
+    cards.forEach(card => {
+      const heading = $("h3", card);
+      if (!heading) return;
+
+      const text = heading.textContent.trim();
+      if (text.includes("Now:")) {
+        card.dataset.category = "today";
+      } else if (
+        text.includes("days ready") ||
+        text.includes("Generate Monday")
+      ) {
+        card.dataset.category = "planning";
+      } else if (
+        text.includes("Unit") ||
+        text.includes("Module") ||
+        text.includes("selected lessons")
+      ) {
+        card.dataset.category = "curriculum";
+      } else {
+        card.dataset.category = "production";
+      }
+    });
+  }
+
+  function polishPageHeader() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const header = $(".page-header", host);
+    if (header) header.classList.add("v85-page-header");
+
+    $$(".panel", host).forEach(panel => {
+      panel.classList.add("v85-panel");
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();
