@@ -3428,3 +3428,542 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   else start();
 })();
 \n/* Version 9.0 — Automatic Lesson Generator & Full-Day Builder */\n(()=>{"use strict";\nconst KEY="thh-v90:generator",WEEK="thh-v73:weekly-plan",MATH="thh-v82:eureka-math",AFTER="thh-v83:afternoon-studios";\nlet cfg,state={selectedDay:"Monday",dayType:"Full Day",openCourtUnit:1,openCourtLesson:1,eurekaModule:1,eurekaLesson:1,heggertyFocus:"",ufliLesson:"",mowrFocus:"",writingFocus:"",scienceFocus:"",socialStudiesFocus:"",launchRoutine:"",pillar:"Heart",generated:null,savedDays:{}};\nconst $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];\nconst esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");\nasync function start(){cfg=await fetch("tos-data.json",{cache:"no-store"}).then(r=>r.json());try{state={...state,...JSON.parse(localStorage.getItem(KEY)||"{}")} }catch{};wait()}\nfunction save(){localStorage.setItem(KEY,JSON.stringify(state))}\nfunction wait(){if(!$("#pageHost")||!$("#mainNav"))return setTimeout(wait,100);nav();window.addEventListener("hashchange",route);new MutationObserver(route).observe($("#pageHost"),{childList:true,subtree:true});route()}\nfunction nav(){if($('[data-route="lesson-generator"]'))return;const b=document.createElement("button");b.className="nav-button";b.dataset.route="lesson-generator";b.innerHTML="<span>⚡</span><strong>Automatic Lesson Generator</strong>";b.onclick=()=>location.hash="lesson-generator";const a=$('[data-route="lesson-builder"]');a?a.insertAdjacentElement("afterend",b):$("#mainNav").appendChild(b)}\nfunction route(){const r=location.hash.replace("#","")||"dashboard";if(r==="lesson-generator"&&!$("#v90"))setTimeout(render,0);if(r==="dashboard")setTimeout(dash,0);if(r==="lesson-plans")setTimeout(planCard,0);if(r==="teachday")setTimeout(teachCard,0);if(r==="health")setTimeout(health,0)}\nfunction oc(){const u=cfg.openCourtUnits?.find(x=>x.unit===Number(state.openCourtUnit));return u?.lessons?.find(x=>x.lesson===Number(state.openCourtLesson))||null}\nfunction math(){try{const s=JSON.parse(localStorage.getItem(MATH)||"{}");return s.lessons?.[`m${state.eurekaModule}-l${state.eurekaLesson}`]||null}catch{return null}}\nfunction afternoon(){try{const s=JSON.parse(localStorage.getItem(AFTER)||"{}"),sel=s.selectedLessons||{},l=s.lessons||{};return{writing:l.writing?.[`writing-lesson-${sel.writing||1}`]||null,science:l.science?.[`science-lesson-${sel.science||1}`]||null,socialStudies:l.socialStudies?.[`socialStudies-lesson-${sel.socialStudies||1}`]||null}}catch{return{writing:null,science:null,socialStudies:null}}}\nfunction sel(k,l,opts,v){return `<label><span>${esc(l)}</span><select data-setup="${k}">${opts.map(o=>`<option ${String(o)===String(v)?"selected":""}>${esc(o)}</option>`).join("")}</select></label>`}\nfunction inp(k,l,v,t="text"){return `<label><span>${esc(l)}</span><input data-setup="${k}" type="${t}" value="${esc(v)}"></label>`}\nfunction render(){const h=$("#pageHost"),o=oc(),g=state.generated;h.innerHTML=`<section id="v90"><section class="page-header"><div><p>VERSION 9.0</p><h2>Automatic Lesson Generator & Full-Day Builder</h2><span>Select curriculum inputs, generate the day, review, and send to Weekly Planning.</span></div><div class="button-row"><button id="generate" class="primary-button">Generate Full Day</button><button id="clear" class="secondary-button">Clear</button></div></section>\n<section class="panel v90-setup"><h3>Day Setup</h3><div class="v90-grid">${sel("selectedDay","Day",["Monday","Tuesday","Wednesday","Thursday","Friday"],state.selectedDay)}${sel("dayType","Day Type",["Full Day","Assessment Half Day"],state.dayType)}${inp("pillar","Pillar",state.pillar)}${inp("launchRoutine","Classroom Launch Routine",state.launchRoutine)}</div></section>\n<section class="v90-curriculum"><section class="panel"><h3>Open Court</h3>${sel("openCourtUnit","Unit",[1,2,3,4,5,6],state.openCourtUnit)}${sel("openCourtLesson","Lesson",[1,2,3,4,5,6],state.openCourtLesson)}<div class="v90-selected"><span>Selected Story</span><strong>${esc(o?.title||"Select a lesson")}</strong></div></section><section class="panel"><h3>Foundational Reading</h3>${inp("heggertyFocus","Heggerty Focus",state.heggertyFocus)}${inp("ufliLesson","UFLI Lesson or Skill",state.ufliLesson)}${inp("mowrFocus","MOWR Focus",state.mowrFocus)}</section><section class="panel"><h3>Eureka Math²</h3>${sel("eurekaModule","Module",[1,2,3,4,5,6],state.eurekaModule)}${inp("eurekaLesson","Lesson Number",state.eurekaLesson,"number")}</section><section class="panel"><h3>Afternoon Curriculum</h3>${inp("writingFocus","Writing Focus",state.writingFocus)}${inp("scienceFocus","Science Focus",state.scienceFocus)}${inp("socialStudiesFocus","Social Studies Focus",state.socialStudiesFocus)}</section></section>\n${g?generated(g):'<div class="empty-state"><strong>No generated day yet.</strong><p>Select inputs and choose Generate Full Day.</p></div>'}</section>`;wire()}\nfunction generated(g){return `<section class="v90-generated-head"><div><p>GENERATED DAY</p><h3>${esc(g.day)} • ${esc(g.dayType)}</h3><span>${completion(g)}% complete</span></div><div class="button-row"><button id="sendWeek" class="primary-button">Send to Weekly Planning</button><button id="sendTeach" class="secondary-button">Send to Live Teaching</button><button id="print" class="secondary-button">Print</button></div></section><section class="v90-layout"><aside class="panel v90-nav"><h3>Generated Blocks</h3>${g.blocks.map((b,i)=>`<button data-jump="${i}"><strong>${esc(b.subject)}</strong><span>${esc(b.time)}</span></button>`).join("")}</aside><main class="v90-main">${g.blocks.map((b,i)=>block(b,i)).join("")}</main><aside class="panel v90-summary"><h3>Day Summary</h3><article><span>Open Court</span><strong>${esc(g.meta.openCourt)}</strong></article><article><span>Eureka</span><strong>${esc(g.meta.eureka)}</strong></article><article><span>Pillar</span><strong>${esc(g.meta.pillar)}</strong></article><article><span>Blocks</span><strong>${g.blocks.length}</strong></article><button id="saveLocal" class="primary-button">Save Generated Day</button></aside></section>`}\nfunction block(b,i){return `<section id="v90-b-${i}" class="panel v90-block"><div class="v90-block-head"><div><span>${esc(b.time)}</span><h3>${esc(b.subject)}</h3></div><label><input type="checkbox" data-complete="${i}" ${b.complete?"checked":""}> Ready</label></div><div class="v90-block-grid">${ta(i,"objective","Objective",b.objective)}${ta(i,"iDo","I Do",b.iDo)}${ta(i,"weDo","We Do",b.weDo)}${ta(i,"youDo","You Do",b.youDo)}${ta(i,"differentiation","Differentiation",b.differentiation)}${ta(i,"materials","Materials",b.materials)}${ta(i,"assessment","Assessment",b.assessment)}${ta(i,"notes","Teacher Notes",b.notes)}</div></section>`}\nfunction ta(i,k,l,v){return `<label><span>${esc(l)}</span><textarea data-block="${i}" data-field="${k}">${esc(v)}</textarea></label>`}\nfunction wire(){$$("[data-setup]").forEach(c=>{const u=()=>{const k=c.dataset.setup;state[k]=["openCourtUnit","openCourtLesson","eurekaModule","eurekaLesson"].includes(k)?Number(c.value):c.value;save();if(["openCourtUnit","openCourtLesson"].includes(k))render()};c.onchange=u;c.oninput=u});$("#generate")?.addEventListener("click",generate);$("#clear")?.addEventListener("click",()=>{state.generated=null;save();render()});$$("[data-jump]").forEach(b=>b.onclick=()=>$("#v90-b-"+b.dataset.jump)?.scrollIntoView({behavior:"smooth"}));$$("[data-block]").forEach(c=>c.oninput=()=>{state.generated.blocks[Number(c.dataset.block)][c.dataset.field]=c.value;save()});$$("[data-complete]").forEach(c=>c.onchange=()=>{state.generated.blocks[Number(c.dataset.complete)].complete=c.checked;save();render()});$("#sendWeek")?.addEventListener("click",sendWeek);$("#sendTeach")?.addEventListener("click",sendTeach);$("#print")?.addEventListener("click",()=>window.print());$("#saveLocal")?.addEventListener("click",()=>{state.savedDays[state.selectedDay]=JSON.parse(JSON.stringify(state.generated));save();toast("Generated day saved.")})}\nfunction supports(){const d=cfg.generatorDefaults;return[...d.universalSupports,...d.elSupports,...d.iep504Supports].map(x=>"• "+x).join("\\n")}\nfunction temp(k){const t=cfg.generatorTemplates[k];return{objective:t[0],iDo:t[1],weDo:t[2],youDo:t[3],assessment:t[4]}}\nfunction mk(time,subject,k,focus,mat="",diff=supports()){const t=temp(k);return{time,subject,key:k,objective:t.objective,iDo:t.iDo+`\\nFocus: ${focus}`,weDo:t.weDo,youDo:t.youDo,differentiation:diff,materials:mat,assessment:t.assessment,notes:"",complete:false}}\nfunction routine(time,subject,focus){return{time,subject,key:subject.toLowerCase().replace(/\\W+/g,"-"),objective:focus,iDo:"Model the expected routine.",weDo:"Practice the routine together.",youDo:"Students complete the routine independently.",differentiation:supports(),materials:"",assessment:"Teacher observation.",notes:"",complete:false}}\nfunction generate(){const o=oc(),m=math(),a=afternoon(),half=state.dayType==="Assessment Half Day";let blocks;if(half){blocks=[["7:45–8:10","Arrival / Breakfast","Arrival, attendance, and testing preparation."],["8:10–8:20","Phonics Test","Weekly phonics assessment."],["8:20–8:40","Vocabulary Test","Weekly vocabulary assessment."],["8:40–9:00","Spelling Test","Weekly spelling assessment."],["9:00–9:20","Grammar Test","Weekly GUM assessment."],["9:20–9:40","Transition / Make-Up","Make-up testing and preparation."],["9:40–10:20","Reading Test",o?`${o.title} lesson assessment.`:"Open Court reading assessment."],["10:20–10:40","Indoor Lunch / Recess","Indoor lunch and recess procedures."],["10:40–11:10","Math / Tests",m?.title||`Eureka Module ${state.eurekaModule}, Lesson ${state.eurekaLesson}`],["11:10–11:30","Science & Social Studies Tests","Science and Social Studies assessments."],["11:30–11:40","First Buses Clean-Up","Clean-up and pack-up."],["11:40–12:00","Pack-Up / End of Day","End-of-day preparation."],["12:00","Dismissal","Dismissal procedures."]].map(x=>routine(...x))}else{blocks=[routine("7:45–8:10","Breakfast","Attendance, breakfast count, and morning reminders."),mk("8:10–8:20","Morning Work","morningWork",state.launchRoutine||"Morning routine"),mk("8:20–9:15","MOWR","reading",state.mowrFocus||state.ufliLesson||"UFLI, decodable reading, fluency, and groups"),mk("9:15–9:25","Heggerty","heggerty",state.heggertyFocus||"Daily phonemic awareness"),mk("9:25–9:45","Phonics","phonics",state.ufliLesson||o?.title||"Target phonics skill"),mk("9:45–9:55","Vocabulary","vocabulary",o?.title||"Weekly vocabulary"),mk("9:55–10:45","Reading (Open Court)","reading",o?`Unit ${state.openCourtUnit}, Lesson ${state.openCourtLesson}: ${o.title}`:"Open Court lesson"),routine("10:45–11:00","Lunch","Lunch routines and supervision."),routine("11:00–11:10","Lunch Recess","Recess expectations and return routine."),writing(a.writing),mathBlock(m),routine("12:40–1:15","Workout","Workout, hydration, safety, and equipment."),routine("1:15–1:20","Recess","Brief recess and return routine."),math2(m),science(a.science),social(a.socialStudies),routine("2:55–3:00","Pack-Up / Clean-Up","Jobs, homework, materials, and first buses."),routine("3:00–3:30","Dismissal","Student release procedures.")]}state.generated={createdAt:new Date().toISOString(),day:state.selectedDay,dayType:state.dayType,meta:{openCourt:o?`Unit ${state.openCourtUnit}, Lesson ${state.openCourtLesson} — ${o.title}`:"Not selected",eureka:`Module ${state.eurekaModule}, Lesson ${state.eurekaLesson}`,pillar:state.pillar||"Heart"},blocks};save();render();toast(`${state.selectedDay} generated.`)}\nfunction writing(l){const t=temp("writing");return{time:"11:10–11:40",subject:"Writing",key:"writing",objective:l?.objective||t.objective,iDo:l?.teacherModel||t.iDo+`\\nFocus: ${state.writingFocus||l?.title||"Writing lesson"}`,weDo:l?.guidedWriting||t.weDo,youDo:l?.independentWriting||t.youDo,differentiation:l?.differentiation||supports(),materials:l?.materials||"",assessment:l?.assessment||t.assessment,notes:l?.teacherNotes||"",complete:false}}\nfunction mathBlock(l){const t=temp("math");return{time:"11:40–12:40",subject:"Math",key:"math",objective:l?.objective||t.objective,iDo:l?.conceptDevelopment||t.iDo+`\\nLesson: ${l?.title||`Module ${state.eurekaModule}, Lesson ${state.eurekaLesson}`}`,weDo:l?.applicationProblem||t.weDo,youDo:l?.exitTicket||t.youDo,differentiation:l?.intervention||supports(),materials:l?.materials||"",assessment:l?.exitTicket||t.assessment,notes:l?.teacherNotes||"",complete:false}}\nfunction math2(l){return{time:"1:20–1:40",subject:"Math 2",key:"math2",objective:"Strengthen fluency, reteach needs, or problem solving.",iDo:"Review the selected skill or exit-ticket error.",weDo:l?.math2Plan||"Guided spiral review or fact fluency.",youDo:"Brief independent or small-group follow-up.",differentiation:l?.intervention||supports(),materials:"Fluency cards, manipulatives, or whiteboards.",assessment:"Quick check or observation.",notes:"",complete:false}}\nfunction science(l){const t=temp("science");return{time:"1:40–2:15",subject:"Science",key:"science",objective:l?.objective||t.objective,iDo:l?.phenomenon||t.iDo+`\\nFocus: ${state.scienceFocus||l?.title||"Science lesson"}`,weDo:l?.investigation||t.weDo,youDo:l?.notebookResponse||t.youDo,differentiation:l?.differentiation||supports(),materials:l?.materials||"",assessment:l?.assessment||t.assessment,notes:l?.teacherNotes||"",complete:false}}\nfunction social(l){const t=temp("socialStudies");return{time:"2:15–2:55",subject:"Social Studies",key:"socialStudies",objective:l?.objective||t.objective,iDo:l?.teacherModel||t.iDo+`\\nFocus: ${state.socialStudiesFocus||l?.title||"Social Studies lesson"}`,weDo:l?.guidedPractice||t.weDo,youDo:l?.studentTask||t.youDo,differentiation:l?.differentiation||supports(),materials:l?.materials||"",assessment:l?.assessment||t.assessment,notes:l?.teacherNotes||"",complete:false}}\nfunction completion(g){const n=g.blocks.filter(b=>b.objective.trim()&&b.iDo.trim()&&b.weDo.trim()&&b.youDo.trim()&&b.assessment.trim()).length;return Math.round(n/g.blocks.length*100)}\nfunction summary(b){return[`Objective: ${b.objective}`,`I Do: ${b.iDo}`,`We Do: ${b.weDo}`,`You Do: ${b.youDo}`,`Assessment: ${b.assessment}`].join("\\n")}\nfunction sendWeek(){let w;try{w=JSON.parse(localStorage.getItem(WEEK)||"null")}catch{};if(!w?.days)return toast("Build Weekly Planning first.");const d=w.days[state.selectedDay];if(!d)return;const find=s=>state.generated.blocks.find(b=>b.subject===s);d.focus=state.generated.meta.openCourt;d.openCourtLesson=state.generated.meta.openCourt;[["mowr","MOWR"],["heggerty","Heggerty"],["phonics","Phonics"],["vocabulary","Vocabulary"],["reading","Reading (Open Court)"],["writing","Writing"],["math","Math"],["math2","Math 2"],["science","Science"],["socialStudies","Social Studies"]].forEach(([k,s])=>{const b=find(s);d[k]=b?summary(b):""});d.launchRoutine=state.launchRoutine;d.differentiation=supports();d.materials=state.generated.blocks.map(b=>b.materials).filter(Boolean).join("\\n");d.assessment=state.generated.blocks.map(b=>`${b.subject}: ${b.assessment}`).join("\\n");d.complete=completion(state.generated)>=85;localStorage.setItem(WEEK,JSON.stringify(w));toast(`${state.selectedDay} sent to Weekly Planning.`);setTimeout(()=>location.hash="lesson-plans",500)}\nfunction sendTeach(){localStorage.setItem("thh-v90:teach-day",JSON.stringify({...state.generated,sentAt:new Date().toISOString()}));toast("Sent to Live Teaching.");setTimeout(()=>location.hash="teachday",500)}\nfunction dash(){const d=$("#v72Dashboard");if(!d||$("#v90Dash"))return;const c=document.createElement("section");c.id="v90Dash";c.className="v90-injected";c.innerHTML=`<div><p>AUTOMATIC LESSON GENERATOR</p><h3>${state.generated?`${esc(state.generated.day)} generated`:"Build a complete teaching day"}</h3><span>${state.generated?`${completion(state.generated)}% complete`:"Generate every instructional block from one screen."}</span></div><button>Open Generator</button>`;c.querySelector("button").onclick=()=>location.hash="lesson-generator";d.prepend(c)}\nfunction planCard(){const s=$("#v73PlanningStudio");if(!s||$("#v90Plan"))return;const c=document.createElement("section");c.id="v90Plan";c.className="v90-injected";c.innerHTML=`<div><p>AUTOMATIC FULL-DAY BUILDER</p><h3>${state.generated?`${esc(state.generated.day)} is ready to send`:"Generate before manual editing"}</h3><span>Prefill Weekly Planning from selected curricula.</span></div><button>Open Generator</button>`;c.querySelector("button").onclick=()=>location.hash="lesson-generator";$(".v73-planning-header",s)?.insertAdjacentElement("afterend",c)}\nfunction teachCard(){const h=$("#pageHost");if(!h||$("#v90Teach"))return;let g;try{g=JSON.parse(localStorage.getItem("thh-v90:teach-day")||"null")}catch{};if(!g)return;const head=$(".page-header",h);if(!head)return;const c=document.createElement("section");c.id="v90Teach";c.className="v90-injected";c.innerHTML=`<div><p>VERSION 9.0 GENERATED DAY</p><h3>${esc(g.day)} • ${esc(g.dayType)}</h3><span>${g.blocks.length} generated blocks connected.</span></div><button>Open Generator</button>`;c.querySelector("button").onclick=()=>location.hash="lesson-generator";head.insertAdjacentElement("afterend",c)}\nfunction health(){const h=$("#pageHost");if(!h||$("#v90Health"))return;const p=document.createElement("section");p.id="v90Health";p.className="panel";p.innerHTML=`<h3>Version 9.0 Generator Health</h3><div class="health-grid">${hi("Open Court units",cfg.openCourtUnits?.length===6,`${cfg.openCourtUnits?.length||0}/6`)}${hi("Eureka modules",cfg.eurekaMath?.modules?.length===6,`${cfg.eurekaMath?.modules?.length||0}/6`)}${hi("Generator templates",Object.keys(cfg.generatorTemplates||{}).length>=9,`${Object.keys(cfg.generatorTemplates||{}).length} templates`)}${hi("Generated day",!!state.generated,state.generated?.day||"None")}</div><button class="secondary-button">Open Generator</button>`;p.querySelector("button").onclick=()=>location.hash="lesson-generator";h.appendChild(p)}\nfunction hi(t,o,d){return `<article class="${o?"ready":"missing"}"><strong>${o?"✓":"!"}</strong><div><span>${t}</span><small>${d}</small></div></article>`}\nfunction toast(m){const t=$("#toast");if(!t)return;t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}\nif(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();\n})();
+
+/* Version 9.1 — First-Week Auto-Builder & Five-Day Launch Pack */
+(() => {
+  "use strict";
+
+  const STORE = "thh-v91:first-week-pack";
+  const WEEK_STORE = "thh-v73:weekly-plan";
+  const PRINT_STORE = "thh-v74:print-center";
+  const GENERATOR_STORE = "thh-v90:generator";
+
+  let config = null;
+  let state = {
+    openCourtUnit: 1,
+    startLesson: 1,
+    eurekaModule: 1,
+    startMathLesson: 1,
+    heggertyFocus: "Beginning-of-year phonemic-awareness routines",
+    ufliFocus: "Beginning-of-year sound and word routines",
+    generatedWeek: null,
+    completedPrep: {},
+    notes: ""
+  };
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+
+  async function start() {
+    config = await fetch("tos-data.json", { cache: "no-store" }).then(r => r.json());
+    try {
+      state = { ...state, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
+    } catch {}
+    wait();
+  }
+
+  function save() {
+    localStorage.setItem(STORE, JSON.stringify(state));
+  }
+
+  function wait() {
+    if (!$("#pageHost") || !$("#mainNav")) return setTimeout(wait, 100);
+    addNav();
+    window.addEventListener("hashchange", route);
+    new MutationObserver(route).observe($("#pageHost"), { childList: true, subtree: true });
+    route();
+  }
+
+  function addNav() {
+    if ($('[data-route="first-week-builder"]')) return;
+    const generator = $('[data-route="lesson-generator"]');
+    const button = document.createElement("button");
+    button.className = "nav-button";
+    button.dataset.route = "first-week-builder";
+    button.innerHTML = "<span>5</span><strong>First-Week Auto-Builder</strong>";
+    button.onclick = () => location.hash = "first-week-builder";
+    if (generator) generator.insertAdjacentElement("afterend", button);
+    else $("#mainNav").appendChild(button);
+  }
+
+  function route() {
+    const current = location.hash.replace("#", "") || "dashboard";
+    if (current === "first-week-builder" && !$("#v91Builder")) setTimeout(render, 0);
+    if (current === "dashboard") setTimeout(injectDashboard, 0);
+    if (current === "lesson-plans") setTimeout(injectPlanning, 0);
+    if (current === "health") setTimeout(injectHealth, 0);
+  }
+
+  function openCourtLesson(unit, lessonNumber) {
+    const unitData = config.openCourtUnits?.find(item => item.unit === Number(unit));
+    return unitData?.lessons?.find(item => item.lesson === Number(lessonNumber)) || null;
+  }
+
+  function render() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const week = state.generatedWeek;
+    host.innerHTML = `
+      <section id="v91Builder">
+        <section class="page-header">
+          <div>
+            <p>VERSION 9.1</p>
+            <h2>First-Week Auto-Builder & Five-Day Launch Pack</h2>
+            <span>Generate Monday through Friday, then send the whole week to Weekly Planning.</span>
+          </div>
+          <div class="button-row">
+            <button id="v91Generate" class="primary-button">Generate First Week</button>
+            <button id="v91Reset" class="secondary-button">Reset Pack</button>
+          </div>
+        </section>
+
+        <section class="panel v91-setup">
+          <h3>Week Setup</h3>
+          <div class="v91-setup-grid">
+            ${numberInput("openCourtUnit", "Open Court Unit", state.openCourtUnit, 1, 6)}
+            ${numberInput("startLesson", "Starting Open Court Lesson", state.startLesson, 1, 6)}
+            ${numberInput("eurekaModule", "Eureka Module", state.eurekaModule, 1, 6)}
+            ${numberInput("startMathLesson", "Starting Math Lesson", state.startMathLesson, 1, 60)}
+            ${textInput("heggertyFocus", "Heggerty Focus", state.heggertyFocus)}
+            ${textInput("ufliFocus", "UFLI Focus", state.ufliFocus)}
+          </div>
+        </section>
+
+        ${week ? generatedWeekMarkup(week) : `
+          <div class="empty-state">
+            <strong>No first-week pack has been generated.</strong>
+            <p>Choose the starting curriculum lessons and select Generate First Week.</p>
+          </div>
+        `}
+      </section>
+    `;
+
+    wire();
+  }
+
+  function numberInput(key, label, value, min, max) {
+    return `<label><span>${esc(label)}</span><input data-v91-setup="${key}" type="number" min="${min}" max="${max}" value="${esc(value)}"></label>`;
+  }
+
+  function textInput(key, label, value) {
+    return `<label><span>${esc(label)}</span><input data-v91-setup="${key}" value="${esc(value)}"></label>`;
+  }
+
+  function generatedWeekMarkup(week) {
+    const days = Object.keys(week.days);
+    const ready = days.filter(day => week.days[day].ready).length;
+
+    return `
+      <section class="v91-week-summary">
+        <div>
+          <p>GENERATED FIRST WEEK</p>
+          <h3>${ready}/5 days marked ready</h3>
+          <span>${esc(week.title)} • Pillar: ${esc(week.pillar)}</span>
+        </div>
+        <div class="button-row">
+          <button id="v91SendWeek" class="primary-button">Send All 5 Days to Weekly Planning</button>
+          <button id="v91BuildPrep" class="secondary-button">Build Preparation Queue</button>
+          <button id="v91PrintWeek" class="secondary-button">Print Launch Pack</button>
+        </div>
+      </section>
+
+      <section class="v91-week-grid">
+        ${days.map(day => dayCard(day, week.days[day])).join("")}
+      </section>
+
+      <section class="v91-bottom-grid">
+        <section class="panel">
+          <h3>First-Week Preparation</h3>
+          <div class="v91-prep-list">
+            ${(config.firstWeekAutoBuilder?.preparationDefaults || []).map((item, index) => `
+              <label>
+                <input type="checkbox" data-v91-prep="${index}" ${state.completedPrep[index] ? "checked" : ""}>
+                <span>${esc(item)}</span>
+              </label>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Week Notes</h3>
+          <textarea id="v91Notes" placeholder="Changes, materials, reminders, and questions...">${esc(state.notes)}</textarea>
+          <button id="v91SaveNotes" class="primary-button">Save Notes</button>
+        </section>
+      </section>
+    `;
+  }
+
+  function dayCard(day, item) {
+    return `
+      <article class="panel v91-day-card ${item.ready ? "ready" : ""}">
+        <div class="v91-day-heading">
+          <div>
+            <span>${esc(day)}</span>
+            <h3>${esc(item.launchFocus)}</h3>
+          </div>
+          <label><input type="checkbox" data-v91-ready="${day}" ${item.ready ? "checked" : ""}> Ready</label>
+        </div>
+
+        <dl>
+          <div><dt>Read Aloud</dt><dd>${esc(item.readAloud)}</dd></div>
+          <div><dt>Open Court</dt><dd>${esc(item.openCourt)}</dd></div>
+          <div><dt>Eureka Math²</dt><dd>${esc(item.math)}</dd></div>
+          <div><dt>Writing</dt><dd>${esc(item.writing)}</dd></div>
+          <div><dt>Science</dt><dd>${esc(item.science)}</dd></div>
+          <div><dt>Social Studies</dt><dd>${esc(item.socialStudies)}</dd></div>
+        </dl>
+
+        <textarea data-v91-day-note="${day}" placeholder="${day} notes...">${esc(item.notes || "")}</textarea>
+        <div class="button-row">
+          <button data-v91-copy="${day}" class="secondary-button">Copy Planbook Text</button>
+          <button data-v91-open="${day}" class="primary-button">Open Daily Plan</button>
+        </div>
+      </article>
+    `;
+  }
+
+  function wire() {
+    $$("[data-v91-setup]").forEach(control => {
+      const update = () => {
+        const key = control.dataset.v91Setup;
+        state[key] = control.type === "number" ? Number(control.value) : control.value;
+        save();
+      };
+      control.addEventListener("input", update);
+      control.addEventListener("change", update);
+    });
+
+    $("#v91Generate")?.addEventListener("click", generateWeek);
+    $("#v91Reset")?.addEventListener("click", () => {
+      state.generatedWeek = null;
+      save();
+      render();
+    });
+
+    $$("[data-v91-ready]").forEach(input => {
+      input.addEventListener("change", () => {
+        state.generatedWeek.days[input.dataset.v91Ready].ready = input.checked;
+        save();
+        render();
+      });
+    });
+
+    $$("[data-v91-day-note]").forEach(field => {
+      field.addEventListener("change", () => {
+        state.generatedWeek.days[field.dataset.v91DayNote].notes = field.value.trim();
+        save();
+      });
+    });
+
+    $$("[data-v91-prep]").forEach(input => {
+      input.addEventListener("change", () => {
+        state.completedPrep[input.dataset.v91Prep] = input.checked;
+        save();
+      });
+    });
+
+    $$("[data-v91-copy]").forEach(button => {
+      button.addEventListener("click", () => copyPlanbook(button.dataset.v91Copy));
+    });
+
+    $$("[data-v91-open]").forEach(button => {
+      button.addEventListener("click", () => openInGenerator(button.dataset.v91Open));
+    });
+
+    $("#v91SendWeek")?.addEventListener("click", sendWeek);
+    $("#v91BuildPrep")?.addEventListener("click", buildPreparationQueue);
+    $("#v91PrintWeek")?.addEventListener("click", () => window.print());
+    $("#v91SaveNotes")?.addEventListener("click", () => {
+      state.notes = $("#v91Notes").value.trim();
+      save();
+      toast("Week notes saved.");
+    });
+  }
+
+  function generateWeek() {
+    const defaults = config.firstWeekAutoBuilder;
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    const generated = {};
+
+    days.forEach((day, index) => {
+      const dayDefaults = defaults.days[day];
+      const ocLessonNumber = Math.min(6, Number(state.startLesson) + index);
+      const oc = openCourtLesson(state.openCourtUnit, ocLessonNumber);
+      const mathLesson = Number(state.startMathLesson) + index;
+
+      generated[day] = {
+        day,
+        launchFocus: dayDefaults.launchFocus,
+        readAloud: dayDefaults.readAloud,
+        openCourt: oc
+          ? `Unit ${state.openCourtUnit}, Lesson ${ocLessonNumber} — ${oc.title}`
+          : `Unit ${state.openCourtUnit}, Lesson ${ocLessonNumber}`,
+        math: `Eureka Math² Module ${state.eurekaModule}, Lesson ${mathLesson}`,
+        heggerty: state.heggertyFocus,
+        ufli: state.ufliFocus,
+        writing: dayDefaults.writingFocus,
+        science: dayDefaults.scienceFocus,
+        socialStudies: dayDefaults.socialStudiesFocus,
+        ready: false,
+        notes: "",
+        planbookText: buildPlanbookText(day, dayDefaults, oc, ocLessonNumber, mathLesson)
+      };
+    });
+
+    state.generatedWeek = {
+      title: defaults.weekTitle,
+      pillar: defaults.pillar,
+      createdAt: new Date().toISOString(),
+      days: generated
+    };
+    save();
+    render();
+    toast("The complete first week has been generated.");
+  }
+
+  function buildPlanbookText(day, defaults, oc, ocLessonNumber, mathLesson) {
+    return [
+      `${day.toUpperCase()} — FIRST WEEK OF SCHOOL`,
+      "",
+      `CLASSROOM LAUNCH`,
+      defaults.launchFocus,
+      "",
+      `READ ALOUD`,
+      defaults.readAloud,
+      "",
+      `MOWR / UFLI`,
+      `${state.heggertyFocus}\n${state.ufliFocus}`,
+      "",
+      `OPEN COURT`,
+      oc ? `Unit ${state.openCourtUnit}, Lesson ${ocLessonNumber} — ${oc.title}` : `Unit ${state.openCourtUnit}, Lesson ${ocLessonNumber}`,
+      "",
+      `WRITING`,
+      defaults.writingFocus,
+      "",
+      `EUREKA MATH²`,
+      `Module ${state.eurekaModule}, Lesson ${mathLesson}`,
+      "",
+      `SCIENCE`,
+      defaults.scienceFocus,
+      "",
+      `SOCIAL STUDIES`,
+      defaults.socialStudiesFocus,
+      "",
+      `DIFFERENTIATION`,
+      "Visuals, gestures, sentence frames, partner talk, oral rehearsal, chunked directions, manipulatives, and reduced response load as appropriate.",
+      "",
+      `ASSESSMENT`,
+      "Teacher observation, student participation, routine independence, and subject-specific quick checks."
+    ].join("\n");
+  }
+
+  async function copyPlanbook(day) {
+    const text = state.generatedWeek.days[day].planbookText;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const area = document.createElement("textarea");
+      area.value = text;
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+    }
+    toast(`${day} Planbook text copied.`);
+  }
+
+  function openInGenerator(day) {
+    const item = state.generatedWeek.days[day];
+    const dayIndex = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].indexOf(day);
+
+    localStorage.setItem(GENERATOR_STORE, JSON.stringify({
+      selectedDay: day,
+      dayType: day === "Friday" ? "Assessment Half Day" : "Full Day",
+      openCourtUnit: state.openCourtUnit,
+      openCourtLesson: Math.min(6, state.startLesson + dayIndex),
+      eurekaModule: state.eurekaModule,
+      eurekaLesson: state.startMathLesson + dayIndex,
+      heggertyFocus: state.heggertyFocus,
+      ufliLesson: state.ufliFocus,
+      mowrFocus: state.ufliFocus,
+      writingFocus: item.writing,
+      scienceFocus: item.science,
+      socialStudiesFocus: item.socialStudies,
+      launchRoutine: item.launchFocus,
+      pillar: state.generatedWeek.pillar,
+      generated: null,
+      savedDays: {}
+    }));
+
+    location.hash = "lesson-generator";
+  }
+
+  function sendWeek() {
+    if (!state.generatedWeek) return;
+
+    let week;
+    try {
+      week = JSON.parse(localStorage.getItem(WEEK_STORE) || "null");
+    } catch {}
+
+    if (!week?.days) {
+      week = {
+        title: state.generatedWeek.title,
+        weekOf: "",
+        pillar: state.generatedWeek.pillar,
+        days: {},
+        printQueue: [],
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    Object.entries(state.generatedWeek.days).forEach(([day, item]) => {
+      week.days[day] = {
+        ...(week.days[day] || {}),
+        day,
+        focus: item.launchFocus,
+        openCourtLesson: item.openCourt,
+        launchRoutine: item.launchFocus,
+        morningMeeting: `${item.readAloud}\n${item.launchFocus}`,
+        heggerty: item.heggerty,
+        ufli: item.ufli,
+        mowr: item.ufli,
+        reading: item.openCourt,
+        writing: item.writing,
+        math: item.math,
+        math2: "Spiral review, fact fluency, small-group reteach, or exit-ticket review.",
+        science: item.science,
+        socialStudies: item.socialStudies,
+        differentiation: "Visuals, sentence frames, oral rehearsal, partner support, chunked directions, manipulatives, and approved accommodations.",
+        assessment: "Teacher observation, student participation, routine independence, and subject-specific quick checks.",
+        materials: "",
+        attachments: "",
+        notes: item.notes || "",
+        complete: item.ready
+      };
+    });
+
+    week.title = state.generatedWeek.title;
+    week.pillar = state.generatedWeek.pillar;
+    week.updatedAt = new Date().toISOString();
+
+    localStorage.setItem(WEEK_STORE, JSON.stringify(week));
+    toast("All five days were sent to Weekly Planning.");
+    setTimeout(() => location.hash = "lesson-plans", 700);
+  }
+
+  function buildPreparationQueue() {
+    const existing = (() => {
+      try { return JSON.parse(localStorage.getItem(PRINT_STORE) || "[]"); }
+      catch { return []; }
+    })();
+
+    const items = (config.firstWeekAutoBuilder?.preparationDefaults || []).map((title, index) => ({
+      id: `v91-prep-${index}`,
+      source: "First-Week Auto-Builder",
+      day: "Before Monday",
+      title,
+      category: "Classroom Launch",
+      copies: 1,
+      notes: "",
+      url: "",
+      complete: Boolean(state.completedPrep[index])
+    }));
+
+    const merged = [
+      ...existing.filter(item => !String(item.id).startsWith("v91-prep-")),
+      ...items
+    ];
+
+    localStorage.setItem(PRINT_STORE, JSON.stringify(merged));
+    toast("First-week preparation items were added to the Print Center.");
+    setTimeout(() => location.hash = "forms", 700);
+  }
+
+  function injectDashboard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v91DashboardCard")) return;
+
+    const ready = state.generatedWeek
+      ? Object.values(state.generatedWeek.days).filter(day => day.ready).length
+      : 0;
+
+    const card = document.createElement("section");
+    card.id = "v91DashboardCard";
+    card.className = "v91-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>FIRST-WEEK AUTO-BUILDER</p>
+        <h3>${state.generatedWeek ? `${ready}/5 days ready` : "Generate the entire first week"}</h3>
+        <span>Classroom launch, curriculum, Planbook text, and preparation in one pack.</span>
+      </div>
+      <button>Open First-Week Builder</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "first-week-builder";
+    dashboard.prepend(card);
+  }
+
+  function injectPlanning() {
+    const studio = $("#v73PlanningStudio");
+    if (!studio || $("#v91PlanningCard")) return;
+
+    const card = document.createElement("section");
+    card.id = "v91PlanningCard";
+    card.className = "v91-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>FIVE-DAY LAUNCH PACK</p>
+        <h3>${state.generatedWeek ? "First-week pack is available" : "Generate all five first-week days"}</h3>
+        <span>Send Monday through Friday into Weekly Planning together.</span>
+      </div>
+      <button>Open Builder</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "first-week-builder";
+    $(".v73-planning-header", studio)?.insertAdjacentElement("afterend", card);
+  }
+
+  function injectHealth() {
+    const host = $("#pageHost");
+    if (!host || $("#v91Health")) return;
+
+    const days = state.generatedWeek ? Object.keys(state.generatedWeek.days).length : 0;
+    const ready = state.generatedWeek
+      ? Object.values(state.generatedWeek.days).filter(day => day.ready).length
+      : 0;
+
+    const panel = document.createElement("section");
+    panel.id = "v91Health";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 9.1 First-Week Health</h3>
+      <div class="health-grid">
+        ${healthItem("First-week template", Boolean(config.firstWeekAutoBuilder), "Connected")}
+        ${healthItem("Generated days", days === 5, `${days}/5`)}
+        ${healthItem("Ready days", ready === 5, `${ready}/5`)}
+        ${healthItem("Preparation defaults", (config.firstWeekAutoBuilder?.preparationDefaults || []).length >= 10, `${(config.firstWeekAutoBuilder?.preparationDefaults || []).length} items`)}
+      </div>
+      <button class="secondary-button">Open First-Week Builder</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "first-week-builder";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `<article class="${ok ? "ready" : "missing"}"><strong>${ok ? "✓" : "!"}</strong><div><span>${esc(title)}</span><small>${esc(detail)}</small></div></article>`;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1900);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();

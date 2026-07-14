@@ -1,6 +1,6 @@
 {
-  "version": "9.0 Automatic Lesson Generator & Full-Day Builder",
-  "releaseStatus": "Generates a complete second-grade teaching day from selected Open Court, Eureka Math\u00b2, foundational reading, writing, science, social studies, and classroom-launch inputs.",
+  "version": "9.1 First-Week Auto-Builder & Five-Day Launch Pack",
+  "releaseStatus": "Generates Monday through Friday as one first-week launch pack, connects routines and curriculum, creates Planbook-ready daily text, builds the preparation queue, and sends the week to Weekly Planning.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1485,6 +1485,61 @@
       "Analyze and discuss together.",
       "Students complete the task independently.",
       "Student task or exit ticket."
+    ]
+  },
+  "firstWeekAutoBuilder": {
+    "weekTitle": "First Week of School",
+    "pillar": "Heart",
+    "days": {
+      "Monday": {
+        "launchFocus": "Enter, Belong, Learn the Room",
+        "readAloud": "A Letter from Your Teacher",
+        "writingFocus": "Introduce ourselves and build the writing-community routine.",
+        "scienceFocus": "Scientists observe and ask questions.",
+        "socialStudiesFocus": "Our classroom is a community."
+      },
+      "Tuesday": {
+        "launchFocus": "Practice Transitions",
+        "readAloud": "First Day Jitters",
+        "writingFocus": "Write about a first-day feeling or experience.",
+        "scienceFocus": "Use observations to describe objects.",
+        "socialStudiesFocus": "Rules help communities work."
+      },
+      "Wednesday": {
+        "launchFocus": "Build Independence",
+        "readAloud": "Oh, the Places You'll Go!",
+        "writingFocus": "Write a goal for second grade.",
+        "scienceFocus": "Record evidence in a science notebook.",
+        "socialStudiesFocus": "Classroom jobs and responsibilities."
+      },
+      "Thursday": {
+        "launchFocus": "Academic Routines",
+        "readAloud": "Teacher-selected classroom text",
+        "writingFocus": "Practice planning, writing, and revising.",
+        "scienceFocus": "Follow an investigation routine.",
+        "socialStudiesFocus": "Use maps and classroom-location words."
+      },
+      "Friday": {
+        "launchFocus": "Review, Celebrate, Reteach",
+        "readAloud": "Class favorite or reread",
+        "writingFocus": "Reflect on the first week.",
+        "scienceFocus": "Review observation and evidence.",
+        "socialStudiesFocus": "Reflect on our classroom community."
+      }
+    },
+    "preparationDefaults": [
+      "Morning routine visual",
+      "Carpet expectations anchor chart",
+      "Restroom signal poster",
+      "Line-up expectations",
+      "Pencil procedures",
+      "Voice-level chart",
+      "Classroom jobs cards",
+      "Recess expectations",
+      "Pack-up checklist",
+      "Family welcome letter",
+      "Student name tags",
+      "First-week writing paper"
     ]
   }
 }
