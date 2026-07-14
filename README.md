@@ -1,49 +1,27 @@
-# TeachingHappensHere
+# Emergency Restore — Version 8.3
 
-## Version 9.1 — First-Week Auto-Builder & Five-Day Launch Pack
+This repair restores the last verified working application after the Version 9.0 JavaScript failure.
 
-### Replace
+## Replace these files
 
-- `app.js`
-- `style.css`
-- `service-worker.js`
-- `tos-data.json`
-- `README.md`
+- app.js
+- style.css
+- service-worker.js
+- tos-data.json
+- README.md
 
-No `index.html` change is required.
+## Commit message
 
-### Commit message
+Emergency Restore - Return to Verified Version 8.3
 
-`Version 9.1 - First Week Auto Builder and Five Day Launch Pack`
+## Important
 
-### Included
+This repair does not erase local browser data. Version 9 local-storage records may remain in the browser, but Version 8.3 will ignore them.
 
-- First-Week Auto-Builder in the sidebar
-- Generate Monday through Friday together
-- Classroom-launch focus for each day
-- Read-aloud suggestions using available books
-- Open Court lesson sequence
-- Eureka Math² lesson sequence
-- Heggerty and UFLI focus
-- Writing, Science, and Social Studies focus
-- Planbook-ready text for every day
-- Copy daily Planbook text
-- Open an individual day in the Version 9.0 generator
-- Mark each day ready
-- Send all five days to Weekly Planning
-- Build the first-week preparation queue
-- Print the complete launch pack
-- Dashboard, Weekly Planning, and Health connections
-- iPad and phone layouts
+## After deployment
 
-### After deployment
-
-1. Hard-refresh the site.
-2. Open **First-Week Auto-Builder**.
-3. Choose the starting Open Court and Eureka lessons.
-4. Select **Generate First Week**.
-5. Review all five day cards.
-6. Copy Planbook text as needed.
-7. Mark each completed day ready.
-8. Select **Send All 5 Days to Weekly Planning**.
-9. Select **Build Preparation Queue**.
+1. Wait for GitHub Pages to finish deploying.
+2. Open the site in an incognito/private window.
+3. Confirm that the dashboard loads.
+4. In the normal browser, press Ctrl+Shift+R.
+5. If the normal browser is still blank, clear only the site's cached files or unregister its service worker, then reload.
