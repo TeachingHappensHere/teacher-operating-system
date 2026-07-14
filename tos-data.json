@@ -1,5 +1,5 @@
 {
-  "version": "8.3 Writing, Science & Social Studies Daily Studios",
+  "version": "8.4 Stable First-Week Builder",
   "releaseStatus": "Completes the afternoon instructional workflow by connecting Writing, Science, and Social Studies to Weekly Planning, Live Teaching, Daily Lesson Packets, attachments, assessments, and printing.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
@@ -1394,5 +1394,79 @@
     "Oral response option",
     "Chunked text",
     "Bilingual support"
-  ]
+  ],
+  "firstWeekBuilder": {
+    "title": "First Week of School",
+    "pillar": "Heart",
+    "days": {
+      "Monday": [
+        "Enter, Belong, Learn the Room",
+        "A Letter from Your Teacher",
+        [
+          "Entering the Classroom",
+          "Morning Routine",
+          "Carpet Expectations",
+          "Restroom Signal",
+          "Line-Up Routine",
+          "Dismissal Routine"
+        ]
+      ],
+      "Tuesday": [
+        "Practice Transitions",
+        "First Day Jitters",
+        [
+          "Voice Levels",
+          "Pencil Procedures",
+          "Partner Talk",
+          "Hallway Expectations",
+          "Lunch and Recess Expectations"
+        ]
+      ],
+      "Wednesday": [
+        "Build Independence",
+        "Oh, the Places You'll Go!",
+        [
+          "Classroom Jobs",
+          "Help Signals",
+          "Independent Work",
+          "Materials Care",
+          "Center Practice"
+        ]
+      ],
+      "Thursday": [
+        "Academic Routines",
+        "Teacher-selected classroom text",
+        [
+          "I Do, We Do, You Do",
+          "Small Groups",
+          "Partner Math",
+          "Writing Workshop",
+          "Science Notebook"
+        ]
+      ],
+      "Friday": [
+        "Review, Celebrate, Reteach",
+        "Class favorite or reread",
+        [
+          "Routine Review",
+          "Compliment Circle",
+          "Student Reflection",
+          "Reteach High-Need Procedures",
+          "Celebrate Growth"
+        ]
+      ]
+    },
+    "preparation": [
+      "Morning routine visual",
+      "Carpet expectations anchor chart",
+      "Restroom signal poster",
+      "Line-up expectations",
+      "Pencil procedure chart",
+      "Voice-level chart",
+      "Classroom jobs cards",
+      "Recess expectations",
+      "Pack-up checklist",
+      "Family welcome letter"
+    ]
+  }
 }

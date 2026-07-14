@@ -1,5 +1,5 @@
 
-const CACHE = "teaching-happens-here-emergency-v8-3-1";
+const CACHE = "teaching-happens-here-v8-4-stable";
 const CORE = [
   "./",
   "./index.html",
