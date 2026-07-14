@@ -1370,3 +1370,551 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
+
+
+/* Version 8.0 — Live Teaching Timeline & Assessment-Day Mode */
+(() => {
+  "use strict";
+
+  const STATE_KEY = "thh-v80:live-teaching";
+  const WEEK_KEY = "thh-v73:weekly-plan";
+  const TEACH_DAY_KEY = "thh-v73:teach-day";
+  const ATTACHMENT_KEY = "thh-v74:attachments";
+  const PRINT_KEY = "thh-v74:print-center";
+
+  let config = null;
+  let state = {
+    modeOverride: "",
+    selectedBlock: "",
+    completed: {},
+    notes: {},
+    timers: {},
+    currentDate: "",
+    autoAdvance: true
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+      loadState();
+      waitForShell();
+      setInterval(updateLiveClock, 30000);
+    } catch (error) {
+      console.warn("Version 8.0 could not start.", error);
+    }
+  }
+
+  function todayKey() {
+    return new Date().toISOString().slice(0,10);
+  }
+
+  function loadState() {
+    try {
+      state = { ...state, ...JSON.parse(localStorage.getItem(STATE_KEY) || "{}") };
+    } catch {}
+
+    if (state.currentDate !== todayKey()) {
+      state.completed = {};
+      state.selectedBlock = "";
+      state.currentDate = todayKey();
+      saveState();
+    }
+  }
+
+  function saveState() {
+    localStorage.setItem(STATE_KEY, JSON.stringify(state));
+  }
+
+  function weeklyPlan() {
+    try {
+      return JSON.parse(localStorage.getItem(WEEK_KEY) || "null");
+    } catch {
+      return null;
+    }
+  }
+
+  function activeTeachDay() {
+    try {
+      return JSON.parse(localStorage.getItem(TEACH_DAY_KEY) || "null");
+    } catch {
+      return null;
+    }
+  }
+
+  function attachments() {
+    try {
+      return JSON.parse(localStorage.getItem(ATTACHMENT_KEY) || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function printCenter() {
+    try {
+      return JSON.parse(localStorage.getItem(PRINT_KEY) || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    patchTeachDayLabel();
+    addTimelineShortcut();
+    window.addEventListener("hashchange", handleRoute);
+
+    new MutationObserver(() => {
+      const route = location.hash.replace("#","") || "dashboard";
+      if (route === "teachday" && !$("#v80TeachDay")) renderLiveTeaching();
+      if (route === "dashboard") setTimeout(injectDashboardLiveCard, 0);
+      if (route === "health") setTimeout(injectHealthChecks, 0);
+    }).observe($("#pageHost"), { childList: true, subtree: true });
+
+    handleRoute();
+  }
+
+  function patchTeachDayLabel() {
+    const button = $('[data-route="teachday"] strong');
+    if (button) button.textContent = "Live Teaching";
+  }
+
+  function addTimelineShortcut() {
+    const mobile = $("#mobileNav");
+    const todayButton = $('[data-route="teachday"]', mobile);
+    if (todayButton) todayButton.textContent = "Live";
+  }
+
+  function handleRoute() {
+    const route = location.hash.replace("#","") || "dashboard";
+    if (route === "teachday") setTimeout(renderLiveTeaching, 0);
+    if (route === "dashboard") setTimeout(injectDashboardLiveCard, 0);
+    if (route === "health") setTimeout(injectHealthChecks, 0);
+  }
+
+  function currentMode() {
+    if (state.modeOverride) return state.modeOverride;
+    const weekday = new Date().toLocaleDateString("en-US", { weekday: "long" });
+    return config.scheduleModeRules?.defaultWeekdays?.[weekday] || "full";
+  }
+
+  function schedule() {
+    return currentMode() === "half"
+      ? config.halfDaySchedule2026_2027
+      : config.fullDaySchedule2026_2027;
+  }
+
+  function minutes(value) {
+    const [hourText, minuteText] = value.split(":");
+    let hour = Number(hourText);
+    const minute = Number(minuteText);
+    if (hour < 7) hour += 12;
+    return hour * 60 + minute;
+  }
+
+  function currentMinute() {
+    const now = new Date();
+    return now.getHours() * 60 + now.getMinutes();
+  }
+
+  function activeBlockIndex(items = schedule()) {
+    const now = currentMinute();
+    const active = items.findIndex(([start,end]) => now >= minutes(start) && now < minutes(end));
+    if (active >= 0) return active;
+
+    const firstFuture = items.findIndex(([start]) => now < minutes(start));
+    if (firstFuture >= 0) return firstFuture;
+    return items.length - 1;
+  }
+
+  function selectedBlockIndex(items = schedule()) {
+    if (state.selectedBlock) {
+      const index = items.findIndex(item => item[3] === state.selectedBlock);
+      if (index >= 0) return index;
+    }
+    return activeBlockIndex(items);
+  }
+
+  function activeDayPlan() {
+    const direct = activeTeachDay();
+    if (direct?.day) return direct;
+
+    const week = weeklyPlan();
+    const weekday = new Date().toLocaleDateString("en-US", { weekday: "long" });
+    return week?.days?.[weekday] || week?.days?.Monday || null;
+  }
+
+  function renderLiveTeaching() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const items = schedule();
+    const index = selectedBlockIndex(items);
+    const block = items[index];
+    const next = items[index + 1] || null;
+    const dayPlan = activeDayPlan();
+    const dayName = dayPlan?.day || new Date().toLocaleDateString("en-US",{weekday:"long"});
+    const dayAttachments = attachments().filter(item => item.day === dayName);
+    const blockAttachments = filterAttachmentsForBlock(dayAttachments, block[3]);
+    const printItems = printCenter().filter(item => item.day === dayName && !item.complete);
+    const lessonText = blockLesson(dayPlan, block[3]);
+    const resources = config.blockResources?.[block[3]] || [];
+    const percent = Math.round((Object.values(state.completed).filter(Boolean).length / items.length) * 100);
+
+    host.innerHTML = `
+      <section id="v80TeachDay">
+        <section class="page-header v80-live-header">
+          <div>
+            <p>VERSION 8.0 • ${currentMode() === "half" ? "ASSESSMENT DAY MODE" : "FULL DAY TEACHING MODE"}</p>
+            <h2>${esc(dayName)} Live Teaching Timeline</h2>
+            <span id="v80Clock">${new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"})}</span>
+          </div>
+          <div class="v80-header-actions">
+            <select id="v80ModeSelect">
+              <option value="" ${!state.modeOverride ? "selected" : ""}>Automatic Mode</option>
+              <option value="full" ${state.modeOverride === "full" ? "selected" : ""}>Full Day</option>
+              <option value="half" ${state.modeOverride === "half" ? "selected" : ""}>Assessment Half Day</option>
+            </select>
+            <button id="v80ResetDay" class="secondary-button">Reset Day</button>
+            <button id="v80PrintDay" class="primary-button">Print Timeline</button>
+          </div>
+        </section>
+
+        <section class="v80-progress">
+          <div><strong>${percent}%</strong><span>Day complete</span></div>
+          <div class="v80-progress-track"><span style="width:${percent}%"></span></div>
+          <label><input id="v80AutoAdvance" type="checkbox" ${state.autoAdvance ? "checked" : ""}> Auto-select current time block</label>
+        </section>
+
+        <section class="v80-live-layout">
+          <aside class="panel v80-timeline">
+            <div class="v80-timeline-heading">
+              <h3>Teaching Timeline</h3>
+              <span>${currentMode() === "half" ? "Half Day" : "Full Day"}</span>
+            </div>
+            <div class="v80-timeline-list">
+              ${items.map((item, itemIndex) => timelineItem(item, itemIndex, index)).join("")}
+            </div>
+          </aside>
+
+          <main class="v80-current-workspace">
+            <section class="v80-now-card">
+              <div>
+                <p>NOW TEACHING</p>
+                <h1>${esc(block[2])}</h1>
+                <span>${esc(block[0])}–${esc(block[1])}</span>
+              </div>
+              <button id="v80CompleteCurrent" class="primary-button">
+                ${state.completed[block[3]] ? "✓ Complete" : "Mark Complete"}
+              </button>
+            </section>
+
+            <section class="v80-block-grid">
+              <article class="panel">
+                <h3>Today's Lesson</h3>
+                <p>${formatText(lessonText || "No lesson content has been connected to this block.")}</p>
+                <div class="v80-block-actions">
+                  <button data-v80-route="production" class="secondary-button">Open Daily Packet</button>
+                  <button data-v80-route="lesson-plans" class="secondary-button">Open Weekly Plan</button>
+                </div>
+              </article>
+
+              <article class="panel">
+                <h3>Block Resources</h3>
+                <div class="v80-resource-tags">
+                  ${resources.map(resource => `<span>${esc(resource)}</span>`).join("") || "<span>No mapped resources</span>"}
+                </div>
+                <div class="v80-block-actions">
+                  <button data-v80-route="attachments" class="secondary-button">Open Attachments</button>
+                  <button data-v80-route="resources" class="secondary-button">Open Resources</button>
+                </div>
+              </article>
+
+              <article class="panel">
+                <h3>Connected Attachments</h3>
+                ${renderAttachments(blockAttachments)}
+              </article>
+
+              <article class="panel">
+                <h3>Print & Preparation</h3>
+                ${printItems.length
+                  ? `<ul>${printItems.slice(0,8).map(item => `<li>${esc(item.title)}</li>`).join("")}</ul>`
+                  : "<p>No remaining print tasks for this day.</p>"}
+                <button data-v80-route="forms" class="secondary-button">Open Print Center</button>
+              </article>
+            </section>
+
+            <section class="panel v80-live-notes">
+              <div class="v80-note-heading">
+                <h3>Live Teaching Notes</h3>
+                <button id="v80SaveNotes" class="secondary-button">Save Notes</button>
+              </div>
+              <textarea id="v80Notes" placeholder="Student responses, changes, reteach needs, behavior patterns, and reminders...">${esc(state.notes[block[3]] || "")}</textarea>
+            </section>
+
+            <section class="v80-next-card">
+              <div>
+                <span>NEXT</span>
+                <strong>${next ? `${next[0]}–${next[1]} ${next[2]}` : "End of teaching day"}</strong>
+              </div>
+              ${next ? `<button id="v80GoNext" class="secondary-button">Open Next Block</button>` : ""}
+            </section>
+          </main>
+        </section>
+      </section>
+    `;
+
+    wireLiveTeaching(items, index, block);
+  }
+
+  function timelineItem(item, itemIndex, selectedIndex) {
+    const complete = Boolean(state.completed[item[3]]);
+    const current = itemIndex === activeBlockIndex();
+    const selected = itemIndex === selectedIndex;
+    return `
+      <button data-v80-block="${item[3]}" class="${complete ? "complete" : ""} ${current ? "current" : ""} ${selected ? "selected" : ""}">
+        <span>${complete ? "✓" : current ? "▶" : "○"}</span>
+        <div>
+          <strong>${esc(item[2])}</strong>
+          <small>${esc(item[0])}–${esc(item[1])}</small>
+        </div>
+      </button>`;
+  }
+
+  function blockLesson(day, key) {
+    if (!day) return "";
+
+    const map = {
+      breakfast: "Attendance, breakfast count, student check-in, and morning reminders.",
+      morningWork: day.morningWork || day.launchRoutine,
+      mowr: day.mowr || day.smallGroups,
+      heggerty: day.heggerty,
+      phonics: day.phonics,
+      vocabulary: day.vocabulary,
+      reading: day.reading || day.openCourtLesson,
+      writing: day.writing,
+      math: day.math,
+      workout: "Daily workout, equipment, safety, hydration, and heat considerations.",
+      math2: day.math2 || day.math,
+      science: day.science,
+      socialStudies: day.socialStudies,
+      packup: "Classroom jobs, homework, clean-up, bus preparation, and dismissal checks.",
+      dismissal: "Dismissal and student release procedures.",
+      phonicsTest: day.phonics || "Phonics assessment",
+      vocabularyTest: day.vocabulary || "Vocabulary assessment",
+      spellingTest: "Weekly spelling assessment",
+      grammarTest: day.writing || "Grammar, Usage, and Mechanics assessment",
+      readingTest: day.reading || day.openCourtLesson || "Reading assessment",
+      mathTest: day.math || "Math assessment",
+      scienceSocialTest: [day.science, day.socialStudies].filter(Boolean).join("\n") || "Science and Social Studies assessments",
+      transition: "Make-up testing, restroom, movement, and preparation.",
+      lunch: "Lunch and recess procedures.",
+      lunchRecess: "Lunch recess procedures.",
+      recess: "Recess expectations and return routine.",
+      dismissalPrep: "Pack-up, end-of-day reflection, and dismissal preparation."
+    };
+
+    return map[key] || "";
+  }
+
+  function filterAttachmentsForBlock(items, key) {
+    const categoryMap = {
+      mowr: ["MOWR","UFLI"],
+      heggerty: ["Heggerty"],
+      phonics: ["Open Court","UFLI"],
+      vocabulary: ["Open Court"],
+      reading: ["Open Court","Assessment"],
+      writing: ["Writing / GUM"],
+      math: ["Eureka Math²"],
+      math2: ["Eureka Math²"],
+      science: ["Science"],
+      socialStudies: ["Social Studies"],
+      phonicsTest: ["Assessment","Open Court"],
+      vocabularyTest: ["Assessment","Open Court"],
+      spellingTest: ["Assessment","Open Court"],
+      grammarTest: ["Assessment","Writing / GUM"],
+      readingTest: ["Assessment","Open Court"],
+      mathTest: ["Assessment","Eureka Math²"],
+      scienceSocialTest: ["Assessment","Science","Social Studies"]
+    };
+
+    const categories = categoryMap[key] || [];
+    return items.filter(item => categories.includes(item.category));
+  }
+
+  function renderAttachments(items) {
+    if (!items.length) {
+      return `<p>No attachments are linked specifically to this block.</p>
+        <button data-v80-route="attachments" class="secondary-button">Link Resources</button>`;
+    }
+
+    return `<ul class="v80-attachment-list">${items.map(item => `
+      <li>
+        ${item.url
+          ? `<a href="${esc(item.url)}" target="_blank" rel="noopener">${esc(item.title)}</a>`
+          : `<span>${esc(item.title)} — link needed</span>`}
+        <small>${esc(item.category)} • ${esc(item.type)}</small>
+      </li>`).join("")}</ul>`;
+  }
+
+  function formatText(value) {
+    return esc(value).replace(/\n/g, "<br>");
+  }
+
+  function wireLiveTeaching(items, index, block) {
+    $$("[data-v80-block]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.selectedBlock = button.dataset.v80Block;
+        state.autoAdvance = false;
+        saveState();
+        renderLiveTeaching();
+      });
+    });
+
+    $$("[data-v80-route]").forEach(button => {
+      button.addEventListener("click", () => location.hash = button.dataset.v80Route);
+    });
+
+    $("#v80ModeSelect")?.addEventListener("change", event => {
+      state.modeOverride = event.target.value;
+      state.selectedBlock = "";
+      saveState();
+      renderLiveTeaching();
+    });
+
+    $("#v80AutoAdvance")?.addEventListener("change", event => {
+      state.autoAdvance = event.target.checked;
+      if (state.autoAdvance) state.selectedBlock = "";
+      saveState();
+      renderLiveTeaching();
+    });
+
+    $("#v80CompleteCurrent")?.addEventListener("click", () => {
+      state.completed[block[3]] = !state.completed[block[3]];
+      saveState();
+
+      if (state.completed[block[3]] && items[index + 1]) {
+        state.selectedBlock = items[index + 1][3];
+        saveState();
+      }
+      renderLiveTeaching();
+    });
+
+    $("#v80GoNext")?.addEventListener("click", () => {
+      if (!items[index + 1]) return;
+      state.selectedBlock = items[index + 1][3];
+      state.autoAdvance = false;
+      saveState();
+      renderLiveTeaching();
+    });
+
+    $("#v80SaveNotes")?.addEventListener("click", () => {
+      state.notes[block[3]] = $("#v80Notes").value.trim();
+      saveState();
+      toast("Live teaching notes saved.");
+    });
+
+    $("#v80ResetDay")?.addEventListener("click", () => {
+      if (!confirm("Reset today's completed blocks and selected block?")) return;
+      state.completed = {};
+      state.selectedBlock = "";
+      state.notes = {};
+      saveState();
+      renderLiveTeaching();
+    });
+
+    $("#v80PrintDay")?.addEventListener("click", () => window.print());
+  }
+
+  function updateLiveClock() {
+    const clock = $("#v80Clock");
+    if (clock) {
+      clock.textContent = new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
+    }
+
+    if (location.hash === "#teachday" && state.autoAdvance) {
+      const items = schedule();
+      const active = items[activeBlockIndex(items)];
+      if (active && state.selectedBlock !== active[3]) {
+        state.selectedBlock = "";
+        saveState();
+        renderLiveTeaching();
+      }
+    }
+  }
+
+  function injectDashboardLiveCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v80DashboardLive")) return;
+
+    const items = schedule();
+    const block = items[activeBlockIndex(items)];
+    const next = items[activeBlockIndex(items) + 1];
+    const card = document.createElement("section");
+    card.id = "v80DashboardLive";
+    card.className = "v80-dashboard-live";
+    card.innerHTML = `
+      <div>
+        <p>${currentMode() === "half" ? "ASSESSMENT DAY MODE" : "LIVE TEACHING MODE"}</p>
+        <h3>Now: ${esc(block?.[2] || "Teaching day complete")}</h3>
+        <span>${next ? `Next: ${esc(next[0])} ${esc(next[2])}` : "No additional blocks scheduled."}</span>
+      </div>
+      <button id="v80OpenLive">Open Live Teaching</button>
+    `;
+    dashboard.prepend(card);
+    $("#v80OpenLive")?.addEventListener("click", () => location.hash = "teachday");
+  }
+
+  function injectHealthChecks() {
+    const host = $("#pageHost");
+    if (!host || $("#v80Health")) return;
+
+    const full = config.fullDaySchedule2026_2027 || [];
+    const half = config.halfDaySchedule2026_2027 || [];
+    const plan = activeDayPlan();
+
+    const panel = document.createElement("section");
+    panel.id = "v80Health";
+    panel.className = "panel v80-health-panel";
+    panel.innerHTML = `
+      <h3>Version 8.0 Live Teaching Health</h3>
+      <div class="health-grid">
+        ${healthItem("Full-day schedule", full.length === 18, `${full.length} blocks`)}
+        ${healthItem("Half-day schedule", half.length === 13, `${half.length} blocks`)}
+        ${healthItem("Current daily plan", Boolean(plan), plan ? "Connected" : "Missing")}
+        ${healthItem("Schedule mode", true, currentMode() === "half" ? "Assessment Half Day" : "Full Day")}
+      </div>
+      <button id="v80HealthOpen" class="secondary-button">Open Live Teaching</button>
+    `;
+    host.appendChild(panel);
+    $("#v80HealthOpen")?.addEventListener("click", () => location.hash = "teachday");
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div><span>${esc(title)}</span><small>${esc(detail)}</small></div>
+      </article>`;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1800);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();

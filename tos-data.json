@@ -1,6 +1,6 @@
 {
-  "version": "7.5 Planbook Export, Daily Lesson Packets & Production Workflow",
-  "releaseStatus": "Turns the Version 7.3 weekly plan and Version 7.4 lesson attachments into Planbook-ready daily lessons, printable teacher packets, and ready-to-teach checks.",
+  "version": "8.0 Live Teaching Timeline & Assessment-Day Mode",
+  "releaseStatus": "Live classroom guidance using the 2026\u20132027 full-day schedule, assessment half-day schedule, weekly planning, daily lesson packets, attachments, and a persistent teaching timeline.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -574,5 +574,277 @@
     "Materials",
     "Attachments",
     "Teacher Notes"
-  ]
+  ],
+  "fullDaySchedule2026_2027": [
+    [
+      "7:45",
+      "8:10",
+      "Breakfast",
+      "breakfast"
+    ],
+    [
+      "8:10",
+      "8:20",
+      "Morning Work",
+      "morningWork"
+    ],
+    [
+      "8:20",
+      "9:15",
+      "MOWR",
+      "mowr"
+    ],
+    [
+      "9:15",
+      "9:25",
+      "Heggerty",
+      "heggerty"
+    ],
+    [
+      "9:25",
+      "9:45",
+      "Phonics",
+      "phonics"
+    ],
+    [
+      "9:45",
+      "9:55",
+      "Vocabulary",
+      "vocabulary"
+    ],
+    [
+      "9:55",
+      "10:45",
+      "Reading (Open Court)",
+      "reading"
+    ],
+    [
+      "10:45",
+      "11:00",
+      "Lunch",
+      "lunch"
+    ],
+    [
+      "11:00",
+      "11:10",
+      "Lunch Recess",
+      "lunchRecess"
+    ],
+    [
+      "11:10",
+      "11:40",
+      "Writing",
+      "writing"
+    ],
+    [
+      "11:40",
+      "12:40",
+      "Math",
+      "math"
+    ],
+    [
+      "12:40",
+      "1:15",
+      "Workout",
+      "workout"
+    ],
+    [
+      "1:15",
+      "1:20",
+      "Recess",
+      "recess"
+    ],
+    [
+      "1:20",
+      "1:40",
+      "Math 2",
+      "math2"
+    ],
+    [
+      "1:40",
+      "2:15",
+      "Science",
+      "science"
+    ],
+    [
+      "2:15",
+      "2:55",
+      "Social Studies",
+      "socialStudies"
+    ],
+    [
+      "2:55",
+      "3:00",
+      "Pack-Up / Clean-Up / Bus Dismissal",
+      "packup"
+    ],
+    [
+      "3:00",
+      "3:30",
+      "Dismissal",
+      "dismissal"
+    ]
+  ],
+  "halfDaySchedule2026_2027": [
+    [
+      "7:45",
+      "8:10",
+      "Arrival / Breakfast",
+      "breakfast"
+    ],
+    [
+      "8:10",
+      "8:20",
+      "Phonics Test",
+      "phonicsTest"
+    ],
+    [
+      "8:20",
+      "8:40",
+      "Vocabulary Test",
+      "vocabularyTest"
+    ],
+    [
+      "8:40",
+      "9:00",
+      "Spelling Test",
+      "spellingTest"
+    ],
+    [
+      "9:00",
+      "9:20",
+      "Grammar, Usage & Mechanics Test",
+      "grammarTest"
+    ],
+    [
+      "9:20",
+      "9:40",
+      "Transition / Make-Up Time",
+      "transition"
+    ],
+    [
+      "9:40",
+      "10:20",
+      "Reading Test",
+      "readingTest"
+    ],
+    [
+      "10:20",
+      "10:40",
+      "Indoor Lunch / Recess",
+      "lunch"
+    ],
+    [
+      "10:40",
+      "11:10",
+      "Math / Tests",
+      "mathTest"
+    ],
+    [
+      "11:10",
+      "11:30",
+      "Science & Social Studies Tests",
+      "scienceSocialTest"
+    ],
+    [
+      "11:30",
+      "11:40",
+      "First Buses: Clean-Up & Pack-Up",
+      "packup"
+    ],
+    [
+      "11:40",
+      "12:00",
+      "Pack-Up / End of Day",
+      "dismissalPrep"
+    ],
+    [
+      "12:00",
+      "12:30",
+      "Dismissal",
+      "dismissal"
+    ]
+  ],
+  "scheduleModeRules": {
+    "defaultWeekdays": {
+      "Monday": "full",
+      "Tuesday": "full",
+      "Wednesday": "full",
+      "Thursday": "full",
+      "Friday": "half"
+    },
+    "manualOverride": true
+  },
+  "blockResources": {
+    "morningWork": [
+      "Morning Work",
+      "Classroom Launch",
+      "Pillar Resources"
+    ],
+    "mowr": [
+      "MOWR",
+      "UFLI",
+      "Small Groups",
+      "Intervention"
+    ],
+    "heggerty": [
+      "Heggerty"
+    ],
+    "phonics": [
+      "Open Court",
+      "UFLI",
+      "Skills Practice"
+    ],
+    "vocabulary": [
+      "Open Court",
+      "Skills Practice"
+    ],
+    "reading": [
+      "Open Court",
+      "Weekly Story",
+      "Skills Practice",
+      "Lesson Assessment"
+    ],
+    "writing": [
+      "Writing / GUM",
+      "Skills Practice"
+    ],
+    "math": [
+      "Eureka Math\u00b2"
+    ],
+    "math2": [
+      "Eureka Math\u00b2",
+      "Fact Fluency",
+      "Intervention"
+    ],
+    "science": [
+      "Science"
+    ],
+    "socialStudies": [
+      "Social Studies"
+    ],
+    "phonicsTest": [
+      "Open Court Assessment"
+    ],
+    "vocabularyTest": [
+      "Open Court Assessment"
+    ],
+    "spellingTest": [
+      "Open Court Assessment"
+    ],
+    "grammarTest": [
+      "Open Court Assessment"
+    ],
+    "readingTest": [
+      "Open Court Assessment",
+      "Oral Fluency"
+    ],
+    "mathTest": [
+      "Eureka Math\u00b2 Assessment"
+    ],
+    "scienceSocialTest": [
+      "Science Assessment",
+      "Social Studies Assessment"
+    ]
+  }
 }
