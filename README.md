@@ -1,6 +1,6 @@
 # TeachingHappensHere
 
-## Version 7.4 — Lesson Attachments, Print Center & Resource Linking
+## Version 7.5 — Planbook Export, Daily Lesson Packets & Production Workflow
 
 ### Replace these files
 
@@ -14,31 +14,38 @@ No change to `index.html` is required.
 
 ### Commit message
 
-`Version 7.4 - Lesson Attachments Print Center and Resource Linking`
+`Version 7.5 - Planbook Export Daily Lesson Packets and Production Workflow`
 
 ### Included
 
-- Lesson Attachments page
-- Monday–Friday resource assignment
-- Curriculum categories and resource types
-- URL and GitHub path fields
-- Lesson connections and copy counts
-- Missing-link alerts
-- Attachment search and filters
-- Consolidated Print & Preparation Center
-- Weekly Planning print-queue integration
-- Dashboard and planning summaries
-- Resource Health checks
-
-### Important
-
-The application stores resource links and metadata. The actual file must exist at the entered public URL or GitHub path.
+- Daily Lesson Packets page in the sidebar
+- Monday–Friday packet production
+- Planbook-ready copy text
+- Downloadable daily text file
+- Printable teacher packet
+- Daily focus, standards, objective, I Do, We Do, You Do
+- Subject-by-subject lesson blocks
+- Small groups and differentiation
+- Assessment and evidence
+- Materials and connected attachments
+- Teacher notes
+- Ready-to-teach checklist
+- Missing-content alerts
+- Daily readiness percentage
+- Weekly Planning production summary
+- Dashboard production status
+- Teach My Day packet status
+- Compact iPad production view
+- Production Health checks
+- Local browser storage
 
 ### After deployment
 
 1. Hard-refresh the site.
-2. Open Lesson Attachments.
-3. Add Monday’s Open Court, Heggerty, UFLI, and Eureka resources.
-4. Mark needed files for printing.
-5. Build the Print Center.
-6. Test every link before Monday.
+2. Open **Daily Lesson Packets**.
+3. Select Monday.
+4. Review missing-content warnings.
+5. Copy the Planbook text.
+6. Print Monday’s teacher packet.
+7. Send Monday to Teach My Day.
+8. Repeat for Tuesday through Friday.

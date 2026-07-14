@@ -814,3 +814,559 @@ function planCard(){const s=$('#v73PlanningStudio');if(!s||$('#v74PlanCard'))ret
 function health(){const h=$('#pageHost');if(!h||$('#v74Health'))return;const p=document.createElement('section');p.id='v74Health';p.className='panel';p.innerHTML=`<h3>Version 7.4 Resource Health</h3><div class="health-grid"><article class="ready"><strong>✓</strong><div><span>Attachment storage</span><small>${items.length} record(s)</small></div></article><article class="ready"><strong>✓</strong><div><span>Print Center</span><small>${queue.length} item(s)</small></div></article><article class="${items.some(x=>!x.url)?'missing':'ready'}"><strong>${items.some(x=>!x.url)?'!':'✓'}</strong><div><span>Missing links</span><small>${items.filter(x=>!x.url).length} missing</small></div></article></div>`;h.appendChild(p)}
 function toast(m){const t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();})();
+
+
+/* Version 7.5 — Planbook Export, Daily Lesson Packets & Production Workflow */
+(() => {
+  "use strict";
+
+  const WEEK_STORE = "thh-v73:weekly-plan";
+  const ATTACHMENT_STORE = "thh-v74:attachments";
+  const PACKET_STORE = "thh-v75:packet-state";
+  const TEACH_DAY_STORE = "thh-v73:teach-day";
+
+  let config = null;
+  let selectedDay = "Monday";
+  let packetState = {
+    checks: {},
+    packetNotes: {},
+    lastExportedDay: "",
+    compactView: false
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+      try {
+        packetState = { ...packetState, ...JSON.parse(localStorage.getItem(PACKET_STORE) || "{}") };
+      } catch {}
+      waitForShell();
+    } catch (error) {
+      console.warn("Version 7.5 could not start.", error);
+    }
+  }
+
+  function savePacketState() {
+    localStorage.setItem(PACKET_STORE, JSON.stringify(packetState));
+  }
+
+  function weeklyPlan() {
+    try {
+      return JSON.parse(localStorage.getItem(WEEK_STORE) || "null");
+    } catch {
+      return null;
+    }
+  }
+
+  function attachments() {
+    try {
+      return JSON.parse(localStorage.getItem(ATTACHMENT_STORE) || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    addProductionNavigation();
+    window.addEventListener("hashchange", handleRoute);
+
+    new MutationObserver(() => {
+      const route = location.hash.replace("#", "") || "dashboard";
+      if (route === "production" && !$("#v75Production")) renderProduction();
+      if (route === "lesson-plans") setTimeout(injectPlanningProductionCard, 0);
+      if (route === "dashboard") setTimeout(injectDashboardProductionCard, 0);
+      if (route === "teachday") setTimeout(injectTeachDayPacket, 0);
+      if (route === "health") setTimeout(injectHealthChecks, 0);
+    }).observe($("#pageHost"), { childList: true, subtree: true });
+
+    handleRoute();
+  }
+
+  function addProductionNavigation() {
+    if ($('[data-route="production"]')) return;
+
+    const lessonPlans = $('[data-route="lesson-plans"]');
+    const button = document.createElement("button");
+    button.className = "nav-button";
+    button.dataset.route = "production";
+    button.innerHTML = "<span>▤</span><strong>Daily Lesson Packets</strong>";
+    button.addEventListener("click", () => location.hash = "production");
+
+    if (lessonPlans) lessonPlans.insertAdjacentElement("afterend", button);
+    else $("#mainNav").appendChild(button);
+  }
+
+  function handleRoute() {
+    const route = location.hash.replace("#", "") || "dashboard";
+    if (route === "production") setTimeout(renderProduction, 0);
+    if (route === "lesson-plans") setTimeout(injectPlanningProductionCard, 0);
+    if (route === "dashboard") setTimeout(injectDashboardProductionCard, 0);
+    if (route === "teachday") setTimeout(injectTeachDayPacket, 0);
+    if (route === "health") setTimeout(injectHealthChecks, 0);
+  }
+
+  function renderProduction() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const week = weeklyPlan();
+    if (!week?.days) {
+      host.innerHTML = `
+        <section id="v75Production">
+          <section class="page-header">
+            <div>
+              <p>VERSION 7.5</p>
+              <h2>Daily Lesson Packets</h2>
+              <span>A weekly plan is required before packets can be produced.</span>
+            </div>
+            <button class="primary-button" id="v75OpenPlanning">Open Weekly Planning</button>
+          </section>
+          <div class="empty-state">
+            <strong>No Version 7.3 weekly plan was found.</strong>
+            <p>Build Monday through Friday in Weekly Planning, then return here.</p>
+          </div>
+        </section>`;
+      $("#v75OpenPlanning")?.addEventListener("click", () => location.hash = "lesson-plans");
+      return;
+    }
+
+    if (!week.days[selectedDay]) selectedDay = Object.keys(week.days)[0];
+    const day = week.days[selectedDay];
+    const dayAttachments = attachments().filter(item => item.day === selectedDay);
+    const readiness = calculateReadiness(day, dayAttachments);
+    const planbookText = buildPlanbookText(day, dayAttachments);
+
+    host.innerHTML = `
+      <section id="v75Production" class="${packetState.compactView ? "compact-production" : ""}">
+        <section class="page-header">
+          <div>
+            <p>VERSION 7.5</p>
+            <h2>Planbook Export & Daily Lesson Packets</h2>
+            <span>Produce a classroom-ready packet from Weekly Planning and Lesson Attachments.</span>
+          </div>
+          <div class="button-row">
+            <button id="v75CompactToggle" class="secondary-button">${packetState.compactView ? "Standard View" : "Compact iPad View"}</button>
+            <button id="v75PrintPacket" class="primary-button">Print ${esc(selectedDay)} Packet</button>
+          </div>
+        </section>
+
+        <nav class="v75-day-tabs">
+          ${Object.keys(week.days).map(name => {
+            const item = week.days[name];
+            const result = calculateReadiness(item, attachments().filter(attachment => attachment.day === name));
+            return `
+              <button data-v75-day="${name}" class="${name === selectedDay ? "active" : ""}">
+                <strong>${esc(name)}</strong>
+                <span>${result.percent}% ready</span>
+              </button>`;
+          }).join("")}
+        </nav>
+
+        <section class="v75-readiness-strip">
+          <article><span>DAY</span><strong>${esc(selectedDay)}</strong></article>
+          <article><span>LESSON</span><strong>${esc(day.openCourtLesson || "Not selected")}</strong></article>
+          <article><span>READINESS</span><strong>${readiness.percent}%</strong></article>
+          <article class="${readiness.missing.length ? "warning" : "ready"}">
+            <span>MISSING ITEMS</span><strong>${readiness.missing.length}</strong>
+          </article>
+        </section>
+
+        <section class="v75-production-layout">
+          <aside class="panel v75-production-sidebar">
+            <h3>Packet Actions</h3>
+            <button id="v75CopyPlanbook" class="primary-button">Copy Planbook Text</button>
+            <button id="v75DownloadText" class="secondary-button">Download Text File</button>
+            <button id="v75SendTeachDay" class="secondary-button">Send to Teach My Day</button>
+            <button id="v75OpenAttachments" class="secondary-button">Open Attachments</button>
+            <button id="v75OpenPlanning" class="secondary-button">Return to Weekly Planning</button>
+
+            <h3>Ready-to-Teach Check</h3>
+            <div class="v75-check-list">
+              ${readiness.checks.map((check, index) => `
+                <label class="${check.ok ? "complete" : ""}">
+                  <input type="checkbox" data-v75-manual-check="${selectedDay}-${index}"
+                    ${packetState.checks[`${selectedDay}-${index}`] || check.ok ? "checked" : ""}>
+                  <span>${esc(check.label)}</span>
+                </label>`).join("")}
+            </div>
+          </aside>
+
+          <main class="v75-packet">
+            <section class="v75-packet-title">
+              <p>${esc(week.title || "Weekly Plan")} • ${esc(selectedDay)}</p>
+              <h1>${esc(day.openCourtLesson || "Daily Lesson Packet")}</h1>
+              <span>${esc(day.date || week.weekOf || "")} • Pillar: ${esc(week.pillar || "Heart")}</span>
+            </section>
+
+            ${packetSection("Daily Focus", `<p>${formatText(day.focus || day.launchRoutine || "Add the daily focus.")}</p>`)}
+            ${packetSection("Standards & Objective", `
+              <h4>Standards</h4><p>${formatText(day.standards || "Add standards.")}</p>
+              <h4>Objective</h4><p>${formatText(day.objective || "Add the learning objective.")}</p>
+            `)}
+            ${packetSection("Instructional Release", `
+              <div class="v75-release-grid">
+                <article><h4>I Do</h4><p>${formatText(day.iDo || "Add teacher modeling.")}</p></article>
+                <article><h4>We Do</h4><p>${formatText(day.weDo || "Add guided practice.")}</p></article>
+                <article><h4>You Do</h4><p>${formatText(day.youDo || "Add independent practice.")}</p></article>
+              </div>
+            `)}
+            ${packetSection("Daily Subject Blocks", renderSubjectBlocks(day))}
+            ${packetSection("Small Groups & Differentiation", `
+              <h4>Small Groups</h4><p>${formatText(day.smallGroups || "Add small-group plan.")}</p>
+              <h4>Differentiation</h4><p>${formatText(day.differentiation || "Add EL, IEP, 504, and universal supports.")}</p>
+            `)}
+            ${packetSection("Assessment & Evidence", `<p>${formatText(day.assessment || "Add assessment or evidence.")}</p>`)}
+            ${packetSection("Materials & Attachments", `
+              <div class="v75-material-columns">
+                <article><h4>Materials</h4><p>${formatText(day.materials || "No materials entered.")}</p></article>
+                <article><h4>Attachments</h4>${renderAttachmentList(dayAttachments)}</article>
+              </div>
+            `)}
+            ${packetSection("Teacher Notes", `
+              <p>${formatText(day.notes || "No weekly-planning notes entered.")}</p>
+              <textarea id="v75PacketNotes" placeholder="Additional packet notes...">${esc(packetState.packetNotes[selectedDay] || "")}</textarea>
+              <button id="v75SavePacketNotes" class="secondary-button">Save Packet Notes</button>
+            `)}
+          </main>
+
+          <aside class="panel v75-planbook-preview">
+            <h3>Planbook Copy Preview</h3>
+            <textarea id="v75PlanbookText" readonly>${esc(planbookText)}</textarea>
+            ${readiness.missing.length ? `
+              <div class="v75-missing-warning">
+                <strong>Complete before teaching:</strong>
+                <ul>${readiness.missing.map(item => `<li>${esc(item)}</li>`).join("")}</ul>
+              </div>` : `
+              <div class="v75-ready-message"><strong>✓ Packet is ready to teach.</strong></div>`}
+          </aside>
+        </section>
+      </section>
+    `;
+
+    wireProduction(day, dayAttachments, planbookText);
+  }
+
+  function packetSection(title, body) {
+    return `<section class="v75-packet-section"><h3>${esc(title)}</h3>${body}</section>`;
+  }
+
+  function formatText(value) {
+    return esc(value).replace(/\n/g, "<br>");
+  }
+
+  function renderSubjectBlocks(day) {
+    return (config.planbookSubjects || []).map(([label, key]) => `
+      <article class="v75-subject-block">
+        <h4>${esc(label)}</h4>
+        <p>${formatText(day[key] || "No plan entered.")}</p>
+      </article>
+    `).join("");
+  }
+
+  function renderAttachmentList(items) {
+    if (!items.length) return "<p>No lesson attachments connected.</p>";
+    return `<ul class="v75-attachment-list">${items.map(item => `
+      <li>
+        ${item.url ? `<a href="${esc(item.url)}" target="_blank" rel="noopener">${esc(item.title)}</a>` : `<span>${esc(item.title)}</span>`}
+        <small>${esc(item.category)} • ${esc(item.type)}${item.notes ? ` • ${esc(item.notes)}` : ""}</small>
+      </li>`).join("")}</ul>`;
+  }
+
+  function calculateReadiness(day, dayAttachments) {
+    const checks = (config.requiredDailyFields || []).map(([label, key]) => ({
+      label,
+      ok: Boolean(String(day[key] || "").trim())
+    }));
+
+    checks.push({
+      label: "At least one subject block is planned",
+      ok: (config.planbookSubjects || []).some(([, key]) => Boolean(String(day[key] || "").trim()))
+    });
+    checks.push({
+      label: "Attachments reviewed",
+      ok: dayAttachments.length > 0 && dayAttachments.every(item => Boolean(item.url?.trim()))
+    });
+    checks.push({
+      label: "Day marked ready in Weekly Planning",
+      ok: Boolean(day.complete)
+    });
+
+    const missing = checks.filter(check => !check.ok).map(check => check.label);
+    const percent = Math.round((checks.filter(check => check.ok).length / checks.length) * 100);
+    return { checks, missing, percent };
+  }
+
+  function buildPlanbookText(day, dayAttachments) {
+    const lines = [
+      `${selectedDay.toUpperCase()} — ${day.openCourtLesson || "DAILY LESSON"}`,
+      "",
+      `DAILY FOCUS`,
+      day.focus || day.launchRoutine || "",
+      "",
+      `STANDARDS`,
+      day.standards || "",
+      "",
+      `OBJECTIVE`,
+      day.objective || "",
+      "",
+      `I DO`,
+      day.iDo || "",
+      "",
+      `WE DO`,
+      day.weDo || "",
+      "",
+      `YOU DO`,
+      day.youDo || "",
+      ""
+    ];
+
+    (config.planbookSubjects || []).forEach(([label, key]) => {
+      lines.push(label.toUpperCase(), day[key] || "", "");
+    });
+
+    lines.push(
+      "SMALL GROUPS",
+      day.smallGroups || "",
+      "",
+      "DIFFERENTIATION",
+      day.differentiation || "",
+      "",
+      "ASSESSMENT / EVIDENCE",
+      day.assessment || "",
+      "",
+      "MATERIALS",
+      day.materials || "",
+      "",
+      "ATTACHMENTS",
+      dayAttachments.map(item => `${item.title}${item.url ? ` — ${item.url}` : " — LINK NEEDED"}`).join("\n"),
+      "",
+      "TEACHER NOTES",
+      day.notes || ""
+    );
+
+    return lines.join("\n").trim();
+  }
+
+  function wireProduction(day, dayAttachments, planbookText) {
+    $$("[data-v75-day]").forEach(button => {
+      button.addEventListener("click", () => {
+        selectedDay = button.dataset.v75Day;
+        renderProduction();
+      });
+    });
+
+    $$("[data-v75-manual-check]").forEach(input => {
+      input.addEventListener("change", () => {
+        packetState.checks[input.dataset.v75ManualCheck] = input.checked;
+        savePacketState();
+      });
+    });
+
+    $("#v75CompactToggle")?.addEventListener("click", () => {
+      packetState.compactView = !packetState.compactView;
+      savePacketState();
+      renderProduction();
+    });
+
+    $("#v75PrintPacket")?.addEventListener("click", () => window.print());
+    $("#v75OpenPlanning")?.addEventListener("click", () => location.hash = "lesson-plans");
+    $("#v75OpenAttachments")?.addEventListener("click", () => location.hash = "attachments");
+    $("#v75SendTeachDay")?.addEventListener("click", () => sendToTeachDay(day));
+    $("#v75CopyPlanbook")?.addEventListener("click", () => copyPlanbook(planbookText));
+    $("#v75DownloadText")?.addEventListener("click", () => downloadText(planbookText));
+
+    $("#v75SavePacketNotes")?.addEventListener("click", () => {
+      packetState.packetNotes[selectedDay] = $("#v75PacketNotes").value.trim();
+      savePacketState();
+      toast("Packet notes saved.");
+    });
+  }
+
+  async function copyPlanbook(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      packetState.lastExportedDay = selectedDay;
+      savePacketState();
+      toast(`${selectedDay} Planbook text copied.`);
+    } catch {
+      const field = $("#v75PlanbookText");
+      field.select();
+      document.execCommand("copy");
+      toast(`${selectedDay} Planbook text copied.`);
+    }
+  }
+
+  function downloadText(text) {
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `${selectedDay.toLowerCase()}-planbook-lesson.txt`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 500);
+    packetState.lastExportedDay = selectedDay;
+    savePacketState();
+    toast("Planbook text downloaded.");
+  }
+
+  function sendToTeachDay(day) {
+    const payload = {
+      version: "7.5",
+      sentAt: new Date().toISOString(),
+      day: selectedDay,
+      ...day
+    };
+    localStorage.setItem(TEACH_DAY_STORE, JSON.stringify(payload));
+    toast(`${selectedDay} sent to Teach My Day.`);
+    setTimeout(() => location.hash = "teachday", 500);
+  }
+
+  function injectPlanningProductionCard() {
+    const studio = $("#v73PlanningStudio");
+    if (!studio || $("#v75PlanningCard")) return;
+
+    const week = weeklyPlan();
+    if (!week?.days) return;
+
+    const ready = Object.values(week.days).filter(day => {
+      const result = calculateReadiness(day, attachments().filter(item => item.day === day.day));
+      return result.percent >= 85;
+    }).length;
+
+    const card = document.createElement("section");
+    card.id = "v75PlanningCard";
+    card.className = "v75-planning-card";
+    card.innerHTML = `
+      <div>
+        <p>DAILY LESSON PACKETS</p>
+        <h3>${ready}/5 days production-ready</h3>
+        <span>Generate Planbook text, packets, and ready-to-teach checks.</span>
+      </div>
+      <button id="v75OpenProduction">Open Production Studio</button>
+    `;
+
+    const header = $(".v73-planning-header", studio);
+    header?.insertAdjacentElement("afterend", card);
+    $("#v75OpenProduction")?.addEventListener("click", () => location.hash = "production");
+  }
+
+  function injectDashboardProductionCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v75DashboardCard")) return;
+
+    const week = weeklyPlan();
+    const days = week?.days ? Object.values(week.days) : [];
+    const ready = days.filter(day => {
+      const result = calculateReadiness(day, attachments().filter(item => item.day === day.day));
+      return result.percent >= 85;
+    }).length;
+
+    const card = document.createElement("section");
+    card.id = "v75DashboardCard";
+    card.className = "v75-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>PLANBOOK & DAILY PACKETS</p>
+        <h3>${ready}/${days.length || 5} days ready for production</h3>
+        <span>${packetState.lastExportedDay ? `Last exported: ${esc(packetState.lastExportedDay)}` : "No Planbook day exported yet."}</span>
+      </div>
+      <button id="v75DashboardOpen">Open Daily Packets</button>
+    `;
+    dashboard.prepend(card);
+    $("#v75DashboardOpen")?.addEventListener("click", () => location.hash = "production");
+  }
+
+  function injectTeachDayPacket() {
+    const host = $("#pageHost");
+    if (!host || $("#v75TeachDayPacket")) return;
+
+    let day = null;
+    try {
+      day = JSON.parse(localStorage.getItem(TEACH_DAY_STORE) || "null");
+    } catch {}
+    if (!day) return;
+
+    const header = $(".page-header", host);
+    if (!header) return;
+
+    const card = document.createElement("section");
+    card.id = "v75TeachDayPacket";
+    card.className = "v75-teachday-packet";
+    card.innerHTML = `
+      <div>
+        <p>VERSION 7.5 PACKET</p>
+        <h3>${esc(day.day)} production packet is active</h3>
+        <span>${esc(day.openCourtLesson || day.focus || "")}</span>
+      </div>
+      <button id="v75ReturnPackets">Open Daily Packet</button>
+    `;
+    header.insertAdjacentElement("afterend", card);
+    $("#v75ReturnPackets")?.addEventListener("click", () => {
+      selectedDay = day.day || selectedDay;
+      location.hash = "production";
+    });
+  }
+
+  function injectHealthChecks() {
+    const host = $("#pageHost");
+    if (!host || $("#v75Health")) return;
+
+    const week = weeklyPlan();
+    const days = week?.days ? Object.values(week.days) : [];
+    const noPlan = !week?.days;
+    const missing = days.reduce((sum, day) => {
+      return sum + calculateReadiness(day, attachments().filter(item => item.day === day.day)).missing.length;
+    }, 0);
+
+    const panel = document.createElement("section");
+    panel.id = "v75Health";
+    panel.className = "panel v75-health-panel";
+    panel.innerHTML = `
+      <h3>Version 7.5 Production Health</h3>
+      <div class="health-grid">
+        ${healthItem("Weekly plan detected", !noPlan, noPlan ? "Missing" : "Ready")}
+        ${healthItem("Five planning days", days.length === 5, `${days.length}/5 found`)}
+        ${healthItem("Missing daily content", missing === 0, `${missing} missing item(s)`)}
+        ${healthItem("Planbook export support", Boolean(navigator.clipboard), "Clipboard and text download")}
+      </div>
+      <button id="v75HealthOpen" class="secondary-button">Open Daily Packets</button>
+    `;
+    host.appendChild(panel);
+    $("#v75HealthOpen")?.addEventListener("click", () => location.hash = "production");
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div><span>${esc(title)}</span><small>${esc(detail)}</small></div>
+      </article>`;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1900);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();

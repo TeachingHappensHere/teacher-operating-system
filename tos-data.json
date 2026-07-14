@@ -1,6 +1,6 @@
 {
-  "version": "7.4 Lesson Attachments, Print Center & Resource Linking",
-  "releaseStatus": "Connect weekly lessons to curriculum links, printable pages, preparation tasks, and a consolidated print center.",
+  "version": "7.5 Planbook Export, Daily Lesson Packets & Production Workflow",
+  "releaseStatus": "Turns the Version 7.3 weekly plan and Version 7.4 lesson attachments into Planbook-ready daily lessons, printable teacher packets, and ready-to-teach checks.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -474,5 +474,105 @@
       "url": "",
       "notes": "Connect the routine poster or first-week printable."
     }
+  ],
+  "planbookSubjects": [
+    [
+      "Morning Work",
+      "morningWork"
+    ],
+    [
+      "Morning Meeting",
+      "morningMeeting"
+    ],
+    [
+      "Heggerty",
+      "heggerty"
+    ],
+    [
+      "MOWR / Reading Intervention",
+      "mowr"
+    ],
+    [
+      "Phonics",
+      "phonics"
+    ],
+    [
+      "Vocabulary",
+      "vocabulary"
+    ],
+    [
+      "Open Court Reading",
+      "reading"
+    ],
+    [
+      "Writing / GUM",
+      "writing"
+    ],
+    [
+      "Eureka Math\u00b2",
+      "math"
+    ],
+    [
+      "Social Studies",
+      "socialStudies"
+    ],
+    [
+      "Science",
+      "science"
+    ],
+    [
+      "Classroom Launch Routine",
+      "launchRoutine"
+    ]
+  ],
+  "requiredDailyFields": [
+    [
+      "Open Court lesson",
+      "openCourtLesson"
+    ],
+    [
+      "Daily focus",
+      "focus"
+    ],
+    [
+      "Learning objective",
+      "objective"
+    ],
+    [
+      "I Do",
+      "iDo"
+    ],
+    [
+      "We Do",
+      "weDo"
+    ],
+    [
+      "You Do",
+      "youDo"
+    ],
+    [
+      "Differentiation",
+      "differentiation"
+    ],
+    [
+      "Assessment",
+      "assessment"
+    ],
+    [
+      "Materials",
+      "materials"
+    ]
+  ],
+  "planbookSectionOrder": [
+    "Standards",
+    "Objective",
+    "I Do",
+    "We Do",
+    "You Do",
+    "Differentiation",
+    "Assessment",
+    "Materials",
+    "Attachments",
+    "Teacher Notes"
   ]
 }

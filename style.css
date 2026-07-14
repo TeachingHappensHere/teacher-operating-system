@@ -129,3 +129,134 @@ textarea{min-height:115px;resize:vertical}
 .v74-print-list{display:grid;gap:8px}.v74-print-item{display:grid;grid-template-columns:1fr 90px auto;gap:12px;align-items:center;padding:12px;background:#fff;border:1px solid var(--line);border-radius:12px}.v74-print-item.complete{opacity:.58;text-decoration:line-through}.v74-print-item>label{display:flex;gap:10px}.v74-print-item span,.v74-print-item strong,.v74-print-item small{display:block}.v74-print-item span{font-size:10px;color:var(--accent);font-weight:900}.v74-print-item strong{margin:4px 0}.v74-print-item small{color:var(--muted)}
 .v74-dashboard,.v74-plan-card{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 16px;border:1px solid #d6dfe9;border-radius:14px;background:#eef4fb;margin-bottom:12px}.v74-dashboard p,.v74-plan-card p{margin:0;color:#476f9e;font-size:11px;font-weight:900}.v74-dashboard h3,.v74-plan-card h3{margin:4px 0}.v74-dashboard span{color:var(--muted)}.v74-dashboard button,.v74-plan-card button{border:0;border-radius:9px;background:#476f9e;color:#fff;padding:10px 12px;font-weight:800}.v74-dashboard>div:last-child{display:flex;gap:7px}
 @media(max-width:1050px){.v74-grid{grid-template-columns:1fr 1fr}.v74-toolbar{grid-template-columns:1fr 1fr}.v74-toolbar input{grid-column:1/3}}@media(max-width:760px){.v74-stats,.v74-grid,.v74-toolbar{grid-template-columns:1fr}.v74-toolbar input{grid-column:auto}.v74-print-item{grid-template-columns:1fr}.v74-dashboard,.v74-plan-card{align-items:flex-start;flex-direction:column}.v74-dashboard>div:last-child{width:100%;display:grid;grid-template-columns:1fr 1fr}}@media print{.v74-toolbar,.v74-actions,.v74-dashboard,.v74-plan-card{display:none!important}.v74-print-item{break-inside:avoid}}
+
+
+/* Version 7.5 — Planbook Export, Daily Lesson Packets & Production Workflow */
+.v75-day-tabs{
+  position:sticky;top:71px;z-index:20;display:grid;
+  grid-template-columns:repeat(5,1fr);gap:7px;padding:8px;margin-bottom:12px;
+  background:rgba(255,250,248,.96);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:14px
+}
+.v75-day-tabs button{
+  border:0;border-radius:10px;background:#fff;padding:10px;text-align:left
+}
+.v75-day-tabs button.active{background:#ffcbd2;color:#7f1731}
+.v75-day-tabs strong,.v75-day-tabs span{display:block}
+.v75-day-tabs span{margin-top:4px;font-size:11px}
+.v75-readiness-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:12px
+}
+.v75-readiness-strip article{
+  padding:12px;background:#fff;border:1px solid var(--line);border-radius:12px
+}
+.v75-readiness-strip article.warning{background:#fff2df}
+.v75-readiness-strip article.ready{background:#eef6eb}
+.v75-readiness-strip span,.v75-readiness-strip strong{display:block}
+.v75-readiness-strip span{font-size:10px;color:var(--accent);font-weight:900}
+.v75-readiness-strip strong{margin-top:5px}
+.v75-production-layout{
+  display:grid;grid-template-columns:230px minmax(0,1fr) 340px;gap:12px
+}
+.v75-production-sidebar,.v75-planbook-preview{
+  position:sticky;top:146px;height:max-content
+}
+.v75-production-sidebar{display:grid;gap:8px}
+.v75-production-sidebar>button{width:100%}
+.v75-check-list{display:grid;gap:7px}
+.v75-check-list label{
+  display:flex;gap:8px;align-items:flex-start;padding:8px;border-radius:8px;background:#fff7f5
+}
+.v75-check-list label.complete{background:#eef6eb}
+.v75-packet{
+  min-width:0;padding:18px;background:#fff;border:1px solid var(--line);
+  border-radius:16px;box-shadow:var(--shadow)
+}
+.v75-packet-title{
+  padding-bottom:14px;margin-bottom:12px;border-bottom:2px solid var(--line)
+}
+.v75-packet-title p{margin:0;color:var(--accent);font-weight:900}
+.v75-packet-title h1{margin:5px 0}
+.v75-packet-title span{color:var(--muted)}
+.v75-packet-section{
+  padding:14px 0;border-bottom:1px solid var(--line)
+}
+.v75-packet-section:last-child{border-bottom:0}
+.v75-packet-section>h3{
+  margin:0 0 10px;color:var(--accent-dark);text-transform:uppercase;
+  font-size:13px;letter-spacing:.04em
+}
+.v75-packet-section h4{margin:8px 0 4px}
+.v75-packet-section p{line-height:1.55}
+.v75-release-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.v75-release-grid article{
+  padding:12px;border-radius:10px;background:var(--surface-alt)
+}
+.v75-subject-block{
+  display:grid;grid-template-columns:190px 1fr;gap:12px;
+  padding:10px;border-radius:9px
+}
+.v75-subject-block:nth-child(even){background:#fff8ed}
+.v75-subject-block h4,.v75-subject-block p{margin:0}
+.v75-material-columns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.v75-attachment-list{padding-left:20px}
+.v75-attachment-list li{margin-bottom:8px}
+.v75-attachment-list a{color:var(--accent-dark);font-weight:800}
+.v75-attachment-list small{display:block;color:var(--muted)}
+.v75-planbook-preview textarea{min-height:560px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px}
+.v75-missing-warning{
+  margin-top:10px;padding:12px;border-radius:10px;background:#fff2df
+}
+.v75-missing-warning ul{padding-left:20px}
+.v75-ready-message{
+  margin-top:10px;padding:12px;border-radius:10px;background:#eef6eb;color:#355c3b
+}
+.v75-planning-card,.v75-dashboard-card,.v75-teachday-packet{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:14px 16px;border:1px solid #dfd4ed;border-radius:14px;
+  background:#f3eefb;margin-bottom:12px
+}
+.v75-planning-card p,.v75-dashboard-card p,.v75-teachday-packet p{
+  margin:0;color:#7255a4;font-size:11px;font-weight:900
+}
+.v75-planning-card h3,.v75-dashboard-card h3,.v75-teachday-packet h3{margin:4px 0}
+.v75-planning-card span,.v75-dashboard-card span,.v75-teachday-packet span{color:var(--muted)}
+.v75-planning-card button,.v75-dashboard-card button,.v75-teachday-packet button{
+  border:0;border-radius:9px;background:#7255a4;color:#fff;padding:10px 12px;font-weight:800
+}
+.v75-health-panel{margin-top:12px}
+.compact-production .v75-production-layout{grid-template-columns:180px minmax(0,1fr)}
+.compact-production .v75-planbook-preview{position:static;grid-column:1/3}
+.compact-production .v75-packet-section{padding:10px 0}
+.compact-production .v75-subject-block{grid-template-columns:150px 1fr;padding:7px}
+@media(max-width:1180px){
+  .v75-production-layout{grid-template-columns:190px minmax(0,1fr)}
+  .v75-planbook-preview{position:static;grid-column:1/3}
+}
+@media(max-width:760px){
+  .v75-day-tabs{top:58px;display:flex;overflow:auto}
+  .v75-day-tabs button{min-width:130px}
+  .v75-readiness-strip,.v75-release-grid,.v75-material-columns{grid-template-columns:1fr}
+  .v75-production-layout,.compact-production .v75-production-layout{display:block}
+  .v75-production-sidebar,.v75-planbook-preview{
+    position:static;margin-bottom:12px
+  }
+  .v75-production-sidebar{
+    display:grid;grid-template-columns:1fr 1fr
+  }
+  .v75-production-sidebar h3,.v75-check-list{grid-column:1/3}
+  .v75-subject-block,.compact-production .v75-subject-block{
+    grid-template-columns:1fr
+  }
+  .v75-planning-card,.v75-dashboard-card,.v75-teachday-packet{
+    align-items:flex-start;flex-direction:column
+  }
+}
+@media print{
+  .sidebar,.topbar,.mobile-nav,.v75-day-tabs,.v75-production-sidebar,
+  .v75-planbook-preview,.page-header button,.v75-dashboard-card,
+  .v75-planning-card,.v75-teachday-packet{display:none!important}
+  .v75-production-layout{display:block}
+  .v75-packet{box-shadow:none;border:0;padding:0}
+  .v75-packet-section{break-inside:avoid}
+}
