@@ -1968,3 +1968,629 @@ function hi(t,o,d){return `<article class="${o?"ready":"missing"}"><strong>${o?"
 function toast(m){const t=$("#toast");if(!t)return;t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
+
+/* Version 8.2 — Eureka Math² Daily Math Studio & Module 1 Integration */
+(() => {
+  "use strict";
+
+  const STATE_KEY = "thh-v82:eureka-math";
+  const WEEK_KEY = "thh-v73:weekly-plan";
+  const ATTACHMENT_KEY = "thh-v74:attachments";
+  const TEACH_DAY_KEY = "thh-v73:teach-day";
+
+  let config = null;
+  let state = {
+    selectedModule: 1,
+    selectedLesson: 1,
+    lessons: {},
+    assessmentResults: [],
+    moduleNotes: {},
+    portalLinks: {}
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+      try {
+        state = { ...state, ...JSON.parse(localStorage.getItem(STATE_KEY) || "{}") };
+      } catch {}
+      ensureLesson();
+      waitForShell();
+    } catch (error) {
+      console.warn("Version 8.2 could not start.", error);
+    }
+  }
+
+  function save() {
+    localStorage.setItem(STATE_KEY, JSON.stringify(state));
+  }
+
+  function lessonKey(module = state.selectedModule, lesson = state.selectedLesson) {
+    return `m${module}-l${lesson}`;
+  }
+
+  function blankLesson(module, lesson) {
+    return {
+      module,
+      lesson,
+      title: `Module ${module}, Lesson ${lesson}`,
+      objective: "",
+      standards: "",
+      fluency: "",
+      applicationProblem: "",
+      conceptDevelopment: "",
+      studentDebrief: "",
+      exitTicket: "",
+      homework: "",
+      materials: "",
+      teacherNotes: "",
+      math2Focus: "Spiral Review",
+      math2Plan: "",
+      intervention: "",
+      enrichment: "",
+      assessmentType: "Exit Ticket",
+      complete: false
+    };
+  }
+
+  function ensureLesson() {
+    const key = lessonKey();
+    if (!state.lessons[key]) state.lessons[key] = blankLesson(state.selectedModule, state.selectedLesson);
+    save();
+  }
+
+  function currentLesson() {
+    ensureLesson();
+    return state.lessons[lessonKey()];
+  }
+
+  function weeklyPlan() {
+    try {
+      return JSON.parse(localStorage.getItem(WEEK_KEY) || "null");
+    } catch {
+      return null;
+    }
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    addNavigation();
+    window.addEventListener("hashchange", route);
+
+    new MutationObserver(() => {
+      const current = location.hash.replace("#","") || "dashboard";
+      if (current === "eureka-math" && !$("#v82MathStudio")) renderMathStudio();
+      if (current === "lesson-plans") setTimeout(injectWeeklyMathCard, 0);
+      if (current === "teachday") setTimeout(injectTeachDayMathCard, 0);
+      if (current === "assessments") setTimeout(injectAssessmentCard, 0);
+      if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+      if (current === "health") setTimeout(injectHealth, 0);
+    }).observe($("#pageHost"), { childList: true, subtree: true });
+
+    route();
+  }
+
+  function addNavigation() {
+    if ($('[data-route="eureka-math"]')) return;
+
+    const openCourt = $('[data-route="open-court"]');
+    const button = document.createElement("button");
+    button.className = "nav-button";
+    button.dataset.route = "eureka-math";
+    button.innerHTML = "<span>➗</span><strong>Eureka Math²</strong>";
+    button.addEventListener("click", () => location.hash = "eureka-math");
+
+    if (openCourt) openCourt.insertAdjacentElement("afterend", button);
+    else $("#mainNav").appendChild(button);
+  }
+
+  function route() {
+    const current = location.hash.replace("#","") || "dashboard";
+    if (current === "eureka-math") setTimeout(renderMathStudio, 0);
+    if (current === "lesson-plans") setTimeout(injectWeeklyMathCard, 0);
+    if (current === "teachday") setTimeout(injectTeachDayMathCard, 0);
+    if (current === "assessments") setTimeout(injectAssessmentCard, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "health") setTimeout(injectHealth, 0);
+  }
+
+  function portalUrl(module = state.selectedModule) {
+    const explicit = state.portalLinks[`module-${module}`];
+    if (explicit) return explicit;
+    return `https://digital.greatminds.org/teacher?curriculaCode=em2&gradeCode=em2.g2&moduleCode=em2.g2.m${module}`;
+  }
+
+  function renderMathStudio() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const lesson = currentLesson();
+    const module = config.eurekaMath.modules.find(item => item.module === Number(state.selectedModule))
+      || config.eurekaMath.modules[0];
+
+    host.innerHTML = `
+      <section id="v82MathStudio">
+        <section class="page-header">
+          <div>
+            <p>VERSION 8.2</p>
+            <h2>Eureka Math² Daily Math Studio</h2>
+            <span>Plan the 60-minute math lesson, the 20-minute Math 2 block, exit tickets, and differentiated support.</span>
+          </div>
+          <div class="button-row">
+            <a href="${esc(portalUrl())}" target="_blank" rel="noopener" class="secondary-button">Open Great Minds Portal</a>
+            <button id="v82SendPlanning" class="primary-button">Send to Weekly Planning</button>
+          </div>
+        </section>
+
+        <nav class="v82-module-tabs">
+          ${config.eurekaMath.modules.map(item => `
+            <button data-v82-module="${item.module}" class="${item.module === Number(state.selectedModule) ? "active" : ""}">
+              <strong>Module ${item.module}</strong>
+              <span>${esc(item.title)}</span>
+            </button>`).join("")}
+        </nav>
+
+        <section class="v82-lesson-selector panel">
+          <label>
+            <span>Lesson Number</span>
+            <input id="v82LessonNumber" type="number" min="1" max="60" value="${esc(state.selectedLesson)}">
+          </label>
+          <label class="wide">
+            <span>Lesson Title</span>
+            <input data-v82-field="title" value="${esc(lesson.title)}">
+          </label>
+          <label>
+            <span>Status</span>
+            <select id="v82LessonStatus">
+              <option ${!lesson.complete ? "selected" : ""}>In Progress</option>
+              <option ${lesson.complete ? "selected" : ""}>Ready to Teach</option>
+            </select>
+          </label>
+          <button id="v82LoadLesson" class="secondary-button">Load Lesson</button>
+        </section>
+
+        <section class="v82-layout">
+          <aside class="panel v82-section-nav">
+            <h3>Math Lesson Sections</h3>
+            ${[
+              ["overview","Overview"],
+              ["fluency","Fluency"],
+              ["application","Application Problem"],
+              ["concept","Concept Development"],
+              ["debrief","Student Debrief"],
+              ["exit","Exit Ticket"],
+              ["homework","Homework"],
+              ["math2","Math 2"],
+              ["support","Intervention & Enrichment"],
+              ["assessment","Assessment"]
+            ].map(([id,label]) => `<button data-v82-section="${id}">${esc(label)}</button>`).join("")}
+          </aside>
+
+          <main class="v82-main">
+            ${section("overview","Lesson Overview",`
+              <div class="v82-form-grid">
+                ${textField("objective","Objective",lesson.objective,"wide")}
+                ${textField("standards","Arizona Standards",lesson.standards,"wide")}
+                ${textField("materials","Materials",lesson.materials)}
+                ${textField("teacherNotes","Teacher Notes",lesson.teacherNotes)}
+              </div>
+            `)}
+
+            ${section("fluency","Fluency",`
+              <div class="v82-component">
+                <span>Suggested time: 10 minutes</span>
+                ${textArea("fluency","Fluency Practice",lesson.fluency)}
+              </div>
+            `)}
+
+            ${section("application","Application Problem",`
+              <div class="v82-component">
+                <span>Suggested time: 10 minutes</span>
+                ${textArea("applicationProblem","Application Problem",lesson.applicationProblem)}
+              </div>
+            `)}
+
+            ${section("concept","Concept Development",`
+              <div class="v82-component">
+                <span>Suggested time: 25 minutes</span>
+                ${textArea("conceptDevelopment","Concept Development",lesson.conceptDevelopment)}
+              </div>
+            `)}
+
+            ${section("debrief","Student Debrief",`
+              <div class="v82-component">
+                <span>Suggested time: 10 minutes</span>
+                ${textArea("studentDebrief","Debrief Questions and Discussion",lesson.studentDebrief)}
+              </div>
+            `)}
+
+            ${section("exit","Exit Ticket",`
+              <div class="v82-component">
+                <span>Suggested time: 5 minutes</span>
+                ${textArea("exitTicket","Exit Ticket / Evidence",lesson.exitTicket)}
+                <button id="v82AddExitAttachment" class="secondary-button">Add Exit Ticket to Attachments</button>
+              </div>
+            `)}
+
+            ${section("homework","Homework",`
+              <div class="v82-component">
+                ${textArea("homework","Homework / Family Practice",lesson.homework)}
+              </div>
+            `)}
+
+            ${section("math2","Math 2 — 20-Minute Follow-Up",`
+              <div class="v82-form-grid">
+                <label><span>Math 2 Focus</span><select data-v82-field="math2Focus">
+                  ${config.eurekaMath.math2Options.map(option => `
+                    <option ${option === lesson.math2Focus ? "selected" : ""}>${esc(option)}</option>
+                  `).join("")}
+                </select></label>
+                ${textArea("math2Plan","Math 2 Plan",lesson.math2Plan,"wide")}
+              </div>
+            `)}
+
+            ${section("support","Intervention & Enrichment",`
+              <div class="v82-form-grid">
+                ${textArea("intervention","Intervention / Reteach",lesson.intervention)}
+                ${textArea("enrichment","Enrichment / Extension",lesson.enrichment)}
+              </div>
+            `)}
+
+            ${section("assessment","Assessment & Data",`
+              <div class="v82-form-grid">
+                <label><span>Assessment Type</span><select data-v82-field="assessmentType">
+                  ${config.eurekaMath.assessmentTypes.map(option => `
+                    <option ${option === lesson.assessmentType ? "selected" : ""}>${esc(option)}</option>
+                  `).join("")}
+                </select></label>
+                <label><span>Class Average or Score %</span><input id="v82AssessmentScore" type="number" min="0" max="100"></label>
+              </div>
+              <div class="button-row">
+                <button id="v82SaveAssessment" class="primary-button">Save Assessment Result</button>
+                <button id="v82AddAssessmentAttachment" class="secondary-button">Add Assessment to Attachments</button>
+              </div>
+              <div class="v82-results">${renderResults()}</div>
+            `)}
+          </main>
+
+          <aside class="panel v82-summary">
+            <h3>Lesson Summary</h3>
+            <article><span>Module</span><strong>${esc(module.module)}</strong></article>
+            <article><span>Lesson</span><strong>${esc(state.selectedLesson)}</strong></article>
+            <article><span>Main Math Block</span><strong>11:40–12:40</strong></article>
+            <article><span>Math 2 Block</span><strong>1:20–1:40</strong></article>
+            <article><span>Status</span><strong>${lesson.complete ? "Ready" : "In Progress"}</strong></article>
+            <button id="v82PrintLesson" class="secondary-button">Print Math Lesson</button>
+            <button id="v82SendTeachDay" class="primary-button">Send to Teach My Day</button>
+          </aside>
+        </section>
+      </section>
+    `;
+
+    wireMathStudio();
+  }
+
+  function section(id, title, body) {
+    return `<section id="v82-${id}" class="panel v82-section"><h3>${esc(title)}</h3>${body}</section>`;
+  }
+
+  function textField(key, label, value, className = "") {
+    return `<label class="${className}"><span>${esc(label)}</span><input data-v82-field="${key}" value="${esc(value)}"></label>`;
+  }
+
+  function textArea(key, label, value, className = "") {
+    return `<label class="${className}"><span>${esc(label)}</span><textarea data-v82-field="${key}">${esc(value)}</textarea></label>`;
+  }
+
+  function renderResults() {
+    const results = state.assessmentResults.filter(item =>
+      item.module === Number(state.selectedModule) &&
+      item.lesson === Number(state.selectedLesson)
+    );
+
+    if (!results.length) return "<p>No assessment results saved for this lesson.</p>";
+
+    return results.map(item => `
+      <article>
+        <strong>${esc(item.type)} — ${esc(item.score)}%</strong>
+        <span>${new Date(item.date).toLocaleString()}</span>
+      </article>`).join("");
+  }
+
+  function wireMathStudio() {
+    $$("[data-v82-module]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.selectedModule = Number(button.dataset.v82Module);
+        state.selectedLesson = 1;
+        ensureLesson();
+        save();
+        renderMathStudio();
+      });
+    });
+
+    $$("[data-v82-section]").forEach(button => {
+      button.addEventListener("click", () => {
+        $(`#v82-${button.dataset.v82Section}`)?.scrollIntoView({behavior:"smooth",block:"start"});
+      });
+    });
+
+    $$("[data-v82-field]").forEach(control => {
+      control.addEventListener("input", () => {
+        currentLesson()[control.dataset.v82Field] = control.value;
+        save();
+      });
+      control.addEventListener("change", () => {
+        currentLesson()[control.dataset.v82Field] = control.value;
+        save();
+      });
+    });
+
+    $("#v82LoadLesson")?.addEventListener("click", () => {
+      state.selectedLesson = Math.max(1, Number($("#v82LessonNumber").value) || 1);
+      ensureLesson();
+      save();
+      renderMathStudio();
+    });
+
+    $("#v82LessonStatus")?.addEventListener("change", event => {
+      currentLesson().complete = event.target.value === "Ready to Teach";
+      save();
+      renderMathStudio();
+    });
+
+    $("#v82SendPlanning")?.addEventListener("click", sendToWeeklyPlanning);
+    $("#v82SendTeachDay")?.addEventListener("click", sendToTeachDay);
+    $("#v82PrintLesson")?.addEventListener("click", () => window.print());
+    $("#v82AddExitAttachment")?.addEventListener("click", () => addAttachment("Exit Ticket","Assessment"));
+    $("#v82AddAssessmentAttachment")?.addEventListener("click", () => addAttachment(currentLesson().assessmentType,"Assessment"));
+    $("#v82SaveAssessment")?.addEventListener("click", saveAssessmentResult);
+  }
+
+  function sendToWeeklyPlanning() {
+    const week = weeklyPlan();
+    if (!week?.days) {
+      toast("Build Weekly Planning first.");
+      setTimeout(() => location.hash = "lesson-plans", 700);
+      return;
+    }
+
+    const day = prompt("Send this math lesson to which day?", "Monday");
+    if (!day || !week.days[day]) return;
+
+    const lesson = currentLesson();
+    week.days[day].math = [
+      lesson.title,
+      lesson.objective,
+      lesson.fluency ? `Fluency: ${lesson.fluency}` : "",
+      lesson.applicationProblem ? `Application Problem: ${lesson.applicationProblem}` : "",
+      lesson.conceptDevelopment ? `Concept Development: ${lesson.conceptDevelopment}` : "",
+      lesson.studentDebrief ? `Student Debrief: ${lesson.studentDebrief}` : "",
+      lesson.exitTicket ? `Exit Ticket: ${lesson.exitTicket}` : ""
+    ].filter(Boolean).join("\n\n");
+
+    week.days[day].math2 = `${lesson.math2Focus}\n${lesson.math2Plan}`.trim();
+    week.days[day].materials = [week.days[day].materials, lesson.materials].filter(Boolean).join("\n");
+    week.days[day].assessment = [week.days[day].assessment, `${lesson.assessmentType}: ${lesson.exitTicket}`].filter(Boolean).join("\n");
+
+    localStorage.setItem(WEEK_KEY, JSON.stringify(week));
+    toast(`Math lesson sent to ${day}.`);
+    setTimeout(() => location.hash = "lesson-plans", 600);
+  }
+
+  function sendToTeachDay() {
+    const lesson = currentLesson();
+    const existing = (() => {
+      try { return JSON.parse(localStorage.getItem(TEACH_DAY_KEY) || "{}"); }
+      catch { return {}; }
+    })();
+
+    localStorage.setItem(TEACH_DAY_KEY, JSON.stringify({
+      ...existing,
+      math: lesson.title,
+      mathObjective: lesson.objective,
+      math2: `${lesson.math2Focus}\n${lesson.math2Plan}`.trim(),
+      mathMaterials: lesson.materials,
+      mathExitTicket: lesson.exitTicket,
+      eurekaModule: state.selectedModule,
+      eurekaLesson: state.selectedLesson,
+      sentAt: new Date().toISOString()
+    }));
+
+    toast("Eureka Math² lesson sent to Teach My Day.");
+    setTimeout(() => location.hash = "teachday", 500);
+  }
+
+  function addAttachment(title, category) {
+    let items = [];
+    try {
+      items = JSON.parse(localStorage.getItem(ATTACHMENT_KEY) || "[]");
+    } catch {}
+
+    const lesson = currentLesson();
+    items.unshift({
+      id: `em2-${Date.now()}`,
+      day: "Monday",
+      lesson: `Eureka Math² Module ${state.selectedModule}, Lesson ${state.selectedLesson}`,
+      title: `${lesson.title} — ${title}`,
+      category: "Eureka Math²",
+      type: category === "Assessment" ? "Assessment" : "Printable Page",
+      url: portalUrl(),
+      notes: title === "Exit Ticket" ? lesson.exitTicket : `${lesson.assessmentType}`,
+      print: true,
+      copies: 1,
+      status: "Linked"
+    });
+
+    localStorage.setItem(ATTACHMENT_KEY, JSON.stringify(items));
+    toast(`${title} added to Lesson Attachments.`);
+    setTimeout(() => location.hash = "attachments", 500);
+  }
+
+  function saveAssessmentResult() {
+    const score = Number($("#v82AssessmentScore").value);
+    if (!Number.isFinite(score) || score < 0 || score > 100) {
+      toast("Enter a score from 0 to 100.");
+      return;
+    }
+
+    state.assessmentResults.unshift({
+      id: Date.now(),
+      module: Number(state.selectedModule),
+      lesson: Number(state.selectedLesson),
+      type: currentLesson().assessmentType,
+      score,
+      date: new Date().toISOString()
+    });
+    save();
+    renderMathStudio();
+    toast("Math assessment result saved.");
+  }
+
+  function injectWeeklyMathCard() {
+    const studio = $("#v73PlanningStudio");
+    if (!studio || $("#v82WeeklyMath")) return;
+
+    const lesson = currentLesson();
+    const card = document.createElement("section");
+    card.id = "v82WeeklyMath";
+    card.className = "v82-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>EUREKA MATH²</p>
+        <h3>Module ${state.selectedModule}, Lesson ${state.selectedLesson}</h3>
+        <span>${esc(lesson.title)}</span>
+      </div>
+      <button>Open Math Studio</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "eureka-math";
+
+    const header = $(".v73-planning-header", studio);
+    header?.insertAdjacentElement("afterend", card);
+  }
+
+  function injectTeachDayMathCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v82TeachDayMath")) return;
+
+    const lesson = currentLesson();
+    const header = $(".page-header", host);
+    if (!header) return;
+
+    const card = document.createElement("section");
+    card.id = "v82TeachDayMath";
+    card.className = "v82-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>TODAY'S EUREKA MATH²</p>
+        <h3>Module ${state.selectedModule}, Lesson ${state.selectedLesson}</h3>
+        <span>${esc(lesson.title)} • Math 2: ${esc(lesson.math2Focus)}</span>
+      </div>
+      <button>Open Math Studio</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "eureka-math";
+    header.insertAdjacentElement("afterend", card);
+  }
+
+  function injectAssessmentCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v82AssessmentCard")) return;
+
+    const results = state.assessmentResults;
+    const average = results.length
+      ? Math.round(results.reduce((sum,item) => sum + Number(item.score || 0), 0) / results.length)
+      : 0;
+
+    const header = $(".page-header", host);
+    if (!header) return;
+
+    const card = document.createElement("section");
+    card.id = "v82AssessmentCard";
+    card.className = "v82-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>EUREKA MATH² ASSESSMENTS</p>
+        <h3>${results.length} saved result(s)</h3>
+        <span>${results.length ? `Average recorded score: ${average}%` : "No math scores recorded yet."}</span>
+      </div>
+      <button>Open Math Studio</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "eureka-math";
+    header.insertAdjacentElement("afterend", card);
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v82DashboardCard")) return;
+
+    const lesson = currentLesson();
+    const card = document.createElement("section");
+    card.id = "v82DashboardCard";
+    card.className = "v82-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>EUREKA MATH² DAILY STUDIO</p>
+        <h3>Module ${state.selectedModule}, Lesson ${state.selectedLesson}</h3>
+        <span>${esc(lesson.title)} • ${lesson.complete ? "Ready to teach" : "Planning in progress"}</span>
+      </div>
+      <div>
+        <a href="${esc(portalUrl())}" target="_blank" rel="noopener">Great Minds</a>
+        <button>Open Math Studio</button>
+      </div>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "eureka-math";
+    dashboard.prepend(card);
+  }
+
+  function injectHealth() {
+    const host = $("#pageHost");
+    if (!host || $("#v82Health")) return;
+
+    const lessons = Object.keys(state.lessons).length;
+    const ready = Object.values(state.lessons).filter(item => item.complete).length;
+
+    const panel = document.createElement("section");
+    panel.id = "v82Health";
+    panel.className = "panel v82-health-panel";
+    panel.innerHTML = `
+      <h3>Version 8.2 Eureka Math² Health</h3>
+      <div class="health-grid">
+        ${healthItem("Great Minds portal", true, "Grade 2 Module 1 link connected")}
+        ${healthItem("Math modules", config.eurekaMath.modules.length === 6, `${config.eurekaMath.modules.length}/6 available`)}
+        ${healthItem("Saved math lessons", lessons > 0, `${lessons} lesson record(s)`)}
+        ${healthItem("Ready math lessons", ready > 0, `${ready} ready`)}
+      </div>
+      <button class="secondary-button">Open Eureka Math²</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "eureka-math";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div><span>${esc(title)}</span><small>${esc(detail)}</small></div>
+      </article>`;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1800);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();

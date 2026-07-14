@@ -370,3 +370,89 @@ textarea{min-height:115px;resize:vertical}
 .v81-map label{display:flex;gap:8px;padding:8px;border-radius:8px;background:#fff8ed}.v81-injected{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border:1px solid #f0cbb1;border-radius:14px;background:#fff4e8;margin-bottom:12px}.v81-injected p{margin:0;color:#a65724;font-size:11px;font-weight:900}.v81-injected h3{margin:4px 0}.v81-injected button{border:0;border-radius:9px;background:#b85e28;color:#fff;padding:10px 12px;font-weight:800}
 @media(max-width:1100px){.v81-layout{grid-template-columns:180px 1fr}.v81-map{position:static;grid-column:1/3}.v81-resources{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.v81-units{display:flex;overflow:auto}.v81-units button{min-width:90px}.v81-layout{display:block}.v81-lessons{position:sticky;top:58px;z-index:20;display:flex;overflow:auto;margin-bottom:10px}.v81-lessons h3{display:none}.v81-lessons button{min-width:170px}.v81-resources{grid-template-columns:1fr}.v81-source{grid-template-columns:1fr}.v81-hero,.v81-injected{align-items:flex-start;flex-direction:column}.v81-map{grid-column:auto;margin-top:10px}}
+
+
+/* Version 8.2 — Eureka Math² Daily Math Studio */
+.v82-module-tabs{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-bottom:12px
+}
+.v82-module-tabs button{
+  border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px;text-align:left
+}
+.v82-module-tabs button.active{background:#e4f1df;border-color:#a8c8a1}
+.v82-module-tabs strong,.v82-module-tabs span{display:block}
+.v82-module-tabs span{margin-top:3px;font-size:11px;color:var(--muted)}
+.v82-lesson-selector{
+  display:grid;grid-template-columns:150px 1fr 180px auto;gap:10px;align-items:end;margin-bottom:12px
+}
+.v82-lesson-selector label{display:grid;gap:6px;font-weight:700}
+.v82-layout{display:grid;grid-template-columns:220px minmax(0,1fr) 240px;gap:12px}
+.v82-section-nav,.v82-summary{position:sticky;top:72px;height:max-content}
+.v82-section-nav{display:grid;gap:6px}
+.v82-section-nav button{
+  border:0;border-radius:8px;background:var(--surface-soft);color:var(--accent-dark);
+  padding:9px;text-align:left;font-weight:800
+}
+.v82-main{display:grid;gap:12px;min-width:0}
+.v82-section{scroll-margin-top:84px}
+.v82-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v82-form-grid label,.v82-component label{display:grid;gap:6px;font-weight:700}
+.v82-form-grid .wide{grid-column:1/3}
+.v82-component>span{display:inline-block;margin-bottom:8px;color:#557d5b;font-size:11px;font-weight:900}
+.v82-component textarea{min-height:150px}
+.v82-summary{display:grid;gap:8px}
+.v82-summary article{padding:9px;border-radius:9px;background:#eef6eb}
+.v82-summary span,.v82-summary strong{display:block}
+.v82-summary span{font-size:10px;color:#557d5b;font-weight:900}
+.v82-summary strong{margin-top:3px}
+.v82-results{display:grid;gap:7px;margin-top:12px}
+.v82-results article{padding:9px;border-radius:8px;background:#fff8ed}
+.v82-results strong,.v82-results span{display:block}
+.v82-results span{margin-top:3px;color:var(--muted);font-size:11px}
+.v82-injected-card,.v82-dashboard-card{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:14px 16px;border:1px solid #d4e2d0;border-radius:14px;
+  background:#eef6eb;margin-bottom:12px
+}
+.v82-injected-card p,.v82-dashboard-card p{
+  margin:0;color:#557d5b;font-size:11px;font-weight:900
+}
+.v82-injected-card h3,.v82-dashboard-card h3{margin:4px 0}
+.v82-injected-card span,.v82-dashboard-card span{color:var(--muted)}
+.v82-injected-card button,.v82-dashboard-card button{
+  border:0;border-radius:9px;background:#557d5b;color:#fff;padding:10px 12px;font-weight:800
+}
+.v82-dashboard-card>div:last-child{display:flex;gap:7px}
+.v82-dashboard-card a{
+  display:inline-flex;align-items:center;padding:10px 12px;border-radius:9px;
+  background:#fff;color:#355c3b;text-decoration:none;font-weight:800
+}
+.v82-health-panel{margin-top:12px}
+@media(max-width:1150px){
+  .v82-layout{grid-template-columns:180px minmax(0,1fr)}
+  .v82-summary{position:static;grid-column:1/3}
+  .v82-lesson-selector{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .v82-module-tabs{display:flex;overflow:auto}
+  .v82-module-tabs button{min-width:100px}
+  .v82-lesson-selector,.v82-form-grid{grid-template-columns:1fr}
+  .v82-form-grid .wide{grid-column:auto}
+  .v82-layout{display:block}
+  .v82-section-nav{
+    position:sticky;top:58px;z-index:20;display:flex;overflow:auto;
+    margin-bottom:10px;padding:8px
+  }
+  .v82-section-nav h3{display:none}
+  .v82-section-nav button{white-space:nowrap}
+  .v82-summary{grid-column:auto;margin-top:10px}
+  .v82-injected-card,.v82-dashboard-card{align-items:flex-start;flex-direction:column}
+  .v82-dashboard-card>div:last-child{width:100%;display:grid;grid-template-columns:1fr 1fr}
+}
+@media print{
+  .sidebar,.topbar,.mobile-nav,.v82-module-tabs,.v82-section-nav,
+  .page-header button,.v82-dashboard-card,.v82-injected-card,
+  .v82-summary button{display:none!important}
+  .v82-layout{display:block}
+  .v82-section{break-inside:avoid}
+}

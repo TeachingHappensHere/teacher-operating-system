@@ -1,6 +1,6 @@
 {
-  "version": "8.1 Open Court Curriculum Intelligence & Assessment Map",
-  "releaseStatus": "Maps all six Open Court units to Skills Practice, lesson assessments, unit assessments, oral fluency, answer keys, Weekly Planning, and Friday Assessment Mode.",
+  "version": "8.2 Eureka Math\u00b2 Daily Math Studio & Module 1 Integration",
+  "releaseStatus": "Connects the Grade 2 Eureka Math\u00b2 teacher portal to weekly planning, the 60-minute math block, the 20-minute Math 2 block, lesson packets, exit tickets, assessment notes, and differentiated support.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1211,5 +1211,75 @@
       "title": "Assessment Book 2",
       "units": "4\u20136"
     }
-  ]
+  ],
+  "eurekaMath": {
+    "curriculum": "Eureka Math\u00b2",
+    "grade": "Grade 2",
+    "teacherPortal": "https://digital.greatminds.org/teacher?curriculaCode=em2&gradeCode=em2.g2&moduleCode=em2.g2.m1",
+    "modules": [
+      {
+        "module": 1,
+        "title": "Module 1",
+        "portalCode": "em2.g2.m1",
+        "lessonCount": 0
+      },
+      {
+        "module": 2,
+        "title": "Module 2",
+        "portalCode": "em2.g2.m2",
+        "lessonCount": 0
+      },
+      {
+        "module": 3,
+        "title": "Module 3",
+        "portalCode": "em2.g2.m3",
+        "lessonCount": 0
+      },
+      {
+        "module": 4,
+        "title": "Module 4",
+        "portalCode": "em2.g2.m4",
+        "lessonCount": 0
+      },
+      {
+        "module": 5,
+        "title": "Module 5",
+        "portalCode": "em2.g2.m5",
+        "lessonCount": 0
+      },
+      {
+        "module": 6,
+        "title": "Module 6",
+        "portalCode": "em2.g2.m6",
+        "lessonCount": 0
+      }
+    ],
+    "lessonComponents": [
+      "Fluency",
+      "Application Problem",
+      "Concept Development",
+      "Student Debrief",
+      "Exit Ticket",
+      "Homework",
+      "Materials",
+      "Teacher Notes"
+    ],
+    "math2Options": [
+      "Spiral Review",
+      "Fact Fluency",
+      "Small-Group Reteach",
+      "Intervention",
+      "Problem-Solving Extension",
+      "Exit-Ticket Review",
+      "Manipulative Practice"
+    ],
+    "assessmentTypes": [
+      "Exit Ticket",
+      "Topic Quiz",
+      "Mid-Module Assessment",
+      "End-of-Module Assessment",
+      "Fluency Check",
+      "Teacher Observation"
+    ]
+  }
 }
