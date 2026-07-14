@@ -1,55 +1,34 @@
 # TeachingHappensHere
 
-## Version 8.0 — Live Teaching Timeline & Assessment-Day Mode
+## Version 8.1 — Open Court Curriculum Intelligence & Assessment Map
 
-### Replace these files
-
+Replace:
 - `app.js`
 - `style.css`
 - `service-worker.js`
 - `tos-data.json`
 - `README.md`
 
-No change to `index.html` is required.
+No `index.html` change is required.
 
-### Commit message
+Commit message:
 
-`Version 8.0 - Live Teaching Timeline and Assessment Day Mode`
+`Version 8.1 - Open Court Curriculum Intelligence and Assessment Map`
 
-### Included
+Included:
+- Six Open Court units and 36 lesson records
+- Skills Practice Books 1 and 2
+- Assessment Books 1 and 2
+- Lesson-assessment starting pages
+- Unit-assessment starting pages
+- Lesson 6 Oral Fluency identification
+- Resource-ready tracking
+- Authorized source path fields
+- Send lessons to Weekly Planning
+- Send resources to Lesson Attachments
+- Friday Assessment Mode
+- Assessment score entry
+- Dashboard, Weekly Planning, and Health connections
+- Responsive iPad and phone layouts
 
-- Exact 2026–2027 full-day schedule
-- Exact assessment half-day schedule
-- Automatic Monday–Thursday full-day mode
-- Automatic Friday half-day mode
-- Manual schedule-mode override
-- Live current-time block detection
-- Persistent teaching timeline
-- Complete-block tracking
-- Automatic or manual block selection
-- Current lesson connection
-- Daily Lesson Packet connection
-- Weekly Planning connection
-- Lesson Attachment connection
-- Print Center connection
-- Block-specific resource suggestions
-- Live teaching notes
-- Next-block preview
-- Full-day completion percentage
-- Dashboard Live Teaching card
-- Live Teaching Health checks
-- iPad horizontal timeline
-- Phone-friendly live teaching layout
-- Printable teaching timeline
-- Local browser storage
-
-### After deployment
-
-1. Hard-refresh the site.
-2. Open **Live Teaching** in the sidebar.
-3. Confirm today’s schedule mode.
-4. Confirm the current time block is highlighted.
-5. Open the current block’s lesson, attachments, and print tasks.
-6. Mark the block complete.
-7. Test Full Day and Assessment Half Day modes.
-8. Test the horizontal timeline on iPad.
+The app stores indexing and authorized links only. It does not redistribute copyrighted curriculum files.

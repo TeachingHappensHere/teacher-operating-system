@@ -1918,3 +1918,53 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
+
+/* Version 8.1 — Open Court Curriculum Intelligence */
+(()=>{"use strict";
+const KEY="thh-v81:open-court",WEEK="thh-v73:weekly-plan",ATT="thh-v74:attachments";
+let cfg,state={unit:1,lesson:1,paths:{},ready:{},notes:{},results:[]};
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+async function start(){cfg=await fetch("tos-data.json",{cache:"no-store"}).then(r=>r.json());try{state={...state,...JSON.parse(localStorage.getItem(KEY)||"{}")}}catch{};wait()}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function wait(){if(!$("#pageHost")||!$("#mainNav"))return setTimeout(wait,100);nav();window.addEventListener("hashchange",route);new MutationObserver(route).observe($("#pageHost"),{childList:true,subtree:true});route()}
+function nav(){if($('[data-route="open-court"]'))return;const b=document.createElement("button");b.className="nav-button";b.dataset.route="open-court";b.innerHTML="<span>📚</span><strong>Open Court Curriculum</strong>";b.onclick=()=>location.hash="open-court";const a=$('[data-route="lesson-builder"]');a?a.insertAdjacentElement("afterend",b):$("#mainNav").appendChild(b)}
+function route(){const r=location.hash.replace("#","")||"dashboard";if(r==="open-court"&&!$("#v81"))setTimeout(render,0);if(r==="dashboard")setTimeout(dash,0);if(r==="lesson-plans")setTimeout(planCard,0);if(r==="health")setTimeout(health,0)}
+function unit(){return cfg.openCourtUnits.find(x=>x.unit===Number(state.unit))||cfg.openCourtUnits[0]}
+function lesson(){return unit().lessons.find(x=>x.lesson===Number(state.lesson))||unit().lessons[0]}
+function key(x){return `u${state.unit}-l${state.lesson}-${x}`}
+function render(){const h=$("#pageHost"),u=unit(),l=lesson();h.innerHTML=`<section id="v81">
+<section class="page-header"><div><p>VERSION 8.1</p><h2>Open Court Curriculum Intelligence</h2><span>Six units, Skills Practice, assessments, fluency, answer keys, and Friday mode.</span></div><div class="button-row"><button id="sendPlan" class="secondary-button">Send to Weekly Planning</button><button id="friday" class="primary-button">Friday Assessment Mode</button></div></section>
+<nav class="v81-units">${cfg.openCourtUnits.map(x=>`<button data-u="${x.unit}" class="${x.unit===Number(state.unit)?"active":""}">Unit ${x.unit}</button>`).join("")}</nav>
+<section class="v81-layout">
+<aside class="panel v81-lessons"><h3>Unit ${u.unit}</h3>${u.lessons.map(x=>`<button data-l="${x.lesson}" class="${x.lesson===Number(state.lesson)?"active":""}"><span>Lesson ${x.lesson}</span><strong>${esc(x.title)}</strong></button>`).join("")}</aside>
+<main class="v81-main">
+<section class="v81-hero"><div><p>UNIT ${u.unit} • LESSON ${l.lesson}</p><h1>${esc(l.title)}</h1><span>Skills Practice Book ${l.skillsPracticeBook} • Assessment Book ${l.assessmentBook}</span></div><b>Assessment p. ${l.assessmentStartPage}</b></section>
+<section class="v81-resources">${cfg.openCourtResourceTypes.map(r=>resource(r,l)).join("")}</section>
+<section class="panel"><h3>Authorized Source Paths</h3>${cfg.openCourtSourceFiles.map(s=>source(s)).join("")}<article class="v81-source"><div><strong>Unit ${u.unit} Assessment</strong><span>Starts on page ${u.unitAssessmentStartPage}</span></div></article></section>
+<section class="panel"><h3>Lesson Notes</h3><textarea id="ocNotes">${esc(state.notes[`u${u.unit}-l${l.lesson}`]||"")}</textarea><button id="saveNotes" class="primary-button">Save Notes</button></section>
+</main>
+<aside class="panel v81-map"><h3>Assessment Map</h3>${["Phonics","Word Analysis","Vocabulary","Comprehension","Grammar, Usage & Mechanics","Analyzing the Selection","Writing","Oral Fluency","Unit Assessment"].map(x=>`<label><input type="checkbox" data-r="${esc(x)}" ${state.ready[key(x)]?"checked":""}><span>${esc(x)}</span></label>`).join("")}<button id="score" class="primary-button">Enter Score</button></aside>
+</section></section>`;wire()}
+function resource(r,l){const done=!!state.ready[key(r)];return `<article class="v81-card ${done?"done":""}"><span>${done?"✓ Ready":"Resource"}</span><h3>${esc(r)}</h3><p>${r.includes("Assessment")?`Assessment Book ${l.assessmentBook}, page ${l.assessmentStartPage}.`:"Skills Practice and lesson materials."}</p><div><button data-ready="${esc(r)}" class="secondary-button">${done?"Mark Not Ready":"Mark Ready"}</button><button data-link="${esc(r)}" class="primary-button">Add to Attachments</button></div></article>`}
+function source(s){const p=state.paths[s.key]||"";return `<article class="v81-source"><div><strong>${esc(s.title)}</strong><span>Units ${esc(s.units)}</span></div><input data-path="${s.key}" value="${esc(p)}" placeholder="Authorized URL or GitHub path">${p?`<a href="${esc(p)}" target="_blank">Open</a>`:"<b>Path needed</b>"}</article>`}
+function wire(){
+$$("[data-u]").forEach(b=>b.onclick=()=>{state.unit=Number(b.dataset.u);state.lesson=1;save();render()});
+$$("[data-l]").forEach(b=>b.onclick=()=>{state.lesson=Number(b.dataset.l);save();render()});
+$$("[data-ready]").forEach(b=>b.onclick=()=>{state.ready[key(b.dataset.ready)]=!state.ready[key(b.dataset.ready)];save();render()});
+$$("[data-r]").forEach(i=>i.onchange=()=>{state.ready[key(i.dataset.r)]=i.checked;save()});
+$$("[data-path]").forEach(i=>i.onchange=()=>{state.paths[i.dataset.path]=i.value.trim();save();render()});
+$$("[data-link]").forEach(b=>b.onclick=()=>addAttachment(b.dataset.link));
+$("#saveNotes").onclick=()=>{state.notes[`u${state.unit}-l${state.lesson}`]=$("#ocNotes").value.trim();save();toast("Lesson notes saved.")};
+$("#sendPlan").onclick=sendPlan;$("#friday").onclick=fridayMode;$("#score").onclick=score}
+function addAttachment(name){let a=[];try{a=JSON.parse(localStorage.getItem(ATT)||"[]")}catch{};const l=lesson();if(!a.some(x=>x.lesson===`Unit ${state.unit}, Lesson ${state.lesson}`&&x.title===name))a.unshift({id:`oc-${Date.now()}`,day:"Monday",lesson:`Unit ${state.unit}, Lesson ${state.lesson}`,title:name,category:name.includes("Assessment")?"Assessment":"Open Court",type:name==="Answer Key"?"Teacher Guide":"Printable Page",url:"",notes:`${l.title} — ${name}`,print:name!=="Answer Key",copies:1,status:"Missing"});localStorage.setItem(ATT,JSON.stringify(a));toast("Added to Lesson Attachments.");setTimeout(()=>location.hash="attachments",500)}
+function sendPlan(){let w;try{w=JSON.parse(localStorage.getItem(WEEK)||"null")}catch{};if(!w?.days)return toast("Build Weekly Planning first.");const d=prompt("Send to which day?","Monday");if(!d||!w.days[d])return;const l=lesson();w.days[d].openCourtLesson=`Unit ${state.unit}, Lesson ${state.lesson} — ${l.title}`;w.days[d].reading=l.title;w.days[d].assessment=`Assessment Book ${l.assessmentBook}, page ${l.assessmentStartPage}`;w.days[d].attachments=`Skills Practice Book ${l.skillsPracticeBook}: Unit ${state.unit}, Lesson ${state.lesson}\nAssessment Book ${l.assessmentBook}: page ${l.assessmentStartPage}${l.oralFluency?"\nOral Fluency Assessment":""}`;localStorage.setItem(WEEK,JSON.stringify(w));toast(`Sent to ${d}.`);setTimeout(()=>location.hash="lesson-plans",500)}
+function fridayMode(){const l=lesson();localStorage.setItem("thh-v81:friday-assessment",JSON.stringify({unit:state.unit,lesson:state.lesson,title:l.title,assessmentBook:l.assessmentBook,assessmentStartPage:l.assessmentStartPage,oralFluency:l.oralFluency}));localStorage.setItem("thh-v80:live-teaching",JSON.stringify({modeOverride:"half",selectedBlock:"phonicsTest",completed:{},notes:{},currentDate:new Date().toISOString().slice(0,10),autoAdvance:false}));toast("Friday Assessment Mode prepared.");setTimeout(()=>location.hash="teachday",500)}
+function score(){const skill=prompt("Skill:","Comprehension");if(!skill)return;const score=Number(prompt("Score percentage:","")||0);state.results.unshift({id:Date.now(),unit:state.unit,lesson:state.lesson,title:lesson().title,skill,score,date:new Date().toISOString()});save();toast("Score saved.")}
+function dash(){const d=$("#v72Dashboard");if(!d||$("#v81Dash"))return;const l=lesson(),ready=cfg.openCourtResourceTypes.filter(x=>state.ready[key(x)]).length,c=document.createElement("section");c.id="v81Dash";c.className="v81-injected";c.innerHTML=`<div><p>OPEN COURT CURRICULUM</p><h3>Unit ${state.unit}, Lesson ${state.lesson}: ${esc(l.title)}</h3><span>${ready}/${cfg.openCourtResourceTypes.length} resource categories ready.</span></div><button>Open Curriculum</button>`;c.querySelector("button").onclick=()=>location.hash="open-court";d.prepend(c)}
+function planCard(){const s=$("#v73PlanningStudio");if(!s||$("#v81Plan"))return;const l=lesson(),c=document.createElement("section");c.id="v81Plan";c.className="v81-injected";c.innerHTML=`<div><p>OPEN COURT MAP</p><h3>Selected: Unit ${state.unit}, Lesson ${state.lesson}</h3><span>${esc(l.title)}</span></div><button>Open Map</button>`;c.querySelector("button").onclick=()=>location.hash="open-court";$(".v73-planning-header",s)?.insertAdjacentElement("afterend",c)}
+function health(){const h=$("#pageHost");if(!h||$("#v81Health"))return;const paths=Object.values(state.paths).filter(Boolean).length,p=document.createElement("section");p.id="v81Health";p.className="panel";p.innerHTML=`<h3>Version 8.1 Open Court Health</h3><div class="health-grid">${hi("Units",cfg.openCourtUnits.length===6,`${cfg.openCourtUnits.length}/6`)}${hi("Lessons",cfg.openCourtUnits.flatMap(x=>x.lessons).length===36,"36/36")}${hi("Source paths",paths>=4,`${paths}/4 linked`)}${hi("Stored results",true,`${state.results.length}`)}</div><button class="secondary-button">Open Curriculum</button>`;p.querySelector("button").onclick=()=>location.hash="open-court";h.appendChild(p)}
+function hi(t,o,d){return `<article class="${o?"ready":"missing"}"><strong>${o?"✓":"!"}</strong><div><span>${t}</span><small>${d}</small></div></article>`}
+function toast(m){const t=$("#toast");if(!t)return;t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+})();

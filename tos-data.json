@@ -1,6 +1,6 @@
 {
-  "version": "8.0 Live Teaching Timeline & Assessment-Day Mode",
-  "releaseStatus": "Live classroom guidance using the 2026\u20132027 full-day schedule, assessment half-day schedule, weekly planning, daily lesson packets, attachments, and a persistent teaching timeline.",
+  "version": "8.1 Open Court Curriculum Intelligence & Assessment Map",
+  "releaseStatus": "Maps all six Open Court units to Skills Practice, lesson assessments, unit assessments, oral fluency, answer keys, Weekly Planning, and Friday Assessment Mode.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -846,5 +846,370 @@
       "Science Assessment",
       "Social Studies Assessment"
     ]
-  }
+  },
+  "openCourtUnits": [
+    {
+      "unit": 1,
+      "book": 1,
+      "unitAssessmentStartPage": 68,
+      "lessons": [
+        {
+          "lesson": 1,
+          "title": "The Mice Who Lived in a Shoe",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 23,
+          "oralFluency": false
+        },
+        {
+          "lesson": 2,
+          "title": "Ants and Aphids Work Together",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 30,
+          "oralFluency": false
+        },
+        {
+          "lesson": 3,
+          "title": "The Bat, Birds, and Beasts",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 38,
+          "oralFluency": false
+        },
+        {
+          "lesson": 4,
+          "title": "A Cherokee Stickball Game",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 47,
+          "oralFluency": false
+        },
+        {
+          "lesson": 5,
+          "title": "The Final Game",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 55,
+          "oralFluency": false
+        },
+        {
+          "lesson": 6,
+          "title": "Ellie\u2019s Long Walk",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 63,
+          "oralFluency": true
+        }
+      ]
+    },
+    {
+      "unit": 2,
+      "book": 1,
+      "unitAssessmentStartPage": 131,
+      "lessons": [
+        {
+          "lesson": 1,
+          "title": "Mattland",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 85,
+          "oralFluency": false
+        },
+        {
+          "lesson": 2,
+          "title": "A River of Ice",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 93,
+          "oralFluency": false
+        },
+        {
+          "lesson": 3,
+          "title": "What Makes the Earth Shake?",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 101,
+          "oralFluency": false
+        },
+        {
+          "lesson": 4,
+          "title": "All About Earthquakes",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 110,
+          "oralFluency": false
+        },
+        {
+          "lesson": 5,
+          "title": "In My Own Backyard",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 118,
+          "oralFluency": false
+        },
+        {
+          "lesson": 6,
+          "title": "Volcano Rising",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 126,
+          "oralFluency": true
+        }
+      ]
+    },
+    {
+      "unit": 3,
+      "book": 1,
+      "unitAssessmentStartPage": 193,
+      "lessons": [
+        {
+          "lesson": 1,
+          "title": "Gross Jobs",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 147,
+          "oralFluency": false
+        },
+        {
+          "lesson": 2,
+          "title": "My Community and Me",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 155,
+          "oralFluency": false
+        },
+        {
+          "lesson": 3,
+          "title": "Victor\u2019s Journal",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 163,
+          "oralFluency": false
+        },
+        {
+          "lesson": 4,
+          "title": "Night Shift",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 172,
+          "oralFluency": false
+        },
+        {
+          "lesson": 5,
+          "title": "The Art of Storytelling",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 180,
+          "oralFluency": false
+        },
+        {
+          "lesson": 6,
+          "title": "Aesop and His Fables",
+          "skillsPracticeBook": 1,
+          "assessmentBook": 1,
+          "assessmentStartPage": 188,
+          "oralFluency": true
+        }
+      ]
+    },
+    {
+      "unit": 4,
+      "book": 2,
+      "unitAssessmentStartPage": 49,
+      "lessons": [
+        {
+          "lesson": 1,
+          "title": "Storytelling: A Zulu Tradition",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 1,
+          "oralFluency": false
+        },
+        {
+          "lesson": 2,
+          "title": "Cinderella Tales",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 10,
+          "oralFluency": false
+        },
+        {
+          "lesson": 3,
+          "title": "Cinderlad",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 19,
+          "oralFluency": false
+        },
+        {
+          "lesson": 4,
+          "title": "The Green Grass Grew All Around",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 28,
+          "oralFluency": false
+        },
+        {
+          "lesson": 5,
+          "title": "Winston and George",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 36,
+          "oralFluency": false
+        },
+        {
+          "lesson": 6,
+          "title": "A Brand-New American Family",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 44,
+          "oralFluency": true
+        }
+      ]
+    },
+    {
+      "unit": 5,
+      "book": 2,
+      "unitAssessmentStartPage": 111,
+      "lessons": [
+        {
+          "lesson": 1,
+          "title": "Unit 5, Lesson 1",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 65,
+          "oralFluency": false
+        },
+        {
+          "lesson": 2,
+          "title": "Unit 5, Lesson 2",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 73,
+          "oralFluency": false
+        },
+        {
+          "lesson": 3,
+          "title": "Unit 5, Lesson 3",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 81,
+          "oralFluency": false
+        },
+        {
+          "lesson": 4,
+          "title": "Unit 5, Lesson 4",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 90,
+          "oralFluency": false
+        },
+        {
+          "lesson": 5,
+          "title": "Unit 5, Lesson 5",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 98,
+          "oralFluency": false
+        },
+        {
+          "lesson": 6,
+          "title": "Unit 5, Lesson 6",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 106,
+          "oralFluency": true
+        }
+      ]
+    },
+    {
+      "unit": 6,
+      "book": 2,
+      "unitAssessmentStartPage": 173,
+      "lessons": [
+        {
+          "lesson": 1,
+          "title": "Unit 6, Lesson 1",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 127,
+          "oralFluency": false
+        },
+        {
+          "lesson": 2,
+          "title": "Unit 6, Lesson 2",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 135,
+          "oralFluency": false
+        },
+        {
+          "lesson": 3,
+          "title": "Unit 6, Lesson 3",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 143,
+          "oralFluency": false
+        },
+        {
+          "lesson": 4,
+          "title": "Unit 6, Lesson 4",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 152,
+          "oralFluency": false
+        },
+        {
+          "lesson": 5,
+          "title": "Unit 6, Lesson 5",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 160,
+          "oralFluency": false
+        },
+        {
+          "lesson": 6,
+          "title": "Unit 6, Lesson 6",
+          "skillsPracticeBook": 2,
+          "assessmentBook": 2,
+          "assessmentStartPage": 168,
+          "oralFluency": true
+        }
+      ]
+    }
+  ],
+  "openCourtResourceTypes": [
+    "Phonics / Word Analysis",
+    "Vocabulary",
+    "Access Complex Text",
+    "Writing",
+    "Spelling",
+    "Grammar, Usage & Mechanics",
+    "Lesson Assessment",
+    "Answer Key",
+    "Oral Fluency Assessment"
+  ],
+  "openCourtSourceFiles": [
+    {
+      "key": "skills-1",
+      "title": "Skills Practice Book 1",
+      "units": "1\u20133"
+    },
+    {
+      "key": "skills-2",
+      "title": "Skills Practice Book 2",
+      "units": "4\u20136"
+    },
+    {
+      "key": "assessment-1",
+      "title": "Assessment Book 1",
+      "units": "1\u20133"
+    },
+    {
+      "key": "assessment-2",
+      "title": "Assessment Book 2",
+      "units": "4\u20136"
+    }
+  ]
 }
