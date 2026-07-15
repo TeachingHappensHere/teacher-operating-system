@@ -1,6 +1,6 @@
 {
-  "version": "15.0.3 Students & Data Route Recovery",
-  "releaseStatus": "Makes Intervention, Assessments, Students, and Communication direct authoritative routes with immediate renderer registration and persistent recovery.",
+  "version": "16.0 Teacher Intelligence \u2014 Build My Week",
+  "releaseStatus": "Adds a stable Teacher Intelligence command center that prepares Weekly Planning, Lesson Attachments, Print Center, Live Teaching, and Small Groups from one selected week.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2418,7 +2418,7 @@
     {
       "id": "intelligence-engine",
       "label": "Teacher Intelligence",
-      "owner": "v10.0"
+      "owner": "v16.0"
     },
     {
       "id": "workflow-hub",
@@ -2753,5 +2753,25 @@
     "rendererRegistration": "Immediate",
     "persistentWait": true,
     "fallbackRendering": true
+  },
+  "teacherIntelligenceV160": {
+    "workflowSteps": [
+      "Select School Week",
+      "Build Weekly Planning",
+      "Create Attachment Checklist",
+      "Prepare Print Queue",
+      "Prepare Live Teaching",
+      "Prepare Small Groups"
+    ],
+    "curriculumStartDate": "2026-08-03",
+    "launchWeekStart": "2026-07-27",
+    "launchWeekEnd": "2026-07-31",
+    "readingGroupOrder": [
+      "Red \u2014 Far Below Level",
+      "Yellow \u2014 Below Level",
+      "Green \u2014 Benchmark",
+      "Blue \u2014 Above Level"
+    ],
+    "defaultCopies": 33
   }
 }

@@ -307,7 +307,39 @@
       health: renderHealth,
       settings: renderSettings,
       "live-workspace": () => renderFeatureLoading("Live Workspace"),
-      "intelligence-engine": () => renderFeatureLoading("Teacher Intelligence"),
+      "intelligence-engine": () => {
+        if (typeof window.THH_RENDER_TEACHER_INTELLIGENCE === "function") {
+          window.THH_RENDER_TEACHER_INTELLIGENCE();
+          return;
+        }
+
+        renderFeatureLoading("Teacher Intelligence");
+
+        let attempts = 0;
+        const waitForTeacherIntelligence = window.setInterval(() => {
+          attempts += 1;
+
+          if (location.hash.replace("#", "") !== "intelligence-engine") {
+            window.clearInterval(waitForTeacherIntelligence);
+            return;
+          }
+
+          if (typeof window.THH_RENDER_TEACHER_INTELLIGENCE === "function") {
+            window.clearInterval(waitForTeacherIntelligence);
+            window.THH_RENDER_TEACHER_INTELLIGENCE();
+            return;
+          }
+
+          if (attempts >= 80) {
+            window.clearInterval(waitForTeacherIntelligence);
+            $("#pageHost").innerHTML = `
+              <section class="v150-module-error">
+                <strong>Teacher Intelligence did not finish loading.</strong>
+                <span>Refresh once or open Health for diagnostics.</span>
+              </section>`;
+          }
+        }, 100);
+      },
       "workflow-hub": () => renderFeatureLoading("Workflow Hub"),
       production: () => renderFeatureLoading("Daily Lesson Packets"),
       "first-week-builder": () => renderFeatureLoading("First-Week Builder"),
@@ -9607,5 +9639,599 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     });
   } else {
     setTimeout(recover, 150);
+  }
+})();
+
+
+/* =====================================================================
+   Version 16.0 — Teacher Intelligence: Build My Week
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const INTELLIGENCE_STORE = "thh-v100:intelligence-engine";
+  const WEEK_STORE = "thh-v73:weekly-plan";
+  const ATTACHMENTS_STORE = "thh-v74:attachments";
+  const PRINT_STORE = "thh-v74:print-center";
+  const LIVE_STORE = "thh-v90:teach-day";
+  const GROUP_PLAN_STORE = "thh-v141:group-plans";
+  const RUN_STORE = "thh-v160:build-my-week";
+
+  let config = null;
+  let state = {
+    selectedWeek: "2026-08-03",
+    runs: {},
+    lastRun: "",
+    status: {}
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+  const GROUPS = [
+    "Red — Far Below Level",
+    "Yellow — Below Level",
+    "Green — Benchmark",
+    "Blue — Above Level"
+  ];
+
+  async function start() {
+    window.THH_RENDER_TEACHER_INTELLIGENCE = renderCommandCenter;
+
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => {
+        if (!response.ok) throw new Error(`Configuration failed: ${response.status}`);
+        return response.json();
+      });
+    } catch (error) {
+      console.warn("Teacher Intelligence is using fallback configuration.", error);
+      config = {
+        teacherIntelligenceV160: {
+          curriculumStartDate: "2026-08-03",
+          launchWeekStart: "2026-07-27",
+          launchWeekEnd: "2026-07-31",
+          defaultCopies: 33
+        }
+      };
+    }
+
+    try {
+      state = { ...state, ...JSON.parse(localStorage.getItem(RUN_STORE) || "{}") };
+    } catch {}
+
+    if (state.selectedWeek < "2026-08-03") state.selectedWeek = "2026-08-03";
+    save();
+    window.addEventListener("hashchange", route);
+    route();
+  }
+
+  function save() {
+    localStorage.setItem(RUN_STORE, JSON.stringify(state));
+  }
+
+  function intelligenceState() {
+    try {
+      return JSON.parse(localStorage.getItem(INTELLIGENCE_STORE) || "{}");
+    } catch {
+      return {};
+    }
+  }
+
+  function availableWeeks() {
+    const engine = intelligenceState();
+    const weeks = Object.values(engine.weeks || {})
+      .filter(week => week?.weekOf)
+      .sort((a, b) => a.weekOf.localeCompare(b.weekOf));
+
+    const deduped = new Map();
+
+    weeks.forEach(week => {
+      const date = week.weekOf;
+      if (!deduped.has(date)) deduped.set(date, week);
+    });
+
+    if (!deduped.has("2026-08-03")) {
+      deduped.set("2026-08-03", {
+        weekOf: "2026-08-03",
+        title: "Curriculum Week 1",
+        curriculumWeek: 1,
+        pillar: "Heart",
+        curriculumLocked: false,
+        openCourtUnit: 1,
+        openCourtLesson: 1,
+        eurekaModule: 1,
+        eurekaStartingLesson: 1
+      });
+    }
+
+    return [...deduped.values()]
+      .filter(week => week.weekOf >= "2026-08-03")
+      .sort((a, b) => a.weekOf.localeCompare(b.weekOf))
+      .map((week, index) => ({
+        ...week,
+        curriculumWeek: index + 1,
+        title: `Curriculum Week ${index + 1}`
+      }));
+  }
+
+  function selectedWeek() {
+    return availableWeeks().find(week => week.weekOf === state.selectedWeek)
+      || availableWeeks()[0];
+  }
+
+  function route() {
+    const current = location.hash.replace("#", "") || "dashboard";
+    if (current === "intelligence-engine") setTimeout(renderCommandCenter, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "health") setTimeout(injectHealthCard, 0);
+  }
+
+  function renderCommandCenter() {
+    if (location.hash.replace("#", "") !== "intelligence-engine") return;
+
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const week = selectedWeek();
+    if (!week) {
+      host.innerHTML = `<div class="empty-state"><strong>No curriculum weeks are available.</strong></div>`;
+      return;
+    }
+
+    const run = state.runs[week.weekOf] || {};
+    const completion = workflowCompletion(run);
+
+    host.innerHTML = `
+      <section id="v160TeacherIntelligence">
+        <section class="page-header">
+          <div>
+            <p>VERSION 16.0</p>
+            <h2>Teacher Intelligence — Build My Week</h2>
+            <span>Select a curriculum week and prepare the connected teaching workflow.</span>
+          </div>
+          <div class="button-row">
+            <button id="v160OpenWorkflow" class="secondary-button">Open Workflow Hub</button>
+            <button id="v160RunAll" class="primary-button">Build My Week</button>
+          </div>
+        </section>
+
+        <section class="v160-week-selector panel">
+          <label>
+            <span>Curriculum Week</span>
+            <select id="v160WeekSelect">
+              ${availableWeeks().map(item => `
+                <option value="${esc(item.weekOf)}" ${item.weekOf === week.weekOf ? "selected" : ""}>
+                  ${formatDate(item.weekOf)} — Curriculum Week ${item.curriculumWeek}
+                </option>
+              `).join("")}
+            </select>
+          </label>
+          <div>
+            <span>SELECTED WEEK</span>
+            <strong>Curriculum Week ${week.curriculumWeek}</strong>
+            <small>Week of ${formatDate(week.weekOf)} • ${esc(week.pillar || "Heart")}</small>
+          </div>
+          <div>
+            <span>WORKFLOW STATUS</span>
+            <strong>${completion}% complete</strong>
+            <small>${Object.values(run.steps || {}).filter(Boolean).length}/6 steps prepared</small>
+          </div>
+        </section>
+
+        <section class="v160-progress">
+          <div><b style="width:${completion}%"></b></div>
+          <strong>${completion}%</strong>
+        </section>
+
+        <section class="v160-workflow-grid">
+          ${workflowCard(1, "Select School Week", true, "The selected curriculum week is ready.", "v160SelectStep")}
+          ${workflowCard(2, "Build Weekly Planning", run.steps?.planning, "Create Monday–Friday planning records.", "v160BuildPlanning")}
+          ${workflowCard(3, "Create Attachment Checklist", run.steps?.attachments, "Prepare weekly curriculum resource records.", "v160BuildAttachments")}
+          ${workflowCard(4, "Prepare Print Queue", run.steps?.printing, "Send printable resources to the weekly queue.", "v160BuildPrint")}
+          ${workflowCard(5, "Prepare Live Teaching", run.steps?.liveTeaching, "Send Monday into the live teaching workspace.", "v160BuildLive")}
+          ${workflowCard(6, "Prepare Small Groups", run.steps?.smallGroups, "Create group-plan records for all four reading groups.", "v160BuildGroups")}
+        </section>
+
+        <section class="v160-summary-grid">
+          <article class="panel">
+            <span>OPEN COURT</span>
+            <h3>Unit ${week.openCourtUnit || 1}, Lesson ${week.openCourtLesson || week.curriculumWeek}</h3>
+            <p>${esc(openCourtTitle(week))}</p>
+          </article>
+          <article class="panel">
+            <span>EUREKA MATH²</span>
+            <h3>Module ${week.eurekaModule || 1}</h3>
+            <p>Starting Lesson ${week.eurekaStartingLesson || week.curriculumWeek}</p>
+          </article>
+          <article class="panel">
+            <span>WEEKLY OUTPUTS</span>
+            <h3>${outputCount(week.weekOf)} connected records</h3>
+            <p>Planning, attachments, printing, teaching, and groups.</p>
+          </article>
+        </section>
+
+        <section class="panel v160-actions">
+          <h3>Open Connected Modules</h3>
+          <div class="button-row">
+            <button data-route-go="lesson-plans" class="secondary-button">Weekly Planning</button>
+            <button data-route-go="attachments" class="secondary-button">Lesson Attachments</button>
+            <button data-route-go="print-center" class="secondary-button">Print Center</button>
+            <button data-route-go="teachday" class="secondary-button">Live Teaching</button>
+            <button data-route-go="small-groups" class="secondary-button">Small Groups</button>
+          </div>
+        </section>
+      </section>
+    `;
+
+    wire();
+  }
+
+  function workflowCard(number, title, complete, description, buttonId) {
+    return `
+      <article class="panel v160-workflow-card ${complete ? "complete" : ""}">
+        <b>${number}</b>
+        <span>${complete ? "COMPLETE" : "READY"}</span>
+        <h3>${esc(title)}</h3>
+        <p>${esc(description)}</p>
+        <button id="${buttonId}" class="${complete ? "secondary-button" : "primary-button"}">
+          ${complete ? "Run Again" : "Run Step"}
+        </button>
+      </article>
+    `;
+  }
+
+  function wire() {
+    $("#v160WeekSelect").onchange = event => {
+      state.selectedWeek = event.target.value;
+      save();
+      renderCommandCenter();
+    };
+
+    $("#v160OpenWorkflow").onclick = () => location.hash = "workflow-hub";
+    $("#v160RunAll").onclick = buildAll;
+    $("#v160SelectStep").onclick = () => toast("Selected week confirmed.");
+    $("#v160BuildPlanning").onclick = buildPlanning;
+    $("#v160BuildAttachments").onclick = buildAttachments;
+    $("#v160BuildPrint").onclick = buildPrintQueue;
+    $("#v160BuildLive").onclick = buildLiveTeaching;
+    $("#v160BuildGroups").onclick = buildSmallGroups;
+
+    $$("[data-route-go]").forEach(button => {
+      button.onclick = () => location.hash = button.dataset.routeGo;
+    });
+  }
+
+  function currentRun() {
+    const week = selectedWeek();
+    if (!state.runs[week.weekOf]) {
+      state.runs[week.weekOf] = {
+        weekOf: week.weekOf,
+        steps: {},
+        updatedAt: ""
+      };
+    }
+    return state.runs[week.weekOf];
+  }
+
+  function markStep(step) {
+    const run = currentRun();
+    run.steps[step] = true;
+    run.updatedAt = new Date().toISOString();
+    state.lastRun = run.updatedAt;
+    save();
+  }
+
+  function workflowCompletion(run) {
+    const completed = Object.values(run.steps || {}).filter(Boolean).length + 1;
+    return Math.round((completed / 6) * 100);
+  }
+
+  function buildAll() {
+    buildPlanning(false);
+    buildAttachments(false);
+    buildPrintQueue(false);
+    buildLiveTeaching(false);
+    buildSmallGroups(false);
+    toast("Connected weekly workflow prepared.");
+    renderCommandCenter();
+  }
+
+  function buildPlanning(renderAfter = true) {
+    const week = selectedWeek();
+    const plan = {
+      version: "16.0",
+      title: `Curriculum Week ${week.curriculumWeek}`,
+      weekOf: week.weekOf,
+      pillar: week.pillar || "Heart",
+      days: {}
+    };
+
+    DAYS.forEach((day, index) => {
+      plan.days[day] = {
+        day,
+        complete: false,
+        focus: `${day} — Curriculum Week ${week.curriculumWeek}`,
+        openCourtLesson: `Unit ${week.openCourtUnit || 1}, Lesson ${week.openCourtLesson || week.curriculumWeek}`,
+        reading: openCourtTitle(week),
+        phonics: "Open Court phonics sequence",
+        vocabulary: "Open Court weekly vocabulary",
+        heggerty: "Daily phonemic awareness",
+        mowr: "UFLI, teacher table, fluency, vocabulary, and writing centers",
+        writing: "Writing Building the Foundation / Open Court GUM",
+        math: `Eureka Math² Module ${week.eurekaModule || 1}, Lesson ${(week.eurekaStartingLesson || week.curriculumWeek) + index}`,
+        math2: "Math recap, fluency, or exit-ticket review",
+        science: "Select the current Arizona science lesson and resource",
+        socialStudies: "Select the aligned Arizona Social Studies / iCivics lesson",
+        materials: "",
+        assessment: day === "Friday" ? "Weekly assessments and teacher review" : "Teacher observation and exit evidence",
+        differentiation: "Use student profiles, accommodations, EL supports, and current reading groups."
+      };
+    });
+
+    localStorage.setItem(WEEK_STORE, JSON.stringify(plan));
+    markStep("planning");
+    if (renderAfter) {
+      toast("Weekly Planning prepared.");
+      renderCommandCenter();
+    }
+  }
+
+  function buildAttachments(renderAfter = true) {
+    const week = selectedWeek();
+    const categories = [
+      ["Open Court","Skills Practice","Open Court Skills Practice"],
+      ["Open Court","Assessment","Open Court Weekly Assessment"],
+      ["Phonics","Student Page","Phonics / Spelling Practice"],
+      ["Vocabulary","Student Page","Vocabulary Practice"],
+      ["Writing / GUM","Student Page","Writing / GUM Page"],
+      ["Eureka Math²","Student Page","Eureka Math² Student Materials"],
+      ["Eureka Math²","Exit Ticket","Eureka Math² Exit Ticket"],
+      ["Science","Student Page","Science Student Page"],
+      ["Social Studies","Student Page","Social Studies Student Page"]
+    ];
+
+    let existing = [];
+    try {
+      existing = JSON.parse(localStorage.getItem(ATTACHMENTS_STORE) || "[]");
+      if (!Array.isArray(existing)) existing = [];
+    } catch {
+      existing = [];
+    }
+
+    const generated = [];
+    DAYS.forEach(day => {
+      categories.forEach(([category, type, title], index) => {
+        generated.push({
+          id: `v160-${week.weekOf}-${day}-${category}-${index}`.toLowerCase().replace(/[^a-z0-9-]/g, "-"),
+          title,
+          day,
+          category,
+          type,
+          lesson: `Curriculum Week ${week.curriculumWeek}`,
+          url: "",
+          fileName: "",
+          notes: "Add the authorized school-provided resource.",
+          print: true,
+          copies: config.teacherIntelligenceV160?.defaultCopies || 33,
+          status: "Missing Link",
+          teacherOnly: false,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
+      });
+    });
+
+    const ids = new Set(generated.map(item => item.id));
+    existing = [...existing.filter(item => !ids.has(item.id)), ...generated];
+    localStorage.setItem(ATTACHMENTS_STORE, JSON.stringify(existing));
+    markStep("attachments");
+
+    if (renderAfter) {
+      toast("Attachment checklist prepared.");
+      renderCommandCenter();
+    }
+  }
+
+  function buildPrintQueue(renderAfter = true) {
+    let attachments = [];
+    let queue = [];
+
+    try {
+      attachments = JSON.parse(localStorage.getItem(ATTACHMENTS_STORE) || "[]");
+      if (!Array.isArray(attachments)) attachments = [];
+    } catch {}
+
+    try {
+      queue = JSON.parse(localStorage.getItem(PRINT_STORE) || "[]");
+      if (!Array.isArray(queue)) queue = [];
+    } catch {}
+
+    const week = selectedWeek();
+    const weekAttachments = attachments.filter(item =>
+      item.id?.includes(week.weekOf) && item.print
+    );
+
+    weekAttachments.forEach(item => {
+      const record = {
+        id: `print-${item.id}`,
+        source: "Teacher Intelligence 16.0",
+        day: item.day,
+        title: item.title,
+        category: item.category,
+        section: item.teacherOnly ? "Teacher Materials" : "Student Copies",
+        copies: item.teacherOnly ? 1 : item.copies,
+        notes: item.notes,
+        url: item.url || item.fileName || "",
+        complete: false,
+        missingSource: !(item.url || item.fileName),
+        teacherOnly: Boolean(item.teacherOnly),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      const index = queue.findIndex(existing => existing.id === record.id);
+      if (index >= 0) queue[index] = { ...record, complete: queue[index].complete };
+      else queue.push(record);
+    });
+
+    localStorage.setItem(PRINT_STORE, JSON.stringify(queue));
+    markStep("printing");
+
+    if (renderAfter) {
+      toast("Print queue prepared.");
+      renderCommandCenter();
+    }
+  }
+
+  function buildLiveTeaching(renderAfter = true) {
+    const week = selectedWeek();
+    localStorage.setItem(LIVE_STORE, JSON.stringify({
+      day: "Monday",
+      dayType: "Full Day",
+      weekOf: week.weekOf,
+      title: `Curriculum Week ${week.curriculumWeek}`,
+      preparedAt: new Date().toISOString()
+    }));
+    markStep("liveTeaching");
+
+    if (renderAfter) {
+      toast("Monday prepared for Live Teaching.");
+      renderCommandCenter();
+    }
+  }
+
+  function buildSmallGroups(renderAfter = true) {
+    let plans = {};
+    try {
+      plans = JSON.parse(localStorage.getItem(GROUP_PLAN_STORE) || "{}");
+      if (!plans || typeof plans !== "object" || Array.isArray(plans)) plans = {};
+    } catch {
+      plans = {};
+    }
+
+    GROUPS.forEach(group => {
+      DAYS.forEach(day => {
+        const key = `${group}|${day}`;
+        plans[key] = {
+          ...(plans[key] || {}),
+          group,
+          day,
+          objective: plans[key]?.objective || "",
+          skill: plans[key]?.skill || groupFocus(group),
+          text: plans[key]?.text || "",
+          materials: plans[key]?.materials || "",
+          assessment: plans[key]?.assessment || "Teacher observation and brief progress evidence",
+          notes: plans[key]?.notes || "",
+          complete: Boolean(plans[key]?.complete),
+          updatedAt: new Date().toISOString()
+        };
+      });
+    });
+
+    localStorage.setItem(GROUP_PLAN_STORE, JSON.stringify(plans));
+    markStep("smallGroups");
+
+    if (renderAfter) {
+      toast("Small-group plans prepared.");
+      renderCommandCenter();
+    }
+  }
+
+  function groupFocus(group) {
+    if (group.startsWith("Red")) return "Intensive decoding, accuracy, and controlled-text reading";
+    if (group.startsWith("Yellow")) return "Strategic decoding, word recognition, and supported fluency";
+    if (group.startsWith("Green")) return "Benchmark fluency, comprehension, and grade-level application";
+    return "Above-level comprehension, prosody, vocabulary, and extension";
+  }
+
+  function outputCount(weekOf) {
+    let total = 0;
+    try {
+      const plan = JSON.parse(localStorage.getItem(WEEK_STORE) || "{}");
+      if (plan.weekOf === weekOf) total += Object.keys(plan.days || {}).length;
+    } catch {}
+
+    try {
+      const attachments = JSON.parse(localStorage.getItem(ATTACHMENTS_STORE) || "[]");
+      total += attachments.filter(item => item.id?.includes(weekOf)).length;
+    } catch {}
+
+    return total;
+  }
+
+  function openCourtTitle(week) {
+    if (week.weekOf === "2026-08-03") return "The Mice Who Lived in a Shoe";
+    return week.openCourtTitle || "Select the current Open Court weekly story";
+  }
+
+  function formatDate(value) {
+    return new Date(`${value}T12:00:00`).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v160DashboardCard")) return;
+
+    const week = selectedWeek();
+    const card = document.createElement("section");
+    card.id = "v160DashboardCard";
+    card.className = "v160-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>TEACHER INTELLIGENCE</p>
+        <h3>Build Curriculum Week ${week?.curriculumWeek || 1}</h3>
+        <span>Prepare planning, attachments, printing, teaching, and groups.</span>
+      </div>
+      <button>Open Build My Week</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "intelligence-engine";
+    dashboard.prepend(card);
+  }
+
+  function injectHealthCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v160HealthCard")) return;
+
+    const panel = document.createElement("section");
+    panel.id = "v160HealthCard";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 16.0 Teacher Intelligence Health</h3>
+      <div class="health-grid">
+        ${healthItem("Direct renderer", typeof window.THH_RENDER_TEACHER_INTELLIGENCE === "function", "Connected")}
+        ${healthItem("Curriculum Week 1", availableWeeks()[0]?.weekOf === "2026-08-03", "August 3, 2026")}
+        ${healthItem("Connected modules", true, "Planning, attachments, print, live teaching, groups")}
+        ${healthItem("Reading group order", true, "Red, Yellow, Green, Blue")}
+      </div>
+      <button class="secondary-button">Open Teacher Intelligence</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "intelligence-engine";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `<article class="${ok ? "ready" : "missing"}"><strong>${ok ? "✓" : "!"}</strong><div><span>${esc(title)}</span><small>${esc(detail)}</small></div></article>`;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1900);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
   }
 })();

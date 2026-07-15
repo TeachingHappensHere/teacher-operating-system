@@ -1,31 +1,32 @@
 # Teacher Operating System
 
-## Version 15.0.3 — Students & Data Route Recovery
+## Version 16.0 — Teacher Intelligence: Build My Week
 
 Upload the complete extracted repository to the GitHub repository root.
 
 ### Commit message
-Version 15.0.3 - Students and Data Route Recovery
+Version 16.0 - Teacher Intelligence Build My Week
 
-### Fixed together
-- Intervention
-- Assessments & Data
-- Students
-- Communication
+### Included
+- Stable direct Teacher Intelligence route
+- Curriculum-week selector
+- Duplicate-date protection in the week selector
+- Curriculum Week 1 anchored to August 3, 2026
+- One-click Build My Week
+- Weekly Planning generation
+- Lesson Attachments checklist generation
+- Print Center queue preparation
+- Monday Live Teaching preparation
+- Red, Yellow, Green, and Blue small-group plan preparation
+- Connected-module shortcuts
+- Dashboard and Health connections
 
-### Repairs
-- Registers Student Data and Assessments renderers before data loading.
-- Uses persistent route waits instead of one short timeout.
-- Keeps Intervention's immediate renderer and strengthens its recovery.
-- Gives Communication a dedicated direct renderer.
-- Adds a watchdog that retries all four routes after navigation.
-- Adds fallback configuration when `tos-data.json` cannot load.
-- Updates application and service-worker cache versions.
+### Important
+The week selector uses the existing school-year records but removes duplicate dates and renumbers the available curriculum weeks sequentially. A full holiday, iDay, and break-aware calendar still requires the complete school calendar file.
 
-### Test after deployment
-1. Open Intervention.
-2. Open Assessments & Data.
-3. Open Students.
-4. Open Communication.
-5. Leave each page open for 20 seconds.
-6. Confirm no page stays blank or on a permanent loading screen.
+### Test
+1. Open Teacher Intelligence.
+2. Select Curriculum Week 1.
+3. Click Build My Week.
+4. Open Weekly Planning, Lesson Attachments, Print Center, Live Teaching, and Small Groups.
+5. Confirm connected records were created.

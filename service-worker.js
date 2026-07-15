@@ -1,11 +1,11 @@
 
-const CACHE = "teaching-happens-here-v15-0-3-students-data-routes";
+const CACHE = "teaching-happens-here-v16-0-build-my-week";
 const CORE = [
   "./",
   "./index.html",
-  "./style.css?v=15.0.3",
+  "./style.css?v=16.0.0",
   "./style-additions-v7-1.css",
-  "./app.js?v=15.0.3",
+  "./app.js?v=16.0.0",
   "./launch-stabilization-v7-1.js",
   "./tos-data.json",
   "./manifest.json",
