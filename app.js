@@ -142,19 +142,7 @@
         if (typeof window.THH_RENDER_INTERVENTION === "function") window.THH_RENDER_INTERVENTION();
         else { renderFeatureLoading("Intervention"); setTimeout(() => window.THH_RENDER_INTERVENTION?.(), 80); }
       },
-      assessments: () => {
-        if (typeof window.THH_RENDER_ASSESSMENTS === "function") {
-          window.THH_RENDER_ASSESSMENTS();
-        } else {
-          renderFeatureLoading("Assessments & Progress Monitoring");
-          window.setTimeout(() => {
-            if (location.hash.replace("#", "") === "assessments" &&
-                typeof window.THH_RENDER_ASSESSMENTS === "function") {
-              window.THH_RENDER_ASSESSMENTS();
-            }
-          }, 80);
-        }
-      },
+      assessments: renderAssessments,
       "classroom-systems": renderClassroomSystems,
       students: () => {
         if (typeof window.THH_RENDER_STUDENT_DATA === "function") {
@@ -398,21 +386,37 @@
   }
 
   function renderAssessments() {
-    $("#pageHost").innerHTML = `
-      ${pageHeader("ASSESSMENTS & DATA", "Assessment Decision Center", "Record a score and select the instructional next step.")}
-      <section class="assessment-entry">
-        <label>Skill<select id="assessmentSkill"><option>Phonics & Decoding</option><option>Fluency</option><option>Vocabulary</option><option>Comprehension</option><option>Grammar</option><option>Writing</option><option>Math</option><option>Science</option></select></label>
-        <label>Score %<input id="assessmentScore" type="number" min="0" max="100"></label>
-        <button id="analyzeAssessment" class="primary-button">Analyze</button>
-      </section>
-      <section id="assessmentResult"></section>`;
-    $("#analyzeAssessment").addEventListener("click", () => {
-      const score = Number($("#assessmentScore").value);
-      if (!Number.isFinite(score) || score < 0 || score > 100) return toast("Enter a score from 0 to 100.");
-      const level = score >= 80 ? "Secure" : score >= 65 ? "Developing" : "Needs Reteach";
-      const group = score >= 80 ? "Green" : score >= 65 ? "Blue or Yellow" : "Red";
-      $("#assessmentResult").innerHTML = card(level, `<p>Recommended group: <strong>${group}</strong></p><p>${score >= 80 ? "Extend and apply." : score >= 65 ? "Use guided practice and immediate feedback." : "Use explicit intervention, modeling, and short decodable practice."}</p>`);
-    });
+    if (typeof window.THH_RENDER_ASSESSMENTS === "function") {
+      window.THH_RENDER_ASSESSMENTS();
+      return;
+    }
+
+    renderFeatureLoading("Assessments & Progress Monitoring");
+
+    let attempts = 0;
+    const waitForAssessmentModule = window.setInterval(() => {
+      attempts += 1;
+
+      if (location.hash.replace("#", "") !== "assessments") {
+        window.clearInterval(waitForAssessmentModule);
+        return;
+      }
+
+      if (typeof window.THH_RENDER_ASSESSMENTS === "function") {
+        window.clearInterval(waitForAssessmentModule);
+        window.THH_RENDER_ASSESSMENTS();
+        return;
+      }
+
+      if (attempts >= 50) {
+        window.clearInterval(waitForAssessmentModule);
+        $("#pageHost").innerHTML = `
+          <section class="v150-module-error">
+            <strong>Assessments module did not finish loading.</strong>
+            <span>Refresh the page once. If this continues, open Health for diagnostics.</span>
+          </section>`;
+      }
+    }, 100);
   }
 
   function renderClassroomSystems() {
@@ -8059,7 +8063,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 (() => {
 "use strict";
 const STUDENTS="thh-v140:student-records",PLANS="thh-v141:group-plans",NOTES="thh-v141:progress-notes",UI="thh-v141:ui";
-let cfg,students=[],plans={},notes=[],ui={group:"Red — Intensive",day:"Monday",tier:"All"};
+let cfg,students=[],plans={},notes=[],ui={group:"Red — Far Below Level",day:"Monday",tier:"All"};
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
 async function start(){cfg=await fetch("tos-data.json",{cache:"no-store"}).then(r=>r.json());try{students=JSON.parse(localStorage.getItem(STUDENTS)||"[]")}catch{}try{plans=JSON.parse(localStorage.getItem(PLANS)||"{}")}catch{}try{notes=JSON.parse(localStorage.getItem(NOTES)||"[]")}catch{}try{ui={...ui,...JSON.parse(localStorage.getItem(UI)||"{}")}}catch{}ensure();window.THH_RENDER_SMALL_GROUPS=renderGroups;window.THH_RENDER_INTERVENTION=renderIntervention;window.addEventListener("hashchange",route);route()}
@@ -8761,4 +8765,150 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
+})();
+
+
+/* =====================================================================
+   Version 15.0 — Core Refactor & Stabilization
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const BUILD = "15.0.0";
+  const STATE_KEY = "thh-v150:framework-health";
+  const GROUP_MIGRATION_KEY = "thh-v150:group-migration";
+
+  let state = {
+    build: BUILD,
+    routeChecks: {},
+    errors: [],
+    migratedGroups: false
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  function boot() {
+    try {
+      state = { ...state, ...JSON.parse(localStorage.getItem(STATE_KEY) || "{}") };
+    } catch {}
+
+    migrateReadingGroups();
+    document.documentElement.dataset.build = BUILD;
+    document.documentElement.classList.add("v150-stable-framework");
+
+    window.addEventListener("hashchange", verifyRoute);
+    window.addEventListener("error", recordError);
+    verifyRoute();
+  }
+
+  function save() {
+    localStorage.setItem(STATE_KEY, JSON.stringify(state));
+  }
+
+  function migrateReadingGroups() {
+    if (localStorage.getItem(GROUP_MIGRATION_KEY) === BUILD) return;
+
+    const studentKey = "thh-v140:student-records";
+    const planKey = "thh-v141:group-plans";
+    const uiKey = "thh-v141:ui";
+
+    const mapping = {
+      "Red — Intensive": "Red — Far Below Level",
+      "Yellow — Strategic": "Yellow — Below Level",
+      "Green — Extension": "Green — Benchmark",
+      "Blue — Developing Fluency": "Blue — Above Level"
+    };
+
+    try {
+      const students = JSON.parse(localStorage.getItem(studentKey) || "[]");
+      if (Array.isArray(students)) {
+        students.forEach(student => {
+          if (mapping[student.readingGroup]) student.readingGroup = mapping[student.readingGroup];
+        });
+        localStorage.setItem(studentKey, JSON.stringify(students));
+      }
+    } catch {}
+
+    try {
+      const plans = JSON.parse(localStorage.getItem(planKey) || "{}");
+      const migrated = {};
+
+      Object.entries(plans).forEach(([key, value]) => {
+        let newKey = key;
+        Object.entries(mapping).forEach(([oldGroup, newGroup]) => {
+          if (newKey.startsWith(`${oldGroup}|`)) {
+            newKey = newKey.replace(oldGroup, newGroup);
+          }
+        });
+        migrated[newKey] = {
+          ...value,
+          group: mapping[value?.group] || value?.group
+        };
+      });
+
+      localStorage.setItem(planKey, JSON.stringify(migrated));
+    } catch {}
+
+    try {
+      const ui = JSON.parse(localStorage.getItem(uiKey) || "{}");
+      if (mapping[ui.group]) ui.group = mapping[ui.group];
+      if (mapping[ui.selectedGroup]) ui.selectedGroup = mapping[ui.selectedGroup];
+      localStorage.setItem(uiKey, JSON.stringify(ui));
+    } catch {}
+
+    localStorage.setItem(GROUP_MIGRATION_KEY, BUILD);
+    state.migratedGroups = true;
+    save();
+  }
+
+  function verifyRoute() {
+    const route = location.hash.replace("#", "") || "dashboard";
+    const expected = {
+      teachday: "v120LiveTeaching",
+      attachments: "v121Attachments",
+      "print-center": "v122PrintCenter",
+      students: "v140StudentCenter",
+      "small-groups": "v141Groups",
+      intervention: "v141Intervention",
+      assessments: "v142AssessmentCenter"
+    };
+
+    if (!expected[route]) return;
+
+    window.setTimeout(() => {
+      const ready = Boolean(document.querySelector(`#${expected[route]}`));
+      state.routeChecks[route] = {
+        ready,
+        checkedAt: new Date().toISOString(),
+        expectedElement: expected[route]
+      };
+      save();
+
+      if (route === "assessments" && !ready &&
+          typeof window.THH_RENDER_ASSESSMENTS === "function") {
+        window.THH_RENDER_ASSESSMENTS();
+      }
+    }, 500);
+  }
+
+  function recordError(event) {
+    state.errors.unshift({
+      route: location.hash.replace("#", "") || "dashboard",
+      message: event.message || "Unknown runtime error",
+      date: new Date().toISOString()
+    });
+    state.errors = state.errors.slice(0, 25);
+    save();
+  }
+
+  window.THH_V15_FRAMEWORK_STATE = () => structuredClone(state);
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();

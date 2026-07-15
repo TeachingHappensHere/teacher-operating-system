@@ -1,6 +1,6 @@
 {
-  "version": "14.2 Assessments & Progress Monitoring Center",
-  "releaseStatus": "Adds a stable assessments dashboard connected to local student profiles, screening data, weekly checks, and intervention progress evidence.",
+  "version": "15.0 Core Refactor & Stabilization",
+  "releaseStatus": "Removes the obsolete assessment renderer, establishes authoritative feature renderers, corrects reading-group hierarchy, and cache-busts core application assets.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2473,17 +2473,17 @@
     {
       "id": "small-groups",
       "label": "Small Groups",
-      "owner": "v14.1"
+      "owner": "v15.0 / v14.1"
     },
     {
       "id": "intervention",
       "label": "Intervention",
-      "owner": "v14.1"
+      "owner": "v15.0 / v14.1"
     },
     {
       "id": "assessments",
       "label": "Assessments & Data",
-      "owner": "v14.2"
+      "owner": "v15.0 / v14.2"
     },
     {
       "id": "students",
@@ -2572,10 +2572,10 @@
       "Gifted / Extension"
     ],
     "readingGroups": [
-      "Red \u2014 Intensive",
-      "Yellow \u2014 Strategic",
-      "Blue \u2014 Developing Fluency",
-      "Green \u2014 Extension",
+      "Red \u2014 Far Below Level",
+      "Yellow \u2014 Below Level",
+      "Green \u2014 Benchmark",
+      "Blue \u2014 Above Level",
       "Not Assigned"
     ],
     "interventionTiers": [
@@ -2610,28 +2610,28 @@
   "interventionCenterV141": {
     "readingGroups": [
       {
-        "name": "Red \u2014 Intensive",
+        "name": "Red \u2014 Far Below Level",
         "frequency": "Daily",
         "minutes": 15,
-        "focus": "Decoding, phoneme-grapheme mapping, accuracy, and controlled text"
+        "focus": "Intensive decoding, phoneme-grapheme mapping, accuracy, and controlled-text reading"
       },
       {
-        "name": "Yellow \u2014 Strategic",
+        "name": "Yellow \u2014 Below Level",
         "frequency": "3\u20134 times weekly",
         "minutes": 12,
-        "focus": "Accuracy, word recognition, phrasing, and supported fluency"
+        "focus": "Strategic decoding, accuracy, word recognition, phrasing, and supported fluency"
       },
       {
-        "name": "Blue \u2014 Developing Fluency",
-        "frequency": "2 times weekly",
-        "minutes": 10,
-        "focus": "Fluency, expression, comprehension, and vocabulary"
-      },
-      {
-        "name": "Green \u2014 Extension",
+        "name": "Green \u2014 Benchmark",
         "frequency": "1\u20132 times weekly",
         "minutes": 10,
-        "focus": "Prosody, deeper comprehension, vocabulary, and author\u2019s craft"
+        "focus": "Benchmark-level fluency, comprehension, vocabulary, and grade-level application"
+      },
+      {
+        "name": "Blue \u2014 Above Level",
+        "frequency": "1\u20132 times weekly",
+        "minutes": 10,
+        "focus": "Above-level prosody, deeper comprehension, vocabulary, author\u2019s craft, and extension"
       }
     ],
     "days": [
@@ -2694,6 +2694,26 @@
       "Rubric 1\u20134",
       "Level / Letter",
       "Pass / Needs Support"
+    ]
+  },
+  "frameworkV15": {
+    "authoritativeRendererRoutes": [
+      "teachday",
+      "attachments",
+      "print-center",
+      "students",
+      "small-groups",
+      "intervention",
+      "assessments"
+    ],
+    "removedLegacyRenderer": "Assessment Decision Center",
+    "assessmentRenderer": "Version 14.2 Assessments & Progress Monitoring",
+    "assetVersion": "15.0.0",
+    "readingGroupHierarchy": [
+      "Red \u2014 Far Below Level",
+      "Yellow \u2014 Below Level",
+      "Green \u2014 Benchmark",
+      "Blue \u2014 Above Level"
     ]
   }
 }

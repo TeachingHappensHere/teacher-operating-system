@@ -1,11 +1,11 @@
 
-const CACHE = "teaching-happens-here-v14-2-assessments";
+const CACHE = "teaching-happens-here-v15-0-core-refactor";
 const CORE = [
   "./",
   "./index.html",
-  "./style.css",
+  "./style.css?v=15.0.0",
   "./style-additions-v7-1.css",
-  "./app.js",
+  "./app.js?v=15.0.0",
   "./launch-stabilization-v7-1.js",
   "./tos-data.json",
   "./manifest.json",
@@ -27,11 +27,35 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+
+  const url = new URL(event.request.url);
+  const isCore =
+    url.pathname.endsWith("/app.js") ||
+    url.pathname.endsWith("/style.css") ||
+    url.pathname.endsWith("/tos-data.json") ||
+    url.pathname.endsWith("/index.html") ||
+    url.pathname.endsWith("/");
+
+  if (isCore) {
+    event.respondWith(
+      fetch(event.request, { cache: "no-store" })
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE).then(cache => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
   event.respondWith(
-    fetch(event.request).then(response => {
-      const copy = response.clone();
-      caches.open(CACHE).then(cache => cache.put(event.request, copy));
-      return response;
-    }).catch(() => caches.match(event.request))
+    caches.match(event.request).then(cached =>
+      cached || fetch(event.request).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE).then(cache => cache.put(event.request, copy));
+        return response;
+      })
+    )
   );
 });

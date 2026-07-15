@@ -3422,3 +3422,26 @@ body {
     display:none!important
   }
 }
+
+
+/* Version 15.0 — Core Refactor & Stabilization */
+.v150-module-error {
+  display:grid;
+  place-items:center;
+  align-content:center;
+  gap:8px;
+  min-height:55vh;
+  padding:30px;
+  border:1px solid #e5b8b8;
+  border-radius:14px;
+  background:#fff2f2;
+  text-align:center;
+}
+.v150-module-error strong {color:#9d2d49;font-size:18px}
+.v150-module-error span {color:var(--muted)}
+.v150-stable-framework .v110-nav-group,
+.v150-stable-framework .v110-nav-body,
+.v150-stable-framework .v110-route {
+  animation:none!important;
+  transition:none!important;
+}
