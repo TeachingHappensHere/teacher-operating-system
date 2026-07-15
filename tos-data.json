@@ -1,6 +1,6 @@
 {
-  "version": "10.0 Teacher Intelligence Engine Foundation",
-  "releaseStatus": "Creates a central curriculum registry and automatic school-year week planner that preserves Launch Week and begins core curriculum on August 3, 2026.",
+  "version": "11.0 Clean Stable Foundation",
+  "releaseStatus": "Consolidates the Teacher Operating System into one authoritative navigation shell, one compact command center, and a cleaned curriculum registry.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1767,5 +1767,224 @@
       "eureka": "Module 1 begins",
       "notes": "Core curriculum begins."
     }
-  }
+  },
+  "navigationV11": [
+    {
+      "id": "today",
+      "title": "Today",
+      "open": true,
+      "items": [
+        [
+          "dashboard",
+          "Home Dashboard",
+          "\u2302"
+        ],
+        [
+          "live-workspace",
+          "Live Workspace",
+          "\u2605"
+        ],
+        [
+          "teachday",
+          "Live Teaching",
+          "\u25b6"
+        ],
+        [
+          "calendar",
+          "Calendar",
+          "\u25a6"
+        ]
+      ]
+    },
+    {
+      "id": "planning",
+      "title": "Planning",
+      "open": true,
+      "items": [
+        [
+          "intelligence-engine",
+          "Teacher Intelligence",
+          "\ud83e\udde0"
+        ],
+        [
+          "lesson-builder",
+          "Lesson Builder",
+          "\u2726"
+        ],
+        [
+          "lesson-plans",
+          "Weekly Planning",
+          "\u25b1"
+        ],
+        [
+          "production",
+          "Daily Lesson Packets",
+          "\u25a4"
+        ],
+        [
+          "classroom-launch",
+          "Classroom Launch",
+          "\u2661"
+        ],
+        [
+          "first-week-builder",
+          "First-Week Builder",
+          "5"
+        ],
+        [
+          "curriculum-week-1",
+          "Curriculum Week 1",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "curriculum",
+      "title": "Curriculum",
+      "open": true,
+      "items": [
+        [
+          "open-court",
+          "Open Court Curriculum",
+          "\ud83d\udcda"
+        ],
+        [
+          "eureka-math",
+          "Eureka Math\u00b2",
+          "\u2797"
+        ],
+        [
+          "afternoon-studios",
+          "Writing, Science & Social Studies",
+          "\u270e"
+        ]
+      ]
+    },
+    {
+      "id": "students",
+      "title": "Students & Data",
+      "open": false,
+      "items": [
+        [
+          "small-groups",
+          "Small Groups",
+          "\u2667"
+        ],
+        [
+          "intervention",
+          "Intervention",
+          "\u25ce"
+        ],
+        [
+          "assessments",
+          "Assessments & Data",
+          "\u25a5"
+        ],
+        [
+          "students",
+          "Students",
+          "\u2659"
+        ],
+        [
+          "communication",
+          "Communication",
+          "\u2709"
+        ]
+      ]
+    },
+    {
+      "id": "resources",
+      "title": "Resources & Administration",
+      "open": false,
+      "items": [
+        [
+          "classroom-systems",
+          "Classroom Systems",
+          "\u25a3"
+        ],
+        [
+          "attachments",
+          "Lesson Attachments",
+          "\ud83d\udcce"
+        ],
+        [
+          "forms",
+          "Print Center",
+          "\ud83d\udda8"
+        ],
+        [
+          "resources",
+          "Resources",
+          "\u25a1"
+        ],
+        [
+          "teacher-brain",
+          "Teacher Brain",
+          "\u2661"
+        ],
+        [
+          "school-year-settings",
+          "School-Year Dates",
+          "\ud83d\udcc5"
+        ],
+        [
+          "health",
+          "Health",
+          "\u2665"
+        ],
+        [
+          "settings",
+          "Settings",
+          "\u2699"
+        ]
+      ]
+    }
+  ],
+  "curriculumShortcutsV11": [
+    {
+      "route": "open-court",
+      "label": "Open Court",
+      "category": "ELA"
+    },
+    {
+      "route": "eureka-math",
+      "label": "Eureka Math\u00b2",
+      "category": "Mathematics"
+    },
+    {
+      "route": "afternoon-studios",
+      "label": "Writing / GUM",
+      "category": "Writing"
+    },
+    {
+      "route": "afternoon-studios",
+      "label": "Science",
+      "category": "Science"
+    },
+    {
+      "route": "afternoon-studios",
+      "label": "Social Studies",
+      "category": "Social Studies"
+    },
+    {
+      "route": "small-groups",
+      "label": "MOWR",
+      "category": "Reading Intervention"
+    },
+    {
+      "route": "open-court",
+      "label": "Phonics & Vocabulary",
+      "category": "Foundational Reading"
+    },
+    {
+      "route": "classroom-launch",
+      "label": "Morning Meeting",
+      "category": "SEL / Community"
+    },
+    {
+      "route": "first-week-builder",
+      "label": "Pillar Resources",
+      "category": "School Culture"
+    }
+  ]
 }

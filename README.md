@@ -1,8 +1,10 @@
 # TeachingHappensHere
 
-## Version 10.0 — Teacher Intelligence Engine Foundation
+## Version 11.0 — Clean Stable Foundation
 
-Upload every file in this package to the repository root:
+This is a full replacement release. Do not copy only five files.
+
+## Upload every file in this package to the repository root
 
 - index.html
 - app.js
@@ -14,32 +16,39 @@ Upload every file in this package to the repository root:
 - icon-512.svg
 - README.md
 
-Commit message:
+## Commit message
 
-Version 10.0 - Teacher Intelligence Engine Foundation
+Version 11.0 - Clean Stable Foundation
 
-Included:
+## Included
 
-- Teacher Intelligence page in Planning
-- Central curriculum registry
-- Protected July 27–31 Launch Week
-- August 3 curriculum start
-- Protected Open Court Unit 1 Lesson 1 start
-- Protected Eureka Math² Module 1 start
-- Automatic Monday-based school-year week generation
-- Weekly curriculum assignment editor
-- Open Court and Eureka sequence fields
-- Heggerty, UFLI, Writing, Science, and Social Studies registry fields
-- Send selected week to Weekly Planning
-- Dashboard, Planning, and Health connections
+- One permanent authoritative sidebar
+- Teacher Intelligence permanently included under Planning
+- First-Week Builder permanently included
+- Curriculum Week 1 permanently included
+- Five organized navigation groups
+- Duplicate dashboard status cleanup
+- Compact command center
+- Dashboard focus mode
+- Clean curriculum shortcuts
+- No Art or Music shortcuts
+- Preserved July 27–31 Classroom Launch Week
+- Preserved August 3 curriculum start
+- Preserved The Mice Who Lived in a Shoe as the first Open Court selection
+- Preserved Eureka Math² Module 1 start
+- Responsive desktop, iPad, and phone layouts
 - Fresh service-worker cache
 - Complete JavaScript syntax validation
 
-After deployment:
+## Deployment procedure
 
-1. Open the site in an incognito/private window.
-2. Expand Planning.
-3. Open Teacher Intelligence.
-4. Confirm Launch Week and Curriculum Week 1 are listed.
-5. Select Generate School-Year Weeks.
-6. Select August 3, build the assignment, and send it to Weekly Planning.
+1. Download and extract this ZIP.
+2. Back up the current repository files.
+3. In the repository root, choose Add file → Upload files.
+4. Upload all nine files from this package together.
+5. Confirm all filenames appear before committing.
+6. Commit with the message above.
+7. Wait for GitHub Pages deployment to finish.
+8. Test in a private/incognito browser window first.
+9. Expand Planning and confirm Teacher Intelligence is present.
+10. Hard-refresh the normal browser with Ctrl+Shift+R.

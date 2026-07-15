@@ -5361,3 +5361,318 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
+
+
+/* =====================================================================
+   Version 11.0 — Clean Stable Foundation
+   This module is the authoritative navigation and dashboard-cleanup layer.
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const NAV_KEY = "thh-v110:navigation";
+  const DASHBOARD_KEY = "thh-v110:dashboard";
+  let config = null;
+  let navState = {};
+  let dashboardState = { focusMode: false };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const escapeHtml = value => String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+  async function bootV11() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => {
+        if (!response.ok) throw new Error(`tos-data.json returned ${response.status}`);
+        return response.json();
+      });
+
+      try {
+        navState = JSON.parse(localStorage.getItem(NAV_KEY) || "{}");
+      } catch {
+        navState = {};
+      }
+
+      try {
+        dashboardState = {
+          ...dashboardState,
+          ...JSON.parse(localStorage.getItem(DASHBOARD_KEY) || "{}")
+        };
+      } catch {}
+
+      waitForShell();
+    } catch (error) {
+      console.error("Version 11.0 failed to initialize.", error);
+    }
+  }
+
+  function waitForShell() {
+    if (!document.querySelector("#mainNav") || !document.querySelector("#pageHost")) {
+      window.setTimeout(waitForShell, 100);
+      return;
+    }
+
+    window.setTimeout(buildAuthoritativeNavigation, 800);
+    window.setTimeout(buildAuthoritativeNavigation, 1800);
+
+    window.addEventListener("hashchange", () => {
+      updateActiveRoute();
+      openCurrentGroup();
+      if (currentRoute() === "dashboard") window.setTimeout(cleanDashboard, 60);
+    });
+
+    new MutationObserver(() => {
+      if (!document.querySelector("#v110Navigation")) {
+        window.setTimeout(buildAuthoritativeNavigation, 120);
+      }
+      if (currentRoute() === "dashboard") {
+        window.setTimeout(cleanDashboard, 80);
+      }
+    }).observe(document.body, { childList: true, subtree: true });
+
+    if (currentRoute() === "dashboard") window.setTimeout(cleanDashboard, 80);
+  }
+
+  function navigationGroups() {
+    return config.navigationV11 || [];
+  }
+
+  function buildAuthoritativeNavigation() {
+    const nav = document.querySelector("#mainNav");
+    if (!nav) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "v110Navigation";
+    wrapper.className = "v110-navigation";
+
+    navigationGroups().forEach(group => {
+      if (typeof navState[group.id] !== "boolean") {
+        navState[group.id] = Boolean(group.open);
+      }
+
+      const section = document.createElement("section");
+      section.className = "v110-nav-group";
+      section.dataset.group = group.id;
+
+      const heading = document.createElement("button");
+      heading.type = "button";
+      heading.className = "v110-nav-heading";
+      heading.setAttribute("aria-expanded", String(navState[group.id]));
+      heading.innerHTML = `
+        <span>${escapeHtml(group.title)}</span>
+        <b aria-hidden="true">${navState[group.id] ? "−" : "+"}</b>
+      `;
+
+      const body = document.createElement("div");
+      body.className = "v110-nav-body";
+      body.hidden = !navState[group.id];
+
+      group.items.forEach(([route, label, icon]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "nav-button v110-route";
+        button.dataset.route = route;
+        button.innerHTML = `
+          <span aria-hidden="true">${escapeHtml(icon)}</span>
+          <strong>${escapeHtml(label)}</strong>
+        `;
+        button.addEventListener("click", () => {
+          location.hash = route;
+          document.body.classList.remove("nav-open");
+        });
+        body.appendChild(button);
+      });
+
+      heading.addEventListener("click", () => {
+        navState[group.id] = !navState[group.id];
+        body.hidden = !navState[group.id];
+        heading.setAttribute("aria-expanded", String(navState[group.id]));
+        heading.querySelector("b").textContent = navState[group.id] ? "−" : "+";
+        localStorage.setItem(NAV_KEY, JSON.stringify(navState));
+      });
+
+      section.append(heading, body);
+      wrapper.appendChild(section);
+    });
+
+    nav.replaceChildren(wrapper);
+    localStorage.setItem(NAV_KEY, JSON.stringify(navState));
+    updateActiveRoute();
+    openCurrentGroup();
+  }
+
+  function currentRoute() {
+    return location.hash.replace("#", "") || "dashboard";
+  }
+
+  function updateActiveRoute() {
+    const route = currentRoute();
+    $$(".v110-route").forEach(button => {
+      const active = button.dataset.route === route;
+      button.classList.toggle("active", active);
+      if (active) button.setAttribute("aria-current", "page");
+      else button.removeAttribute("aria-current");
+    });
+  }
+
+  function openCurrentGroup() {
+    const route = currentRoute();
+    const group = navigationGroups().find(item =>
+      item.items.some(([itemRoute]) => itemRoute === route)
+    );
+    if (!group) return;
+
+    navState[group.id] = true;
+    localStorage.setItem(NAV_KEY, JSON.stringify(navState));
+
+    const section = document.querySelector(
+      `.v110-nav-group[data-group="${group.id}"]`
+    );
+    if (!section) return;
+
+    const heading = document.querySelector(".v110-nav-heading", section);
+    const body = document.querySelector(".v110-nav-body", section);
+    body.hidden = false;
+    heading.setAttribute("aria-expanded", "true");
+    heading.querySelector("b").textContent = "−";
+  }
+
+  function cleanDashboard() {
+    const dashboard = document.querySelector("#v72Dashboard");
+    if (!dashboard) return;
+
+    removeDuplicateStatusCards(dashboard);
+    installCleanCommandCenter(dashboard);
+    rebuildCurriculumShortcuts(dashboard);
+    applyDashboardFocusMode();
+  }
+
+  function removeDuplicateStatusCards(dashboard) {
+    const cards = $$(
+      [
+        "#v80DashboardLive",
+        "#v73DashboardPlanning",
+        "#v84DashboardCard",
+        "#v81Dashboard",
+        "#v82DashboardCard",
+        "#v83DashboardCard",
+        "#v74DashboardAttachmentCard",
+        "#v75DashboardCard",
+        "#v86StartBanner",
+        "#v87DashboardCard",
+        "#v100DashboardCard"
+      ].join(","),
+      dashboard
+    );
+
+    const seen = new Set();
+    cards.forEach(card => {
+      const text = card.textContent.replace(/\s+/g, " ").trim();
+      const signature = text.slice(0, 90);
+      if (seen.has(signature)) {
+        card.remove();
+      } else {
+        seen.add(signature);
+        card.classList.add("v110-status-source");
+      }
+    });
+  }
+
+  function installCleanCommandCenter(dashboard) {
+    let command = document.querySelector("#v110CommandCenter", dashboard);
+
+    if (!command) {
+      command = document.createElement("section");
+      command.id = "v110CommandCenter";
+      command.className = "v110-command-center";
+      dashboard.prepend(command);
+    }
+
+    const sources = $$(".v110-status-source", dashboard).filter(card =>
+      card.id !== "v110CommandCenter"
+    );
+
+    command.innerHTML = `
+      <div class="v110-command-heading">
+        <div>
+          <p>TEACHER OPERATING SYSTEM</p>
+          <h2>Today’s Command Center</h2>
+          <span>Planning, curriculum, production, and teaching status in one compact view.</span>
+        </div>
+        <button id="v110FocusButton" type="button">
+          ${dashboardState.focusMode ? "Show Full Dashboard" : "Focus on Command Center"}
+        </button>
+      </div>
+      <div class="v110-command-grid"></div>
+    `;
+
+    const grid = document.querySelector(".v110-command-grid", command);
+
+    sources.forEach(card => {
+      card.classList.add("v110-command-card");
+      grid.appendChild(card);
+    });
+
+    document.querySelector("#v110FocusButton", command)?.addEventListener("click", () => {
+      dashboardState.focusMode = !dashboardState.focusMode;
+      localStorage.setItem(DASHBOARD_KEY, JSON.stringify(dashboardState));
+      applyDashboardFocusMode();
+      cleanDashboard();
+    });
+  }
+
+  function rebuildCurriculumShortcuts(dashboard) {
+    const existing =
+      document.querySelector(".v72-curriculum-card", dashboard) ||
+      [...dashboard.querySelectorAll("section,article,div")].find(element =>
+        /Curriculum Resources/i.test(element.textContent || "")
+      );
+
+    if (!existing || existing.dataset.v110Cleaned === "true") return;
+    existing.dataset.v110Cleaned = "true";
+    existing.classList.add("v110-curriculum-shortcuts");
+
+    const heading = [...existing.querySelectorAll("h2,h3,h4,strong")]
+      .find(element => /Curriculum Resources/i.test(element.textContent || ""));
+
+    const titleMarkup = heading
+      ? `<h3>${escapeHtml(heading.textContent.trim())}</h3>`
+      : "<h3>Curriculum Resources</h3>";
+
+    existing.innerHTML = `
+      ${titleMarkup}
+      <div class="v110-shortcut-grid">
+        ${(config.curriculumShortcutsV11 || []).map(item => `
+          <button type="button" data-v110-route="${escapeHtml(item.route)}">
+            <span>${escapeHtml(item.category)}</span>
+            <strong>${escapeHtml(item.label)}</strong>
+          </button>
+        `).join("")}
+      </div>
+    `;
+
+    $$("[data-v110-route]", existing).forEach(button => {
+      button.addEventListener("click", () => {
+        location.hash = button.dataset.v110Route;
+      });
+    });
+  }
+
+  function applyDashboardFocusMode() {
+    document.body.classList.toggle(
+      "v110-dashboard-focus",
+      Boolean(dashboardState.focusMode)
+    );
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootV11);
+  } else {
+    bootV11();
+  }
+})();

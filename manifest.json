@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#fffaf8",
   "theme_color": "#f7cbd2",
-  "description": "Unified classroom planning and teacher workflow system.",
+  "description": "A unified classroom planning, curriculum, and teaching operating system.",
   "icons": [
     {
       "src": "icon-192.svg",
