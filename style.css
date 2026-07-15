@@ -3017,3 +3017,52 @@ body {
 
 /* Version 12.2.1 */
 [data-route="print-center"]{font-weight:800}
+
+
+/* Version 13.0 — Stable Application Framework */
+.v130-route-loading {
+  display:grid;
+  place-items:center;
+  align-content:center;
+  gap:8px;
+  min-height:55vh;
+  padding:30px;
+  color:var(--muted);
+  text-align:center;
+}
+.v130-loading-mark {
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#fff;
+  display:grid;
+  place-items:center;
+}
+.v130-route-loading strong {font-size:18px;color:var(--text)}
+.v130-framework-card {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  margin-bottom:12px;
+  border:1px solid #bfe0dc;
+  border-radius:14px;
+  background:#edf9f7;
+}
+.v130-framework-card p {margin:0;color:#347c76;font-size:10px;font-weight:900}
+.v130-framework-card h3 {margin:4px 0}
+.v130-framework-card span {color:var(--muted)}
+.v130-framework-card button {
+  border:0;border-radius:9px;background:#347c76;color:#fff;padding:10px 12px;font-weight:800;
+}
+.v130-framework .v110-nav-body,
+.v130-framework .v110-nav-group,
+.v130-framework .v110-route {
+  animation:none!important;
+  transition:none!important;
+}
+@media(max-width:760px) {
+  .v130-framework-card {align-items:flex-start;flex-direction:column}
+}

@@ -1,6 +1,6 @@
 {
-  "version": "12.2.1 Print Center Route Repair",
-  "releaseStatus": "Separates the new Print Center from the legacy Forms & Printables page.",
+  "version": "13.0 Stable Application Framework & Route Registry",
+  "releaseStatus": "Installs one central route registry so every module has a permanent independent route before any feature renderer runs.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -106,6 +106,11 @@
       "\ud83e\udde0"
     ],
     [
+      "workflow-hub",
+      "Workflow Hub",
+      "\u21bb"
+    ],
+    [
       "lesson-builder",
       "Lesson Builder",
       "\u2726"
@@ -147,7 +152,7 @@
     ],
     [
       "afternoon-studios",
-      "Writing, Science & SS",
+      "Writing, Science & Social Studies",
       "\u270e"
     ],
     [
@@ -186,14 +191,19 @@
       "\ud83d\udcce"
     ],
     [
-      "resources",
-      "Resources",
-      "\u25a1"
+      "print-center",
+      "Print Center",
+      "\ud83d\udda8"
     ],
     [
       "forms",
-      "Print Center",
-      "\ud83d\udda8"
+      "Forms & Printables",
+      "\u25a4"
+    ],
+    [
+      "resources",
+      "Resources",
+      "\u25a1"
     ],
     [
       "teacher-brain",
@@ -2383,5 +2393,164 @@
       "Homework / Family Materials"
     ],
     "defaultCopies": 33
+  },
+  "routeRegistryV13": [
+    {
+      "id": "dashboard",
+      "label": "Home Dashboard",
+      "owner": "core"
+    },
+    {
+      "id": "live-workspace",
+      "label": "Live Workspace",
+      "owner": "feature"
+    },
+    {
+      "id": "teachday",
+      "label": "Live Teaching",
+      "owner": "v12.0"
+    },
+    {
+      "id": "calendar",
+      "label": "Calendar",
+      "owner": "core"
+    },
+    {
+      "id": "intelligence-engine",
+      "label": "Teacher Intelligence",
+      "owner": "v10.0"
+    },
+    {
+      "id": "workflow-hub",
+      "label": "Workflow Hub",
+      "owner": "v11.1"
+    },
+    {
+      "id": "lesson-builder",
+      "label": "Lesson Builder",
+      "owner": "core"
+    },
+    {
+      "id": "lesson-plans",
+      "label": "Weekly Planning",
+      "owner": "v7.3"
+    },
+    {
+      "id": "production",
+      "label": "Daily Lesson Packets",
+      "owner": "v7.5"
+    },
+    {
+      "id": "classroom-launch",
+      "label": "Classroom Launch",
+      "owner": "core"
+    },
+    {
+      "id": "first-week-builder",
+      "label": "First-Week Builder",
+      "owner": "v8.4"
+    },
+    {
+      "id": "curriculum-week-1",
+      "label": "Curriculum Week 1",
+      "owner": "v8.7"
+    },
+    {
+      "id": "open-court",
+      "label": "Open Court Curriculum",
+      "owner": "v8.1"
+    },
+    {
+      "id": "eureka-math",
+      "label": "Eureka Math\u00b2",
+      "owner": "v8.2"
+    },
+    {
+      "id": "afternoon-studios",
+      "label": "Writing, Science & Social Studies",
+      "owner": "v8.3"
+    },
+    {
+      "id": "small-groups",
+      "label": "Small Groups",
+      "owner": "core"
+    },
+    {
+      "id": "intervention",
+      "label": "Intervention",
+      "owner": "core"
+    },
+    {
+      "id": "assessments",
+      "label": "Assessments & Data",
+      "owner": "core"
+    },
+    {
+      "id": "students",
+      "label": "Students",
+      "owner": "core"
+    },
+    {
+      "id": "communication",
+      "label": "Communication",
+      "owner": "core"
+    },
+    {
+      "id": "classroom-systems",
+      "label": "Classroom Systems",
+      "owner": "core"
+    },
+    {
+      "id": "attachments",
+      "label": "Lesson Attachments",
+      "owner": "v12.1"
+    },
+    {
+      "id": "print-center",
+      "label": "Print Center",
+      "owner": "v12.2"
+    },
+    {
+      "id": "forms",
+      "label": "Forms & Printables",
+      "owner": "core"
+    },
+    {
+      "id": "resources",
+      "label": "Resources",
+      "owner": "core"
+    },
+    {
+      "id": "teacher-brain",
+      "label": "Teacher Brain",
+      "owner": "core"
+    },
+    {
+      "id": "school-year-settings",
+      "label": "School-Year Dates",
+      "owner": "v8.6"
+    },
+    {
+      "id": "health",
+      "label": "Health",
+      "owner": "core+features"
+    },
+    {
+      "id": "settings",
+      "label": "Settings",
+      "owner": "core"
+    },
+    {
+      "id": "search",
+      "label": "Search",
+      "owner": "core"
+    }
+  ],
+  "frameworkV13": {
+    "routerOwner": "Version 13.0",
+    "fallbackRoute": "dashboard",
+    "independentRoutes": true,
+    "printCenterRoute": "print-center",
+    "formsRoute": "forms"
   }
 }

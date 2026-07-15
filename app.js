@@ -113,7 +113,8 @@
 
   function routeFromHash() {
     const route = location.hash.replace("#", "") || state.route || "dashboard";
-    renderRoute(config.navigation.some(item => item[0] === route) ? route : "dashboard");
+    const registered = (config.routeRegistryV13 || []).some(item => item.id === route);
+    renderRoute(registered ? route : (config.frameworkV13?.fallbackRoute || "dashboard"));
   }
 
   function renderRoute(route) {
@@ -144,11 +145,32 @@
       forms: renderForms,
       "teacher-brain": renderTeacherBrain,
       health: renderHealth,
-      settings: renderSettings
+      settings: renderSettings,
+      "live-workspace": () => renderFeatureLoading("Live Workspace"),
+      "intelligence-engine": () => renderFeatureLoading("Teacher Intelligence"),
+      "workflow-hub": () => renderFeatureLoading("Workflow Hub"),
+      production: () => renderFeatureLoading("Daily Lesson Packets"),
+      "first-week-builder": () => renderFeatureLoading("First-Week Builder"),
+      "curriculum-week-1": () => renderFeatureLoading("Curriculum Week 1"),
+      "open-court": () => renderFeatureLoading("Open Court Curriculum"),
+      "eureka-math": () => renderFeatureLoading("Eureka Math²"),
+      "afternoon-studios": () => renderFeatureLoading("Writing, Science & Social Studies"),
+      attachments: () => renderFeatureLoading("Lesson Attachments"),
+      "print-center": () => renderFeatureLoading("Print Center"),
+      "school-year-settings": () => renderFeatureLoading("School-Year Dates")
     };
 
     (renderers[route] || renderDashboard)();
     $("#pageHost").focus({ preventScroll: true });
+  }
+
+  function renderFeatureLoading(title) {
+    $("#pageHost").innerHTML = `
+      <section class="v130-route-loading" data-feature-loading="${esc(title)}">
+        <div class="v130-loading-mark">●</div>
+        <strong>Opening ${esc(title)}…</strong>
+        <span>The application framework is connecting the dedicated module.</span>
+      </section>`;
   }
 
   function pageHeader(eyebrow, title, description, action = "") {
@@ -6997,4 +7019,135 @@ function prepare(){
 }
 window.addEventListener("hashchange",prepare);
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",prepare);else prepare();
+})();
+
+/* =====================================================================
+   Version 13.0 — Stable Application Framework & Route Registry
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const STATE_KEY = "thh-v130:framework";
+  let cfg = null;
+  let state = { lastRoute: "dashboard", visits: {}, errors: [] };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  async function boot() {
+    try {
+      cfg = await fetch("tos-data.json", { cache: "no-store" }).then(r => r.json());
+      try { state = { ...state, ...JSON.parse(localStorage.getItem(STATE_KEY) || "{}") }; } catch {}
+      document.documentElement.classList.add("v130-framework");
+      wait();
+    } catch (error) {
+      console.error("Version 13 framework failed.", error);
+    }
+  }
+
+  function save() {
+    localStorage.setItem(STATE_KEY, JSON.stringify(state));
+  }
+
+  function registered(route) {
+    return (cfg.routeRegistryV13 || []).some(item => item.id === route);
+  }
+
+  function current() {
+    return location.hash.replace("#", "") || "dashboard";
+  }
+
+  function wait() {
+    if (!$("#pageHost") || !$("#mainNav")) return setTimeout(wait, 100);
+    window.addEventListener("hashchange", handleRoute);
+    window.addEventListener("error", recordError);
+    handleRoute();
+  }
+
+  function handleRoute() {
+    const route = current();
+
+    if (!registered(route)) {
+      location.hash = cfg.frameworkV13?.fallbackRoute || "dashboard";
+      return;
+    }
+
+    state.lastRoute = route;
+    state.visits[route] = (state.visits[route] || 0) + 1;
+    save();
+
+    document.body.dataset.route = route;
+    $$(".v110-route").forEach(button => {
+      button.classList.toggle("active", button.dataset.route === route);
+    });
+
+    if (route === "dashboard") setTimeout(injectFrameworkCard, 80);
+    if (route === "health") setTimeout(injectFrameworkHealth, 80);
+  }
+
+  function recordError(event) {
+    state.errors.unshift({
+      message: event.message || "Unknown application error",
+      route: current(),
+      date: new Date().toISOString()
+    });
+    state.errors = state.errors.slice(0, 20);
+    save();
+  }
+
+  function injectFrameworkCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v130FrameworkCard")) return;
+
+    const card = document.createElement("section");
+    card.id = "v130FrameworkCard";
+    card.className = "v130-framework-card";
+    card.innerHTML = `
+      <div>
+        <p>APPLICATION FRAMEWORK</p>
+        <h3>${(cfg.routeRegistryV13 || []).length} permanent routes registered</h3>
+        <span>Print Center and Forms & Printables now use separate routes.</span>
+      </div>
+      <button>Open Print Center</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "print-center";
+    dashboard.prepend(card);
+  }
+
+  function injectFrameworkHealth() {
+    const host = $("#pageHost");
+    if (!host || $("#v130FrameworkHealth")) return;
+
+    const printReady = registered("print-center");
+    const formsReady = registered("forms");
+    const panel = document.createElement("section");
+    panel.id = "v130FrameworkHealth";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 13 Application Framework Health</h3>
+      <div class="health-grid">
+        ${healthItem("Route registry", true, `${(cfg.routeRegistryV13 || []).length} routes`)}
+        ${healthItem("Print Center route", printReady, "print-center")}
+        ${healthItem("Forms route", formsReady, "forms")}
+        ${healthItem("Runtime errors", state.errors.length === 0, `${state.errors.length} recorded`)}
+      </div>
+      <div class="button-row">
+        <button id="v130OpenPrint" class="secondary-button">Open Print Center</button>
+        <button id="v130OpenForms" class="secondary-button">Open Forms & Printables</button>
+      </div>
+    `;
+    $("#v130OpenPrint", panel).onclick = () => location.hash = "print-center";
+    $("#v130OpenForms", panel).onclick = () => location.hash = "forms";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `<article class="${ok ? "ready" : "missing"}"><strong>${ok ? "✓" : "!"}</strong><div><span>${esc(title)}</span><small>${esc(detail)}</small></div></article>`;
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
 })();

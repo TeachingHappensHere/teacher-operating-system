@@ -1,5 +1,5 @@
 
-const CACHE = "teaching-happens-here-v12-2-1-print-route";
+const CACHE = "teaching-happens-here-v13-0-framework";
 const CORE = [
   "./",
   "./index.html",
