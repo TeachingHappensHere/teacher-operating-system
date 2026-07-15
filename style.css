@@ -3582,3 +3582,246 @@ body {
   .v160-week-selector label {grid-column:auto}
   .v160-dashboard-card {align-items:flex-start;flex-direction:column}
 }
+
+
+/* Version 15.0.4 — Small Groups Workspace Polish */
+#v141Groups {
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+#v141Groups .page-header {
+  padding: 18px 20px;
+}
+
+#v141Groups .page-header h2 {
+  font-size: clamp(25px, 2.4vw, 34px);
+}
+
+.v141-group-tabs {
+  align-items: stretch;
+}
+
+.v141-group-tabs button {
+  min-height: 72px;
+  align-content: center;
+}
+
+.v141-group-tabs button strong {
+  line-height: 1.2;
+}
+
+.v141-layout {
+  grid-template-columns: 230px minmax(480px, 1fr) 210px;
+  align-items: start;
+}
+
+.v141-group-roster-panel,
+.v141-weekly-status-panel {
+  position: sticky;
+  top: 82px;
+  max-height: calc(100vh - 104px);
+  overflow: auto;
+}
+
+.v141-planning-panel {
+  min-width: 0;
+  padding: 18px;
+}
+
+.v141-heading {
+  align-items: flex-start;
+}
+
+.v141-heading > div {
+  min-width: 0;
+}
+
+.v141-heading h2 {
+  font-size: clamp(23px, 2.2vw, 32px);
+  line-height: 1.08;
+}
+
+.v141-day-control {
+  display: grid;
+  flex: 0 0 190px;
+  gap: 5px;
+  align-self: flex-start;
+  font-weight: 700;
+}
+
+.v141-day-control > span {
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.v141-day-control select {
+  width: 100%;
+  height: 44px;
+  min-height: 44px;
+  padding: 8px 34px 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.v141-plan-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.v141-plan-grid label {
+  min-width: 0;
+}
+
+.v141-plan-grid textarea {
+  width: 100%;
+  min-height: 132px;
+  resize: vertical;
+  line-height: 1.35;
+  overflow: auto;
+}
+
+.v141-plan-grid label:nth-child(1) textarea,
+.v141-plan-grid label:nth-child(2) textarea {
+  min-height: 120px;
+}
+
+.v141-planning-panel > .button-row {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1.15fr;
+  gap: 9px;
+}
+
+.v141-planning-panel > .button-row button {
+  min-height: 48px;
+  padding: 10px;
+  white-space: normal;
+}
+
+.v141-roster article {
+  border: 1px solid #d8e4ee;
+}
+
+.v141-weekly-status-panel h3 {
+  position: sticky;
+  top: -16px;
+  z-index: 1;
+  margin: -16px -16px 10px;
+  padding: 16px;
+  background: #fff;
+}
+
+.v141-status article {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.v141-status article strong {
+  font-size: 12px;
+}
+
+.v141-status article span {
+  text-align: right;
+}
+
+.sidebar-reminder {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  margin-top: 12px;
+  background: #fff7f8;
+  box-shadow: 0 6px 18px rgba(91,43,58,.08);
+}
+
+@media (max-width: 1275px) {
+  .v141-layout {
+    grid-template-columns: 210px minmax(0, 1fr);
+    grid-template-areas:
+      "roster planning"
+      "status planning";
+  }
+
+  .v141-group-roster-panel {
+    grid-area: roster;
+  }
+
+  .v141-planning-panel {
+    grid-area: planning;
+  }
+
+  .v141-weekly-status-panel {
+    grid-area: status;
+  }
+
+  .v141-group-roster-panel,
+  .v141-weekly-status-panel {
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .v141-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "planning"
+      "roster"
+      "status";
+  }
+
+  .v141-heading {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .v141-day-control {
+    width: 100%;
+    max-width: none;
+  }
+
+  .v141-plan-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .v141-planning-panel > .button-row {
+    grid-template-columns: 1fr;
+  }
+
+  .v141-roster {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .v141-status {
+    grid-template-columns: repeat(5, minmax(125px,1fr));
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 620px) {
+  #v141Groups .page-header {
+    padding: 15px;
+  }
+
+  .v141-group-tabs button {
+    min-width: 205px;
+  }
+
+  .v141-roster {
+    grid-template-columns: 1fr;
+  }
+
+  .v141-status {
+    display: flex;
+  }
+
+  .v141-status article {
+    min-width: 150px;
+  }
+}

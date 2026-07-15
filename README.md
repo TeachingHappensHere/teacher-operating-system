@@ -1,32 +1,27 @@
 # Teacher Operating System
 
-## Version 16.0 — Teacher Intelligence: Build My Week
+## Version 15.0.4 — Small Groups Workspace Polish
 
-Upload the complete extracted repository to the GitHub repository root.
+This release was built directly from the uploaded current GitHub repository.
 
 ### Commit message
-Version 16.0 - Teacher Intelligence Build My Week
+Version 15.0.4 - Small Groups Workspace Polish
 
-### Included
-- Stable direct Teacher Intelligence route
-- Curriculum-week selector
-- Duplicate-date protection in the week selector
-- Curriculum Week 1 anchored to August 3, 2026
-- One-click Build My Week
-- Weekly Planning generation
-- Lesson Attachments checklist generation
-- Print Center queue preparation
-- Monday Live Teaching preparation
-- Red, Yellow, Green, and Blue small-group plan preparation
-- Connected-module shortcuts
-- Dashboard and Health connections
-
-### Important
-The week selector uses the existing school-year records but removes duplicate dates and renumbers the available curriculum weeks sequentially. A full holiday, iDay, and break-aware calendar still requires the complete school calendar file.
+### Fixed
+- Preserves the working Red, Yellow, Green, and Blue tabs.
+- Gives the planning form more usable width.
+- Changes the oversized weekday selector into a compact control.
+- Improves textarea height and resizing.
+- Keeps roster and weekly status visible without crowding the form.
+- Stacks the layout cleanly on iPad and phone screens.
+- Prevents the Today’s Reminder panel from covering navigation choices.
+- Updates application cache versions.
 
 ### Test
-1. Open Teacher Intelligence.
-2. Select Curriculum Week 1.
-3. Click Build My Week.
-4. Open Weekly Planning, Lesson Attachments, Print Center, Live Teaching, and Small Groups.
-5. Confirm connected records were created.
+1. Open Small Groups.
+2. Click all four group tabs.
+3. Change the planning day.
+4. Type in each planning field.
+5. Save a group plan.
+6. Scroll the sidebar and confirm the reminder does not cover menu items.
+7. Test the page on an iPad-sized window.

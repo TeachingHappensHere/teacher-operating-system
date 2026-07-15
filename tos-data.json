@@ -1,6 +1,6 @@
 {
-  "version": "16.0 Teacher Intelligence \u2014 Build My Week",
-  "releaseStatus": "Adds a stable Teacher Intelligence command center that prepares Weekly Planning, Lesson Attachments, Print Center, Live Teaching, and Small Groups from one selected week.",
+  "version": "15.0.4 Small Groups Workspace Polish",
+  "releaseStatus": "Improves Small Groups layout, weekday controls, planning-field space, weekly status visibility, and sidebar reminder behavior.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2773,5 +2773,11 @@
       "Blue \u2014 Above Level"
     ],
     "defaultCopies": 33
+  },
+  "smallGroupsWorkspaceV1504": {
+    "preservesWorkingTabs": true,
+    "layout": "Responsive planning-first workspace",
+    "weekdayControl": "Compact",
+    "sidebarReminderOverlapRepair": true
   }
 }
