@@ -1,29 +1,28 @@
 # Teacher Operating System
 
-## Version 16.0.1 — Teacher Intelligence Week Engine
+## Version 16.2 — Navigation & Collapsible Sidebar
 
-Built directly from `teacher-operating-system-main (2).zip`.
+Upload the complete extracted repository to the GitHub repository root.
 
 ### Commit message
-Version 16.0.1 - Teacher Intelligence Week Engine
+Version 16.2 - Navigation and Collapsible Sidebar
 
 ### Included
-- One authoritative week list
-- Permanent duplicate-date protection
-- July 27–31 locked as Classroom Launch Week
-- Curriculum Week 1 begins August 3, 2026
-- The Mice Who Lived in a Shoe begins August 3, 2026
-- One-click Build My Week
-- Weekly Planning, Attachments, Print Center, Live Teaching, and Small Groups outputs
-- Dashboard and Health diagnostics
-
-### Important
-This release fixes duplicate week numbering and establishes the correct launch/curriculum boundary. Full holiday, iDay, break, and shortened-week alignment still requires the complete official 2026–2027 school calendar file.
+- Independent scrollbar inside the left navigation
+- Collapsible icon-only sidebar
+- Pin and unpin control
+- Temporary hover/focus expansion when unpinned
+- Existing accordion sections preserved
+- Active page automatically scrolled into view
+- Sidebar preference remembered locally
+- Existing mobile slide-out navigation preserved
+- Isolated JavaScript and CSS so the central router is unchanged
 
 ### Test
-1. Open Teacher Intelligence.
-2. Confirm July 27 is Classroom Launch Week.
-3. Confirm August 3 is Curriculum Week 1.
-4. Confirm there is only one Curriculum Week 1.
-5. Select August 3 and click Build My Week.
-6. Open Weekly Planning, Attachments, Print Center, Live Teaching, and Small Groups.
+1. Confirm existing pages still open.
+2. Scroll the left navigation using its scrollbar.
+3. Select Collapse.
+4. Use the icon-only rail.
+5. Unpin it and hover over the sidebar.
+6. Pin it open again.
+7. Resize to an iPad- and phone-sized window.

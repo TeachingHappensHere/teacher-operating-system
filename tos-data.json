@@ -1,6 +1,6 @@
 {
-  "version": "16.0.1 Teacher Intelligence Week Engine",
-  "releaseStatus": "Installs one authoritative school-week engine, removes duplicate Curriculum Week 1, locks Classroom Launch to July 27\u201331, and starts core curriculum August 3, 2026.",
+  "version": "16.2 Navigation & Collapsible Sidebar",
+  "releaseStatus": "Adds a scrollable, collapsible, pinnable left sidebar without changing the central router.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2418,7 +2418,7 @@
     {
       "id": "intelligence-engine",
       "label": "Teacher Intelligence",
-      "owner": "v16.0.1"
+      "owner": "v16.0"
     },
     {
       "id": "workflow-hub",
@@ -2780,19 +2780,169 @@
     "weekdayControl": "Compact",
     "sidebarReminderOverlapRepair": true
   },
-  "teacherIntelligenceWeekEngineV1601": {
-    "launchWeek": {
-      "start": "2026-07-27",
-      "end": "2026-07-31",
-      "label": "Classroom Launch Week",
-      "curriculumAllowed": false
-    },
+  "teacherIntelligenceIsolationV1602": {
+    "coreAppModified": false,
+    "isolatedScript": "teacher-intelligence-v1602.js",
+    "isolatedStyles": "teacher-intelligence-v1602.css",
+    "launchWeek": "2026-07-27",
     "curriculumStart": "2026-08-03",
-    "firstCurriculumWeek": 1,
-    "firstOpenCourtStory": "The Mice Who Lived in a Shoe",
-    "firstOpenCourtUnit": 1,
-    "firstOpenCourtLesson": 1,
-    "weekNumberingRule": "Advance only on instructional curriculum weeks.",
-    "duplicateProtection": true
+    "duplicateWeekProtection": true
+  },
+  "openCourtIntelligenceV161": {
+    "curriculumStartDate": "2026-08-03",
+    "sequence": [
+      [
+        1,
+        1,
+        1,
+        "The Mice Who Lived in a Shoe"
+      ],
+      [
+        2,
+        1,
+        2,
+        "Ants and Aphids Work Together"
+      ],
+      [
+        3,
+        1,
+        3,
+        "The Bat, Birds, and Beasts"
+      ],
+      [
+        4,
+        1,
+        4,
+        "A Cherokee Stickball Game"
+      ],
+      [
+        5,
+        1,
+        5,
+        "The Final Game"
+      ],
+      [
+        6,
+        1,
+        6,
+        "Ellie\u2019s Long Walk"
+      ],
+      [
+        7,
+        1,
+        7,
+        "Mattland"
+      ],
+      [
+        8,
+        1,
+        8,
+        "A River of Ice"
+      ],
+      [
+        9,
+        2,
+        1,
+        "What Makes the Earth Shake?"
+      ],
+      [
+        10,
+        2,
+        2,
+        "All About Earthquakes"
+      ],
+      [
+        11,
+        2,
+        3,
+        "In My Own Backyard"
+      ],
+      [
+        12,
+        2,
+        4,
+        "Volcano Rising"
+      ],
+      [
+        13,
+        3,
+        1,
+        "Gross Jobs"
+      ],
+      [
+        14,
+        3,
+        2,
+        "My Community and Me"
+      ],
+      [
+        15,
+        3,
+        3,
+        "Victor\u2019s Journal"
+      ],
+      [
+        16,
+        3,
+        4,
+        "Night Shift"
+      ],
+      [
+        17,
+        4,
+        1,
+        "The Art of Storytelling"
+      ],
+      [
+        18,
+        4,
+        2,
+        "Aesop and His Fables"
+      ],
+      [
+        19,
+        4,
+        3,
+        "Storytelling: A Zulu Tradition"
+      ],
+      [
+        20,
+        4,
+        4,
+        "Cinderella Tales"
+      ],
+      [
+        21,
+        4,
+        5,
+        "Cinderlad"
+      ],
+      [
+        22,
+        5,
+        1,
+        "The Green Grass Grew All Around"
+      ],
+      [
+        23,
+        5,
+        2,
+        "Winston and George"
+      ],
+      [
+        24,
+        5,
+        3,
+        "A Brand-New American Family"
+      ]
+    ]
+  },
+  "sidebarV162": {
+    "independentScrollbar": true,
+    "collapsedIconRail": true,
+    "pinControl": true,
+    "hoverExpansion": true,
+    "accordionNavigationPreserved": true,
+    "preferenceStorage": "Local browser storage"
   }
 }
