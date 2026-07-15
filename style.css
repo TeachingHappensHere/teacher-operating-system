@@ -1109,3 +1109,177 @@ body {
     display:none!important;
   }
 }
+
+
+/* Version 8.7 — Curriculum Week 1 Builder */
+.v87-start-card,
+.v87-summary,
+.v87-dashboard-card,
+.v87-injected-card {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  margin-bottom:12px;
+  border:1px solid #cbdcc6;
+  border-radius:14px;
+  background:#eef6eb;
+}
+
+.v87-start-card p,
+.v87-summary p,
+.v87-dashboard-card p,
+.v87-injected-card p {
+  margin:0;
+  color:#557d5b;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.07em;
+}
+
+.v87-start-card h3,
+.v87-summary h3,
+.v87-dashboard-card h3,
+.v87-injected-card h3 {
+  margin:4px 0;
+}
+
+.v87-start-card span,
+.v87-summary span,
+.v87-dashboard-card span,
+.v87-injected-card span {
+  color:var(--muted);
+}
+
+.v87-dashboard-card button,
+.v87-injected-card button {
+  border:0;
+  border-radius:9px;
+  background:#557d5b;
+  color:#fff;
+  padding:10px 12px;
+  font-weight:800;
+}
+
+.v87-setup {
+  margin-bottom:12px;
+}
+
+.v87-setup-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.v87-setup-grid label {
+  display:grid;
+  gap:6px;
+  font-weight:700;
+}
+
+.v87-days {
+  display:grid;
+  gap:12px;
+}
+
+.v87-day-card.ready {
+  border-left:6px solid #5c9a63;
+  background:#f7fcf5;
+}
+
+.v87-day-heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.v87-day-heading span {
+  color:var(--accent);
+  font-size:11px;
+  font-weight:900;
+}
+
+.v87-day-heading h3 {
+  margin:4px 0;
+}
+
+.v87-day-heading label {
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+
+.v87-subject-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:10px;
+}
+
+.v87-subject-grid label,
+.v87-notes {
+  display:grid;
+  gap:6px;
+  font-weight:700;
+}
+
+.v87-subject-grid textarea {
+  min-height:115px;
+}
+
+.v87-notes {
+  margin-top:10px;
+}
+
+.v87-notes textarea {
+  min-height:90px;
+}
+
+@media(max-width:1100px) {
+  .v87-setup-grid {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .v87-subject-grid {
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:760px) {
+  .v87-start-card,
+  .v87-summary,
+  .v87-dashboard-card,
+  .v87-injected-card {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .v87-setup-grid,
+  .v87-subject-grid {
+    grid-template-columns:1fr;
+  }
+
+  .v87-summary .button-row {
+    width:100%;
+    display:grid;
+  }
+}
+
+@media print {
+  .sidebar,
+  .topbar,
+  .mobile-nav,
+  .page-header button,
+  .v87-summary button,
+  .v87-dashboard-card,
+  .v87-injected-card,
+  .v87-day-card > button {
+    display:none!important;
+  }
+
+  .v87-day-card {
+    break-inside:avoid;
+  }
+}

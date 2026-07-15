@@ -1,6 +1,6 @@
 {
-  "version": "8.6 Curriculum Start-Date Guard & Launch Week Lock",
-  "releaseStatus": "Locks July 27\u201331, 2026 as Classroom Launch Week and begins regular curriculum on Monday, August 3, 2026.",
+  "version": "8.7 Curriculum Week 1 Builder & August 3 Launch",
+  "releaseStatus": "Builds the first regular curriculum week beginning Monday, August 3, 2026, with Open Court Unit 1 Lesson 1 and Eureka Math\u00b2 Module 1.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1518,5 +1518,58 @@
       "Do not begin the regular Open Court lesson sequence",
       "Do not begin the regular Eureka Math\u00b2 lesson sequence"
     ]
+  },
+  "curriculumWeek1": {
+    "weekOf": "2026-08-03",
+    "title": "Curriculum Week 1",
+    "pillar": "Heart",
+    "openCourt": {
+      "unit": 1,
+      "lesson": 1,
+      "title": "The Mice Who Lived in a Shoe",
+      "weeklongSelection": true
+    },
+    "eureka": {
+      "module": 1,
+      "startingLesson": 1
+    },
+    "days": {
+      "Monday": {
+        "date": "2026-08-03",
+        "readingFocus": "Introduce the weekly selection, essential question, vocabulary, and first reading.",
+        "writingFocus": "Introduce the first formal writing routine and establish success criteria.",
+        "scienceFocus": "Begin the selected science unit with a phenomenon or observation.",
+        "socialStudiesFocus": "Begin the selected civics or community lesson."
+      },
+      "Tuesday": {
+        "date": "2026-08-04",
+        "readingFocus": "Reread and discuss key details, vocabulary, and comprehension.",
+        "writingFocus": "Model planning and oral rehearsal before writing.",
+        "scienceFocus": "Continue investigation and record observations.",
+        "socialStudiesFocus": "Build background knowledge and vocabulary."
+      },
+      "Wednesday": {
+        "date": "2026-08-05",
+        "readingFocus": "Use text evidence and practice the weekly comprehension skill.",
+        "writingFocus": "Guide students through drafting and elaboration.",
+        "scienceFocus": "Analyze evidence and explain observations.",
+        "socialStudiesFocus": "Use a source, image, map, or text to answer the lesson question."
+      },
+      "Thursday": {
+        "date": "2026-08-06",
+        "readingFocus": "Reread for fluency, vocabulary, and deeper understanding.",
+        "writingFocus": "Revise or edit using the weekly writing and GUM focus.",
+        "scienceFocus": "Complete the investigation or notebook response.",
+        "socialStudiesFocus": "Complete the guided or independent student task."
+      },
+      "Friday": {
+        "date": "2026-08-07",
+        "readingFocus": "Review the weekly selection and complete approved weekly assessments.",
+        "writingFocus": "Complete, share, or assess the weekly writing task.",
+        "scienceFocus": "Complete a science quick check or reflection.",
+        "socialStudiesFocus": "Complete a social studies quick check or reflection."
+      }
+    },
+    "defaultSupports": "Visuals and gestures; picture-word cards; oral rehearsal; sentence frames; partner support; chunked directions; graphic organizers; manipulatives; visual timers; oral-response options; approved IEP and 504 accommodations."
   }
 }

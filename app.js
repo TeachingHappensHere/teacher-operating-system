@@ -4175,3 +4175,578 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     start();
   }
 })();
+
+
+/* Version 8.7 — Curriculum Week 1 Builder & August 3 Launch */
+(() => {
+  "use strict";
+
+  const STORE = "thh-v87:curriculum-week-1";
+  const WEEK_STORE = "thh-v73:weekly-plan";
+  const PRINT_STORE = "thh-v74:print-center";
+
+  let config = null;
+  let state = {
+    generated: false,
+    days: {},
+    heggertyFocus: "",
+    ufliFocus: "",
+    phonicsFocus: "",
+    vocabularyFocus: "",
+    writingProgram: "Building the Foundation / GUM",
+    scienceUnit: "",
+    socialStudiesUnit: "",
+    ready: {},
+    notes: {}
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+      try {
+        state = { ...state, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
+      } catch {}
+      waitForShell();
+    } catch (error) {
+      console.warn("Version 8.7 could not start.", error);
+    }
+  }
+
+  function save() {
+    localStorage.setItem(STORE, JSON.stringify(state));
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    addNavigation();
+    window.addEventListener("hashchange", route);
+
+    new MutationObserver(() => {
+      const current = location.hash.replace("#", "") || "dashboard";
+      if (current === "curriculum-week-1" && !$("#v87Builder")) renderBuilder();
+      if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+      if (current === "lesson-plans") setTimeout(injectPlanningCard, 0);
+      if (current === "health") setTimeout(injectHealthCard, 0);
+    }).observe($("#pageHost"), { childList: true, subtree: true });
+
+    route();
+  }
+
+  function addNavigation() {
+    if ($('[data-route="curriculum-week-1"]')) return;
+
+    const firstWeek = $('[data-route="first-week-builder"]');
+    const button = document.createElement("button");
+    button.className = "nav-button";
+    button.dataset.route = "curriculum-week-1";
+    button.innerHTML = "<span>1</span><strong>Curriculum Week 1</strong>";
+    button.addEventListener("click", () => {
+      location.hash = "curriculum-week-1";
+    });
+
+    if (firstWeek) firstWeek.insertAdjacentElement("afterend", button);
+    else $("#mainNav").appendChild(button);
+  }
+
+  function route() {
+    const current = location.hash.replace("#", "") || "dashboard";
+    if (current === "curriculum-week-1") setTimeout(renderBuilder, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "lesson-plans") setTimeout(injectPlanningCard, 0);
+    if (current === "health") setTimeout(injectHealthCard, 0);
+  }
+
+  function generateDay(day, details, index) {
+    const mathLesson = Number(config.curriculumWeek1.eureka.startingLesson) + index;
+
+    return {
+      day,
+      date: details.date,
+      openCourtLesson: "Unit 1, Lesson 1 — The Mice Who Lived in a Shoe",
+      reading: details.readingFocus,
+      heggerty: state.heggertyFocus || "Enter the current Heggerty week and daily focus.",
+      ufli: state.ufliFocus || "Enter the current UFLI lesson or aligned foundational skill.",
+      phonics: state.phonicsFocus || "Use the Open Court Unit 1 Lesson 1 phonics skill and aligned practice.",
+      vocabulary: state.vocabularyFocus || "Introduce and practice the Unit 1 Lesson 1 vocabulary.",
+      writing: `${state.writingProgram}\n${details.writingFocus}`,
+      math: `Eureka Math² Module 1, Lesson ${mathLesson}`,
+      math2: "Spiral review, fact fluency, exit-ticket review, or small-group reteach.",
+      science: `${state.scienceUnit || "Selected science unit"}\n${details.scienceFocus}`,
+      socialStudies: `${state.socialStudiesUnit || "Selected social studies unit"}\n${details.socialStudiesFocus}`,
+      differentiation: config.curriculumWeek1.defaultSupports,
+      assessment: day === "Friday"
+        ? "Complete approved weekly phonics, vocabulary, spelling, GUM, reading, math, science, and social studies checks as scheduled."
+        : "Use observation, oral response, student work, and subject-specific exit tickets.",
+      materials: "",
+      notes: state.notes[day] || "",
+      ready: Boolean(state.ready[day])
+    };
+  }
+
+  function generateWeek() {
+    const days = {};
+    Object.entries(config.curriculumWeek1.days).forEach(([day, details], index) => {
+      days[day] = generateDay(day, details, index);
+    });
+    state.days = days;
+    state.generated = true;
+    save();
+    renderBuilder();
+    toast("Curriculum Week 1 generated for August 3–7, 2026.");
+  }
+
+  function renderBuilder() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const readyCount = Object.values(state.ready).filter(Boolean).length;
+
+    host.innerHTML = `
+      <section id="v87Builder">
+        <section class="page-header">
+          <div>
+            <p>VERSION 8.7</p>
+            <h2>Curriculum Week 1 Builder</h2>
+            <span>Build the first regular curriculum week beginning Monday, August 3, 2026.</span>
+          </div>
+          <div class="button-row">
+            <button id="v87Generate" class="primary-button">Generate August 3 Week</button>
+            <button id="v87Reset" class="secondary-button">Reset</button>
+          </div>
+        </section>
+
+        <section class="v87-start-card">
+          <div>
+            <p>CURRICULUM START</p>
+            <h3>Monday, August 3, 2026</h3>
+            <span>Open Court Unit 1, Lesson 1: The Mice Who Lived in a Shoe</span>
+          </div>
+          <div>
+            <strong>Eureka Math²</strong>
+            <span>Module 1 begins this week</span>
+          </div>
+        </section>
+
+        <section class="panel v87-setup">
+          <h3>Week 1 Curriculum Setup</h3>
+          <div class="v87-setup-grid">
+            ${input("heggertyFocus","Heggerty Week / Focus",state.heggertyFocus)}
+            ${input("ufliFocus","UFLI Lesson / Skill",state.ufliFocus)}
+            ${input("phonicsFocus","Phonics Focus",state.phonicsFocus)}
+            ${input("vocabularyFocus","Vocabulary Focus",state.vocabularyFocus)}
+            ${input("writingProgram","Writing Program / Unit",state.writingProgram)}
+            ${input("scienceUnit","Science Unit",state.scienceUnit)}
+            ${input("socialStudiesUnit","Social Studies Unit",state.socialStudiesUnit)}
+          </div>
+        </section>
+
+        ${state.generated ? `
+          <section class="v87-summary">
+            <div>
+              <p>CURRICULUM WEEK 1</p>
+              <h3>${readyCount}/5 days ready</h3>
+              <span>August 3–7, 2026 • Pillar: ${esc(config.curriculumWeek1.pillar)}</span>
+            </div>
+            <div class="button-row">
+              <button id="v87SendWeek" class="primary-button">Send All 5 Days to Weekly Planning</button>
+              <button id="v87BuildPrint" class="secondary-button">Build Week 1 Print Queue</button>
+              <button id="v87Print" class="secondary-button">Print Week</button>
+            </div>
+          </section>
+
+          <section class="v87-days">
+            ${Object.entries(state.days).map(([day, item]) => dayCard(day, item)).join("")}
+          </section>
+        ` : `
+          <div class="empty-state">
+            <strong>Curriculum Week 1 has not been generated.</strong>
+            <p>Enter the known curriculum details, then choose Generate August 3 Week.</p>
+          </div>
+        `}
+      </section>
+    `;
+
+    wireBuilder();
+  }
+
+  function input(key, label, value) {
+    return `
+      <label>
+        <span>${esc(label)}</span>
+        <input data-v87-setting="${key}" value="${esc(value)}">
+      </label>
+    `;
+  }
+
+  function dayCard(day, item) {
+    return `
+      <article class="panel v87-day-card ${state.ready[day] ? "ready" : ""}">
+        <div class="v87-day-heading">
+          <div>
+            <span>${esc(day)} • ${esc(formatDate(item.date))}</span>
+            <h3>${esc(item.openCourtLesson)}</h3>
+          </div>
+          <label>
+            <input type="checkbox" data-v87-ready="${day}" ${state.ready[day] ? "checked" : ""}>
+            Ready
+          </label>
+        </div>
+
+        <div class="v87-subject-grid">
+          ${editable(day,"reading","Reading",item.reading)}
+          ${editable(day,"phonics","Phonics",item.phonics)}
+          ${editable(day,"vocabulary","Vocabulary",item.vocabulary)}
+          ${editable(day,"heggerty","Heggerty",item.heggerty)}
+          ${editable(day,"ufli","UFLI / MOWR",item.ufli)}
+          ${editable(day,"writing","Writing",item.writing)}
+          ${editable(day,"math","Math",item.math)}
+          ${editable(day,"math2","Math 2",item.math2)}
+          ${editable(day,"science","Science",item.science)}
+          ${editable(day,"socialStudies","Social Studies",item.socialStudies)}
+          ${editable(day,"assessment","Assessment",item.assessment)}
+          ${editable(day,"materials","Materials",item.materials)}
+        </div>
+
+        <label class="v87-notes">
+          <span>Teacher Notes</span>
+          <textarea data-v87-field="${day}" data-v87-key="notes">${esc(item.notes || "")}</textarea>
+        </label>
+
+        <button data-v87-copy="${day}" class="secondary-button">Copy Planbook Text</button>
+      </article>
+    `;
+  }
+
+  function editable(day, key, label, value) {
+    return `
+      <label>
+        <span>${esc(label)}</span>
+        <textarea data-v87-field="${day}" data-v87-key="${key}">${esc(value)}</textarea>
+      </label>
+    `;
+  }
+
+  function wireBuilder() {
+    $$("[data-v87-setting]").forEach(control => {
+      control.addEventListener("input", () => {
+        state[control.dataset.v87Setting] = control.value;
+        save();
+      });
+    });
+
+    $("#v87Generate")?.addEventListener("click", generateWeek);
+
+    $("#v87Reset")?.addEventListener("click", () => {
+      state.generated = false;
+      state.days = {};
+      state.ready = {};
+      state.notes = {};
+      save();
+      renderBuilder();
+    });
+
+    $$("[data-v87-ready]").forEach(input => {
+      input.addEventListener("change", () => {
+        state.ready[input.dataset.v87Ready] = input.checked;
+        if (state.days[input.dataset.v87Ready]) {
+          state.days[input.dataset.v87Ready].ready = input.checked;
+        }
+        save();
+        renderBuilder();
+      });
+    });
+
+    $$("[data-v87-field]").forEach(field => {
+      field.addEventListener("input", () => {
+        const day = field.dataset.v87Field;
+        const key = field.dataset.v87Key;
+        if (!state.days[day]) return;
+        state.days[day][key] = field.value;
+        if (key === "notes") state.notes[day] = field.value;
+        save();
+      });
+    });
+
+    $$("[data-v87-copy]").forEach(button => {
+      button.addEventListener("click", () => copyPlanbook(button.dataset.v87Copy));
+    });
+
+    $("#v87SendWeek")?.addEventListener("click", sendToWeeklyPlanning);
+    $("#v87BuildPrint")?.addEventListener("click", buildPrintQueue);
+    $("#v87Print")?.addEventListener("click", () => window.print());
+  }
+
+  function formatDate(value) {
+    const date = new Date(`${value}T12:00:00`);
+    return date.toLocaleDateString("en-US", { month:"short", day:"numeric" });
+  }
+
+  function planbookText(day) {
+    const item = state.days[day];
+    return [
+      `${day.toUpperCase()} — ${item.date}`,
+      "",
+      "OPEN COURT",
+      item.openCourtLesson,
+      "",
+      "READING",
+      item.reading,
+      "",
+      "HEGGERTY",
+      item.heggerty,
+      "",
+      "UFLI / MOWR",
+      item.ufli,
+      "",
+      "PHONICS",
+      item.phonics,
+      "",
+      "VOCABULARY",
+      item.vocabulary,
+      "",
+      "WRITING",
+      item.writing,
+      "",
+      "EUREKA MATH²",
+      item.math,
+      "",
+      "MATH 2",
+      item.math2,
+      "",
+      "SCIENCE",
+      item.science,
+      "",
+      "SOCIAL STUDIES",
+      item.socialStudies,
+      "",
+      "DIFFERENTIATION",
+      item.differentiation,
+      "",
+      "ASSESSMENT",
+      item.assessment,
+      "",
+      "MATERIALS",
+      item.materials,
+      "",
+      "TEACHER NOTES",
+      item.notes
+    ].join("\n");
+  }
+
+  async function copyPlanbook(day) {
+    const text = planbookText(day);
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const area = document.createElement("textarea");
+      area.value = text;
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+    }
+    toast(`${day} Planbook text copied.`);
+  }
+
+  function sendToWeeklyPlanning() {
+    if (!state.generated) return;
+
+    let week = null;
+    try {
+      week = JSON.parse(localStorage.getItem(WEEK_STORE) || "null");
+    } catch {}
+
+    if (!week?.days) {
+      week = {
+        title: config.curriculumWeek1.title,
+        weekOf: config.curriculumWeek1.weekOf,
+        pillar: config.curriculumWeek1.pillar,
+        days: {},
+        printQueue: []
+      };
+    }
+
+    Object.entries(state.days).forEach(([day, item]) => {
+      week.days[day] = {
+        ...(week.days[day] || {}),
+        day,
+        date: item.date,
+        focus: item.openCourtLesson,
+        openCourtLesson: item.openCourtLesson,
+        heggerty: item.heggerty,
+        ufli: item.ufli,
+        mowr: item.ufli,
+        phonics: item.phonics,
+        vocabulary: item.vocabulary,
+        reading: item.reading,
+        writing: item.writing,
+        math: item.math,
+        math2: item.math2,
+        science: item.science,
+        socialStudies: item.socialStudies,
+        differentiation: item.differentiation,
+        assessment: item.assessment,
+        materials: item.materials,
+        notes: item.notes,
+        complete: Boolean(state.ready[day])
+      };
+    });
+
+    week.title = config.curriculumWeek1.title;
+    week.weekOf = config.curriculumWeek1.weekOf;
+    week.pillar = config.curriculumWeek1.pillar;
+    week.updatedAt = new Date().toISOString();
+
+    localStorage.setItem(WEEK_STORE, JSON.stringify(week));
+    toast("Curriculum Week 1 sent to Weekly Planning.");
+    setTimeout(() => {
+      location.hash = "lesson-plans";
+    }, 650);
+  }
+
+  function buildPrintQueue() {
+    let queue = [];
+    try {
+      queue = JSON.parse(localStorage.getItem(PRINT_STORE) || "[]");
+    } catch {}
+
+    const items = Object.entries(state.days).flatMap(([day, item], index) => [
+      {
+        id: `v87-oc-${index}`,
+        source: "Curriculum Week 1",
+        day,
+        title: `${item.openCourtLesson} materials`,
+        category: "Open Court",
+        copies: 1,
+        notes: "Add the authorized Skills Practice and lesson resources.",
+        url: "",
+        complete: false
+      },
+      {
+        id: `v87-math-${index}`,
+        source: "Curriculum Week 1",
+        day,
+        title: `${item.math} materials and exit ticket`,
+        category: "Eureka Math²",
+        copies: 1,
+        notes: "",
+        url: "",
+        complete: false
+      }
+    ]);
+
+    queue = [
+      ...queue.filter(item => !String(item.id).startsWith("v87-")),
+      ...items
+    ];
+
+    localStorage.setItem(PRINT_STORE, JSON.stringify(queue));
+    toast("Curriculum Week 1 items added to the Print Center.");
+    setTimeout(() => {
+      location.hash = "forms";
+    }, 650);
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v87DashboardCard")) return;
+
+    const ready = Object.values(state.ready).filter(Boolean).length;
+    const card = document.createElement("section");
+    card.id = "v87DashboardCard";
+    card.className = "v87-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>CURRICULUM WEEK 1</p>
+        <h3>${state.generated ? `${ready}/5 days ready` : "Build August 3–7, 2026"}</h3>
+        <span>The Mice Who Lived in a Shoe begins Monday, August 3.</span>
+      </div>
+      <button>Open Week 1 Builder</button>
+    `;
+    card.querySelector("button").addEventListener("click", () => {
+      location.hash = "curriculum-week-1";
+    });
+    dashboard.prepend(card);
+  }
+
+  function injectPlanningCard() {
+    const studio = $("#v73PlanningStudio");
+    if (!studio || $("#v87PlanningCard")) return;
+
+    const card = document.createElement("section");
+    card.id = "v87PlanningCard";
+    card.className = "v87-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>AUGUST 3 CURRICULUM LAUNCH</p>
+        <h3>${state.generated ? "Curriculum Week 1 is ready to review" : "Build the first curriculum week"}</h3>
+        <span>Open Court Unit 1 Lesson 1 and Eureka Math² Module 1 begin this week.</span>
+      </div>
+      <button>Open Builder</button>
+    `;
+    card.querySelector("button").addEventListener("click", () => {
+      location.hash = "curriculum-week-1";
+    });
+    $(".v73-planning-header", studio)?.insertAdjacentElement("afterend", card);
+  }
+
+  function injectHealthCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v87HealthCard")) return;
+
+    const dayCount = state.generated ? Object.keys(state.days).length : 0;
+    const panel = document.createElement("section");
+    panel.id = "v87HealthCard";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 8.7 Curriculum Week 1 Health</h3>
+      <div class="health-grid">
+        ${healthItem("Week start", config.curriculumWeek1.weekOf === "2026-08-03", "August 3, 2026")}
+        ${healthItem("Open Court start", config.curriculumWeek1.openCourt.title === "The Mice Who Lived in a Shoe", config.curriculumWeek1.openCourt.title)}
+        ${healthItem("Generated days", dayCount === 5, `${dayCount}/5`)}
+        ${healthItem("Eureka sequence", config.curriculumWeek1.eureka.module === 1, "Module 1")}
+      </div>
+      <button class="secondary-button">Open Curriculum Week 1</button>
+    `;
+    panel.querySelector("button").addEventListener("click", () => {
+      location.hash = "curriculum-week-1";
+    });
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div><span>${esc(title)}</span><small>${esc(detail)}</small></div>
+      </article>
+    `;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1800);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();

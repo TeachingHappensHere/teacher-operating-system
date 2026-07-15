@@ -1,8 +1,8 @@
 # TeachingHappensHere
 
-## Version 8.6 — Curriculum Start-Date Guard & Launch Week Lock
+## Version 8.7 — Curriculum Week 1 Builder & August 3 Launch
 
-This is a full replacement package built on Version 8.5.
+This is a full replacement package built on Version 8.6.
 
 ## Upload every file to the repository root
 
@@ -18,33 +18,38 @@ This is a full replacement package built on Version 8.5.
 
 ## Commit message
 
-Version 8.6 - Curriculum Start Date Guard and Launch Week Lock
+Version 8.7 - Curriculum Week 1 Builder and August 3 Launch
 
-## School-year rules
+## Curriculum rules
 
-- July 27–31, 2026: Classroom Launch Week
-- August 3, 2026: Core curriculum begins
-- Open Court Unit 1, Lesson 1: The Mice Who Lived in a Shoe begins August 3
-- Eureka Math² Module 1, Lesson 1 begins August 3
+- July 27–31, 2026 remains Classroom Launch Week.
+- Curriculum Week 1 begins Monday, August 3, 2026.
+- Open Court Unit 1, Lesson 1: The Mice Who Lived in a Shoe begins August 3.
+- Eureka Math² Module 1 begins August 3.
 
 ## Included
 
-- School-Year Dates page
-- Curriculum start-date enforcement
-- Launch Week dashboard banner
-- First-Week Builder launch-only notice
-- Weekly Planning warning for dates before August 3
-- Open Court start-date notice
-- Eureka Math² start-date notice
-- Protection for previously saved July curriculum assignments
-- Health checks
-- New service-worker cache
+- Curriculum Week 1 in the sidebar
+- August 3–7 date mapping
+- The Mice Who Lived in a Shoe across the weekly Open Court cycle
+- Eureka Module 1 daily lesson sequence
+- Heggerty, UFLI, phonics, and vocabulary fields
+- Writing, Science, and Social Studies setup
+- Editable daily subject plans
+- Friday assessment language
+- Daily readiness tracking
+- Planbook copy text
+- Send all five days to Weekly Planning
+- Week 1 Print Center queue
+- Dashboard, Planning, and Health connections
+- Fresh service-worker cache
 
 ## After deployment
 
-1. Wait for GitHub Pages to deploy.
-2. Open the site in an incognito/private window.
-3. Confirm the dashboard states that curriculum begins August 3, 2026.
-4. Open School-Year Dates and confirm July 27–31 is Launch Week.
-5. Open First-Week Builder and confirm it is launch-only.
-6. Open Weekly Planning and set the first curriculum week to August 3, 2026.
+1. Open the site in a private/incognito window.
+2. Open **Curriculum Week 1** below First-Week Builder.
+3. Enter the confirmed Heggerty, UFLI, phonics, vocabulary, writing, science, and social studies details.
+4. Select **Generate August 3 Week**.
+5. Review and edit all five days.
+6. Mark the days ready.
+7. Select **Send All 5 Days to Weekly Planning**.
