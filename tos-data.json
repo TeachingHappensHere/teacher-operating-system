@@ -1,6 +1,6 @@
 {
-  "version": "11.0 Clean Stable Foundation",
-  "releaseStatus": "Consolidates the Teacher Operating System into one authoritative navigation shell, one compact command center, and a cleaned curriculum registry.",
+  "version": "11.1 System Connection Audit & Workflow Hub",
+  "releaseStatus": "Adds a built-in connection audit and a guided workflow from curriculum assignment through planning, production, and live teaching.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1807,6 +1807,11 @@
           "\ud83e\udde0"
         ],
         [
+          "workflow-hub",
+          "Workflow Hub",
+          "\u21bb"
+        ],
+        [
           "lesson-builder",
           "Lesson Builder",
           "\u2726"
@@ -1986,5 +1991,72 @@
       "label": "Pillar Resources",
       "category": "School Culture"
     }
-  ]
+  ],
+  "workflowHubV111": {
+    "stages": [
+      {
+        "id": "intelligence",
+        "title": "1. Assign Curriculum",
+        "route": "intelligence-engine",
+        "storageKeys": [
+          "thh-v100:intelligence-engine"
+        ],
+        "description": "Choose the week and assign the curriculum sequence."
+      },
+      {
+        "id": "planning",
+        "title": "2. Build Weekly Plans",
+        "route": "lesson-plans",
+        "storageKeys": [
+          "thh-v73:weekly-plan"
+        ],
+        "description": "Review the five-day plan and complete the instructional details."
+      },
+      {
+        "id": "attachments",
+        "title": "3. Gather Attachments",
+        "route": "attachments",
+        "storageKeys": [
+          "thh-v74:attachments"
+        ],
+        "description": "Link authorized resources and mark printing needs."
+      },
+      {
+        "id": "packets",
+        "title": "4. Build Daily Packets",
+        "route": "production",
+        "storageKeys": [
+          "thh-v75:production",
+          "thh-v74:print-center"
+        ],
+        "description": "Prepare daily lesson packets and the print queue."
+      },
+      {
+        "id": "teaching",
+        "title": "5. Teach the Day",
+        "route": "teachday",
+        "storageKeys": [
+          "thh-v80:live-teaching",
+          "thh-v90:teach-day"
+        ],
+        "description": "Open the live schedule and advance through the day."
+      }
+    ],
+    "requiredRoutes": [
+      "dashboard",
+      "intelligence-engine",
+      "workflow-hub",
+      "lesson-plans",
+      "attachments",
+      "production",
+      "teachday",
+      "classroom-launch",
+      "first-week-builder",
+      "curriculum-week-1",
+      "open-court",
+      "eureka-math",
+      "afternoon-studios",
+      "health"
+    ]
+  }
 }

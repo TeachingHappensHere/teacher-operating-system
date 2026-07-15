@@ -1,10 +1,10 @@
 # TeachingHappensHere
 
-## Version 11.0 — Clean Stable Foundation
+## Version 11.1 — System Connection Audit & Workflow Hub
 
-This is a full replacement release. Do not copy only five files.
+This is a full replacement release.
 
-## Upload every file in this package to the repository root
+## Upload all nine files
 
 - index.html
 - app.js
@@ -18,37 +18,34 @@ This is a full replacement release. Do not copy only five files.
 
 ## Commit message
 
-Version 11.0 - Clean Stable Foundation
+Version 11.1 - System Connection Audit and Workflow Hub
 
 ## Included
 
-- One permanent authoritative sidebar
-- Teacher Intelligence permanently included under Planning
-- First-Week Builder permanently included
-- Curriculum Week 1 permanently included
-- Five organized navigation groups
-- Duplicate dashboard status cleanup
-- Compact command center
-- Dashboard focus mode
-- Clean curriculum shortcuts
-- No Art or Music shortcuts
-- Preserved July 27–31 Classroom Launch Week
-- Preserved August 3 curriculum start
-- Preserved The Mice Who Lived in a Shoe as the first Open Court selection
-- Preserved Eureka Math² Module 1 start
-- Responsive desktop, iPad, and phone layouts
+- Workflow Hub permanently under Planning
+- Five-stage weekly workflow:
+  1. Teacher Intelligence
+  2. Weekly Planning
+  3. Lesson Attachments
+  4. Daily Lesson Packets
+  5. Live Teaching
+- Route registration audit
+- Saved-data detection
+- Manual test checkboxes
+- Overall readiness percentage
+- Audit notes
+- Dashboard connection card
+- Health connection checks
+- Print-friendly audit report
 - Fresh service-worker cache
-- Complete JavaScript syntax validation
+- Full JavaScript and JSON validation
 
-## Deployment procedure
+## After deployment
 
-1. Download and extract this ZIP.
-2. Back up the current repository files.
-3. In the repository root, choose Add file → Upload files.
-4. Upload all nine files from this package together.
-5. Confirm all filenames appear before committing.
-6. Commit with the message above.
-7. Wait for GitHub Pages deployment to finish.
-8. Test in a private/incognito browser window first.
-9. Expand Planning and confirm Teacher Intelligence is present.
-10. Hard-refresh the normal browser with Ctrl+Shift+R.
+1. Open the site in an incognito/private window.
+2. Expand Planning.
+3. Open Workflow Hub.
+4. Select Run Connection Audit.
+5. Open and test each of the five stages.
+6. Mark each stage successfully tested.
+7. Review Health for any missing routes.

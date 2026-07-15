@@ -5676,3 +5676,315 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     bootV11();
   }
 })();
+
+
+/* =====================================================================
+   Version 11.1 — System Connection Audit & Workflow Hub
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const STORE = "thh-v111:workflow";
+  let config = null;
+  let state = {
+    checkedAt: "",
+    manualChecks: {},
+    notes: ""
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => {
+        if (!response.ok) throw new Error(`tos-data.json returned ${response.status}`);
+        return response.json();
+      });
+
+      try {
+        state = { ...state, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
+      } catch {}
+
+      waitForShell();
+    } catch (error) {
+      console.error("Version 11.1 failed to initialize.", error);
+    }
+  }
+
+  function save() {
+    localStorage.setItem(STORE, JSON.stringify(state));
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    window.addEventListener("hashchange", route);
+    new MutationObserver(route).observe($("#pageHost"), { childList: true, subtree: true });
+    route();
+  }
+
+  function route() {
+    const current = location.hash.replace("#", "") || "dashboard";
+    if (current === "workflow-hub" && !$("#v111WorkflowHub")) setTimeout(renderHub, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "health") setTimeout(injectHealthPanel, 0);
+  }
+
+  function stages() {
+    return config.workflowHubV111?.stages || [];
+  }
+
+  function routeExists(route) {
+    return (config.navigationV11 || [])
+      .flatMap(group => group.items || [])
+      .some(item => item[0] === route);
+  }
+
+  function hasStorage(keys) {
+    return (keys || []).some(key => {
+      const value = localStorage.getItem(key);
+      return value && value !== "{}" && value !== "[]" && value !== "null";
+    });
+  }
+
+  function stageStatus(stage) {
+    const routeReady = routeExists(stage.route);
+    const dataReady = hasStorage(stage.storageKeys);
+    const manual = Boolean(state.manualChecks[stage.id]);
+
+    return {
+      routeReady,
+      dataReady,
+      manual,
+      complete: routeReady && (dataReady || manual)
+    };
+  }
+
+  function overallProgress() {
+    const all = stages();
+    if (!all.length) return 0;
+    const complete = all.filter(stage => stageStatus(stage).complete).length;
+    return Math.round((complete / all.length) * 100);
+  }
+
+  function renderHub() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const progress = overallProgress();
+    const requiredRoutes = config.workflowHubV111?.requiredRoutes || [];
+    const missingRoutes = requiredRoutes.filter(route => !routeExists(route));
+
+    host.innerHTML = `
+      <section id="v111WorkflowHub">
+        <section class="page-header">
+          <div>
+            <p>VERSION 11.1</p>
+            <h2>System Connection Audit & Workflow Hub</h2>
+            <span>Follow the full weekly workflow and verify that every major system is connected.</span>
+          </div>
+          <div class="button-row">
+            <button id="v111RunAudit" class="primary-button">Run Connection Audit</button>
+            <button id="v111PrintAudit" class="secondary-button">Print Audit</button>
+          </div>
+        </section>
+
+        <section class="v111-progress-card">
+          <div>
+            <p>WEEKLY WORKFLOW READINESS</p>
+            <h3>${progress}% connected</h3>
+            <span>${stages().filter(stage => stageStatus(stage).complete).length}/${stages().length} stages ready</span>
+          </div>
+          <div class="v111-progress-track">
+            <span style="width:${progress}%"></span>
+          </div>
+        </section>
+
+        <section class="v111-stage-grid">
+          ${stages().map(stage => stageCard(stage)).join("")}
+        </section>
+
+        <section class="v111-audit-grid">
+          <section class="panel">
+            <h3>Route Audit</h3>
+            <div class="v111-route-list">
+              ${requiredRoutes.map(route => `
+                <article class="${routeExists(route) ? "ready" : "missing"}">
+                  <strong>${routeExists(route) ? "✓" : "!"}</strong>
+                  <div>
+                    <span>${esc(route)}</span>
+                    <small>${routeExists(route) ? "Registered" : "Missing from navigation registry"}</small>
+                  </div>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+
+          <section class="panel">
+            <h3>Audit Notes</h3>
+            <textarea id="v111Notes" placeholder="Record anything that needs attention...">${esc(state.notes || "")}</textarea>
+            <button id="v111SaveNotes" class="primary-button">Save Audit Notes</button>
+
+            <div class="v111-audit-summary">
+              <article>
+                <span>Last Audit</span>
+                <strong>${state.checkedAt ? new Date(state.checkedAt).toLocaleString() : "Not run yet"}</strong>
+              </article>
+              <article class="${missingRoutes.length ? "missing" : "ready"}">
+                <span>Missing Routes</span>
+                <strong>${missingRoutes.length}</strong>
+              </article>
+            </div>
+          </section>
+        </section>
+      </section>
+    `;
+
+    wireHub();
+  }
+
+  function stageCard(stage) {
+    const status = stageStatus(stage);
+
+    return `
+      <article class="panel v111-stage-card ${status.complete ? "complete" : ""}">
+        <div class="v111-stage-heading">
+          <div>
+            <span>${status.complete ? "READY" : "ACTION NEEDED"}</span>
+            <h3>${esc(stage.title)}</h3>
+          </div>
+          <b>${status.complete ? "✓" : "!"}</b>
+        </div>
+
+        <p>${esc(stage.description)}</p>
+
+        <dl>
+          <div>
+            <dt>Page</dt>
+            <dd>${status.routeReady ? "Connected" : "Missing"}</dd>
+          </div>
+          <div>
+            <dt>Saved Data</dt>
+            <dd>${status.dataReady ? "Found" : "Not found yet"}</dd>
+          </div>
+        </dl>
+
+        <label class="v111-manual-check">
+          <input type="checkbox" data-v111-check="${esc(stage.id)}" ${status.manual ? "checked" : ""}>
+          <span>I tested this step successfully</span>
+        </label>
+
+        <button data-v111-open="${esc(stage.route)}" class="primary-button">
+          Open ${esc(stage.title.replace(/^\d+\.\s*/, ""))}
+        </button>
+      </article>
+    `;
+  }
+
+  function wireHub() {
+    $$("[data-v111-open]").forEach(button => {
+      button.addEventListener("click", () => {
+        location.hash = button.dataset.v111Open;
+      });
+    });
+
+    $$("[data-v111-check]").forEach(input => {
+      input.addEventListener("change", () => {
+        state.manualChecks[input.dataset.v111Check] = input.checked;
+        save();
+        renderHub();
+      });
+    });
+
+    $("#v111RunAudit")?.addEventListener("click", () => {
+      state.checkedAt = new Date().toISOString();
+      save();
+      renderHub();
+      toast("Connection audit completed.");
+    });
+
+    $("#v111PrintAudit")?.addEventListener("click", () => window.print());
+
+    $("#v111SaveNotes")?.addEventListener("click", () => {
+      state.notes = $("#v111Notes").value.trim();
+      save();
+      toast("Audit notes saved.");
+    });
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v111DashboardCard")) return;
+
+    const card = document.createElement("section");
+    card.id = "v111DashboardCard";
+    card.className = "v111-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>WORKFLOW CONNECTION AUDIT</p>
+        <h3>${overallProgress()}% connected</h3>
+        <span>Verify curriculum, planning, attachments, packets, and live teaching.</span>
+      </div>
+      <button>Open Workflow Hub</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "workflow-hub";
+    dashboard.prepend(card);
+  }
+
+  function injectHealthPanel() {
+    const host = $("#pageHost");
+    if (!host || $("#v111HealthPanel")) return;
+
+    const requiredRoutes = config.workflowHubV111?.requiredRoutes || [];
+    const missingRoutes = requiredRoutes.filter(route => !routeExists(route));
+
+    const panel = document.createElement("section");
+    panel.id = "v111HealthPanel";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 11.1 Connection Health</h3>
+      <div class="health-grid">
+        ${healthItem("Workflow stages", stages().length === 5, `${stages().length}/5`)}
+        ${healthItem("Required routes", missingRoutes.length === 0, `${requiredRoutes.length - missingRoutes.length}/${requiredRoutes.length}`)}
+        ${healthItem("Overall readiness", overallProgress() >= 80, `${overallProgress()}%`)}
+        ${healthItem("Audit record", Boolean(state.checkedAt), state.checkedAt ? new Date(state.checkedAt).toLocaleDateString() : "Not run")}
+      </div>
+      <button class="secondary-button">Open Workflow Hub</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "workflow-hub";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div>
+          <span>${esc(title)}</span>
+          <small>${esc(detail)}</small>
+        </div>
+      </article>
+    `;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1900);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();

@@ -1772,3 +1772,267 @@ body {
     display: none !important;
   }
 }
+
+
+/* Version 11.1 — System Connection Audit & Workflow Hub */
+.v111-progress-card,
+.v111-dashboard-card {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  margin-bottom:12px;
+  border:1px solid #cbdcc6;
+  border-radius:14px;
+  background:#eef6eb;
+}
+
+.v111-progress-card p,
+.v111-dashboard-card p {
+  margin:0;
+  color:#557d5b;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.07em;
+}
+
+.v111-progress-card h3,
+.v111-dashboard-card h3 {
+  margin:4px 0;
+}
+
+.v111-progress-card span,
+.v111-dashboard-card span {
+  color:var(--muted);
+}
+
+.v111-dashboard-card button {
+  border:0;
+  border-radius:9px;
+  background:#557d5b;
+  color:#fff;
+  padding:10px 12px;
+  font-weight:800;
+}
+
+.v111-progress-track {
+  width:min(360px,40vw);
+  height:12px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#dce7d8;
+}
+
+.v111-progress-track span {
+  display:block;
+  height:100%;
+  border-radius:inherit;
+  background:#5c9a63;
+}
+
+.v111-stage-grid {
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:9px;
+  margin-bottom:12px;
+}
+
+.v111-stage-card {
+  display:flex;
+  flex-direction:column;
+  min-height:260px;
+}
+
+.v111-stage-card.complete {
+  border-top:5px solid #5c9a63;
+  background:#f7fcf5;
+}
+
+.v111-stage-heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:8px;
+}
+
+.v111-stage-heading span {
+  color:var(--accent);
+  font-size:9px;
+  font-weight:900;
+}
+
+.v111-stage-heading h3 {
+  margin:4px 0;
+  font-size:16px;
+}
+
+.v111-stage-heading b {
+  display:grid;
+  place-items:center;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:var(--surface-soft);
+}
+
+.v111-stage-card p {
+  color:var(--muted);
+  line-height:1.4;
+}
+
+.v111-stage-card dl {
+  display:grid;
+  gap:6px;
+}
+
+.v111-stage-card dl div {
+  padding:7px;
+  border-radius:8px;
+  background:#fff8ed;
+}
+
+.v111-stage-card dt {
+  font-size:9px;
+  font-weight:900;
+  color:var(--accent);
+}
+
+.v111-stage-card dd {
+  margin:3px 0 0;
+  font-size:11px;
+}
+
+.v111-manual-check {
+  display:flex;
+  gap:7px;
+  margin-top:auto;
+  padding:8px;
+  border-radius:8px;
+  background:#f3eefb;
+}
+
+.v111-stage-card > button {
+  margin-top:8px;
+}
+
+.v111-audit-grid {
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:10px;
+}
+
+.v111-route-list {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+
+.v111-route-list article {
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+  padding:8px;
+  border-radius:8px;
+  background:#fff8ed;
+}
+
+.v111-route-list article.ready {
+  background:#eef6eb;
+}
+
+.v111-route-list strong {
+  display:grid;
+  place-items:center;
+  width:23px;
+  height:23px;
+  border-radius:50%;
+  background:#fff;
+}
+
+.v111-route-list span,
+.v111-route-list small {
+  display:block;
+}
+
+.v111-route-list small {
+  margin-top:3px;
+  color:var(--muted);
+}
+
+.v111-audit-grid textarea {
+  min-height:170px;
+}
+
+.v111-audit-summary {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:12px;
+}
+
+.v111-audit-summary article {
+  padding:10px;
+  border-radius:8px;
+  background:#f3eefb;
+}
+
+.v111-audit-summary span,
+.v111-audit-summary strong {
+  display:block;
+}
+
+.v111-audit-summary span {
+  font-size:9px;
+  font-weight:900;
+  color:#7255a4;
+}
+
+.v111-audit-summary strong {
+  margin-top:4px;
+}
+
+@media(max-width:1200px) {
+  .v111-stage-grid {
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:900px) {
+  .v111-stage-grid {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .v111-audit-grid {
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:760px) {
+  .v111-progress-card,
+  .v111-dashboard-card {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .v111-progress-track {
+    width:100%;
+  }
+
+  .v111-stage-grid,
+  .v111-route-list,
+  .v111-audit-summary {
+    grid-template-columns:1fr;
+  }
+}
+
+@media print {
+  .sidebar,
+  .topbar,
+  .mobile-nav,
+  .page-header button,
+  .v111-dashboard-card,
+  .v111-stage-card button {
+    display:none!important;
+  }
+}
