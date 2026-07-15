@@ -138,7 +138,19 @@
       intervention: renderIntervention,
       assessments: renderAssessments,
       "classroom-systems": renderClassroomSystems,
-      students: renderStudents,
+      students: () => {
+        if (typeof window.THH_RENDER_STUDENT_DATA === "function") {
+          window.THH_RENDER_STUDENT_DATA();
+        } else {
+          renderFeatureLoading("Student Data & Support Center");
+          window.setTimeout(() => {
+            if (location.hash.replace("#", "") === "students" &&
+                typeof window.THH_RENDER_STUDENT_DATA === "function") {
+              window.THH_RENDER_STUDENT_DATA();
+            }
+          }, 80);
+        }
+      },
       communication: renderCommunication,
       calendar: renderCalendar,
       resources: renderResources,
@@ -7165,4 +7177,862 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
+})();
+
+
+/* =====================================================================
+   Version 14.0 — Student Data & Support Center
+   Local browser storage only.
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const STORE = "thh-v140:student-records";
+  const UI_STORE = "thh-v140:student-ui";
+  const CONTACT_STORE = "thh-v140:contact-log";
+
+  let config = null;
+  let records = [];
+  let contacts = [];
+  let ui = {
+    search: "",
+    group: "All",
+    support: "All",
+    tier: "All",
+    view: "cards",
+    selectedId: ""
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+
+      try {
+        records = JSON.parse(localStorage.getItem(STORE) || "[]");
+        if (!Array.isArray(records)) records = [];
+      } catch {
+        records = [];
+      }
+
+      try {
+        contacts = JSON.parse(localStorage.getItem(CONTACT_STORE) || "[]");
+        if (!Array.isArray(contacts)) contacts = [];
+      } catch {
+        contacts = [];
+      }
+
+      try {
+        ui = { ...ui, ...JSON.parse(localStorage.getItem(UI_STORE) || "{}") };
+      } catch {}
+
+      normalize();
+      window.THH_RENDER_STUDENT_DATA = renderCenter;
+      waitForShell();
+    } catch (error) {
+      console.error("Version 14.0 failed to initialize.", error);
+    }
+  }
+
+  function normalize() {
+    records = records.map((record, index) => ({
+      id: record.id || `student-${Date.now()}-${index}`,
+      displayName: record.displayName || record.name || "Unnamed Student",
+      studentNumber: record.studentNumber || "",
+      grade: record.grade || "2",
+      readingGroup: record.readingGroup || "Not Assigned",
+      interventionTier: record.interventionTier || "Not Assigned",
+      interventionMinutes: Number(record.interventionMinutes) || 0,
+      supportFlags: Array.isArray(record.supportFlags) ? record.supportFlags : [],
+      accommodations: Array.isArray(record.accommodations) ? record.accommodations : [],
+      dibelsComposite: record.dibelsComposite || "",
+      orfWords: record.orfWords || "",
+      orfAccuracy: record.orfAccuracy || "",
+      maze: record.maze || "",
+      nwfCls: record.nwfCls || "",
+      readingLevel: record.readingLevel || "",
+      mathBenchmark: record.mathBenchmark || "",
+      strengths: record.strengths || "",
+      needs: record.needs || "",
+      goals: record.goals || "",
+      teacherNotes: record.teacherNotes || "",
+      lastUpdated: record.lastUpdated || new Date().toISOString()
+    }));
+    saveRecords();
+  }
+
+  function saveRecords() {
+    localStorage.setItem(STORE, JSON.stringify(records));
+  }
+
+  function saveContacts() {
+    localStorage.setItem(CONTACT_STORE, JSON.stringify(contacts));
+  }
+
+  function saveUi() {
+    localStorage.setItem(UI_STORE, JSON.stringify(ui));
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    window.addEventListener("hashchange", route);
+    route();
+  }
+
+  function route() {
+    const current = location.hash.replace("#", "") || "dashboard";
+    if (current === "students") setTimeout(renderCenter, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "small-groups") setTimeout(injectGroupingCard, 0);
+    if (current === "intervention") setTimeout(injectInterventionCard, 0);
+    if (current === "health") setTimeout(injectHealthPanel, 0);
+  }
+
+  function filteredRecords() {
+    const query = ui.search.trim().toLowerCase();
+
+    return records.filter(record => {
+      const groupMatch = ui.group === "All" || record.readingGroup === ui.group;
+      const tierMatch = ui.tier === "All" || record.interventionTier === ui.tier;
+      const supportMatch = ui.support === "All" || record.supportFlags.includes(ui.support);
+      const searchMatch = !query || [
+        record.displayName,
+        record.studentNumber,
+        record.readingGroup,
+        record.interventionTier,
+        record.supportFlags.join(" "),
+        record.strengths,
+        record.needs,
+        record.goals
+      ].join(" ").toLowerCase().includes(query);
+
+      return groupMatch && tierMatch && supportMatch && searchMatch;
+    });
+  }
+
+  function statistics() {
+    return {
+      total: records.length,
+      iep504: records.filter(record =>
+        record.supportFlags.includes("IEP") || record.supportFlags.includes("504")
+      ).length,
+      el: records.filter(record => record.supportFlags.includes("EL")).length,
+      intervention: records.filter(record =>
+        record.supportFlags.includes("Intervention") ||
+        ["Tier 2", "Tier 3"].includes(record.interventionTier)
+      ).length,
+      intensive: records.filter(record => record.readingGroup.includes("Red")).length
+    };
+  }
+
+  function renderCenter() {
+    if (location.hash.replace("#", "") !== "students") return;
+
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const stats = statistics();
+    const filtered = filteredRecords();
+
+    host.innerHTML = `
+      <section id="v140StudentCenter">
+        <section class="page-header">
+          <div>
+            <p>VERSION 14.0</p>
+            <h2>Student Data & Support Center</h2>
+            <span>Academic screening, reading groups, intervention, accommodations, and teacher notes.</span>
+          </div>
+          <div class="button-row">
+            <button id="v140AddStudent" class="primary-button">Add Student</button>
+            <button id="v140Export" class="secondary-button">Export Local Backup</button>
+          </div>
+        </section>
+
+        <section class="v140-privacy">
+          <strong>Local browser storage only</strong>
+          <span>${esc(config.studentDataCenterV140.privacyNotice)}</span>
+        </section>
+
+        <section class="v140-stat-grid">
+          ${statCard("Students", stats.total, "Local student profiles")}
+          ${statCard("IEP / 504", stats.iep504, "Profiles with formal supports")}
+          ${statCard("English Learners", stats.el, "Profiles marked EL")}
+          ${statCard("Intervention", stats.intervention, "Tier 2, Tier 3, or intervention flag")}
+          ${statCard("Red Group", stats.intensive, "Intensive reading support")}
+        </section>
+
+        <section class="panel v140-toolbar">
+          <div class="v140-filter-grid">
+            <label>
+              <span>Search</span>
+              <input id="v140Search" value="${esc(ui.search)}" placeholder="Search student, group, support, or goal">
+            </label>
+            ${selectControl("v140Group", "Reading Group", ["All", ...config.studentDataCenterV140.readingGroups], ui.group)}
+            ${selectControl("v140Tier", "Intervention Tier", ["All", ...config.studentDataCenterV140.interventionTiers], ui.tier)}
+            ${selectControl("v140Support", "Support Flag", ["All", ...config.studentDataCenterV140.supportFlags], ui.support)}
+          </div>
+        </section>
+
+        <section class="v140-student-grid">
+          ${filtered.length
+            ? filtered.map(studentCard).join("")
+            : `<div class="empty-state">
+                <strong>No matching student profiles.</strong>
+                <p>Add a student profile or adjust the filters.</p>
+              </div>`
+          }
+        </section>
+      </section>
+    `;
+
+    wireCenter();
+  }
+
+  function statCard(label, value, detail) {
+    return `
+      <article>
+        <span>${esc(label)}</span>
+        <strong>${value}</strong>
+        <small>${esc(detail)}</small>
+      </article>
+    `;
+  }
+
+  function selectControl(id, label, options, value) {
+    return `
+      <label>
+        <span>${esc(label)}</span>
+        <select id="${id}">
+          ${options.map(option => `<option ${option === value ? "selected" : ""}>${esc(option)}</option>`).join("")}
+        </select>
+      </label>
+    `;
+  }
+
+  function studentCard(record) {
+    const contactCount = contacts.filter(contact => contact.studentId === record.id).length;
+    const recommendation = groupingRecommendation(record);
+
+    return `
+      <article class="panel v140-student-card">
+        <div class="v140-student-heading">
+          <div>
+            <span>${esc(record.readingGroup)}</span>
+            <h3>${esc(record.displayName)}</h3>
+            <small>${record.studentNumber ? `Student ID: ${esc(record.studentNumber)}` : "No student ID entered"}</small>
+          </div>
+          <b>${esc(initials(record.displayName))}</b>
+        </div>
+
+        <div class="v140-flags">
+          ${record.supportFlags.length
+            ? record.supportFlags.map(flag => `<span>${esc(flag)}</span>`).join("")
+            : `<em>No support flags</em>`
+          }
+        </div>
+
+        <div class="v140-score-grid">
+          ${scoreItem("ORF", record.orfWords || "—")}
+          ${scoreItem("Accuracy", record.orfAccuracy ? `${record.orfAccuracy}%` : "—")}
+          ${scoreItem("Maze", record.maze || "—")}
+          ${scoreItem("Math", record.mathBenchmark ? `${record.mathBenchmark}%` : "—")}
+        </div>
+
+        <div class="v140-recommendation">
+          <span>TEACHER REVIEW SUGGESTION</span>
+          <strong>${esc(recommendation)}</strong>
+        </div>
+
+        <dl>
+          <div><dt>Tier</dt><dd>${esc(record.interventionTier)}</dd></div>
+          <div><dt>Minutes</dt><dd>${record.interventionMinutes || 0} weekly</dd></div>
+          <div><dt>Contacts</dt><dd>${contactCount}</dd></div>
+        </dl>
+
+        ${record.goals ? `<p><strong>Goal:</strong> ${esc(record.goals)}</p>` : ""}
+
+        <div class="v140-card-actions">
+          <button data-v140-view="${esc(record.id)}" class="primary-button">Open Profile</button>
+          <button data-v140-contact="${esc(record.id)}" class="secondary-button">Add Contact Note</button>
+        </div>
+      </article>
+    `;
+  }
+
+  function scoreItem(label, value) {
+    return `<article><span>${esc(label)}</span><strong>${esc(value)}</strong></article>`;
+  }
+
+  function initials(name) {
+    return String(name).split(/\s+/).filter(Boolean).slice(0, 2)
+      .map(part => part[0]?.toUpperCase() || "").join("") || "ST";
+  }
+
+  function groupingRecommendation(record) {
+    const accuracy = Number(record.orfAccuracy);
+    const words = Number(record.orfWords);
+
+    if (record.readingGroup !== "Not Assigned") return record.readingGroup;
+    if (accuracy && accuracy < 90) return "Consider Red or Yellow decoding/accuracy support";
+    if (words && words < 50) return "Consider Yellow strategic fluency support";
+    if (words && words >= 90 && accuracy >= 95) return "Consider Green extension/prosody";
+    if (words) return "Consider Blue developing-fluency support";
+    return "Enter current screening data before assigning a group";
+  }
+
+  function wireCenter() {
+    $("#v140Search")?.addEventListener("change", event => {
+      ui.search = event.target.value;
+      saveUi();
+      renderCenter();
+    });
+
+    $("#v140Group")?.addEventListener("change", event => {
+      ui.group = event.target.value;
+      saveUi();
+      renderCenter();
+    });
+
+    $("#v140Tier")?.addEventListener("change", event => {
+      ui.tier = event.target.value;
+      saveUi();
+      renderCenter();
+    });
+
+    $("#v140Support")?.addEventListener("change", event => {
+      ui.support = event.target.value;
+      saveUi();
+      renderCenter();
+    });
+
+    $("#v140AddStudent")?.addEventListener("click", () => renderEditor());
+    $("#v140Export")?.addEventListener("click", exportBackup);
+
+    $$("[data-v140-view]").forEach(button => {
+      button.addEventListener("click", () => renderProfile(button.dataset.v140View));
+    });
+
+    $$("[data-v140-contact]").forEach(button => {
+      button.addEventListener("click", () => renderContactEditor(button.dataset.v140Contact));
+    });
+  }
+
+  function renderProfile(id) {
+    const record = records.find(item => item.id === id);
+    if (!record) return renderCenter();
+
+    const studentContacts = contacts
+      .filter(contact => contact.studentId === id)
+      .sort((a, b) => b.date.localeCompare(a.date));
+
+    $("#pageHost").innerHTML = `
+      <section id="v140StudentProfile">
+        <section class="page-header">
+          <div>
+            <p>STUDENT PROFILE</p>
+            <h2>${esc(record.displayName)}</h2>
+            <span>${esc(record.readingGroup)} • ${esc(record.interventionTier)}</span>
+          </div>
+          <div class="button-row">
+            <button id="v140Back" class="secondary-button">Back to Students</button>
+            <button id="v140Edit" class="primary-button">Edit Profile</button>
+          </div>
+        </section>
+
+        <section class="v140-profile-layout">
+          <main>
+            <section class="panel">
+              <h3>Academic Screening</h3>
+              <div class="v140-profile-score-grid">
+                ${profileScore("DIBELS Composite", record.dibelsComposite)}
+                ${profileScore("ORF Words Correct", record.orfWords)}
+                ${profileScore("ORF Accuracy", record.orfAccuracy ? `${record.orfAccuracy}%` : "")}
+                ${profileScore("Maze", record.maze)}
+                ${profileScore("NWF CLS", record.nwfCls)}
+                ${profileScore("Reading Level", record.readingLevel)}
+                ${profileScore("Math Benchmark", record.mathBenchmark ? `${record.mathBenchmark}%` : "")}
+              </div>
+            </section>
+
+            <section class="panel">
+              <h3>Strengths, Needs & Goals</h3>
+              ${textSection("Strengths", record.strengths)}
+              ${textSection("Instructional Needs", record.needs)}
+              ${textSection("Current Goals", record.goals)}
+              ${textSection("Teacher Notes", record.teacherNotes)}
+            </section>
+
+            <section class="panel">
+              <div class="v140-section-heading">
+                <h3>Family / Caregiver Contact Log</h3>
+                <button id="v140AddContact" class="secondary-button">Add Contact Note</button>
+              </div>
+              <div class="v140-contact-list">
+                ${studentContacts.length
+                  ? studentContacts.map(contactCard).join("")
+                  : `<p>No contact notes have been recorded.</p>`
+                }
+              </div>
+            </section>
+          </main>
+
+          <aside>
+            <section class="panel">
+              <h3>Support Profile</h3>
+              <div class="v140-profile-flags">
+                ${record.supportFlags.length
+                  ? record.supportFlags.map(flag => `<span>${esc(flag)}</span>`).join("")
+                  : `<em>No support flags</em>`
+                }
+              </div>
+              <dl>
+                <div><dt>Reading Group</dt><dd>${esc(record.readingGroup)}</dd></div>
+                <div><dt>Intervention Tier</dt><dd>${esc(record.interventionTier)}</dd></div>
+                <div><dt>Weekly Minutes</dt><dd>${record.interventionMinutes}</dd></div>
+              </dl>
+            </section>
+
+            <section class="panel">
+              <h3>Accommodations & Supports</h3>
+              <ul>
+                ${record.accommodations.length
+                  ? record.accommodations.map(item => `<li>${esc(item)}</li>`).join("")
+                  : `<li>No accommodations entered.</li>`
+                }
+              </ul>
+            </section>
+
+            <section class="panel v140-caution">
+              <strong>Teacher review required</strong>
+              <p>Grouping suggestions are organizational supports only. Use current assessment evidence, team decisions, and formal plans.</p>
+            </section>
+          </aside>
+        </section>
+      </section>
+    `;
+
+    $("#v140Back")?.addEventListener("click", renderCenter);
+    $("#v140Edit")?.addEventListener("click", () => renderEditor(id));
+    $("#v140AddContact")?.addEventListener("click", () => renderContactEditor(id));
+  }
+
+  function profileScore(label, value) {
+    return `<article><span>${esc(label)}</span><strong>${esc(value || "Not entered")}</strong></article>`;
+  }
+
+  function textSection(label, value) {
+    return `<article class="v140-text-section"><span>${esc(label)}</span><p>${esc(value || "Not entered")}</p></article>`;
+  }
+
+  function contactCard(contact) {
+    return `
+      <article>
+        <div>
+          <strong>${esc(contact.method)}</strong>
+          <span>${new Date(contact.date).toLocaleString()}</span>
+        </div>
+        <p>${esc(contact.note)}</p>
+      </article>
+    `;
+  }
+
+  function renderEditor(id = "") {
+    const existing = records.find(record => record.id === id);
+    const record = existing || {
+      id: `student-${Date.now()}`,
+      displayName: "",
+      studentNumber: "",
+      grade: "2",
+      readingGroup: "Not Assigned",
+      interventionTier: "Not Assigned",
+      interventionMinutes: 0,
+      supportFlags: [],
+      accommodations: [],
+      dibelsComposite: "",
+      orfWords: "",
+      orfAccuracy: "",
+      maze: "",
+      nwfCls: "",
+      readingLevel: "",
+      mathBenchmark: "",
+      strengths: "",
+      needs: "",
+      goals: "",
+      teacherNotes: "",
+      lastUpdated: new Date().toISOString()
+    };
+
+    $("#pageHost").innerHTML = `
+      <section id="v140StudentEditor">
+        <section class="page-header">
+          <div>
+            <p>LOCAL STUDENT PROFILE</p>
+            <h2>${existing ? "Edit" : "Add"} Student</h2>
+            <span>Use local browser storage only. Do not add student records to GitHub files.</span>
+          </div>
+          <button id="v140Cancel" class="secondary-button">Cancel</button>
+        </section>
+
+        <section class="panel v140-editor">
+          <div class="v140-editor-grid">
+            <label class="wide">
+              <span>Student Display Name</span>
+              <input id="v140Name" value="${esc(record.displayName)}" placeholder="Use the level of identification appropriate for your device">
+            </label>
+
+            <label>
+              <span>Student Number / Local ID</span>
+              <input id="v140Number" value="${esc(record.studentNumber)}">
+            </label>
+
+            <label>
+              <span>Grade</span>
+              <input id="v140Grade" value="${esc(record.grade)}">
+            </label>
+
+            ${editorSelect("v140ReadingGroup", "Reading Group", config.studentDataCenterV140.readingGroups, record.readingGroup)}
+            ${editorSelect("v140TierEdit", "Intervention Tier", config.studentDataCenterV140.interventionTiers, record.interventionTier)}
+
+            <label>
+              <span>Intervention Minutes per Week</span>
+              <input id="v140Minutes" type="number" min="0" value="${record.interventionMinutes}">
+            </label>
+
+            <label>
+              <span>DIBELS Composite</span>
+              <input id="v140Dibels" value="${esc(record.dibelsComposite)}">
+            </label>
+
+            <label>
+              <span>ORF Words Correct</span>
+              <input id="v140OrfWords" type="number" min="0" value="${esc(record.orfWords)}">
+            </label>
+
+            <label>
+              <span>ORF Accuracy %</span>
+              <input id="v140OrfAccuracy" type="number" min="0" max="100" value="${esc(record.orfAccuracy)}">
+            </label>
+
+            <label>
+              <span>Maze Score</span>
+              <input id="v140Maze" value="${esc(record.maze)}">
+            </label>
+
+            <label>
+              <span>NWF CLS</span>
+              <input id="v140Nwf" value="${esc(record.nwfCls)}">
+            </label>
+
+            <label>
+              <span>Reading Level</span>
+              <input id="v140ReadingLevel" value="${esc(record.readingLevel)}">
+            </label>
+
+            <label>
+              <span>Math Benchmark %</span>
+              <input id="v140Math" type="number" min="0" max="100" value="${esc(record.mathBenchmark)}">
+            </label>
+
+            <fieldset class="wide">
+              <legend>Support Flags</legend>
+              <div class="v140-check-grid">
+                ${config.studentDataCenterV140.supportFlags.map(flag => `
+                  <label>
+                    <input type="checkbox" data-v140-flag="${esc(flag)}" ${record.supportFlags.includes(flag) ? "checked" : ""}>
+                    <span>${esc(flag)}</span>
+                  </label>
+                `).join("")}
+              </div>
+            </fieldset>
+
+            <fieldset class="wide">
+              <legend>Accommodations & Supports</legend>
+              <div class="v140-check-grid">
+                ${config.studentDataCenterV140.defaultAccommodations.map(item => `
+                  <label>
+                    <input type="checkbox" data-v140-accommodation="${esc(item)}" ${record.accommodations.includes(item) ? "checked" : ""}>
+                    <span>${esc(item)}</span>
+                  </label>
+                `).join("")}
+              </div>
+            </fieldset>
+
+            ${textArea("v140Strengths", "Strengths", record.strengths)}
+            ${textArea("v140Needs", "Instructional Needs", record.needs)}
+            ${textArea("v140Goals", "Current Goals", record.goals)}
+            ${textArea("v140TeacherNotes", "Teacher Notes", record.teacherNotes)}
+          </div>
+
+          <div class="button-row">
+            <button id="v140SaveStudent" class="primary-button">Save Student Profile</button>
+            ${existing ? `<button id="v140DeleteStudent" class="danger-button">Delete Student Profile</button>` : ""}
+          </div>
+        </section>
+      </section>
+    `;
+
+    $("#v140Cancel")?.addEventListener("click", existing ? () => renderProfile(id) : renderCenter);
+    $("#v140SaveStudent")?.addEventListener("click", () => saveEditor(record, existing));
+    $("#v140DeleteStudent")?.addEventListener("click", () => {
+      if (!confirm(`Delete the local profile for "${record.displayName}"?`)) return;
+      records = records.filter(item => item.id !== record.id);
+      contacts = contacts.filter(contact => contact.studentId !== record.id);
+      saveRecords();
+      saveContacts();
+      renderCenter();
+      toast("Student profile deleted.");
+    });
+  }
+
+  function editorSelect(id, label, options, value) {
+    return `
+      <label>
+        <span>${esc(label)}</span>
+        <select id="${id}">
+          ${options.map(option => `<option ${option === value ? "selected" : ""}>${esc(option)}</option>`).join("")}
+        </select>
+      </label>
+    `;
+  }
+
+  function textArea(id, label, value) {
+    return `
+      <label class="wide">
+        <span>${esc(label)}</span>
+        <textarea id="${id}">${esc(value)}</textarea>
+      </label>
+    `;
+  }
+
+  function saveEditor(record, existing) {
+    const supportFlags = $$("[data-v140-flag]:checked").map(input => input.dataset.v140Flag);
+    const accommodations = $$("[data-v140-accommodation]:checked")
+      .map(input => input.dataset.v140Accommodation);
+
+    Object.assign(record, {
+      displayName: $("#v140Name").value.trim() || "Unnamed Student",
+      studentNumber: $("#v140Number").value.trim(),
+      grade: $("#v140Grade").value.trim() || "2",
+      readingGroup: $("#v140ReadingGroup").value,
+      interventionTier: $("#v140TierEdit").value,
+      interventionMinutes: Math.max(0, Number($("#v140Minutes").value) || 0),
+      supportFlags,
+      accommodations,
+      dibelsComposite: $("#v140Dibels").value.trim(),
+      orfWords: $("#v140OrfWords").value.trim(),
+      orfAccuracy: $("#v140OrfAccuracy").value.trim(),
+      maze: $("#v140Maze").value.trim(),
+      nwfCls: $("#v140Nwf").value.trim(),
+      readingLevel: $("#v140ReadingLevel").value.trim(),
+      mathBenchmark: $("#v140Math").value.trim(),
+      strengths: $("#v140Strengths").value.trim(),
+      needs: $("#v140Needs").value.trim(),
+      goals: $("#v140Goals").value.trim(),
+      teacherNotes: $("#v140TeacherNotes").value.trim(),
+      lastUpdated: new Date().toISOString()
+    });
+
+    if (!existing) records.unshift(record);
+    saveRecords();
+    renderProfile(record.id);
+    toast("Student profile saved.");
+  }
+
+  function renderContactEditor(studentId) {
+    const record = records.find(item => item.id === studentId);
+    if (!record) return renderCenter();
+
+    $("#pageHost").innerHTML = `
+      <section id="v140ContactEditor">
+        <section class="page-header">
+          <div>
+            <p>CONTACT NOTE</p>
+            <h2>${esc(record.displayName)}</h2>
+            <span>Record a brief professional family or caregiver contact note.</span>
+          </div>
+          <button id="v140ContactCancel" class="secondary-button">Cancel</button>
+        </section>
+
+        <section class="panel v140-contact-editor">
+          <label>
+            <span>Contact Method</span>
+            <select id="v140ContactMethod">
+              <option>ClassDojo</option>
+              <option>Phone</option>
+              <option>Email</option>
+              <option>Conference</option>
+              <option>In Person</option>
+              <option>Other</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Note</span>
+            <textarea id="v140ContactNote" placeholder="Document the purpose, key information, and follow-up."></textarea>
+          </label>
+
+          <button id="v140SaveContact" class="primary-button">Save Contact Note</button>
+        </section>
+      </section>
+    `;
+
+    $("#v140ContactCancel")?.addEventListener("click", () => renderProfile(studentId));
+    $("#v140SaveContact")?.addEventListener("click", () => {
+      const note = $("#v140ContactNote").value.trim();
+      if (!note) return toast("Enter a contact note first.");
+
+      contacts.unshift({
+        id: `contact-${Date.now()}`,
+        studentId,
+        method: $("#v140ContactMethod").value,
+        note,
+        date: new Date().toISOString()
+      });
+
+      saveContacts();
+      renderProfile(studentId);
+      toast("Contact note saved.");
+    });
+  }
+
+  function exportBackup() {
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      version: "14.0",
+      records,
+      contacts
+    };
+
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `teacher-os-student-backup-${new Date().toISOString().slice(0,10)}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast("Local student-data backup created.");
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v140DashboardCard")) return;
+
+    const stats = statistics();
+    const card = document.createElement("section");
+    card.id = "v140DashboardCard";
+    card.className = "v140-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>STUDENT DATA CENTER</p>
+        <h3>${stats.total} profiles • ${stats.intervention} receiving intervention</h3>
+        <span>${stats.intensive} student(s) currently assigned to intensive reading support.</span>
+      </div>
+      <button>Open Student Data</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "students";
+    dashboard.prepend(card);
+  }
+
+  function injectGroupingCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v140GroupingCard")) return;
+
+    const groups = config.studentDataCenterV140.readingGroups
+      .filter(group => group !== "Not Assigned")
+      .map(group => ({
+        group,
+        count: records.filter(record => record.readingGroup === group).length
+      }));
+
+    const card = document.createElement("section");
+    card.id = "v140GroupingCard";
+    card.className = "panel v140-connected-card";
+    card.innerHTML = `
+      <div>
+        <p>STUDENT DATA CONNECTION</p>
+        <h3>Current Reading Groups</h3>
+        <span>${groups.map(item => `${item.group.split(" — ")[0]}: ${item.count}`).join(" • ")}</span>
+      </div>
+      <button>Open Student Profiles</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "students";
+    host.prepend(card);
+  }
+
+  function injectInterventionCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v140InterventionCard")) return;
+
+    const count = records.filter(record =>
+      ["Tier 2", "Tier 3"].includes(record.interventionTier)
+    ).length;
+
+    const card = document.createElement("section");
+    card.id = "v140InterventionCard";
+    card.className = "panel v140-connected-card";
+    card.innerHTML = `
+      <div>
+        <p>STUDENT DATA CONNECTION</p>
+        <h3>${count} Tier 2 or Tier 3 profile(s)</h3>
+        <span>Review minutes, goals, and current screening evidence in Student Data.</span>
+      </div>
+      <button>Open Student Data</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "students";
+    host.prepend(card);
+  }
+
+  function injectHealthPanel() {
+    const host = $("#pageHost");
+    if (!host || $("#v140HealthPanel")) return;
+
+    const stats = statistics();
+    const panel = document.createElement("section");
+    panel.id = "v140HealthPanel";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 14.0 Student Data Health</h3>
+      <div class="health-grid">
+        ${healthItem("Local storage", true, `${stats.total} profiles`)}
+        ${healthItem("Direct route renderer", typeof window.THH_RENDER_STUDENT_DATA === "function", "Connected")}
+        ${healthItem("Reading groups", records.some(record => record.readingGroup !== "Not Assigned"), "Teacher assigned")}
+        ${healthItem("Local backup", true, "Export available")}
+      </div>
+      <button class="secondary-button">Open Student Data</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "students";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div><span>${esc(title)}</span><small>${esc(detail)}</small></div>
+      </article>
+    `;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1900);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
 })();

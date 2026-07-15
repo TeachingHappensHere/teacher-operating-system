@@ -1,6 +1,6 @@
 {
-  "version": "13.1 Direct Renderer Integration Fix",
-  "releaseStatus": "Connects the central router directly to the Version 12.2 Print Center renderer and preserves Forms & Printables as a separate page.",
+  "version": "14.0 Student Data & Support Center",
+  "releaseStatus": "Adds a stable local-only Student Data Center with academic screening, support flags, grouping, intervention, accommodations, and contact notes.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2488,7 +2488,7 @@
     {
       "id": "students",
       "label": "Students",
-      "owner": "core"
+      "owner": "v14.0"
     },
     {
       "id": "communication",
@@ -2559,5 +2559,52 @@
     "formsRoute": "forms",
     "formsTitle": "Forms & Printables",
     "source": "Uploaded GitHub repository master"
+  },
+  "studentDataCenterV140": {
+    "privacyNotice": "Student records are stored only in this browser's local storage. Do not place identifiable student records in GitHub files.",
+    "supportFlags": [
+      "IEP",
+      "504",
+      "EL",
+      "Speech",
+      "Intervention",
+      "Health Plan",
+      "Gifted / Extension"
+    ],
+    "readingGroups": [
+      "Red \u2014 Intensive",
+      "Yellow \u2014 Strategic",
+      "Blue \u2014 Developing Fluency",
+      "Green \u2014 Extension",
+      "Not Assigned"
+    ],
+    "interventionTiers": [
+      "Tier 1",
+      "Tier 2",
+      "Tier 3",
+      "Monitoring Only",
+      "Not Assigned"
+    ],
+    "assessmentFields": [
+      "DIBELS Composite",
+      "ORF Words Correct",
+      "ORF Accuracy %",
+      "Maze Score",
+      "NWF CLS",
+      "Reading Level",
+      "Math Benchmark %"
+    ],
+    "defaultAccommodations": [
+      "Preferential seating",
+      "Directions repeated or clarified",
+      "Chunked assignments",
+      "Extended time",
+      "Small-group testing",
+      "Visual supports",
+      "Sentence frames",
+      "Read-aloud when permitted",
+      "Movement breaks",
+      "Frequent checks for understanding"
+    ]
   }
 }

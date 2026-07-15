@@ -1,26 +1,38 @@
-# Mrs. Parrish’s Teacher Operating System
+# Teacher Operating System
 
-## Version 13.1 — Direct Renderer Integration Fix
+## Version 14.0 — Student Data & Support Center
 
-This release was repaired directly from the currently deployed GitHub repository.
-
-### Fixed
-- The central router now calls the Version 12.2 Print Center renderer directly.
-- Print Center uses the permanent `print-center` route.
-- Forms & Printables remains on the separate `forms` route.
-- The older Forms page heading now correctly says **Forms & Printables** instead of **Print Center**.
-- The obsolete Print Center route bridge was removed.
-- A fresh service-worker cache is included.
-
-### Upload
-Upload the complete contents of this repository ZIP to the GitHub repository root. Existing supporting files are preserved.
+This package contains the complete repository. Upload the full extracted contents to the GitHub repository root.
 
 ### Commit message
-`Version 13.1 - Direct Print Center Renderer Integration`
+Version 14.0 - Student Data and Support Center
 
-### Test
-1. Open the deployed site in an incognito/private window.
-2. Open **Resources & Administration → Print Center**.
-3. Confirm the title is **Print Center & Weekly Packet Queue**.
-4. Confirm **Import from Attachments** is visible.
-5. Open **Forms & Printables** and confirm its title is **Forms & Printables**.
+### Included
+- Stable direct Students route renderer
+- Local-only student profiles
+- DIBELS, ORF, accuracy, Maze, NWF, reading level, and math benchmark fields
+- Reading-group assignments
+- Intervention tiers and weekly minutes
+- IEP, 504, EL, speech, intervention, health-plan, and extension flags
+- Accommodations and supports
+- Strengths, instructional needs, goals, and teacher notes
+- Family/caregiver contact log
+- Search and filtering
+- Local JSON backup export
+- Small Groups and Intervention connections
+- Dashboard and Health connections
+- Responsive desktop, iPad, and phone layouts
+
+### Privacy
+Student records are saved only in browser local storage. They are not included in the GitHub files. Use an appropriately secured school device and follow school privacy requirements.
+
+### Test after deployment
+1. Open the site in an incognito/private window.
+2. Expand Students & Data.
+3. Open Students.
+4. Confirm the title is Student Data & Support Center.
+5. Add a test profile without using a real student's identifying information.
+6. Save and reopen the profile.
+7. Test reading-group and support filters.
+8. Export a local backup.
+9. Confirm the page remains stable.
