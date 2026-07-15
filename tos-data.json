@@ -1,6 +1,6 @@
 {
-  "version": "12.0.1 Live Teaching Stability Repair",
-  "releaseStatus": "Removes the legacy Version 8.0 Live Teaching controller and makes Version 12 the only renderer for the teachday route.",
+  "version": "12.1 Lesson Attachments Center",
+  "releaseStatus": "Adds a stable dedicated center for weekly curriculum resources, missing links, and print preparation.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2300,5 +2300,50 @@
     "cause": "Version 8.0 and Version 12.0 both rendered the teachday route",
     "removedController": "Version 8.0 Live Teaching Timeline & Assessment-Day Mode",
     "authoritativeController": "Version 12.0 Live Teaching Center"
+  },
+  "lessonAttachmentsV121": {
+    "days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "categories": [
+      "Open Court",
+      "Heggerty",
+      "UFLI / MOWR",
+      "Phonics",
+      "Vocabulary",
+      "Writing / GUM",
+      "Eureka Math\u00b2",
+      "Science",
+      "Social Studies",
+      "Assessment",
+      "Classroom Launch",
+      "Other"
+    ],
+    "resourceTypes": [
+      "PDF",
+      "Google Drive",
+      "Website",
+      "Google Slides",
+      "Teacher Guide",
+      "Student Page",
+      "Skills Practice",
+      "Assessment",
+      "Exit Ticket",
+      "Anchor Chart",
+      "Local / GitHub Path",
+      "Other"
+    ],
+    "statusOptions": [
+      "Missing Link",
+      "Linked",
+      "Ready to Print",
+      "Printed",
+      "Teacher Only"
+    ],
+    "defaultCopies": 33
   }
 }
