@@ -1,6 +1,6 @@
 {
-  "version": "12.1 Lesson Attachments Center",
-  "releaseStatus": "Adds a stable dedicated center for weekly curriculum resources, missing links, and print preparation.",
+  "version": "12.2 Print Center & Weekly Packet Queue",
+  "releaseStatus": "Adds a stable Print Center that organizes Lesson Attachments into a Monday\u2013Friday queue, tracks copy counts and completion, and prepares daily packet checklists.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2343,6 +2343,38 @@
       "Ready to Print",
       "Printed",
       "Teacher Only"
+    ],
+    "defaultCopies": 33
+  },
+  "printCenterV122": {
+    "days": [
+      "Before Monday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "categories": [
+      "Open Court",
+      "Heggerty",
+      "UFLI / MOWR",
+      "Phonics",
+      "Vocabulary",
+      "Writing / GUM",
+      "Eureka Math\u00b2",
+      "Science",
+      "Social Studies",
+      "Assessment",
+      "Classroom Launch",
+      "Other"
+    ],
+    "packetSections": [
+      "Teacher Materials",
+      "Student Copies",
+      "Small Group / Intervention",
+      "Assessments",
+      "Homework / Family Materials"
     ],
     "defaultCopies": 33
   }
