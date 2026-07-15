@@ -3463,266 +3463,6 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
 
-/* Version 8.5 — Polished Command Center & Compact Dashboard */
-(() => {
-  "use strict";
-
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-
-  function start() {
-    waitForShell();
-  }
-
-  function waitForShell() {
-    if (!$("#pageHost") || !$("#mainNav")) {
-      setTimeout(waitForShell, 100);
-      return;
-    }
-
-    polishNavigation();
-    window.addEventListener("hashchange", route);
-
-    new MutationObserver(() => {
-      polishNavigation();
-      route();
-    }).observe(document.body, { childList: true, subtree: true });
-
-    route();
-  }
-
-  function route() {
-    const route = location.hash.replace("#", "") || "dashboard";
-    document.body.dataset.currentRoute = route;
-
-    if (route === "dashboard") {
-      setTimeout(polishDashboard, 30);
-    } else {
-      setTimeout(polishPageHeader, 30);
-    }
-  }
-
-  function polishNavigation() {
-    const nav = $("#mainNav");
-    if (!nav || nav.dataset.v85Polished === "true") return;
-
-    const groups = [
-      {
-        title: "Today",
-        routes: ["dashboard", "live-workspace", "teachday", "calendar"]
-      },
-      {
-        title: "Planning",
-        routes: [
-          "lesson-builder", "lesson-plans", "production",
-          "classroom-launch", "first-week-builder"
-        ]
-      },
-      {
-        title: "Curriculum",
-        routes: ["open-court", "eureka-math", "afternoon-studios"]
-      },
-      {
-        title: "Students & Data",
-        routes: [
-          "small-groups", "intervention", "assessments",
-          "students", "communication"
-        ]
-      },
-      {
-        title: "Resources",
-        routes: [
-          "classroom-systems", "attachments", "resources",
-          "forms", "teacher-brain", "health", "settings"
-        ]
-      }
-    ];
-
-    const buttons = new Map();
-    $$("[data-route]", nav).forEach(button => {
-      buttons.set(button.dataset.route, button);
-    });
-
-    const fragment = document.createDocumentFragment();
-
-    groups.forEach((group, index) => {
-      const section = document.createElement("section");
-      section.className = "v85-nav-group";
-      section.dataset.group = group.title.toLowerCase().replace(/\W+/g, "-");
-
-      const heading = document.createElement("button");
-      heading.type = "button";
-      heading.className = "v85-nav-heading";
-      heading.innerHTML = `
-        <span>${group.title}</span>
-        <b>${index < 2 ? "−" : "+"}</b>
-      `;
-
-      const body = document.createElement("div");
-      body.className = "v85-nav-body";
-      if (index >= 2) body.hidden = true;
-
-      group.routes.forEach(route => {
-        const button = buttons.get(route);
-        if (button) body.appendChild(button);
-      });
-
-      heading.addEventListener("click", () => {
-        body.hidden = !body.hidden;
-        heading.querySelector("b").textContent = body.hidden ? "+" : "−";
-      });
-
-      section.append(heading, body);
-      fragment.appendChild(section);
-    });
-
-    // Append any route buttons not listed above.
-    const leftovers = [...buttons.entries()]
-      .filter(([, button]) => !button.parentElement || button.parentElement === nav)
-      .map(([, button]) => button);
-
-    if (leftovers.length) {
-      const section = document.createElement("section");
-      section.className = "v85-nav-group";
-
-      const heading = document.createElement("button");
-      heading.type = "button";
-      heading.className = "v85-nav-heading";
-      heading.innerHTML = "<span>More</span><b>+</b>";
-
-      const body = document.createElement("div");
-      body.className = "v85-nav-body";
-      body.hidden = true;
-
-      leftovers.forEach(button => body.appendChild(button));
-      heading.addEventListener("click", () => {
-        body.hidden = !body.hidden;
-        heading.querySelector("b").textContent = body.hidden ? "+" : "−";
-      });
-
-      section.append(heading, body);
-      fragment.appendChild(section);
-    }
-
-    nav.innerHTML = "";
-    nav.appendChild(fragment);
-    nav.dataset.v85Polished = "true";
-  }
-
-  function polishDashboard() {
-    const dashboard = $("#v72Dashboard");
-    if (!dashboard || $("#v85CommandCenter")) return;
-
-    const injectedCards = [
-      $("#v80DashboardLive"),
-      $("#v73DashboardPlanning"),
-      $("#v84DashboardCard"),
-      $("#v81Dashboard"),
-      $("#v82DashboardCard"),
-      $("#v83DashboardCard"),
-      $("#v74DashboardAttachmentCard"),
-      $("#v75DashboardCard")
-    ].filter(Boolean);
-
-    const command = document.createElement("section");
-    command.id = "v85CommandCenter";
-    command.className = "v85-command-center";
-
-    const heading = document.createElement("div");
-    heading.className = "v85-command-heading";
-    heading.innerHTML = `
-      <div>
-        <p>TEACHER COMMAND CENTER</p>
-        <h2>Today, Planning, Curriculum & Production</h2>
-        <span>Everything important is visible without scrolling through full-width status cards.</span>
-      </div>
-      <button id="v85CustomizeDashboard">Customize Dashboard</button>
-    `;
-
-    const grid = document.createElement("div");
-    grid.className = "v85-command-grid";
-
-    injectedCards.forEach(card => {
-      card.classList.add("v85-command-card");
-      grid.appendChild(card);
-    });
-
-    command.append(heading, grid);
-    dashboard.prepend(command);
-
-    $("#v85CustomizeDashboard")?.addEventListener("click", () => {
-      document.body.classList.toggle("v85-focus-mode");
-    });
-
-    compactWelcome(dashboard);
-    updateDashboardLabels();
-  }
-
-  function compactWelcome(dashboard) {
-    const welcome = $(".v72-welcome", dashboard);
-    if (!welcome || welcome.dataset.v85Compact === "true") return;
-
-    welcome.dataset.v85Compact = "true";
-    welcome.classList.add("v85-welcome");
-
-    const intro = welcome.firstElementChild;
-    if (intro) {
-      const quote = $("blockquote", intro);
-      if (quote) quote.classList.add("v85-quote");
-    }
-
-    const photo = $(".v72-photo-panel", welcome);
-    if (photo) photo.classList.add("v85-photo");
-
-    const classLinks = $(".v72-classroom-links", welcome);
-    if (classLinks) classLinks.classList.add("v85-class-links");
-  }
-
-  function updateDashboardLabels() {
-    const cards = $$(".v85-command-card");
-
-    cards.forEach(card => {
-      const heading = $("h3", card);
-      if (!heading) return;
-
-      const text = heading.textContent.trim();
-      if (text.includes("Now:")) {
-        card.dataset.category = "today";
-      } else if (
-        text.includes("days ready") ||
-        text.includes("Generate Monday")
-      ) {
-        card.dataset.category = "planning";
-      } else if (
-        text.includes("Unit") ||
-        text.includes("Module") ||
-        text.includes("selected lessons")
-      ) {
-        card.dataset.category = "curriculum";
-      } else {
-        card.dataset.category = "production";
-      }
-    });
-  }
-
-  function polishPageHeader() {
-    const host = $("#pageHost");
-    if (!host) return;
-
-    const header = $(".page-header", host);
-    if (header) header.classList.add("v85-page-header");
-
-    $$(".panel", host).forEach(panel => {
-      panel.classList.add("v85-panel");
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", start);
-  } else {
-    start();
-  }
-})();
 
 
 /* Version 8.6 — Curriculum Start-Date Guard & Launch Week Lock */
@@ -4751,63 +4491,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   }
 })();
 
-/* Version 9.0 — Unified Navigation & Stable Application Shell */
-(() => {
-  "use strict";
-  const NAV_STATE_KEY = "thh-v90:navigation";
-  let config = null;
-  let navState = {today:true,planning:true,curriculum:true,students:false,resources:false};
-  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-  const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
-  async function start(){
-    try{
-      config=await fetch("tos-data.json",{cache:"no-store"}).then(r=>r.json());
-      try{navState={...navState,...JSON.parse(localStorage.getItem(NAV_STATE_KEY)||"{}")}}catch{}
-      waitForShell();
-    }catch(error){console.warn("Version 9.0 navigation could not start.",error)}
-  }
-  function save(){localStorage.setItem(NAV_STATE_KEY,JSON.stringify(navState))}
-  function waitForShell(){
-    if(!$("#mainNav")||!$("#pageHost"))return setTimeout(waitForShell,100);
-    setTimeout(build,450);setTimeout(build,1200);
-    window.addEventListener("hashchange",()=>{active();openCurrent()});
-    new MutationObserver(()=>{if(!$("#v90UnifiedNavigation"))setTimeout(build,100)}).observe($("#sidebar"),{childList:true,subtree:true});
-  }
-  function routeMap(){return new Map((config.navigation||[]).map(([id,label,icon])=>[id,{id,label,icon}]))}
-  function build(){
-    const nav=$("#mainNav");if(!nav)return;
-    const routes=routeMap(),wrapper=document.createElement("div");
-    wrapper.id="v90UnifiedNavigation";wrapper.className="v90-unified-navigation";
-    (config.navigationGroupsV9||[]).forEach(group=>{
-      const section=document.createElement("section");section.className="v90-nav-group";section.dataset.group=group.id;
-      const heading=document.createElement("button");heading.type="button";heading.className="v90-nav-heading";heading.setAttribute("aria-expanded",String(!!navState[group.id]));heading.innerHTML=`<span>${esc(group.title)}</span><b>${navState[group.id]?"−":"+"}</b>`;
-      const body=document.createElement("div");body.className="v90-nav-body";body.hidden=!navState[group.id];
-      group.routes.forEach(routeId=>{
-        const route=routes.get(routeId);if(!route)return;
-        const button=document.createElement("button");button.type="button";button.className="nav-button v90-route-button";button.dataset.route=route.id;button.innerHTML=`<span>${esc(route.icon)}</span><strong>${esc(route.label)}</strong>`;
-        button.addEventListener("click",()=>{location.hash=route.id;document.body.classList.remove("nav-open")});
-        body.appendChild(button);
-      });
-      heading.addEventListener("click",()=>{navState[group.id]=!navState[group.id];body.hidden=!navState[group.id];heading.setAttribute("aria-expanded",String(navState[group.id]));heading.querySelector("b").textContent=navState[group.id]?"−":"+";save()});
-      section.append(heading,body);wrapper.appendChild(section);
-    });
-    nav.innerHTML="";nav.appendChild(wrapper);active();openCurrent();
-  }
-  function current(){return location.hash.replace("#","")||"dashboard"}
-  function active(){
-    const route=current();
-    $$(".v90-route-button").forEach(button=>{const yes=button.dataset.route===route;button.classList.toggle("active",yes);button.setAttribute("aria-current",yes?"page":"false")});
-  }
-  function openCurrent(){
-    const route=current(),group=(config.navigationGroupsV9||[]).find(item=>item.routes.includes(route));
-    if(!group||navState[group.id])return;
-    navState[group.id]=true;save();
-    const section=$(`.v90-nav-group[data-group="${group.id}"]`);if(!section)return;
-    const heading=$(".v90-nav-heading",section),body=$(".v90-nav-body",section);
-    body.hidden=false;heading.setAttribute("aria-expanded","true");heading.querySelector("b").textContent="−";
-  }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
-})();
+
 
 /* Version 10.0 — Teacher Intelligence Engine Foundation */
 (() => {
@@ -6492,4 +6176,30 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
+})();
+
+
+/* Version 11.2.1 — Navigation Stability Repair */
+(() => {
+  "use strict";
+
+  function stabilizeNavigation() {
+    const nav = document.querySelector("#mainNav");
+    if (!nav) {
+      window.setTimeout(stabilizeNavigation, 100);
+      return;
+    }
+
+    nav.dataset.navigationOwner = "version-11";
+
+    // Version 11 remains the only navigation controller. No animation is
+    // applied to group open/close state, preventing visual flicker.
+    document.documentElement.classList.add("v1121-stable-navigation");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", stabilizeNavigation);
+  } else {
+    stabilizeNavigation();
+  }
 })();

@@ -1,6 +1,6 @@
 {
-  "version": "11.2 One-Click Weekly Workflow & Guided Handoff",
-  "releaseStatus": "Turns the Workflow Hub into a guided one-click weekly process that carries the selected week from Teacher Intelligence into Weekly Planning, attachments, print preparation, and Live Teaching.",
+  "version": "11.2.1 Navigation Stability Repair",
+  "releaseStatus": "Removes the legacy Version 8.5 and Version 9.0 navigation controllers that competed with the Version 11 authoritative sidebar.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2098,5 +2098,14 @@
       "Science Student Page",
       "Social Studies Student Page"
     ]
+  },
+  "stabilityRepairV1121": {
+    "issue": "Planning section flashing open and closed",
+    "cause": "Multiple navigation controllers repeatedly replacing the sidebar",
+    "removed": [
+      "Version 8.5 Polished Command Center navigation grouping",
+      "Version 9.0 Unified Navigation controller"
+    ],
+    "kept": "Version 11 Clean Stable Foundation navigation"
   }
 }

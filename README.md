@@ -1,8 +1,8 @@
 # TeachingHappensHere
 
-## Version 11.2 — One-Click Weekly Workflow & Guided Handoff
+## Version 11.2.1 — Navigation Stability Repair
 
-This is a full replacement release.
+This is a full replacement repair release.
 
 ## Upload all nine files
 
@@ -18,31 +18,26 @@ This is a full replacement release.
 
 ## Commit message
 
-Version 11.2 - One Click Weekly Workflow and Guided Handoff
+Version 11.2.1 - Navigation Stability Repair
 
-## Included
+## Fixed
 
-- Week selector inside Workflow Hub
-- One-click full weekly workflow
-- Selected Teacher Intelligence week
-- Automatic Weekly Planning handoff
-- Automatic attachment checklist
-- Automatic print queue
-- Automatic Monday Live Teaching preparation
-- Individual Run Step buttons
-- Workflow completion tracking
-- Selected-week summary
-- Dashboard status card
-- Health handoff checks
-- Fresh service-worker cache
-- Full JavaScript and JSON validation
+The Planning section flashed open and closed because older Version 8.5 and Version 9.0 navigation controllers were still running alongside Version 11.
+
+This release:
+
+- removes the complete Version 8.5 navigation controller
+- removes the complete Version 9.0 navigation controller
+- keeps Version 11 as the only sidebar controller
+- preserves Workflow Hub and all Version 11.2 features
+- disables navigation animations that could look like flickering
+- forces a fresh service-worker cache
 
 ## After deployment
 
-1. Open the site in an incognito/private window.
-2. Expand Planning and open Workflow Hub.
-3. Select August 3, 2026 — Curriculum Week 1.
-4. Choose Run Full Weekly Workflow.
-5. Confirm Weekly Planning was created.
-6. Confirm Lesson Attachments and Print Center contain the generated checklist.
-7. Open Live Teaching and confirm Monday is prepared.
+1. Wait for GitHub Pages to deploy.
+2. Open the site in an incognito/private window.
+3. Expand and collapse Planning several times.
+4. Confirm it stays open or closed without flashing.
+5. Open Workflow Hub and verify the one-click weekly workflow.
+6. Hard-refresh the regular browser with Ctrl+Shift+R.

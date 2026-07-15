@@ -2241,3 +2241,17 @@ body {
     display:none!important;
   }
 }
+
+
+/* Version 11.2.1 — Navigation Stability Repair */
+.v1121-stable-navigation .v110-nav-group,
+.v1121-stable-navigation .v110-nav-heading,
+.v1121-stable-navigation .v110-nav-body,
+.v1121-stable-navigation .v110-route {
+  animation: none !important;
+  transition: none !important;
+}
+
+.v1121-stable-navigation #mainNav {
+  contain: layout style;
+}
