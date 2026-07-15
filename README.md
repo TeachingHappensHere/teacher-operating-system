@@ -1,27 +1,29 @@
 # Teacher Operating System
 
-## Version 15.0.4 — Small Groups Workspace Polish
+## Version 16.0.1 — Teacher Intelligence Week Engine
 
-This release was built directly from the uploaded current GitHub repository.
+Built directly from `teacher-operating-system-main (2).zip`.
 
 ### Commit message
-Version 15.0.4 - Small Groups Workspace Polish
+Version 16.0.1 - Teacher Intelligence Week Engine
 
-### Fixed
-- Preserves the working Red, Yellow, Green, and Blue tabs.
-- Gives the planning form more usable width.
-- Changes the oversized weekday selector into a compact control.
-- Improves textarea height and resizing.
-- Keeps roster and weekly status visible without crowding the form.
-- Stacks the layout cleanly on iPad and phone screens.
-- Prevents the Today’s Reminder panel from covering navigation choices.
-- Updates application cache versions.
+### Included
+- One authoritative week list
+- Permanent duplicate-date protection
+- July 27–31 locked as Classroom Launch Week
+- Curriculum Week 1 begins August 3, 2026
+- The Mice Who Lived in a Shoe begins August 3, 2026
+- One-click Build My Week
+- Weekly Planning, Attachments, Print Center, Live Teaching, and Small Groups outputs
+- Dashboard and Health diagnostics
+
+### Important
+This release fixes duplicate week numbering and establishes the correct launch/curriculum boundary. Full holiday, iDay, break, and shortened-week alignment still requires the complete official 2026–2027 school calendar file.
 
 ### Test
-1. Open Small Groups.
-2. Click all four group tabs.
-3. Change the planning day.
-4. Type in each planning field.
-5. Save a group plan.
-6. Scroll the sidebar and confirm the reminder does not cover menu items.
-7. Test the page on an iPad-sized window.
+1. Open Teacher Intelligence.
+2. Confirm July 27 is Classroom Launch Week.
+3. Confirm August 3 is Curriculum Week 1.
+4. Confirm there is only one Curriculum Week 1.
+5. Select August 3 and click Build My Week.
+6. Open Weekly Planning, Attachments, Print Center, Live Teaching, and Small Groups.
