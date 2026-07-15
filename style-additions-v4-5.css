@@ -1,4 +1,110 @@
 
-.student-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-.student-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
-.student-card textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:8px;padding:8px}
+/* Version 4.5 Parent Communication Hub */
+.communication-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:12px 0;
+}
+.communication-tabs button{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:999px;
+  padding:9px 13px;
+  font-weight:700;
+}
+.communication-tabs button.active{
+  background:#ffcfd2;
+  color:#c4314d;
+}
+.communication-section.hidden{
+  display:none;
+}
+.communication-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:14px;
+}
+.communication-card,
+.quick-message-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+.communication-card textarea{
+  width:100%;
+  min-height:260px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px;
+  resize:vertical;
+  line-height:1.45;
+}
+.communication-card input{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:10px;
+}
+.communication-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+.communication-actions button,
+.quick-message-card button{
+  border:0;
+  background:#ffcfd2;
+  color:#c4314d;
+  border-radius:8px;
+  padding:9px 11px;
+}
+.communication-search{
+  width:min(680px,100%);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:11px;
+  margin-right:8px;
+}
+#communicationCategory{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:11px;
+}
+.contact-form{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:12px;
+}
+.contact-form label{
+  display:grid;
+  gap:6px;
+  font-weight:700;
+}
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+}
+.contact-form textarea{
+  min-height:110px;
+}
+.communication-note{
+  color:var(--muted);
+  font-size:13px;
+}
+.newsletter-card{
+  max-width:900px;
+}
+.quick-message-card{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}

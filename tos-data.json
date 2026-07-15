@@ -1,6 +1,6 @@
 {
-  "version": "16.3 Science Intelligence",
-  "releaseStatus": "Adds the complete corrected science workbook library and an isolated Science Intelligence module.",
+  "version": "16.4 Calm Dashboard & Morning Command Center",
+  "releaseStatus": "Replaces the crowded dashboard with a calm daily command center and moves secondary workflow cards into expandable compartments.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2955,6 +2955,24 @@
       "Weekly Planning",
       "Lesson Attachments",
       "Print Center"
+    ]
+  },
+  "calmDashboardV164": {
+    "route": "dashboard",
+    "isolatedModule": true,
+    "primarySections": [
+      "Morning Command Center",
+      "Today's Schedule",
+      "Today's Lessons",
+      "Needs Your Attention",
+      "Small Groups & Intervention"
+    ],
+    "collapsedCompartments": [
+      "Plan the Week",
+      "Curriculum",
+      "Students & Data",
+      "Resources & Printing",
+      "System Details"
     ]
   }
 }

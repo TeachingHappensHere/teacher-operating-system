@@ -1,156 +1,143 @@
 
-/* Version 5.0 Launch Candidate & Installation Center */
-.launch-candidate-open{overflow:hidden}
-.launch-candidate-button{
-  width:100%;
-  margin:8px 0 4px;
-  display:flex;
-  align-items:center;
-  gap:9px;
-  border:1px solid var(--line,#f1d7d7);
-  background:linear-gradient(135deg,#fff,#fff4dc);
-  color:var(--ink,#1e1820);
-  border-radius:11px;
-  padding:10px 12px;
+/* Version 5.1 Complete Instructional Content */
+.instructional-content-open{overflow:hidden}
+.instructional-content-button{
+  width:100%;margin:8px 0 4px;display:flex;align-items:center;gap:9px;
+  border:1px solid var(--line,#f1d7d7);background:linear-gradient(135deg,#fff,#eef7e8);
+  color:var(--ink,#1e1820);border-radius:11px;padding:10px 12px
 }
-.launch-candidate-button>span{
-  width:24px;height:24px;display:grid;place-items:center;border-radius:50%;
-  background:#fff0ce;color:#8c5b00;font-weight:900
+.instructional-content-button>span{
+  width:30px;height:24px;display:grid;place-items:center;border-radius:8px;
+  background:#e9f4e2;color:#356b2f;font-size:11px;font-weight:900
 }
-.launch-candidate-button strong{margin-right:auto}
-.launch-candidate-button small{color:#6f636b}
-.launch-candidate-overlay{
-  display:none;position:fixed;inset:0;z-index:23000;padding:2vh 16px;
-  background:rgba(41,25,45,.52);backdrop-filter:blur(9px)
+.instructional-content-button strong{margin-right:auto}
+.instructional-content-button small{color:#6f636b}
+.instructional-content-overlay{
+  display:none;position:fixed;inset:0;z-index:24000;padding:2vh 16px;
+  background:rgba(41,25,45,.54);backdrop-filter:blur(9px)
 }
-.launch-candidate-overlay.open{display:block}
-.launch-candidate-dialog{
-  width:min(1100px,100%);max-height:96vh;margin:auto;overflow:auto;
-  background:#fffaf8;border:1px solid #f1d7d7;border-radius:24px;
-  box-shadow:0 32px 100px rgba(50,20,35,.32)
+.instructional-content-overlay.open{display:block}
+.instructional-content-dialog{
+  width:min(1250px,100%);height:96vh;margin:auto;overflow:hidden;
+  display:flex;flex-direction:column;background:#fffaf8;border:1px solid #f1d7d7;
+  border-radius:24px;box-shadow:0 34px 110px rgba(50,20,35,.34)
 }
-.launch-candidate-header{
-  display:flex;justify-content:space-between;gap:18px;padding:23px;
+.instructional-content-dialog>header{
+  display:flex;justify-content:space-between;gap:18px;padding:20px 23px;
   background:linear-gradient(135deg,#fff,#fff1f2);border-bottom:1px solid #f1d7d7
 }
-.launch-candidate-header h2{margin:4px 0 6px;font-size:32px}
-.launch-candidate-header p:last-child{margin:0;color:#6f636b}
-#closeLaunchCandidate{
+.instructional-content-dialog>header h2{margin:4px 0 6px}
+.instructional-content-dialog>header p:last-child{margin:0;color:#6f636b}
+#closeInstructionalContent{
   width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;
   border:0;border-radius:50%;background:#fff;color:#a52b44;font-size:28px
 }
-.launch-candidate-hero{
-  margin:16px 22px;display:grid;grid-template-columns:auto 1fr auto;
-  gap:14px;align-items:center;padding:16px;border-radius:17px;
-  background:linear-gradient(135deg,#fff1f2,#fff8e8);border:1px solid #f1d7d7
+.instructional-content-toolbar{
+  display:grid;grid-template-columns:1fr 300px auto;gap:10px;padding:12px 18px;
+  border-bottom:1px solid #f1d7d7;background:#fff
 }
-.launch-candidate-logo{
-  width:62px;height:62px;display:grid;place-items:center;border-radius:18px;
-  background:#ffcfd2;color:#9e2942;font-size:20px;font-weight:900;letter-spacing:.05em
+.instructional-content-toolbar input,.instructional-content-toolbar select{
+  width:100%;border:1px solid #e7d7da;border-radius:10px;padding:10px;background:#fff
 }
-.launch-candidate-hero strong{display:block;font-size:20px}
-.launch-candidate-hero span{display:block;margin-top:4px;color:#6f636b}
-.launch-candidate-hero button,.launch-primary-action{
-  border:0;border-radius:10px;background:#c4314d;color:#fff;padding:11px 15px;font-weight:800
+.instructional-content-toolbar button,.v51-lesson-heading button{
+  border:0;border-radius:9px;background:#c4314d;color:#fff;padding:10px 13px;font-weight:800
 }
-.launch-candidate-tabs{
-  display:flex;flex-wrap:wrap;gap:8px;margin:0 22px 14px
+.instructional-content-layout{
+  flex:1;min-height:0;display:grid;grid-template-columns:280px 1fr
 }
-.launch-candidate-tabs button{
-  border:1px solid #f1d7d7;background:#fff;border-radius:999px;padding:9px 13px;font-weight:800
+#instructionalLessonList{
+  overflow:auto;padding:12px;background:#fff7f5;border-right:1px solid #f1d7d7
 }
-.launch-candidate-tabs button.active{background:#ffcfd2;color:#a52b44}
-.launch-tab-panel.hidden{display:none}
-.launch-candidate-section{
-  margin:14px 22px;padding:18px;background:#fff;border:1px solid #f1d7d7;border-radius:17px
+#instructionalLessonList button{
+  width:100%;display:block;text-align:left;border:1px solid transparent;
+  border-radius:12px;background:transparent;padding:11px;margin-bottom:7px
 }
-.launch-candidate-section h3{margin-top:0}
-.launch-setup-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:9px
+#instructionalLessonList button:hover,#instructionalLessonList button.active{
+  background:#fff;border-color:#f1d7d7;box-shadow:0 6px 16px rgba(122,73,73,.08)
 }
-.launch-setup-grid label{
-  display:flex;gap:9px;align-items:flex-start;padding:11px;border-radius:11px;background:#fff7f5
+#instructionalLessonList strong,#instructionalLessonList span,#instructionalLessonList small{display:block}
+#instructionalLessonList span{margin:4px 0}
+#instructionalLessonList small{color:#6f636b}
+#instructionalLessonDetail{overflow:auto;padding:18px}
+.v51-lesson-heading{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  padding:18px;border-radius:16px;background:linear-gradient(135deg,#fff,#fff1f2);
+  border:1px solid #f1d7d7;margin-bottom:12px
 }
-.launch-setup-grid label:has(input:checked){opacity:.68;text-decoration:line-through}
-.launch-order{
-  display:grid;grid-template-columns:repeat(5,1fr);gap:10px
+.v51-lesson-heading h2{margin:4px 0 8px}
+.v51-status{
+  display:inline-block;border-radius:999px;padding:6px 10px;background:#e9f4e2;
+  color:#356b2f;font-size:12px;font-weight:900
 }
-.launch-order article{padding:13px;border-radius:13px;background:#fff7f5}
-.launch-order b{
-  width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:#ffdfe3;color:#a52b44
+.v51-overview-grid,.v51-three-column,.v51-two-column{
+  display:grid;gap:12px;margin-bottom:12px
 }
-.launch-order strong,.launch-order span{display:block;margin-top:7px}
-.launch-order span{color:#6f636b;font-size:13px}
-.install-status-card{
-  display:flex;gap:12px;align-items:center;padding:14px;border-radius:14px;background:#fff1df
+.v51-overview-grid{grid-template-columns:1.15fr 1fr 1fr}
+.v51-three-column{grid-template-columns:repeat(3,1fr)}
+.v51-two-column{grid-template-columns:1fr 1fr}
+.v51-section{
+  padding:15px;background:#fff;border:1px solid #f1d7d7;border-radius:15px;
+  box-shadow:0 8px 20px rgba(122,73,73,.06);margin-bottom:12px
 }
-.install-status-card.installed{background:#e9f4e2}
-.install-status-card>span{
-  width:42px;height:42px;display:grid;place-items:center;border-radius:50%;
-  background:#fff;color:#a52b44;font-size:24px;font-weight:900
+.v51-three-column .v51-section,.v51-two-column .v51-section,.v51-overview-grid .v51-section{margin-bottom:0}
+.v51-section h3{margin:0 0 10px;text-transform:uppercase;font-size:13px;letter-spacing:.04em}
+.v51-section.objective{background:#fff8ed}.v51-section.target{background:#f1f7ed}
+.v51-section.success{background:#f6f2fb}.v51-section.ido{border-top:4px solid #ffcfd2}
+.v51-section.wedo{border-top:4px solid #fff0ce}.v51-section.youdo{border-top:4px solid #e9f4e2}
+.v51-section.teacher-brain{background:#f6f2fb}
+.v51-check{
+  display:flex;gap:8px;align-items:flex-start;padding:8px 9px;margin:6px 0;
+  border-radius:9px;background:#fff7f5
 }
-.install-status-card strong{display:block;font-size:18px}
-.install-status-card p{margin:4px 0 0;color:#6f636b}
-.installation-steps{padding-left:25px}
-.installation-steps li{padding:7px 0;line-height:1.45}
-.launch-after-install{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:9px
+.v51-check:has(input:checked){opacity:.68;text-decoration:line-through}
+.v51-chips,.v51-vocabulary-grid,.v51-group-grid,.v51-support-grid,.v51-attachment-grid{
+  display:grid;gap:10px
 }
-.launch-after-install p{margin:0;padding:12px;border-radius:11px;background:#fff7f5}
-.launch-feature-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px
+.v51-chips{display:flex;flex-wrap:wrap}
+.v51-chips span{border-radius:999px;padding:6px 9px;background:#fff1df}
+.v51-vocabulary-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.v51-vocabulary-card,.v51-group-card,.v51-support-card,.v51-attachment-card{
+  padding:12px;border:1px solid #eee1e3;border-radius:12px;background:#fff
 }
-.launch-feature-grid article{
-  display:flex;gap:10px;padding:12px;border-radius:12px;background:#fff7f5
+.v51-vocabulary-card p{margin:5px 0}.v51-vocabulary-card small{color:#6f636b}
+.v51-group-grid{grid-template-columns:repeat(4,1fr)}
+.v51-group-card.red{border-top:5px solid #d96666}.v51-group-card.yellow{border-top:5px solid #d8b23e}
+.v51-group-card.blue{border-top:5px solid #5d8db8}.v51-group-card.green{border-top:5px solid #65a66b}
+.v51-support-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.v51-attachment-card{
+  display:flex;justify-content:space-between;gap:12px;align-items:center
 }
-.launch-feature-grid article>span{
-  width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;border-radius:50%;
-  background:#e9f4e2;color:#356b2f;font-weight:900
+.v51-attachment-card strong,.v51-attachment-card code,.v51-attachment-card span{display:block}
+.v51-attachment-card code{margin:5px 0;color:#6f636b;font-size:11px;word-break:break-all}
+.v51-attachment-card span{color:#a52b44;font-size:12px;font-weight:800}
+.v51-attachment-card a{
+  flex:0 0 auto;border-radius:9px;padding:9px 11px;background:#ffcfd2;
+  color:#a52b44;text-decoration:none;font-weight:800
 }
-.launch-feature-grid strong{display:block}
-.launch-feature-grid p{margin:4px 0 0;color:#6f636b;font-size:13px}
-.launch-readiness-score{
-  display:flex;align-items:end;gap:10px;margin-bottom:14px
+.instructional-content-dialog>footer{
+  display:flex;justify-content:space-between;gap:12px;padding:10px 18px;
+  color:#6f636b;font-size:12px;font-weight:700;border-top:1px solid #f1d7d7;background:#fff
 }
-.launch-readiness-score strong{font-size:38px;color:#c4314d}
-.launch-readiness-score span{padding-bottom:6px;color:#6f636b;font-weight:700}
-.launch-readiness-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px
+@media(max-width:950px){
+  .v51-overview-grid,.v51-three-column{grid-template-columns:1fr}
+  .v51-group-grid{grid-template-columns:1fr 1fr}
 }
-.launch-readiness-grid article{
-  display:grid;grid-template-columns:auto 1fr;gap:3px 9px;padding:12px;border-radius:12px;background:#fff7f5
-}
-.launch-readiness-grid article>span{
-  grid-row:1/3;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;font-weight:900
-}
-.launch-readiness-grid .ready>span{background:#e9f4e2;color:#356b2f}
-.launch-readiness-grid .needs-attention>span{background:#fff1df;color:#8c4a00}
-.launch-readiness-grid small{color:#6f636b}
-.launch-readiness-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
-.launch-readiness-actions button{
-  border:0;border-radius:9px;background:#ffcfd2;color:#a52b44;padding:9px 12px;font-weight:800
-}
-.launch-candidate-footer{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;
-  padding:14px 22px 20px;color:#6f636b;font-size:12px;font-weight:700
-}
-.launch-candidate-footer>div{display:flex;flex-wrap:wrap;gap:8px}
-.launch-candidate-footer button{
-  border:0;border-radius:9px;padding:10px 13px;font-weight:800;background:#fff1f2;color:#a52b44
-}
-.launch-candidate-footer #openMyClassroom{background:#c4314d;color:#fff}
-@media(max-width:850px){
-  .launch-order{grid-template-columns:1fr 1fr}
-  .launch-candidate-hero{grid-template-columns:auto 1fr}
-  .launch-candidate-hero button{grid-column:1/3}
-}
-@media(max-width:600px){
-  .launch-candidate-overlay{padding:0}
-  .launch-candidate-dialog{min-height:100vh;max-height:100vh;border-radius:0}
-  .launch-candidate-header h2{font-size:26px}
-  .launch-order,.launch-after-install{grid-template-columns:1fr}
-  .launch-candidate-footer{align-items:flex-start;flex-direction:column}
+@media(max-width:720px){
+  .instructional-content-overlay{padding:0}
+  .instructional-content-dialog{height:100vh;border-radius:0}
+  .instructional-content-toolbar{grid-template-columns:1fr}
+  .instructional-content-layout{grid-template-columns:1fr}
+  #instructionalLessonList{display:flex;overflow:auto;border-right:0;border-bottom:1px solid #f1d7d7}
+  #instructionalLessonList button{min-width:210px}
+  .v51-two-column,.v51-group-grid{grid-template-columns:1fr}
+  .v51-lesson-heading{flex-direction:column}
 }
 @media print{
-  .launch-candidate-button,.launch-candidate-overlay{display:none!important}
+  body>*:not(#instructionalContentOverlay){display:none!important}
+  .instructional-content-overlay{display:block!important;position:static;padding:0;background:#fff}
+  .instructional-content-dialog{height:auto;max-height:none;border:0;box-shadow:none}
+  .instructional-content-dialog>header,.instructional-content-toolbar,#instructionalLessonList,
+  .instructional-content-dialog>footer,.v51-lesson-heading button{display:none!important}
+  .instructional-content-layout{display:block}
+  #instructionalLessonDetail{overflow:visible;padding:0}
 }

@@ -1,30 +1,29 @@
 # Teacher Operating System
 
-## Version 16.3 - Science Intelligence
+## Version 16.4 — Calm Dashboard & Morning Command Center
 
-Built directly from the latest uploaded GitHub repository.
+Upload the complete extracted repository to GitHub.
 
 ### Commit message
-Version 16.3 - Science Intelligence
+Version 16.4 - Calm Dashboard and Morning Command Center
 
 ### Included
-- Complete corrected science workbook library
-- 11 right-side-up workbook PDFs stored in `science-workbook/`
-- Dedicated Science Intelligence navigation item
-- Unit, topic, and workbook page organization
-- Open Workbook PDF button
-- Arizona standard, objective, materials, and teacher notes fields
-- Send to Weekly Planning
-- Send to Lesson Attachments
-- Send to Print Center
-- Class-set default of 33 copies
+- Calm morning greeting and current/next instructional block
+- Start Teaching button
+- Compact today's schedule with optional full-day expansion
+- Four focused lesson cards
+- Needs Your Attention panel
+- Small Groups and Intervention summary
+- Collapsed compartments for Planning, Curriculum, Students, Resources, and System Details
+- Existing injected workflow/status cards preserved inside System Details
+- Responsive iPad and phone layout
 - Isolated JavaScript and CSS so the central router remains unchanged
 
 ### Test
-1. Confirm existing pages still open.
-2. Expand Curriculum and open Science Intelligence.
-3. Choose several workbook sections.
-4. Open each PDF in a new tab.
-5. Enter a standard and objective.
-6. Select a weekday and click Build Science Lesson.
-7. Verify Weekly Planning, Lesson Attachments, and Print Center.
+1. Open Home Dashboard.
+2. Confirm the calm Morning Command Center appears.
+3. Expand and collapse the full schedule.
+4. Open each lesson card.
+5. Review Needs Your Attention.
+6. Expand each compartment.
+7. Open System Details and confirm older status cards are preserved there.
