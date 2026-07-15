@@ -1,6 +1,6 @@
 {
-  "version": "14.0 Student Data & Support Center",
-  "releaseStatus": "Adds a stable local-only Student Data Center with academic screening, support flags, grouping, intervention, accommodations, and contact notes.",
+  "version": "14.1 Intervention & Small-Group Center",
+  "releaseStatus": "Connects local student profiles to stable Small Groups and Intervention pages.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2473,12 +2473,12 @@
     {
       "id": "small-groups",
       "label": "Small Groups",
-      "owner": "core"
+      "owner": "v14.1"
     },
     {
       "id": "intervention",
       "label": "Intervention",
-      "owner": "core"
+      "owner": "v14.1"
     },
     {
       "id": "assessments",
@@ -2605,6 +2605,49 @@
       "Read-aloud when permitted",
       "Movement breaks",
       "Frequent checks for understanding"
+    ]
+  },
+  "interventionCenterV141": {
+    "readingGroups": [
+      {
+        "name": "Red \u2014 Intensive",
+        "frequency": "Daily",
+        "minutes": 15,
+        "focus": "Decoding, phoneme-grapheme mapping, accuracy, and controlled text"
+      },
+      {
+        "name": "Yellow \u2014 Strategic",
+        "frequency": "3\u20134 times weekly",
+        "minutes": 12,
+        "focus": "Accuracy, word recognition, phrasing, and supported fluency"
+      },
+      {
+        "name": "Blue \u2014 Developing Fluency",
+        "frequency": "2 times weekly",
+        "minutes": 10,
+        "focus": "Fluency, expression, comprehension, and vocabulary"
+      },
+      {
+        "name": "Green \u2014 Extension",
+        "frequency": "1\u20132 times weekly",
+        "minutes": 10,
+        "focus": "Prosody, deeper comprehension, vocabulary, and author\u2019s craft"
+      }
+    ],
+    "days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "measures": [
+      "ORF Words Correct",
+      "ORF Accuracy %",
+      "Maze",
+      "NWF CLS",
+      "Phonics Skill Check",
+      "Teacher Observation"
     ]
   }
 }
