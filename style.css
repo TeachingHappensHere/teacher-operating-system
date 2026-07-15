@@ -3445,3 +3445,33 @@ body {
   animation:none!important;
   transition:none!important;
 }
+
+
+/* Version 15.0.3 — Communication Studio */
+.v1503-communication-form {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  max-width:900px;
+  margin:0 auto;
+}
+.v1503-communication-form label {
+  display:grid;
+  gap:6px;
+  font-weight:700;
+}
+.v1503-communication-form .wide {
+  grid-column:1/3;
+}
+.v1503-communication-form textarea {
+  min-height:260px;
+  line-height:1.5;
+}
+@media(max-width:760px) {
+  .v1503-communication-form {
+    grid-template-columns:1fr;
+  }
+  .v1503-communication-form .wide {
+    grid-column:auto;
+  }
+}

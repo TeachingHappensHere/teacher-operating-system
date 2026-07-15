@@ -1,11 +1,11 @@
 
-const CACHE = "teaching-happens-here-v15-0-2-small-groups-startup";
+const CACHE = "teaching-happens-here-v15-0-3-students-data-routes";
 const CORE = [
   "./",
   "./index.html",
-  "./style.css?v=15.0.2",
+  "./style.css?v=15.0.3",
   "./style-additions-v7-1.css",
-  "./app.js?v=15.0.2",
+  "./app.js?v=15.0.3",
   "./launch-stabilization-v7-1.js",
   "./tos-data.json",
   "./manifest.json",

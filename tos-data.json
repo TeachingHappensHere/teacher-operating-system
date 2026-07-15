@@ -1,6 +1,6 @@
 {
-  "version": "15.0.2 Small Groups Startup Repair",
-  "releaseStatus": "Registers Small Groups and Intervention renderers before asynchronous data loading, repairs malformed local group plans, and prevents permanent loading screens.",
+  "version": "15.0.3 Students & Data Route Recovery",
+  "releaseStatus": "Makes Intervention, Assessments, Students, and Communication direct authoritative routes with immediate renderer registration and persistent recovery.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2478,22 +2478,22 @@
     {
       "id": "intervention",
       "label": "Intervention",
-      "owner": "v15.0 / v14.1"
+      "owner": "v15.0.3"
     },
     {
       "id": "assessments",
       "label": "Assessments & Data",
-      "owner": "v15.0 / v14.2"
+      "owner": "v15.0.3"
     },
     {
       "id": "students",
       "label": "Students",
-      "owner": "v14.0"
+      "owner": "v15.0.3"
     },
     {
       "id": "communication",
       "label": "Communication",
-      "owner": "core"
+      "owner": "v15.0.3"
     },
     {
       "id": "classroom-systems",
@@ -2742,5 +2742,16 @@
       "Green \u2014 Benchmark",
       "Blue \u2014 Above Level"
     ]
+  },
+  "routeRecoveryV1503": {
+    "routes": [
+      "intervention",
+      "assessments",
+      "students",
+      "communication"
+    ],
+    "rendererRegistration": "Immediate",
+    "persistentWait": true,
+    "fallbackRendering": true
   }
 }

@@ -173,49 +173,133 @@
           return;
         }
 
-        renderFeatureLoading("Intervention");
+        renderFeatureLoading("Intervention Center");
 
         let attempts = 0;
-        const waitForIntervention = window.setInterval(() => {
+        const waitForModule = window.setInterval(() => {
           attempts += 1;
 
           if (location.hash.replace("#", "") !== "intervention") {
-            window.clearInterval(waitForIntervention);
+            window.clearInterval(waitForModule);
             return;
           }
 
           if (typeof window.THH_RENDER_INTERVENTION === "function") {
-            window.clearInterval(waitForIntervention);
+            window.clearInterval(waitForModule);
             window.THH_RENDER_INTERVENTION();
             return;
           }
 
-          if (attempts >= 50) {
-            window.clearInterval(waitForIntervention);
+          if (attempts >= 80) {
+            window.clearInterval(waitForModule);
             $("#pageHost").innerHTML = `
               <section class="v150-module-error">
-                <strong>Intervention did not finish loading.</strong>
-                <span>Refresh the page once or open Health for diagnostics.</span>
+                <strong>Intervention Center did not finish loading.</strong>
+                <span>Open Health for diagnostics or refresh the page once.</span>
               </section>`;
           }
         }, 100);
       },
-      assessments: renderAssessments,
+      assessments: () => {
+        if (typeof window.THH_RENDER_ASSESSMENTS === "function") {
+          window.THH_RENDER_ASSESSMENTS();
+          return;
+        }
+
+        renderFeatureLoading("Assessments & Progress Monitoring");
+
+        let attempts = 0;
+        const waitForModule = window.setInterval(() => {
+          attempts += 1;
+
+          if (location.hash.replace("#", "") !== "assessments") {
+            window.clearInterval(waitForModule);
+            return;
+          }
+
+          if (typeof window.THH_RENDER_ASSESSMENTS === "function") {
+            window.clearInterval(waitForModule);
+            window.THH_RENDER_ASSESSMENTS();
+            return;
+          }
+
+          if (attempts >= 80) {
+            window.clearInterval(waitForModule);
+            $("#pageHost").innerHTML = `
+              <section class="v150-module-error">
+                <strong>Assessments & Progress Monitoring did not finish loading.</strong>
+                <span>Open Health for diagnostics or refresh the page once.</span>
+              </section>`;
+          }
+        }, 100);
+      },
       "classroom-systems": renderClassroomSystems,
       students: () => {
         if (typeof window.THH_RENDER_STUDENT_DATA === "function") {
           window.THH_RENDER_STUDENT_DATA();
-        } else {
-          renderFeatureLoading("Student Data & Support Center");
-          window.setTimeout(() => {
-            if (location.hash.replace("#", "") === "students" &&
-                typeof window.THH_RENDER_STUDENT_DATA === "function") {
-              window.THH_RENDER_STUDENT_DATA();
-            }
-          }, 80);
+          return;
         }
+
+        renderFeatureLoading("Student Data & Support Center");
+
+        let attempts = 0;
+        const waitForModule = window.setInterval(() => {
+          attempts += 1;
+
+          if (location.hash.replace("#", "") !== "students") {
+            window.clearInterval(waitForModule);
+            return;
+          }
+
+          if (typeof window.THH_RENDER_STUDENT_DATA === "function") {
+            window.clearInterval(waitForModule);
+            window.THH_RENDER_STUDENT_DATA();
+            return;
+          }
+
+          if (attempts >= 80) {
+            window.clearInterval(waitForModule);
+            $("#pageHost").innerHTML = `
+              <section class="v150-module-error">
+                <strong>Student Data & Support Center did not finish loading.</strong>
+                <span>Open Health for diagnostics or refresh the page once.</span>
+              </section>`;
+          }
+        }, 100);
       },
-      communication: renderCommunication,
+      communication: () => {
+        if (typeof window.THH_RENDER_COMMUNICATION === "function") {
+          window.THH_RENDER_COMMUNICATION();
+          return;
+        }
+
+        renderFeatureLoading("Family Communication Studio");
+
+        let attempts = 0;
+        const waitForModule = window.setInterval(() => {
+          attempts += 1;
+
+          if (location.hash.replace("#", "") !== "communication") {
+            window.clearInterval(waitForModule);
+            return;
+          }
+
+          if (typeof window.THH_RENDER_COMMUNICATION === "function") {
+            window.clearInterval(waitForModule);
+            window.THH_RENDER_COMMUNICATION();
+            return;
+          }
+
+          if (attempts >= 80) {
+            window.clearInterval(waitForModule);
+            $("#pageHost").innerHTML = `
+              <section class="v150-module-error">
+                <strong>Family Communication Studio did not finish loading.</strong>
+                <span>Open Health for diagnostics or refresh the page once.</span>
+              </section>`;
+          }
+        }, 100);
+      },
       calendar: renderCalendar,
       resources: renderResources,
       forms: renderForms,
@@ -7293,33 +7377,62 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     .replaceAll("'","&#039;");
 
   async function start() {
+    // Register immediately so the router can always open the page.
+    window.THH_RENDER_STUDENT_DATA = renderCenter;
+
     try {
-      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
-
-      try {
-        records = JSON.parse(localStorage.getItem(STORE) || "[]");
-        if (!Array.isArray(records)) records = [];
-      } catch {
-        records = [];
-      }
-
-      try {
-        contacts = JSON.parse(localStorage.getItem(CONTACT_STORE) || "[]");
-        if (!Array.isArray(contacts)) contacts = [];
-      } catch {
-        contacts = [];
-      }
-
-      try {
-        ui = { ...ui, ...JSON.parse(localStorage.getItem(UI_STORE) || "{}") };
-      } catch {}
-
-      normalize();
-      window.THH_RENDER_STUDENT_DATA = renderCenter;
-      waitForShell();
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => {
+        if (!response.ok) throw new Error(`Configuration request failed: ${response.status}`);
+        return response.json();
+      });
     } catch (error) {
-      console.error("Version 14.0 failed to initialize.", error);
+      console.warn("Student Data is using fallback configuration.", error);
+      config = {
+        studentDataCenterV140: {
+          privacyNotice: "Student records are stored only in this browser's local storage.",
+          supportFlags: ["IEP","504","EL","Speech","Intervention","Health Plan","Gifted / Extension"],
+          readingGroups: [
+            "Red — Far Below Level",
+            "Yellow — Below Level",
+            "Green — Benchmark",
+            "Blue — Above Level",
+            "Not Assigned"
+          ],
+          interventionTiers: ["Tier 1","Tier 2","Tier 3","Monitoring Only","Not Assigned"],
+          defaultAccommodations: [
+            "Preferential seating",
+            "Directions repeated or clarified",
+            "Chunked assignments",
+            "Extended time",
+            "Small-group testing",
+            "Visual supports",
+            "Sentence frames",
+            "Movement breaks"
+          ]
+        }
+      };
     }
+
+    try {
+      records = JSON.parse(localStorage.getItem(STORE) || "[]");
+      if (!Array.isArray(records)) records = [];
+    } catch {
+      records = [];
+    }
+
+    try {
+      contacts = JSON.parse(localStorage.getItem(CONTACT_STORE) || "[]");
+      if (!Array.isArray(contacts)) contacts = [];
+    } catch {
+      contacts = [];
+    }
+
+    try {
+      ui = { ...ui, ...JSON.parse(localStorage.getItem(UI_STORE) || "{}") };
+    } catch {}
+
+    normalize();
+    waitForShell();
   }
 
   function normalize() {
@@ -8356,40 +8469,61 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     .replaceAll('"',"&quot;").replaceAll("'","&#039;");
 
   async function start() {
+    // Register immediately so Assessments cannot remain on a loading page.
+    window.THH_RENDER_ASSESSMENTS = renderCenter;
+
     try {
-      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
-
-      try {
-        students = JSON.parse(localStorage.getItem(STUDENT_STORE) || "[]");
-        if (!Array.isArray(students)) students = [];
-      } catch {
-        students = [];
-      }
-
-      try {
-        interventionNotes = JSON.parse(localStorage.getItem(PROGRESS_STORE) || "[]");
-        if (!Array.isArray(interventionNotes)) interventionNotes = [];
-      } catch {
-        interventionNotes = [];
-      }
-
-      try {
-        records = JSON.parse(localStorage.getItem(ASSESSMENT_STORE) || "[]");
-        if (!Array.isArray(records)) records = [];
-      } catch {
-        records = [];
-      }
-
-      try {
-        ui = { ...ui, ...JSON.parse(localStorage.getItem(UI_STORE) || "{}") };
-      } catch {}
-
-      normalize();
-      window.THH_RENDER_ASSESSMENTS = renderCenter;
-      waitForShell();
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => {
+        if (!response.ok) throw new Error(`Configuration request failed: ${response.status}`);
+        return response.json();
+      });
     } catch (error) {
-      console.error("Version 14.2 failed to initialize.", error);
+      console.warn("Assessments is using fallback configuration.", error);
+      config = {
+        assessmentCenterV142: {
+          assessmentTypes: [
+            "DIBELS Composite","ORF Words Correct","ORF Accuracy %","Maze","NWF CLS",
+            "Open Court Reading","Open Court Phonics","Vocabulary","Spelling",
+            "Grammar / GUM","Eureka Math²","Science","Social Studies",
+            "Writing Rubric","Teacher Observation","Other"
+          ],
+          windows: [
+            "Beginning of Year","Quarter 1","Quarter 2","Middle of Year",
+            "Quarter 3","Quarter 4","End of Year","Weekly","Custom"
+          ],
+          statusOptions: ["Not Started","Scheduled","In Progress","Complete","Needs Make-Up"],
+          scoreFormats: ["Number","Percentage","Words Correct","Rubric 1–4","Level / Letter","Pass / Needs Support"]
+        }
+      };
     }
+
+    try {
+      students = JSON.parse(localStorage.getItem(STUDENT_STORE) || "[]");
+      if (!Array.isArray(students)) students = [];
+    } catch {
+      students = [];
+    }
+
+    try {
+      interventionNotes = JSON.parse(localStorage.getItem(PROGRESS_STORE) || "[]");
+      if (!Array.isArray(interventionNotes)) interventionNotes = [];
+    } catch {
+      interventionNotes = [];
+    }
+
+    try {
+      records = JSON.parse(localStorage.getItem(ASSESSMENT_STORE) || "[]");
+      if (!Array.isArray(records)) records = [];
+    } catch {
+      records = [];
+    }
+
+    try {
+      ui = { ...ui, ...JSON.parse(localStorage.getItem(UI_STORE) || "{}") };
+    } catch {}
+
+    normalize();
+    waitForShell();
   }
 
   function normalize() {
@@ -9305,5 +9439,173 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     document.addEventListener("DOMContentLoaded", () => setTimeout(check, 250));
   } else {
     setTimeout(check, 250);
+  }
+})();
+
+
+/* =====================================================================
+   Version 15.0.3 — Direct Communication Renderer
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  function renderCommunicationDirect() {
+    if (location.hash.replace("#", "") !== "communication") return;
+
+    const host = $("#pageHost");
+    if (!host) return;
+
+    host.innerHTML = `
+      <section id="v1503Communication">
+        <section class="page-header">
+          <div>
+            <p>COMMUNICATION</p>
+            <h2>Family Communication Studio</h2>
+            <span>Create a positive update, intervention note, home-practice message, or classroom announcement.</span>
+          </div>
+        </section>
+
+        <section class="panel v1503-communication-form">
+          <label>
+            <span>Message Type</span>
+            <select id="v1503MessageType">
+              <option>Positive Progress</option>
+              <option>Intervention Update</option>
+              <option>Home Practice</option>
+              <option>Classroom Announcement</option>
+              <option>Attendance Follow-Up</option>
+              <option>Conference Follow-Up</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Student or Topic</span>
+            <input id="v1503MessageSubject" placeholder="Student name or classroom topic">
+          </label>
+
+          <label class="wide">
+            <span>Message</span>
+            <textarea id="v1503MessageBody" placeholder="Write or generate a family message..."></textarea>
+          </label>
+
+          <div class="button-row wide">
+            <button id="v1503GenerateMessage" class="secondary-button">Generate Starter</button>
+            <button id="v1503CopyMessage" class="primary-button">Copy Message</button>
+            <button id="v1503ClearMessage" class="secondary-button">Clear</button>
+          </div>
+        </section>
+      </section>
+    `;
+
+    $("#v1503GenerateMessage").onclick = generateStarter;
+    $("#v1503CopyMessage").onclick = copyMessage;
+    $("#v1503ClearMessage").onclick = () => {
+      $("#v1503MessageSubject").value = "";
+      $("#v1503MessageBody").value = "";
+    };
+  }
+
+  function generateStarter() {
+    const subject = $("#v1503MessageSubject").value.trim() || "your child";
+    const type = $("#v1503MessageType").value;
+
+    const starters = {
+      "Positive Progress": `Hello,\n\nI wanted to share a positive update about ${subject}. I have noticed strong effort and growth during our recent classroom work. I am proud of the progress being made and will continue encouraging this success.\n\nWarmly,\nMrs. Parrish`,
+      "Intervention Update": `Hello,\n\nI wanted to share an update about the support ${subject} is receiving. We are currently focusing on a specific instructional goal through small-group practice and frequent feedback. I will continue monitoring progress and share important updates.\n\nWarmly,\nMrs. Parrish`,
+      "Home Practice": `Hello,\n\nThis week, ${subject} is practicing an important classroom skill. A short, positive practice session at home can help reinforce the learning. Thank you for partnering with us.\n\nWarmly,\nMrs. Parrish`,
+      "Classroom Announcement": `Hello families,\n\nI am writing to share an important classroom update about ${subject}. Please review the information and contact me with any questions.\n\nWarmly,\nMrs. Parrish`,
+      "Attendance Follow-Up": `Hello,\n\nI am checking in regarding ${subject}'s recent attendance. Consistent attendance helps students participate in daily instruction and classroom routines. Please let me know how I can support a successful return to class.\n\nWarmly,\nMrs. Parrish`,
+      "Conference Follow-Up": `Hello,\n\nThank you for meeting with me to discuss ${subject}. I appreciate our partnership. I will continue supporting the goals we discussed and will share updates as we move forward.\n\nWarmly,\nMrs. Parrish`
+    };
+
+    $("#v1503MessageBody").value = starters[type] || "";
+  }
+
+  async function copyMessage() {
+    const message = $("#v1503MessageBody").value;
+    if (!message.trim()) return notify("Write or generate a message first.");
+
+    try {
+      await navigator.clipboard.writeText(message);
+      notify("Message copied.");
+    } catch {
+      $("#v1503MessageBody").select();
+      document.execCommand("copy");
+      notify("Message copied.");
+    }
+  }
+
+  function notify(message) {
+    const toast = $("#toast");
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 1800);
+  }
+
+  window.THH_RENDER_COMMUNICATION = renderCommunicationDirect;
+
+  window.addEventListener("hashchange", () => {
+    if (location.hash.replace("#", "") === "communication") {
+      setTimeout(renderCommunicationDirect, 0);
+    }
+  });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      if (location.hash.replace("#", "") === "communication") renderCommunicationDirect();
+    });
+  } else if (location.hash.replace("#", "") === "communication") {
+    renderCommunicationDirect();
+  }
+})();
+
+
+/* Version 15.0.3 — Students & Data Route Watchdog */
+(() => {
+  "use strict";
+
+  const ROUTES = {
+    intervention: ["THH_RENDER_INTERVENTION", "v141Intervention"],
+    assessments: ["THH_RENDER_ASSESSMENTS", "v142AssessmentCenter"],
+    students: ["THH_RENDER_STUDENT_DATA", "v140StudentCenter"],
+    communication: ["THH_RENDER_COMMUNICATION", "v1503Communication"]
+  };
+
+  function recover() {
+    const route = location.hash.replace("#", "") || "dashboard";
+    const entry = ROUTES[route];
+    if (!entry) return;
+
+    const [rendererName, elementId] = entry;
+    if (document.getElementById(elementId)) return;
+
+    const renderer = window[rendererName];
+    if (typeof renderer === "function") {
+      try {
+        renderer();
+      } catch (error) {
+        console.error(`Route recovery failed for ${route}.`, error);
+      }
+    }
+  }
+
+  window.addEventListener("hashchange", () => {
+    setTimeout(recover, 150);
+    setTimeout(recover, 600);
+  });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(recover, 150);
+      setTimeout(recover, 600);
+    });
+  } else {
+    setTimeout(recover, 150);
   }
 })();

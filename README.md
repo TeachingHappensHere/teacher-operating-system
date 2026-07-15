@@ -1,26 +1,31 @@
 # Teacher Operating System
 
-## Version 15.0.2 — Small Groups Startup Repair
+## Version 15.0.3 — Students & Data Route Recovery
 
 Upload the complete extracted repository to the GitHub repository root.
 
 ### Commit message
-Version 15.0.2 - Small Groups Startup Repair
+Version 15.0.3 - Students and Data Route Recovery
 
-### Fixed
-- Registers Small Groups and Intervention renderers immediately.
-- Prevents data-loading problems from leaving a permanent loading screen.
-- Validates and repairs malformed saved group-plan data.
-- Repairs invalid saved day or group selections.
-- Uses a built-in fallback group configuration when `tos-data.json` cannot load.
-- Keeps the correct Red, Yellow, Green, Blue hierarchy.
-- Adds direct startup diagnostics and route recovery.
-- Updates the application and service-worker cache versions.
+### Fixed together
+- Intervention
+- Assessments & Data
+- Students
+- Communication
 
-### Test
-1. Open Small Groups.
-2. Confirm the Small-Group & MOWR Center appears instead of the loading screen.
-3. Confirm group tabs display Red, Yellow, Green, Blue.
-4. Select each group and each weekday.
-5. Save a test group plan.
-6. Open Intervention and confirm it also loads.
+### Repairs
+- Registers Student Data and Assessments renderers before data loading.
+- Uses persistent route waits instead of one short timeout.
+- Keeps Intervention's immediate renderer and strengthens its recovery.
+- Gives Communication a dedicated direct renderer.
+- Adds a watchdog that retries all four routes after navigation.
+- Adds fallback configuration when `tos-data.json` cannot load.
+- Updates application and service-worker cache versions.
+
+### Test after deployment
+1. Open Intervention.
+2. Open Assessments & Data.
+3. Open Students.
+4. Open Communication.
+5. Leave each page open for 20 seconds.
+6. Confirm no page stays blank or on a permanent loading screen.
