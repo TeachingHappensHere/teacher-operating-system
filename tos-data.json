@@ -1,6 +1,6 @@
 {
-  "version": "12.0 Live Teaching Center",
-  "releaseStatus": "Adds a dedicated live classroom teaching screen with the current block, next block, timers, lesson details, completion tracking, and teacher notes.",
+  "version": "12.0.1 Live Teaching Stability Repair",
+  "releaseStatus": "Removes the legacy Version 8.0 Live Teaching controller and makes Version 12 the only renderer for the teachday route.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2294,5 +2294,11 @@
         "End-of-Day Reflection"
       ]
     ]
+  },
+  "liveTeachingStabilityV1201": {
+    "issue": "Live Teaching page flashing or repeatedly changing",
+    "cause": "Version 8.0 and Version 12.0 both rendered the teachday route",
+    "removedController": "Version 8.0 Live Teaching Timeline & Assessment-Day Mode",
+    "authoritativeController": "Version 12.0 Live Teaching Center"
   }
 }
