@@ -1,6 +1,6 @@
 {
-  "version": "8.5 Polished Command Center & Compact Dashboard",
-  "releaseStatus": "Polishes the verified Teacher Operating System with a compact dashboard command center, grouped navigation, improved spacing, and stronger desktop/iPad/phone layouts.",
+  "version": "8.6 Curriculum Start-Date Guard & Launch Week Lock",
+  "releaseStatus": "Locks July 27\u201331, 2026 as Classroom Launch Week and begins regular curriculum on Monday, August 3, 2026.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1467,7 +1467,9 @@
       "Recess expectations",
       "Pack-up checklist",
       "Family welcome letter"
-    ]
+    ],
+    "curriculumStartDate": "2026-08-03",
+    "launchWeekOnly": true
   },
   "dashboardGroups": [
     {
@@ -1494,5 +1496,27 @@
         "production"
       ]
     }
-  ]
+  ],
+  "schoolYear2026_2027": {
+    "launchWeekStart": "2026-07-27",
+    "launchWeekEnd": "2026-07-31",
+    "curriculumStartDate": "2026-08-03",
+    "openCourtStart": {
+      "unit": 1,
+      "lesson": 1,
+      "title": "The Mice Who Lived in a Shoe"
+    },
+    "eurekaStart": {
+      "module": 1,
+      "lesson": 1
+    },
+    "launchWeekRules": [
+      "Teach routines and procedures",
+      "Build classroom community",
+      "Practice transitions and independence",
+      "Complete informal readiness checks",
+      "Do not begin the regular Open Court lesson sequence",
+      "Do not begin the regular Eureka Math\u00b2 lesson sequence"
+    ]
+  }
 }

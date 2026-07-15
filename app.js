@@ -3723,3 +3723,455 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     start();
   }
 })();
+
+
+/* Version 8.6 — Curriculum Start-Date Guard & Launch Week Lock */
+(() => {
+  "use strict";
+
+  const SETTINGS_KEY = "thh-v86:school-year";
+  const WEEK_STORE = "thh-v73:weekly-plan";
+
+  let config = null;
+  let settings = {
+    curriculumStartDate: "2026-08-03",
+    launchWeekStart: "2026-07-27",
+    launchWeekEnd: "2026-07-31",
+    enforceStartDate: true
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+
+      try {
+        settings = {
+          ...settings,
+          ...JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}")
+        };
+      } catch {}
+
+      const schoolYear = config.schoolYear2026_2027 || {};
+      settings.curriculumStartDate = schoolYear.curriculumStartDate || settings.curriculumStartDate;
+      settings.launchWeekStart = schoolYear.launchWeekStart || settings.launchWeekStart;
+      settings.launchWeekEnd = schoolYear.launchWeekEnd || settings.launchWeekEnd;
+      saveSettings();
+
+      protectSavedWeeklyPlan();
+      waitForShell();
+    } catch (error) {
+      console.warn("Version 8.6 could not start.", error);
+    }
+  }
+
+  function saveSettings() {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  }
+
+  function parseDate(value) {
+    if (!value) return null;
+    const date = new Date(`${value}T12:00:00`);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  function formatDate(value) {
+    const date = parseDate(value);
+    if (!date) return "";
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+
+  function isBeforeCurriculumStart(value) {
+    const date = parseDate(value);
+    const start = parseDate(settings.curriculumStartDate);
+    if (!date || !start) return false;
+    return date < start;
+  }
+
+  function isLaunchWeek(value) {
+    const date = parseDate(value);
+    const start = parseDate(settings.launchWeekStart);
+    const end = parseDate(settings.launchWeekEnd);
+    if (!date || !start || !end) return false;
+    return date >= start && date <= end;
+  }
+
+  function protectSavedWeeklyPlan() {
+    if (!settings.enforceStartDate) return;
+
+    let week = null;
+    try {
+      week = JSON.parse(localStorage.getItem(WEEK_STORE) || "null");
+    } catch {}
+
+    if (!week?.days) return;
+
+    const weekOf = week.weekOf || "";
+    if (!weekOf || !isBeforeCurriculumStart(weekOf)) return;
+
+    Object.values(week.days).forEach(day => {
+      if (!day) return;
+
+      const openCourtText = String(day.openCourtLesson || "");
+      const readingText = String(day.reading || "");
+      const mathText = String(day.math || "");
+
+      if (
+        openCourtText.includes("The Mice Who Lived in a Shoe") ||
+        openCourtText.includes("Unit 1, Lesson 1") ||
+        readingText.includes("The Mice Who Lived in a Shoe")
+      ) {
+        day.openCourtLesson = "";
+        day.reading = "";
+      }
+
+      if (
+        mathText.includes("Module 1, Lesson 1") ||
+        mathText.includes("Eureka Math² Module 1")
+      ) {
+        day.math = "";
+        day.math2 = "";
+      }
+
+      day.focus = day.focus || "Classroom Launch Week";
+      day.launchRoutine = day.launchRoutine || "Routines, procedures, community, and readiness";
+      day.notes = [
+        day.notes || "",
+        "Curriculum pacing is locked until August 3, 2026."
+      ].filter(Boolean).join("\n");
+    });
+
+    week.title = "Classroom Launch Week";
+    week.pillar = week.pillar || "Heart";
+    week.updatedAt = new Date().toISOString();
+    localStorage.setItem(WEEK_STORE, JSON.stringify(week));
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    addSettingsNavigation();
+    window.addEventListener("hashchange", handleRoute);
+
+    new MutationObserver(() => {
+      const route = location.hash.replace("#", "") || "dashboard";
+      if (route === "school-year-settings" && !$("#v86Settings")) renderSettings();
+      if (route === "dashboard") setTimeout(injectDashboardBanner, 0);
+      if (route === "first-week-builder") setTimeout(lockFirstWeekBuilder, 0);
+      if (route === "lesson-plans") setTimeout(injectPlanningGuard, 0);
+      if (route === "open-court") setTimeout(injectOpenCourtGuard, 0);
+      if (route === "eureka-math") setTimeout(injectEurekaGuard, 0);
+      if (route === "health") setTimeout(injectHealthCard, 0);
+    }).observe($("#pageHost"), { childList: true, subtree: true });
+
+    handleRoute();
+  }
+
+  function addSettingsNavigation() {
+    if ($('[data-route="school-year-settings"]')) return;
+
+    const settingsButton = $('[data-route="settings"]');
+    const button = document.createElement("button");
+    button.className = "nav-button";
+    button.dataset.route = "school-year-settings";
+    button.innerHTML = "<span>📅</span><strong>School-Year Dates</strong>";
+    button.addEventListener("click", () => {
+      location.hash = "school-year-settings";
+    });
+
+    if (settingsButton) settingsButton.insertAdjacentElement("beforebegin", button);
+    else $("#mainNav").appendChild(button);
+  }
+
+  function handleRoute() {
+    const route = location.hash.replace("#", "") || "dashboard";
+
+    if (route === "school-year-settings") setTimeout(renderSettings, 0);
+    if (route === "dashboard") setTimeout(injectDashboardBanner, 0);
+    if (route === "first-week-builder") setTimeout(lockFirstWeekBuilder, 0);
+    if (route === "lesson-plans") setTimeout(injectPlanningGuard, 0);
+    if (route === "open-court") setTimeout(injectOpenCourtGuard, 0);
+    if (route === "eureka-math") setTimeout(injectEurekaGuard, 0);
+    if (route === "health") setTimeout(injectHealthCard, 0);
+  }
+
+  function renderSettings() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    host.innerHTML = `
+      <section id="v86Settings">
+        <section class="page-header">
+          <div>
+            <p>VERSION 8.6</p>
+            <h2>School-Year Dates & Curriculum Guard</h2>
+            <span>Protect Launch Week and prevent curriculum from beginning before the approved date.</span>
+          </div>
+        </section>
+
+        <section class="v86-date-grid">
+          <article class="panel">
+            <span>LAUNCH WEEK BEGINS</span>
+            <strong>${esc(formatDate(settings.launchWeekStart))}</strong>
+            <p>Classroom routines, procedures, belonging, transitions, and readiness.</p>
+          </article>
+
+          <article class="panel">
+            <span>LAUNCH WEEK ENDS</span>
+            <strong>${esc(formatDate(settings.launchWeekEnd))}</strong>
+            <p>No regular Open Court or Eureka Math² pacing during this week.</p>
+          </article>
+
+          <article class="panel v86-curriculum-start">
+            <span>CORE CURRICULUM BEGINS</span>
+            <strong>${esc(formatDate(settings.curriculumStartDate))}</strong>
+            <p>Open Court Unit 1, Lesson 1 and Eureka Math² Module 1, Lesson 1 begin here.</p>
+          </article>
+        </section>
+
+        <section class="panel v86-settings-form">
+          <h3>Curriculum Start-Date Settings</h3>
+
+          <div class="v86-form-grid">
+            <label>
+              <span>Launch Week Start</span>
+              <input id="v86LaunchStart" type="date" value="${esc(settings.launchWeekStart)}">
+            </label>
+
+            <label>
+              <span>Launch Week End</span>
+              <input id="v86LaunchEnd" type="date" value="${esc(settings.launchWeekEnd)}">
+            </label>
+
+            <label>
+              <span>Curriculum Start Date</span>
+              <input id="v86CurriculumStart" type="date" value="${esc(settings.curriculumStartDate)}">
+            </label>
+          </div>
+
+          <label class="v86-toggle">
+            <input id="v86Enforce" type="checkbox" ${settings.enforceStartDate ? "checked" : ""}>
+            <span>Prevent Open Court and Eureka Math² from being assigned before the curriculum start date.</span>
+          </label>
+
+          <button id="v86SaveSettings" class="primary-button">Save School-Year Dates</button>
+        </section>
+
+        <section class="panel">
+          <h3>Curriculum Start Sequence</h3>
+          <div class="v86-sequence">
+            <article>
+              <span>OPEN COURT</span>
+              <strong>Unit 1, Lesson 1</strong>
+              <p>The Mice Who Lived in a Shoe</p>
+            </article>
+            <article>
+              <span>EUREKA MATH²</span>
+              <strong>Module 1, Lesson 1</strong>
+              <p>Regular math pacing begins August 3, 2026.</p>
+            </article>
+            <article>
+              <span>FOUNDATIONAL READING</span>
+              <strong>Regular pacing begins</strong>
+              <p>Heggerty, phonics, vocabulary, UFLI, and MOWR align to the curriculum week.</p>
+            </article>
+          </div>
+        </section>
+      </section>
+    `;
+
+    $("#v86SaveSettings")?.addEventListener("click", () => {
+      settings.launchWeekStart = $("#v86LaunchStart").value;
+      settings.launchWeekEnd = $("#v86LaunchEnd").value;
+      settings.curriculumStartDate = $("#v86CurriculumStart").value;
+      settings.enforceStartDate = $("#v86Enforce").checked;
+      saveSettings();
+      protectSavedWeeklyPlan();
+      renderSettings();
+      toast("School-year dates saved.");
+    });
+  }
+
+  function injectDashboardBanner() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v86StartBanner")) return;
+
+    const banner = document.createElement("section");
+    banner.id = "v86StartBanner";
+    banner.className = "v86-start-banner";
+    banner.innerHTML = `
+      <div>
+        <p>2026–2027 CURRICULUM START</p>
+        <h3>Core curriculum begins Monday, August 3, 2026</h3>
+        <span>July 27–31 is reserved for Classroom Launch Week. “The Mice Who Lived in a Shoe” begins August 3.</span>
+      </div>
+      <button>Review Dates</button>
+    `;
+
+    banner.querySelector("button").addEventListener("click", () => {
+      location.hash = "school-year-settings";
+    });
+
+    dashboard.prepend(banner);
+  }
+
+  function lockFirstWeekBuilder() {
+    const builder = $("#v84");
+    if (!builder || $("#v86LaunchLock")) return;
+
+    const banner = document.createElement("section");
+    banner.id = "v86LaunchLock";
+    banner.className = "v86-launch-lock";
+    banner.innerHTML = `
+      <div>
+        <p>LAUNCH WEEK LOCKED</p>
+        <h3>July 27–31, 2026 is routines and community week</h3>
+        <span>Regular Open Court and Eureka Math² lessons begin August 3, 2026.</span>
+      </div>
+    `;
+
+    const header = $(".page-header", builder);
+    header?.insertAdjacentElement("afterend", banner);
+  }
+
+  function injectPlanningGuard() {
+    const studio = $("#v73PlanningStudio");
+    if (!studio || $("#v86PlanningGuard")) return;
+
+    const weekOf = $("#v73WeekOf")?.value || "";
+    const guarded = settings.enforceStartDate && weekOf && isBeforeCurriculumStart(weekOf);
+
+    const card = document.createElement("section");
+    card.id = "v86PlanningGuard";
+    card.className = guarded ? "v86-warning-card" : "v86-ready-card";
+    card.innerHTML = guarded
+      ? `
+        <div>
+          <p>CURRICULUM START-DATE GUARD</p>
+          <h3>This week is before August 3, 2026</h3>
+          <span>Use Classroom Launch lessons only. Open Court Unit 1, Lesson 1 must not begin yet.</span>
+        </div>
+        <button>Open First-Week Builder</button>
+      `
+      : `
+        <div>
+          <p>CURRICULUM START-DATE GUARD</p>
+          <h3>Curriculum pacing is available</h3>
+          <span>Open Court Unit 1, Lesson 1 begins on or after August 3, 2026.</span>
+        </div>
+        <button>Review Dates</button>
+      `;
+
+    card.querySelector("button").addEventListener("click", () => {
+      location.hash = guarded ? "first-week-builder" : "school-year-settings";
+    });
+
+    const header = $(".v73-planning-header", studio);
+    header?.insertAdjacentElement("afterend", card);
+  }
+
+  function injectOpenCourtGuard() {
+    const page = $("#v81");
+    if (!page || $("#v86OpenCourtGuard")) return;
+
+    const guard = document.createElement("section");
+    guard.id = "v86OpenCourtGuard";
+    guard.className = "v86-curriculum-guard";
+    guard.innerHTML = `
+      <div>
+        <p>OPEN COURT START DATE</p>
+        <h3>Unit 1, Lesson 1 begins August 3, 2026</h3>
+        <span>The Mice Who Lived in a Shoe is the first curriculum selection of the school year.</span>
+      </div>
+    `;
+
+    const header = $(".page-header", page);
+    header?.insertAdjacentElement("afterend", guard);
+  }
+
+  function injectEurekaGuard() {
+    const page = $("#v82MathStudio");
+    if (!page || $("#v86EurekaGuard")) return;
+
+    const guard = document.createElement("section");
+    guard.id = "v86EurekaGuard";
+    guard.className = "v86-curriculum-guard";
+    guard.innerHTML = `
+      <div>
+        <p>EUREKA MATH² START DATE</p>
+        <h3>Module 1, Lesson 1 begins August 3, 2026</h3>
+        <span>July 27–31 remains focused on math routines, manipulatives, discussion expectations, and readiness.</span>
+      </div>
+    `;
+
+    const header = $(".page-header", page);
+    header?.insertAdjacentElement("afterend", guard);
+  }
+
+  function injectHealthCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v86HealthCard")) return;
+
+    const panel = document.createElement("section");
+    panel.id = "v86HealthCard";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 8.6 Curriculum-Date Health</h3>
+      <div class="health-grid">
+        ${healthItem("Launch Week start", settings.launchWeekStart === "2026-07-27", formatDate(settings.launchWeekStart))}
+        ${healthItem("Launch Week end", settings.launchWeekEnd === "2026-07-31", formatDate(settings.launchWeekEnd))}
+        ${healthItem("Curriculum start", settings.curriculumStartDate === "2026-08-03", formatDate(settings.curriculumStartDate))}
+        ${healthItem("Start-date enforcement", settings.enforceStartDate, settings.enforceStartDate ? "Enabled" : "Disabled")}
+      </div>
+      <button class="secondary-button">Review School-Year Dates</button>
+    `;
+
+    panel.querySelector("button").addEventListener("click", () => {
+      location.hash = "school-year-settings";
+    });
+
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div>
+          <span>${esc(title)}</span>
+          <small>${esc(detail)}</small>
+        </div>
+      </article>
+    `;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1800);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();

@@ -1,8 +1,8 @@
 # TeachingHappensHere
 
-## Version 8.5 — Polished Command Center & Compact Dashboard
+## Version 8.6 — Curriculum Start-Date Guard & Launch Week Lock
 
-This is a full replacement package built on Version 8.4.1.
+This is a full replacement package built on Version 8.5.
 
 ## Upload every file to the repository root
 
@@ -18,25 +18,33 @@ This is a full replacement package built on Version 8.4.1.
 
 ## Commit message
 
-Version 8.5 - Polished Command Center and Compact Dashboard
+Version 8.6 - Curriculum Start Date Guard and Launch Week Lock
 
-## Changes
+## School-year rules
 
-- Replaces stacked full-width dashboard cards with a compact command-center grid
-- Groups the left navigation into Today, Planning, Curriculum, Students & Data, and Resources
-- Collapses less-frequently used navigation groups
-- Compacts the welcome, classroom photo, and classroom-links areas
-- Improves spacing and visual hierarchy
-- Adds dashboard focus mode
-- Improves desktop, iPad, and phone layouts
-- Preserves all working Version 8.4.1 features
-- Forces a new service-worker cache
+- July 27–31, 2026: Classroom Launch Week
+- August 3, 2026: Core curriculum begins
+- Open Court Unit 1, Lesson 1: The Mice Who Lived in a Shoe begins August 3
+- Eureka Math² Module 1, Lesson 1 begins August 3
+
+## Included
+
+- School-Year Dates page
+- Curriculum start-date enforcement
+- Launch Week dashboard banner
+- First-Week Builder launch-only notice
+- Weekly Planning warning for dates before August 3
+- Open Court start-date notice
+- Eureka Math² start-date notice
+- Protection for previously saved July curriculum assignments
+- Health checks
+- New service-worker cache
 
 ## After deployment
 
-1. Wait for GitHub Pages to finish.
-2. Open the site in a private/incognito window.
-3. Confirm the dashboard status cards appear in a compact grid.
-4. Confirm the sidebar is grouped.
-5. Test the command center on desktop and iPad.
-6. Press Ctrl+Shift+R in the normal browser.
+1. Wait for GitHub Pages to deploy.
+2. Open the site in an incognito/private window.
+3. Confirm the dashboard states that curriculum begins August 3, 2026.
+4. Open School-Year Dates and confirm July 27–31 is Launch Week.
+5. Open First-Week Builder and confirm it is launch-only.
+6. Open Weekly Planning and set the first curriculum week to August 3, 2026.
