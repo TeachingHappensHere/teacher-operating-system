@@ -142,7 +142,19 @@
         if (typeof window.THH_RENDER_INTERVENTION === "function") window.THH_RENDER_INTERVENTION();
         else { renderFeatureLoading("Intervention"); setTimeout(() => window.THH_RENDER_INTERVENTION?.(), 80); }
       },
-      assessments: renderAssessments,
+      assessments: () => {
+        if (typeof window.THH_RENDER_ASSESSMENTS === "function") {
+          window.THH_RENDER_ASSESSMENTS();
+        } else {
+          renderFeatureLoading("Assessments & Progress Monitoring");
+          window.setTimeout(() => {
+            if (location.hash.replace("#", "") === "assessments" &&
+                typeof window.THH_RENDER_ASSESSMENTS === "function") {
+              window.THH_RENDER_ASSESSMENTS();
+            }
+          }, 80);
+        }
+      },
       "classroom-systems": renderClassroomSystems,
       students: () => {
         if (typeof window.THH_RENDER_STUDENT_DATA === "function") {
@@ -8069,4 +8081,684 @@ function dash(){const d=$("#v72Dashboard");if(!d||$("#v141Dash"))return;const c=
 function health(){const h=$("#pageHost");if(!h||$("#v141Health"))return;const p=document.createElement("section");p.id="v141Health";p.className="panel";p.innerHTML=`<h3>Version 14.1 Grouping Health</h3><div class="health-grid"><article class="ready"><strong>✓</strong><div><span>Small Groups</span><small>Connected</small></div></article><article class="ready"><strong>✓</strong><div><span>Intervention</span><small>Connected</small></div></article><article class="${students.some(s=>s.readingGroup!=="Not Assigned")?"ready":"missing"}"><strong>!</strong><div><span>Assigned Students</span><small>${students.filter(s=>s.readingGroup!=="Not Assigned").length}</small></div></article></div>`;h.appendChild(p)}
 function toast(m){const t=$("#toast");if(!t)return;t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+})();
+
+/* =====================================================================
+   Version 14.2 — Assessments & Progress Monitoring Center
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const STUDENT_STORE = "thh-v140:student-records";
+  const PROGRESS_STORE = "thh-v141:progress-notes";
+  const ASSESSMENT_STORE = "thh-v142:assessment-records";
+  const UI_STORE = "thh-v142:assessment-ui";
+
+  let config = null;
+  let students = [];
+  let interventionNotes = [];
+  let records = [];
+  let ui = {
+    student: "All",
+    type: "All",
+    window: "All",
+    status: "All",
+    search: "",
+    selectedId: ""
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+
+      try {
+        students = JSON.parse(localStorage.getItem(STUDENT_STORE) || "[]");
+        if (!Array.isArray(students)) students = [];
+      } catch {
+        students = [];
+      }
+
+      try {
+        interventionNotes = JSON.parse(localStorage.getItem(PROGRESS_STORE) || "[]");
+        if (!Array.isArray(interventionNotes)) interventionNotes = [];
+      } catch {
+        interventionNotes = [];
+      }
+
+      try {
+        records = JSON.parse(localStorage.getItem(ASSESSMENT_STORE) || "[]");
+        if (!Array.isArray(records)) records = [];
+      } catch {
+        records = [];
+      }
+
+      try {
+        ui = { ...ui, ...JSON.parse(localStorage.getItem(UI_STORE) || "{}") };
+      } catch {}
+
+      normalize();
+      window.THH_RENDER_ASSESSMENTS = renderCenter;
+      waitForShell();
+    } catch (error) {
+      console.error("Version 14.2 failed to initialize.", error);
+    }
+  }
+
+  function normalize() {
+    records = records.map((record, index) => ({
+      id: record.id || `assessment-${Date.now()}-${index}`,
+      studentId: record.studentId || "",
+      title: record.title || "Untitled Assessment",
+      type: record.type || "Teacher Observation",
+      window: record.window || "Weekly",
+      date: record.date || new Date().toISOString().slice(0,10),
+      score: record.score ?? "",
+      scoreFormat: record.scoreFormat || "Number",
+      benchmark: record.benchmark ?? "",
+      status: record.status || "Not Started",
+      notes: record.notes || "",
+      source: record.source || "Manual Entry",
+      createdAt: record.createdAt || new Date().toISOString(),
+      updatedAt: record.updatedAt || new Date().toISOString()
+    }));
+    saveRecords();
+  }
+
+  function saveRecords() {
+    localStorage.setItem(ASSESSMENT_STORE, JSON.stringify(records));
+  }
+
+  function saveUi() {
+    localStorage.setItem(UI_STORE, JSON.stringify(ui));
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    window.addEventListener("hashchange", route);
+    route();
+  }
+
+  function route() {
+    const current = location.hash.replace("#", "") || "dashboard";
+    if (current === "assessments") setTimeout(renderCenter, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "students") setTimeout(injectStudentDataCard, 0);
+    if (current === "intervention") setTimeout(injectInterventionCard, 0);
+    if (current === "health") setTimeout(injectHealthPanel, 0);
+  }
+
+  function studentName(id) {
+    return students.find(student => student.id === id)?.displayName || "Unknown Student";
+  }
+
+  function filteredRecords() {
+    const query = ui.search.trim().toLowerCase();
+
+    return records.filter(record => {
+      const studentMatch = ui.student === "All" || record.studentId === ui.student;
+      const typeMatch = ui.type === "All" || record.type === ui.type;
+      const windowMatch = ui.window === "All" || record.window === ui.window;
+      const statusMatch = ui.status === "All" || record.status === ui.status;
+      const searchMatch = !query || [
+        record.title,
+        record.type,
+        record.window,
+        record.notes,
+        studentName(record.studentId)
+      ].join(" ").toLowerCase().includes(query);
+
+      return studentMatch && typeMatch && windowMatch && statusMatch && searchMatch;
+    }).sort((a, b) => b.date.localeCompare(a.date));
+  }
+
+  function statistics() {
+    const complete = records.filter(record => record.status === "Complete").length;
+    const missing = records.filter(record =>
+      ["Not Started", "Needs Make-Up"].includes(record.status)
+    ).length;
+    const scoredStudents = new Set(
+      records.filter(record => record.status === "Complete" && record.studentId)
+        .map(record => record.studentId)
+    ).size;
+
+    return {
+      total: records.length,
+      complete,
+      missing,
+      scoredStudents,
+      interventionEvidence: interventionNotes.length
+    };
+  }
+
+  function renderCenter() {
+    if (location.hash.replace("#", "") !== "assessments") return;
+
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const stats = statistics();
+    const filtered = filteredRecords();
+
+    host.innerHTML = `
+      <section id="v142AssessmentCenter">
+        <section class="page-header">
+          <div>
+            <p>VERSION 14.2</p>
+            <h2>Assessments & Progress Monitoring</h2>
+            <span>Track screening windows, weekly checks, benchmark scores, and intervention evidence.</span>
+          </div>
+          <div class="button-row">
+            <button id="v142Add" class="primary-button">Add Assessment Record</button>
+            <button id="v142ImportStudents" class="secondary-button">Build Screening Checklist</button>
+            <button id="v142Export" class="secondary-button">Export Local Backup</button>
+          </div>
+        </section>
+
+        <section class="v142-stat-grid">
+          ${statCard("Assessment Records", stats.total, "All saved records")}
+          ${statCard("Complete", stats.complete, "Scored or documented")}
+          ${statCard("Missing / Make-Up", stats.missing, "Needs attention")}
+          ${statCard("Students with Scores", stats.scoredStudents, `${students.length} local profiles`)}
+          ${statCard("Intervention Notes", stats.interventionEvidence, "Connected progress evidence")}
+        </section>
+
+        <section class="panel v142-toolbar">
+          <div class="v142-filter-grid">
+            ${studentSelect("v142StudentFilter", "Student", ui.student, true)}
+            ${selectControl("v142TypeFilter", "Assessment Type", ["All", ...config.assessmentCenterV142.assessmentTypes], ui.type)}
+            ${selectControl("v142WindowFilter", "Window", ["All", ...config.assessmentCenterV142.windows], ui.window)}
+            ${selectControl("v142StatusFilter", "Status", ["All", ...config.assessmentCenterV142.statusOptions], ui.status)}
+            <label>
+              <span>Search</span>
+              <input id="v142Search" value="${esc(ui.search)}" placeholder="Search assessment, student, or notes">
+            </label>
+          </div>
+        </section>
+
+        <section class="v142-summary-strip">
+          ${windowSummary("Beginning of Year")}
+          ${windowSummary("Middle of Year")}
+          ${windowSummary("End of Year")}
+          ${windowSummary("Weekly")}
+        </section>
+
+        <section class="v142-record-grid">
+          ${filtered.length
+            ? filtered.map(recordCard).join("")
+            : `<div class="empty-state">
+                <strong>No matching assessment records.</strong>
+                <p>Add a record or build a screening checklist from Student Data.</p>
+              </div>`
+          }
+        </section>
+      </section>
+    `;
+
+    wireCenter();
+  }
+
+  function statCard(label, value, detail) {
+    return `<article><span>${esc(label)}</span><strong>${value}</strong><small>${esc(detail)}</small></article>`;
+  }
+
+  function studentSelect(id, label, value, includeAll = false) {
+    return `
+      <label>
+        <span>${esc(label)}</span>
+        <select id="${id}">
+          ${includeAll ? `<option value="All" ${value === "All" ? "selected" : ""}>All</option>` : ""}
+          ${students.map(student => `
+            <option value="${esc(student.id)}" ${student.id === value ? "selected" : ""}>
+              ${esc(student.displayName)}
+            </option>
+          `).join("")}
+        </select>
+      </label>
+    `;
+  }
+
+  function selectControl(id, label, options, value) {
+    return `
+      <label>
+        <span>${esc(label)}</span>
+        <select id="${id}">
+          ${options.map(option => `<option ${option === value ? "selected" : ""}>${esc(option)}</option>`).join("")}
+        </select>
+      </label>
+    `;
+  }
+
+  function windowSummary(windowName) {
+    const windowRecords = records.filter(record => record.window === windowName);
+    const complete = windowRecords.filter(record => record.status === "Complete").length;
+    const percentage = windowRecords.length
+      ? Math.round((complete / windowRecords.length) * 100)
+      : 0;
+
+    return `
+      <article>
+        <span>${esc(windowName)}</span>
+        <strong>${complete}/${windowRecords.length} complete</strong>
+        <div><b style="width:${percentage}%"></b></div>
+      </article>
+    `;
+  }
+
+  function recordCard(record) {
+    const comparison = compareScore(record);
+
+    return `
+      <article class="panel v142-record-card ${record.status === "Complete" ? "complete" : ""} ${record.status === "Needs Make-Up" ? "makeup" : ""}">
+        <div class="v142-record-heading">
+          <div>
+            <span>${esc(record.window)} • ${esc(record.type)}</span>
+            <h3>${esc(record.title)}</h3>
+            <small>${esc(studentName(record.studentId))} • ${formatDate(record.date)}</small>
+          </div>
+          <b>${record.status === "Complete" ? "✓" : record.status === "Needs Make-Up" ? "!" : "•"}</b>
+        </div>
+
+        <div class="v142-score-panel">
+          <article>
+            <span>SCORE</span>
+            <strong>${esc(formatScore(record))}</strong>
+          </article>
+          <article>
+            <span>BENCHMARK</span>
+            <strong>${esc(record.benchmark || "Not entered")}</strong>
+          </article>
+          <article class="${comparison.className}">
+            <span>REVIEW</span>
+            <strong>${esc(comparison.label)}</strong>
+          </article>
+        </div>
+
+        <dl>
+          <div><dt>Status</dt><dd>${esc(record.status)}</dd></div>
+          <div><dt>Source</dt><dd>${esc(record.source)}</dd></div>
+          <div><dt>Updated</dt><dd>${formatDate(record.updatedAt.slice(0,10))}</dd></div>
+        </dl>
+
+        ${record.notes ? `<p>${esc(record.notes)}</p>` : ""}
+
+        <div class="v142-card-actions">
+          <button data-v142-edit="${esc(record.id)}" class="primary-button">Open Record</button>
+          <button data-v142-complete="${esc(record.id)}" class="secondary-button">
+            ${record.status === "Complete" ? "Reopen" : "Mark Complete"}
+          </button>
+        </div>
+      </article>
+    `;
+  }
+
+  function formatDate(value) {
+    const date = new Date(`${value}T12:00:00`);
+    return Number.isNaN(date.getTime())
+      ? value
+      : date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function formatScore(record) {
+    if (record.score === "" || record.score === null || record.score === undefined) return "Not entered";
+    if (record.scoreFormat === "Percentage") return `${record.score}%`;
+    if (record.scoreFormat === "Rubric 1–4") return `${record.score}/4`;
+    return String(record.score);
+  }
+
+  function compareScore(record) {
+    const score = Number(record.score);
+    const benchmark = Number(record.benchmark);
+
+    if (record.status !== "Complete") {
+      return { label: "Pending", className: "pending" };
+    }
+
+    if (!Number.isFinite(score) || !Number.isFinite(benchmark)) {
+      return { label: "Teacher review", className: "review" };
+    }
+
+    if (score >= benchmark) {
+      return { label: "At / above", className: "ready" };
+    }
+
+    return { label: "Below benchmark", className: "missing" };
+  }
+
+  function wireCenter() {
+    $("#v142StudentFilter")?.addEventListener("change", event => {
+      ui.student = event.target.value;
+      saveUi();
+      renderCenter();
+    });
+
+    $("#v142TypeFilter")?.addEventListener("change", event => {
+      ui.type = event.target.value;
+      saveUi();
+      renderCenter();
+    });
+
+    $("#v142WindowFilter")?.addEventListener("change", event => {
+      ui.window = event.target.value;
+      saveUi();
+      renderCenter();
+    });
+
+    $("#v142StatusFilter")?.addEventListener("change", event => {
+      ui.status = event.target.value;
+      saveUi();
+      renderCenter();
+    });
+
+    $("#v142Search")?.addEventListener("change", event => {
+      ui.search = event.target.value;
+      saveUi();
+      renderCenter();
+    });
+
+    $("#v142Add")?.addEventListener("click", () => renderEditor());
+    $("#v142ImportStudents")?.addEventListener("click", buildScreeningChecklist);
+    $("#v142Export")?.addEventListener("click", exportBackup);
+
+    $$("[data-v142-edit]").forEach(button => {
+      button.addEventListener("click", () => renderEditor(button.dataset.v142Edit));
+    });
+
+    $$("[data-v142-complete]").forEach(button => {
+      button.addEventListener("click", () => {
+        const record = records.find(item => item.id === button.dataset.v142Complete);
+        if (!record) return;
+        record.status = record.status === "Complete" ? "In Progress" : "Complete";
+        record.updatedAt = new Date().toISOString();
+        saveRecords();
+        renderCenter();
+      });
+    });
+  }
+
+  function renderEditor(id = "") {
+    const existing = records.find(record => record.id === id);
+    const record = existing || {
+      id: `assessment-${Date.now()}`,
+      studentId: students[0]?.id || "",
+      title: "",
+      type: "Teacher Observation",
+      window: "Weekly",
+      date: new Date().toISOString().slice(0,10),
+      score: "",
+      scoreFormat: "Number",
+      benchmark: "",
+      status: "Not Started",
+      notes: "",
+      source: "Manual Entry",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    $("#pageHost").innerHTML = `
+      <section id="v142AssessmentEditor">
+        <section class="page-header">
+          <div>
+            <p>ASSESSMENT RECORD</p>
+            <h2>${existing ? "Edit" : "Add"} Assessment</h2>
+            <span>Record brief assessment evidence for local teacher use.</span>
+          </div>
+          <button id="v142Cancel" class="secondary-button">Cancel</button>
+        </section>
+
+        <section class="panel v142-editor">
+          <div class="v142-editor-grid">
+            ${studentSelect("v142EditStudent", "Student", record.studentId)}
+
+            <label class="wide">
+              <span>Assessment Title</span>
+              <input id="v142Title" value="${esc(record.title)}" placeholder="Example: Week 2 Open Court Reading Check">
+            </label>
+
+            ${selectControl("v142EditType", "Assessment Type", config.assessmentCenterV142.assessmentTypes, record.type)}
+            ${selectControl("v142EditWindow", "Assessment Window", config.assessmentCenterV142.windows, record.window)}
+            ${selectControl("v142EditFormat", "Score Format", config.assessmentCenterV142.scoreFormats, record.scoreFormat)}
+            ${selectControl("v142EditStatus", "Status", config.assessmentCenterV142.statusOptions, record.status)}
+
+            <label>
+              <span>Date</span>
+              <input id="v142Date" type="date" value="${esc(record.date)}">
+            </label>
+
+            <label>
+              <span>Score / Result</span>
+              <input id="v142Score" value="${esc(record.score)}">
+            </label>
+
+            <label>
+              <span>Benchmark / Target</span>
+              <input id="v142Benchmark" value="${esc(record.benchmark)}">
+            </label>
+
+            <label>
+              <span>Source</span>
+              <input id="v142Source" value="${esc(record.source)}">
+            </label>
+
+            <label class="wide">
+              <span>Notes / Instructional Next Step</span>
+              <textarea id="v142Notes">${esc(record.notes)}</textarea>
+            </label>
+          </div>
+
+          <div class="button-row">
+            <button id="v142Save" class="primary-button">Save Assessment Record</button>
+            ${existing ? `<button id="v142Delete" class="danger-button">Delete Assessment Record</button>` : ""}
+          </div>
+        </section>
+      </section>
+    `;
+
+    $("#v142Cancel")?.addEventListener("click", renderCenter);
+    $("#v142Save")?.addEventListener("click", () => saveEditor(record, existing));
+    $("#v142Delete")?.addEventListener("click", () => {
+      if (!confirm(`Delete "${record.title}"?`)) return;
+      records = records.filter(item => item.id !== record.id);
+      saveRecords();
+      renderCenter();
+      toast("Assessment record deleted.");
+    });
+  }
+
+  function saveEditor(record, existing) {
+    Object.assign(record, {
+      studentId: $("#v142EditStudent").value,
+      title: $("#v142Title").value.trim() || "Untitled Assessment",
+      type: $("#v142EditType").value,
+      window: $("#v142EditWindow").value,
+      scoreFormat: $("#v142EditFormat").value,
+      status: $("#v142EditStatus").value,
+      date: $("#v142Date").value,
+      score: $("#v142Score").value.trim(),
+      benchmark: $("#v142Benchmark").value.trim(),
+      source: $("#v142Source").value.trim() || "Manual Entry",
+      notes: $("#v142Notes").value.trim(),
+      updatedAt: new Date().toISOString()
+    });
+
+    if (!existing) records.unshift(record);
+    saveRecords();
+    renderCenter();
+    toast("Assessment record saved.");
+  }
+
+  function buildScreeningChecklist() {
+    if (!students.length) {
+      toast("Add student profiles before building the checklist.");
+      setTimeout(() => location.hash = "students", 700);
+      return;
+    }
+
+    const windowName = prompt(
+      "Enter the screening window:",
+      "Beginning of Year"
+    );
+    if (!windowName) return;
+
+    const types = ["DIBELS Composite", "ORF Words Correct", "ORF Accuracy %", "Maze"];
+    const generated = [];
+
+    students.forEach(student => {
+      types.forEach(type => {
+        const id = `screen-${windowName}-${student.id}-${type}`
+          .toLowerCase()
+          .replace(/[^a-z0-9-]+/g, "-");
+
+        generated.push({
+          id,
+          studentId: student.id,
+          title: `${windowName} ${type}`,
+          type,
+          window: windowName,
+          date: new Date().toISOString().slice(0,10),
+          score: "",
+          scoreFormat: type.includes("%") ? "Percentage" : "Number",
+          benchmark: "",
+          status: "Scheduled",
+          notes: "",
+          source: "Student Data Screening Checklist",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
+      });
+    });
+
+    const ids = new Set(generated.map(record => record.id));
+    records = [
+      ...records.filter(record => !ids.has(record.id)),
+      ...generated
+    ];
+
+    saveRecords();
+    renderCenter();
+    toast(`${generated.length} screening records created.`);
+  }
+
+  function exportBackup() {
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      version: "14.2",
+      assessmentRecords: records,
+      interventionNotes
+    };
+
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `teacher-os-assessment-backup-${new Date().toISOString().slice(0,10)}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast("Assessment backup created.");
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v142DashboardCard")) return;
+
+    const stats = statistics();
+    const card = document.createElement("section");
+    card.id = "v142DashboardCard";
+    card.className = "v142-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>ASSESSMENTS & PROGRESS</p>
+        <h3>${stats.complete}/${stats.total} records complete</h3>
+        <span>${stats.missing} assessment(s) still need attention.</span>
+      </div>
+      <button>Open Assessments</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "assessments";
+    dashboard.prepend(card);
+  }
+
+  function injectStudentDataCard() {
+    const center = $("#v140StudentCenter");
+    if (!center || $("#v142StudentDataCard")) return;
+
+    const stats = statistics();
+    const card = document.createElement("section");
+    card.id = "v142StudentDataCard";
+    card.className = "v142-connected-card";
+    card.innerHTML = `
+      <div>
+        <p>ASSESSMENT CONNECTION</p>
+        <h3>${stats.scoredStudents} student(s) have completed assessment records</h3>
+        <span>${stats.missing} record(s) remain incomplete or need make-up.</span>
+      </div>
+      <button>Open Assessments</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "assessments";
+    $(".page-header", center)?.insertAdjacentElement("afterend", card);
+  }
+
+  function injectInterventionCard() {
+    const center = $("#v141Intervention");
+    if (!center || $("#v142InterventionCard")) return;
+
+    const card = document.createElement("section");
+    card.id = "v142InterventionCard";
+    card.className = "v142-connected-card";
+    card.innerHTML = `
+      <div>
+        <p>ASSESSMENT CONNECTION</p>
+        <h3>${interventionNotes.length} intervention progress note(s)</h3>
+        <span>Compare progress evidence with screening and weekly assessment records.</span>
+      </div>
+      <button>Open Assessments</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "assessments";
+    $(".page-header", center)?.insertAdjacentElement("afterend", card);
+  }
+
+  function injectHealthPanel() {
+    const host = $("#pageHost");
+    if (!host || $("#v142HealthPanel")) return;
+
+    const stats = statistics();
+    const panel = document.createElement("section");
+    panel.id = "v142HealthPanel";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 14.2 Assessment Health</h3>
+      <div class="health-grid">
+        ${healthItem("Direct renderer", typeof window.THH_RENDER_ASSESSMENTS === "function", "Connected")}
+        ${healthItem("Student connection", students.length > 0, `${students.length} profiles`)}
+        ${healthItem("Assessment records", records.length > 0, `${records.length} records`)}
+        ${healthItem("Missing / make-up", stats.missing === 0, `${stats.missing} remaining`)}
+      </div>
+      <button class="secondary-button">Open Assessments</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "assessments";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `<article class="${ok ? "ready" : "missing"}"><strong>${ok ? "✓" : "!"}</strong><div><span>${esc(title)}</span><small>${esc(detail)}</small></div></article>`;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1900);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
 })();

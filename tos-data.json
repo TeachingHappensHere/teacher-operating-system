@@ -1,6 +1,6 @@
 {
-  "version": "14.1 Intervention & Small-Group Center",
-  "releaseStatus": "Connects local student profiles to stable Small Groups and Intervention pages.",
+  "version": "14.2 Assessments & Progress Monitoring Center",
+  "releaseStatus": "Adds a stable assessments dashboard connected to local student profiles, screening data, weekly checks, and intervention progress evidence.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2483,7 +2483,7 @@
     {
       "id": "assessments",
       "label": "Assessments & Data",
-      "owner": "core"
+      "owner": "v14.2"
     },
     {
       "id": "students",
@@ -2648,6 +2648,52 @@
       "NWF CLS",
       "Phonics Skill Check",
       "Teacher Observation"
+    ]
+  },
+  "assessmentCenterV142": {
+    "assessmentTypes": [
+      "DIBELS Composite",
+      "ORF Words Correct",
+      "ORF Accuracy %",
+      "Maze",
+      "NWF CLS",
+      "Open Court Reading",
+      "Open Court Phonics",
+      "Vocabulary",
+      "Spelling",
+      "Grammar / GUM",
+      "Eureka Math\u00b2",
+      "Science",
+      "Social Studies",
+      "Writing Rubric",
+      "Teacher Observation",
+      "Other"
+    ],
+    "windows": [
+      "Beginning of Year",
+      "Quarter 1",
+      "Quarter 2",
+      "Middle of Year",
+      "Quarter 3",
+      "Quarter 4",
+      "End of Year",
+      "Weekly",
+      "Custom"
+    ],
+    "statusOptions": [
+      "Not Started",
+      "Scheduled",
+      "In Progress",
+      "Complete",
+      "Needs Make-Up"
+    ],
+    "scoreFormats": [
+      "Number",
+      "Percentage",
+      "Words Correct",
+      "Rubric 1\u20134",
+      "Level / Letter",
+      "Pass / Needs Support"
     ]
   }
 }
