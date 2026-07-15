@@ -1283,3 +1283,17 @@ body {
     break-inside:avoid;
   }
 }
+
+/* Version 9.0 — Unified Navigation */
+.v90-unified-navigation{display:grid;gap:6px;padding:2px 5px 10px}
+.v90-nav-group{overflow:hidden;border:1px solid rgba(116,75,86,.10);border-radius:11px;background:rgba(255,255,255,.30)}
+.v90-nav-heading{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:34px;padding:8px 10px;border:0;background:rgba(255,255,255,.48);color:var(--muted);font-size:10px;font-weight:900;letter-spacing:.075em;text-transform:uppercase}
+.v90-nav-heading:hover{background:rgba(255,255,255,.72)}.v90-nav-heading b{font-size:15px;line-height:1}
+.v90-nav-body{display:grid;gap:2px;padding:4px}.v90-nav-body[hidden]{display:none}
+.v90-route-button{display:grid!important;grid-template-columns:25px minmax(0,1fr);align-items:center;min-height:35px!important;padding:7px 9px!important;border-radius:8px!important;text-align:left}
+.v90-route-button>span{display:grid;place-items:center;width:24px;height:24px;font-size:14px}
+.v90-route-button>strong{overflow:hidden;font-size:12px;line-height:1.15;text-overflow:ellipsis;white-space:nowrap}
+.v90-route-button.active{background:#fff!important;color:var(--accent-dark)!important;box-shadow:0 3px 10px rgba(111,70,82,.10)}
+.v90-route-button.active::after{content:"";width:5px;height:5px;margin-left:auto;border-radius:50%;background:var(--accent)}
+.sidebar{overflow-y:auto}#mainNav{min-height:0}
+@media(max-width:760px){.v90-nav-heading{min-height:38px;font-size:11px}.v90-route-button{min-height:41px!important}.v90-route-button>strong{font-size:13px}}

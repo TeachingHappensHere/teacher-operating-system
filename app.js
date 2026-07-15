@@ -4750,3 +4750,61 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     start();
   }
 })();
+
+/* Version 9.0 — Unified Navigation & Stable Application Shell */
+(() => {
+  "use strict";
+  const NAV_STATE_KEY = "thh-v90:navigation";
+  let config = null;
+  let navState = {today:true,planning:true,curriculum:true,students:false,resources:false};
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  async function start(){
+    try{
+      config=await fetch("tos-data.json",{cache:"no-store"}).then(r=>r.json());
+      try{navState={...navState,...JSON.parse(localStorage.getItem(NAV_STATE_KEY)||"{}")}}catch{}
+      waitForShell();
+    }catch(error){console.warn("Version 9.0 navigation could not start.",error)}
+  }
+  function save(){localStorage.setItem(NAV_STATE_KEY,JSON.stringify(navState))}
+  function waitForShell(){
+    if(!$("#mainNav")||!$("#pageHost"))return setTimeout(waitForShell,100);
+    setTimeout(build,450);setTimeout(build,1200);
+    window.addEventListener("hashchange",()=>{active();openCurrent()});
+    new MutationObserver(()=>{if(!$("#v90UnifiedNavigation"))setTimeout(build,100)}).observe($("#sidebar"),{childList:true,subtree:true});
+  }
+  function routeMap(){return new Map((config.navigation||[]).map(([id,label,icon])=>[id,{id,label,icon}]))}
+  function build(){
+    const nav=$("#mainNav");if(!nav)return;
+    const routes=routeMap(),wrapper=document.createElement("div");
+    wrapper.id="v90UnifiedNavigation";wrapper.className="v90-unified-navigation";
+    (config.navigationGroupsV9||[]).forEach(group=>{
+      const section=document.createElement("section");section.className="v90-nav-group";section.dataset.group=group.id;
+      const heading=document.createElement("button");heading.type="button";heading.className="v90-nav-heading";heading.setAttribute("aria-expanded",String(!!navState[group.id]));heading.innerHTML=`<span>${esc(group.title)}</span><b>${navState[group.id]?"−":"+"}</b>`;
+      const body=document.createElement("div");body.className="v90-nav-body";body.hidden=!navState[group.id];
+      group.routes.forEach(routeId=>{
+        const route=routes.get(routeId);if(!route)return;
+        const button=document.createElement("button");button.type="button";button.className="nav-button v90-route-button";button.dataset.route=route.id;button.innerHTML=`<span>${esc(route.icon)}</span><strong>${esc(route.label)}</strong>`;
+        button.addEventListener("click",()=>{location.hash=route.id;document.body.classList.remove("nav-open")});
+        body.appendChild(button);
+      });
+      heading.addEventListener("click",()=>{navState[group.id]=!navState[group.id];body.hidden=!navState[group.id];heading.setAttribute("aria-expanded",String(navState[group.id]));heading.querySelector("b").textContent=navState[group.id]?"−":"+";save()});
+      section.append(heading,body);wrapper.appendChild(section);
+    });
+    nav.innerHTML="";nav.appendChild(wrapper);active();openCurrent();
+  }
+  function current(){return location.hash.replace("#","")||"dashboard"}
+  function active(){
+    const route=current();
+    $$(".v90-route-button").forEach(button=>{const yes=button.dataset.route===route;button.classList.toggle("active",yes);button.setAttribute("aria-current",yes?"page":"false")});
+  }
+  function openCurrent(){
+    const route=current(),group=(config.navigationGroupsV9||[]).find(item=>item.routes.includes(route));
+    if(!group||navState[group.id])return;
+    navState[group.id]=true;save();
+    const section=$(`.v90-nav-group[data-group="${group.id}"]`);if(!section)return;
+    const heading=$(".v90-nav-heading",section),body=$(".v90-nav-body",section);
+    body.hidden=false;heading.setAttribute("aria-expanded","true");heading.querySelector("b").textContent="−";
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+})();

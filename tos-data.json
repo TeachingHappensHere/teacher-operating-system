@@ -1,6 +1,6 @@
 {
-  "version": "8.7 Curriculum Week 1 Builder & August 3 Launch",
-  "releaseStatus": "Builds the first regular curriculum week beginning Monday, August 3, 2026, with Open Court Unit 1 Lesson 1 and Eureka Math\u00b2 Module 1.",
+  "version": "9.0 Unified Navigation & Stable Application Shell",
+  "releaseStatus": "Replaces fragile navigation injection with one permanent grouped navigation registry for every working Teacher Operating System module.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -92,8 +92,13 @@
     ],
     [
       "teachday",
-      "Teach My Day",
+      "Live Teaching",
       "\u25b6"
+    ],
+    [
+      "calendar",
+      "Calendar",
+      "\u25a6"
     ],
     [
       "lesson-builder",
@@ -102,13 +107,43 @@
     ],
     [
       "lesson-plans",
-      "Lesson Plans",
+      "Weekly Planning",
       "\u25b1"
+    ],
+    [
+      "production",
+      "Daily Lesson Packets",
+      "\u25a4"
     ],
     [
       "classroom-launch",
       "Classroom Launch",
       "\u2661"
+    ],
+    [
+      "first-week-builder",
+      "First-Week Builder",
+      "5"
+    ],
+    [
+      "curriculum-week-1",
+      "Curriculum Week 1",
+      "1"
+    ],
+    [
+      "open-court",
+      "Open Court Curriculum",
+      "\ud83d\udcda"
+    ],
+    [
+      "eureka-math",
+      "Eureka Math\u00b2",
+      "\u2797"
+    ],
+    [
+      "afternoon-studios",
+      "Writing, Science & SS",
+      "\u270e"
     ],
     [
       "small-groups",
@@ -126,11 +161,6 @@
       "\u25a5"
     ],
     [
-      "classroom-systems",
-      "Classroom Systems",
-      "\u25a3"
-    ],
-    [
       "students",
       "Students",
       "\u2659"
@@ -141,9 +171,14 @@
       "\u2709"
     ],
     [
-      "calendar",
-      "Calendar",
-      "\u25a6"
+      "classroom-systems",
+      "Classroom Systems",
+      "\u25a3"
+    ],
+    [
+      "attachments",
+      "Lesson Attachments",
+      "\ud83d\udcce"
     ],
     [
       "resources",
@@ -152,13 +187,18 @@
     ],
     [
       "forms",
-      "Forms & Printables",
-      "\u25a4"
+      "Print Center",
+      "\ud83d\udda8"
     ],
     [
       "teacher-brain",
       "Teacher Brain",
       "\u2661"
+    ],
+    [
+      "school-year-settings",
+      "School-Year Dates",
+      "\ud83d\udcc5"
     ],
     [
       "health",
@@ -1571,5 +1611,68 @@
       }
     },
     "defaultSupports": "Visuals and gestures; picture-word cards; oral rehearsal; sentence frames; partner support; chunked directions; graphic organizers; manipulatives; visual timers; oral-response options; approved IEP and 504 accommodations."
-  }
+  },
+  "navigationGroupsV9": [
+    {
+      "id": "today",
+      "title": "Today",
+      "open": true,
+      "routes": [
+        "dashboard",
+        "live-workspace",
+        "teachday",
+        "calendar"
+      ]
+    },
+    {
+      "id": "planning",
+      "title": "Planning",
+      "open": true,
+      "routes": [
+        "lesson-builder",
+        "lesson-plans",
+        "production",
+        "classroom-launch",
+        "first-week-builder",
+        "curriculum-week-1"
+      ]
+    },
+    {
+      "id": "curriculum",
+      "title": "Curriculum",
+      "open": true,
+      "routes": [
+        "open-court",
+        "eureka-math",
+        "afternoon-studios"
+      ]
+    },
+    {
+      "id": "students",
+      "title": "Students & Data",
+      "open": false,
+      "routes": [
+        "small-groups",
+        "intervention",
+        "assessments",
+        "students",
+        "communication"
+      ]
+    },
+    {
+      "id": "resources",
+      "title": "Resources & Administration",
+      "open": false,
+      "routes": [
+        "classroom-systems",
+        "attachments",
+        "resources",
+        "forms",
+        "teacher-brain",
+        "school-year-settings",
+        "health",
+        "settings"
+      ]
+    }
+  ]
 }

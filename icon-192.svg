@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192"><rect width="192" height="192" rx="42" fill="#6d4cc2"/><path d="M96 155s-62-37-62-82c0-22 17-39 39-39 12 0 23 6 30 16 7-10 18-16 30-16 22 0 39 17 39 39 0 45-76 82-76 82z" fill="#ffc4e5"/><text x="50" y="105" font-family="Arial" font-size="30" font-weight="700" fill="#251b55">THH</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect width="512" height="512" rx="110" fill="#fff0f3"/>
+<path d="M256 410C211 374 100 298 100 195c0-57 41-95 93-95 31 0 52 16 63 34 11-18 32-34 63-34 52 0 93 38 93 95 0 103-111 179-156 215Z" fill="#c73350"/>
+<rect x="184" y="165" width="144" height="184" rx="18" fill="#fff"/>
+<path d="M215 210h82M215 250h82M215 290h60" stroke="#c73350" stroke-width="18" stroke-linecap="round"/>
+</svg>
