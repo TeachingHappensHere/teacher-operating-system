@@ -1,6 +1,6 @@
 {
-  "version": "13.0 Stable Application Framework & Route Registry",
-  "releaseStatus": "Installs one central route registry so every module has a permanent independent route before any feature renderer runs.",
+  "version": "13.1 Direct Renderer Integration Fix",
+  "releaseStatus": "Connects the central router directly to the Version 12.2 Print Center renderer and preserves Forms & Printables as a separate page.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2552,5 +2552,12 @@
     "independentRoutes": true,
     "printCenterRoute": "print-center",
     "formsRoute": "forms"
+  },
+  "integrationFixV131": {
+    "printCenterRoute": "print-center",
+    "printCenterRenderer": "window.THH_RENDER_PRINT_CENTER",
+    "formsRoute": "forms",
+    "formsTitle": "Forms & Printables",
+    "source": "Uploaded GitHub repository master"
   }
 }

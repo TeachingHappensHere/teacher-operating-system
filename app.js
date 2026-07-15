@@ -156,7 +156,19 @@
       "eureka-math": () => renderFeatureLoading("Eureka Math²"),
       "afternoon-studios": () => renderFeatureLoading("Writing, Science & Social Studies"),
       attachments: () => renderFeatureLoading("Lesson Attachments"),
-      "print-center": () => renderFeatureLoading("Print Center"),
+      "print-center": () => {
+        if (typeof window.THH_RENDER_PRINT_CENTER === "function") {
+          window.THH_RENDER_PRINT_CENTER();
+        } else {
+          renderFeatureLoading("Print Center");
+          window.setTimeout(() => {
+            if (location.hash.replace("#", "") === "print-center" &&
+                typeof window.THH_RENDER_PRINT_CENTER === "function") {
+              window.THH_RENDER_PRINT_CENTER();
+            }
+          }, 100);
+        }
+      },
       "school-year-settings": () => renderFeatureLoading("School-Year Dates")
     };
 
@@ -454,7 +466,7 @@
 
   function renderForms() {
     $("#pageHost").innerHTML = `
-      ${pageHeader("FORMS & PRINTABLES", "Print Center", "Classroom forms, student support pages, routines, and planning sheets.")}
+      ${pageHeader("FORMS & PRINTABLES", "Forms & Printables", "Classroom forms, student support pages, routines, and planning sheets.")}
       <section class="resource-library">
         ${["Weekly Lesson Plan","Daily Teaching Brief","Small-Group Plan","Intervention Notes","Student Support Summary","Parent Conference Notes","Classroom Routines Checklist","First-Day Launch Checklist"].map(title => `
           <button onclick="window.print()"><span>Printable</span><strong>${esc(title)}</strong></button>
@@ -7003,22 +7015,25 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     setTimeout(() => element.classList.remove("show"), 1900);
   }
 
+  window.THH_RENDER_PRINT_CENTER = renderPrintCenter;
+
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
 
 
-/* Version 12.2.1 — Print Center Route Repair */
+/* Version 13.1 — Direct Print Center Renderer Integration */
 (() => {
-"use strict";
-function prepare(){
-  if((location.hash.slice(1)||"dashboard")!=="print-center")return;
-  const host=document.querySelector("#pageHost");
-  if(!host)return setTimeout(prepare,100);
-  if(!document.querySelector("#v122PrintCenter"))host.innerHTML='<section class="v122-route-loading"><strong>Opening Print Center…</strong></section>';
-}
-window.addEventListener("hashchange",prepare);
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",prepare);else prepare();
+  "use strict";
+  function openDirectly() {
+    if (location.hash.replace("#", "") !== "print-center") return;
+    if (typeof window.THH_RENDER_PRINT_CENTER === "function") {
+      window.THH_RENDER_PRINT_CENTER();
+    }
+  }
+  window.addEventListener("hashchange", openDirectly);
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", openDirectly);
+  else openDirectly();
 })();
 
 /* =====================================================================
