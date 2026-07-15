@@ -1,6 +1,6 @@
 {
-  "version": "12.2 Print Center & Weekly Packet Queue",
-  "releaseStatus": "Adds a stable Print Center that organizes Lesson Attachments into a Monday\u2013Friday queue, tracks copy counts and completion, and prepares daily packet checklists.",
+  "version": "12.2.1 Print Center Route Repair",
+  "releaseStatus": "Separates the new Print Center from the legacy Forms & Printables page.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -1913,9 +1913,14 @@
           "\ud83d\udcce"
         ],
         [
-          "forms",
+          "print-center",
           "Print Center",
           "\ud83d\udda8"
+        ],
+        [
+          "forms",
+          "Forms & Printables",
+          "\u25a4"
         ],
         [
           "resources",
@@ -2023,13 +2028,13 @@
       },
       {
         "id": "packets",
-        "title": "4. Build Daily Packets",
-        "route": "production",
+        "title": "4. Build Print Queue",
+        "route": "print-center",
         "storageKeys": [
           "thh-v75:production",
           "thh-v74:print-center"
         ],
-        "description": "Prepare daily lesson packets and the print queue."
+        "description": "Prepare the weekly Print Center queue and daily packets."
       },
       {
         "id": "teaching",
@@ -2056,7 +2061,8 @@
       "open-court",
       "eureka-math",
       "afternoon-studios",
-      "health"
+      "health",
+      "print-center"
     ]
   },
   "weeklyWorkflowV112": {

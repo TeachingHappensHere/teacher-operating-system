@@ -141,12 +141,7 @@
       communication: renderCommunication,
       calendar: renderCalendar,
       resources: renderResources,
-      forms: () => {
-        $("#pageHost").innerHTML = `
-          <section id="v122RouteLoading" class="v122-route-loading">
-            <strong>Opening Print Center…</strong>
-          </section>`;
-      },
+      forms: renderForms,
       "teacher-brain": renderTeacherBrain,
       health: renderHealth,
       settings: renderSettings
@@ -6427,7 +6422,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
   function route() {
     const current = location.hash.replace("#","") || "dashboard";
-    if (current === "forms" && !$("#v122PrintCenter")) setTimeout(renderPrintCenter, 0);
+    if (current === "print-center" && !$("#v122PrintCenter")) setTimeout(renderPrintCenter, 0);
     if (current === "dashboard") setTimeout(injectDashboardCard, 0);
     if (current === "workflow-hub") setTimeout(injectWorkflowCard, 0);
     if (current === "health") setTimeout(injectHealthPanel, 0);
@@ -6923,7 +6918,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       </div>
       <button>Open Print Center</button>
     `;
-    card.querySelector("button").onclick = () => location.hash = "forms";
+    card.querySelector("button").onclick = () => location.hash = "print-center";
     dashboard.prepend(card);
   }
 
@@ -6943,7 +6938,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       </div>
       <button>Open Print Center</button>
     `;
-    card.querySelector("button").onclick = () => location.hash = "forms";
+    card.querySelector("button").onclick = () => location.hash = "print-center";
     $(".page-header", hub)?.insertAdjacentElement("afterend", card);
   }
 
@@ -6965,7 +6960,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       </div>
       <button class="secondary-button">Open Print Center</button>
     `;
-    panel.querySelector("button").onclick = () => location.hash = "forms";
+    panel.querySelector("button").onclick = () => location.hash = "print-center";
     host.appendChild(panel);
   }
 
@@ -6988,4 +6983,18 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
+})();
+
+
+/* Version 12.2.1 — Print Center Route Repair */
+(() => {
+"use strict";
+function prepare(){
+  if((location.hash.slice(1)||"dashboard")!=="print-center")return;
+  const host=document.querySelector("#pageHost");
+  if(!host)return setTimeout(prepare,100);
+  if(!document.querySelector("#v122PrintCenter"))host.innerHTML='<section class="v122-route-loading"><strong>Opening Print Center…</strong></section>';
+}
+window.addEventListener("hashchange",prepare);
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",prepare);else prepare();
 })();

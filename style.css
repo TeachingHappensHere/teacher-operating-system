@@ -3014,3 +3014,6 @@ body {
     break-inside:avoid;
   }
 }
+
+/* Version 12.2.1 */
+[data-route="print-center"]{font-weight:800}
