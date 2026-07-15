@@ -1297,3 +1297,194 @@ body {
 .v90-route-button.active::after{content:"";width:5px;height:5px;margin-left:auto;border-radius:50%;background:var(--accent)}
 .sidebar{overflow-y:auto}#mainNav{min-height:0}
 @media(max-width:760px){.v90-nav-heading{min-height:38px;font-size:11px}.v90-route-button{min-height:41px!important}.v90-route-button>strong{font-size:13px}}
+
+
+/* Version 10.0 — Teacher Intelligence Engine */
+.v100-start-rules {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:12px;
+}
+.v100-start-rules article {
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  box-shadow:var(--v85-soft-shadow);
+}
+.v100-start-rules article.curriculum {
+  border-top:5px solid #5c9a63;
+  background:#f7fcf5;
+}
+.v100-start-rules span,.v100-start-rules strong {display:block}
+.v100-start-rules span {
+  color:var(--accent);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.07em;
+}
+.v100-start-rules strong {margin-top:5px;font-size:18px}
+.v100-start-rules p {color:var(--muted);line-height:1.4}
+.v100-layout {
+  display:grid;
+  grid-template-columns:230px minmax(0,1fr) 260px;
+  gap:12px;
+}
+.v100-week-list,.v100-registry {
+  position:sticky;
+  top:72px;
+  height:max-content;
+  max-height:calc(100vh - 100px);
+  overflow:auto;
+}
+.v100-list-heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+.v100-list-heading button {
+  border:0;
+  border-radius:8px;
+  padding:7px 9px;
+  background:var(--surface-soft);
+  color:var(--accent-dark);
+  font-weight:800;
+}
+.v100-week-list > div:last-child {
+  display:grid;
+  gap:6px;
+}
+.v100-week-list [data-v100-week] {
+  display:grid;
+  width:100%;
+  padding:9px;
+  border:0;
+  border-radius:9px;
+  background:#fff8ed;
+  text-align:left;
+}
+.v100-week-list [data-v100-week].active {
+  background:#ffcbd2;
+  outline:2px solid var(--accent);
+}
+.v100-week-list span,.v100-week-list strong,.v100-week-list small {display:block}
+.v100-week-list span {font-size:10px;color:var(--accent);font-weight:900}
+.v100-week-list strong {margin:4px 0}
+.v100-week-list small {color:var(--muted)}
+.v100-main {min-width:0}
+.v100-week-editor.locked {
+  border-left:6px solid #c9902c;
+  background:#fffaf0;
+}
+.v100-week-heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:12px;
+}
+.v100-week-heading p {margin:0;color:var(--accent);font-size:10px;font-weight:900}
+.v100-week-heading h2 {margin:4px 0}
+.v100-week-heading span {color:var(--muted)}
+.v100-week-heading b {
+  padding:7px 9px;
+  border-radius:999px;
+  background:var(--surface-soft);
+  color:var(--accent-dark);
+  font-size:11px;
+}
+.v100-form-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.v100-form-grid label,.v100-notes {
+  display:grid;
+  gap:6px;
+  font-weight:700;
+}
+.v100-curriculum-editor {
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+}
+.v100-lock-message {
+  margin-top:12px;
+  padding:13px;
+  border-radius:10px;
+  background:#fff0d9;
+}
+.v100-lock-message p {margin-bottom:0;color:var(--muted)}
+.v100-notes {margin-top:12px}
+.v100-notes textarea {min-height:120px}
+.v100-registry {display:grid;gap:8px}
+.v100-registry article {
+  padding:10px;
+  border-radius:9px;
+  background:#f3eefb;
+}
+.v100-registry span,.v100-registry strong,.v100-registry small {display:block}
+.v100-registry span {color:#7255a4;font-size:10px;font-weight:900}
+.v100-registry strong {margin:4px 0}
+.v100-registry small {color:var(--muted)}
+.v100-registry p {margin-bottom:0;font-size:11px}
+.v100-dashboard-card,.v100-injected-card {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  margin-bottom:12px;
+  border:1px solid #d8cbe5;
+  border-radius:14px;
+  background:#f3eefb;
+}
+.v100-dashboard-card p,.v100-injected-card p {
+  margin:0;
+  color:#7255a4;
+  font-size:10px;
+  font-weight:900;
+}
+.v100-dashboard-card h3,.v100-injected-card h3 {margin:4px 0}
+.v100-dashboard-card span,.v100-injected-card span {color:var(--muted)}
+.v100-dashboard-card button,.v100-injected-card button {
+  border:0;
+  border-radius:9px;
+  background:#7255a4;
+  color:#fff;
+  padding:10px 12px;
+  font-weight:800;
+}
+@media(max-width:1150px) {
+  .v100-layout {grid-template-columns:200px minmax(0,1fr)}
+  .v100-registry {position:static;grid-column:1/3}
+}
+@media(max-width:760px) {
+  .v100-start-rules,.v100-form-grid {grid-template-columns:1fr}
+  .v100-layout {display:block}
+  .v100-week-list {
+    position:sticky;
+    top:58px;
+    z-index:20;
+    max-height:none;
+    margin-bottom:10px;
+  }
+  .v100-week-list > div:last-child {
+    display:flex;
+    overflow:auto;
+  }
+  .v100-week-list [data-v100-week] {min-width:190px}
+  .v100-registry {grid-column:auto;margin-top:10px}
+  .v100-dashboard-card,.v100-injected-card {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+@media print {
+  .sidebar,.topbar,.mobile-nav,.v100-week-list,.v100-registry,
+  .page-header button,.v100-dashboard-card,.v100-injected-card,
+  .v100-week-editor .button-row {display:none!important}
+  .v100-layout {display:block}
+}

@@ -1,6 +1,6 @@
 {
-  "version": "9.0 Unified Navigation & Stable Application Shell",
-  "releaseStatus": "Replaces fragile navigation injection with one permanent grouped navigation registry for every working Teacher Operating System module.",
+  "version": "10.0 Teacher Intelligence Engine Foundation",
+  "releaseStatus": "Creates a central curriculum registry and automatic school-year week planner that preserves Launch Week and begins core curriculum on August 3, 2026.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -99,6 +99,11 @@
       "calendar",
       "Calendar",
       "\u25a6"
+    ],
+    [
+      "intelligence-engine",
+      "Teacher Intelligence",
+      "\ud83e\udde0"
     ],
     [
       "lesson-builder",
@@ -1629,6 +1634,7 @@
       "title": "Planning",
       "open": true,
       "routes": [
+        "intelligence-engine",
         "lesson-builder",
         "lesson-plans",
         "production",
@@ -1674,5 +1680,92 @@
         "settings"
       ]
     }
-  ]
+  ],
+  "teacherIntelligenceEngine": {
+    "schoolYear": "2026\u20132027",
+    "launchWeekStart": "2026-07-27",
+    "launchWeekEnd": "2026-07-31",
+    "curriculumStartDate": "2026-08-03",
+    "weekdays": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "curriculumAreas": [
+      "Open Court",
+      "Heggerty",
+      "UFLI",
+      "MOWR",
+      "Phonics",
+      "Vocabulary",
+      "Writing / GUM",
+      "Eureka Math\u00b2",
+      "Science",
+      "Social Studies"
+    ],
+    "defaultWeekTypes": [
+      "Launch Week",
+      "Curriculum Week",
+      "Assessment Week",
+      "Short Week",
+      "Holiday Week",
+      "Benchmark Week",
+      "Custom Week"
+    ]
+  },
+  "curriculumRegistryV10": {
+    "openCourt": {
+      "startDate": "2026-08-03",
+      "startUnit": 1,
+      "startLesson": 1,
+      "startTitle": "The Mice Who Lived in a Shoe",
+      "source": "openCourtUnits"
+    },
+    "eurekaMath": {
+      "startDate": "2026-08-03",
+      "startModule": 1,
+      "startLesson": 1,
+      "source": "eurekaMath"
+    },
+    "heggerty": {
+      "startDate": "2026-08-03",
+      "defaultFocus": "Enter the current Heggerty week and lesson."
+    },
+    "ufli": {
+      "startDate": "2026-08-03",
+      "defaultFocus": "Enter the aligned UFLI lesson or foundational skill."
+    },
+    "writing": {
+      "startDate": "2026-08-03",
+      "defaultProgram": "Building the Foundation / Open Court GUM"
+    },
+    "science": {
+      "startDate": "2026-08-03",
+      "defaultFocus": "Select the current Arizona science unit and lesson."
+    },
+    "socialStudies": {
+      "startDate": "2026-08-03",
+      "defaultFocus": "Select the current Arizona Social Studies, iCivics, or 180 Days lesson."
+    }
+  },
+  "yearPlannerDefaultsV10": {
+    "launchWeek": {
+      "weekOf": "2026-07-27",
+      "title": "Classroom Launch Week",
+      "weekType": "Launch Week",
+      "openCourt": "",
+      "eureka": "",
+      "notes": "Routines, procedures, classroom community, transitions, independence, and readiness."
+    },
+    "curriculumWeek1": {
+      "weekOf": "2026-08-03",
+      "title": "Curriculum Week 1",
+      "weekType": "Curriculum Week",
+      "openCourt": "Unit 1, Lesson 1 \u2014 The Mice Who Lived in a Shoe",
+      "eureka": "Module 1 begins",
+      "notes": "Core curriculum begins."
+    }
+  }
 }

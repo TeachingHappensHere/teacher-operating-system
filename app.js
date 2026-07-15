@@ -4808,3 +4808,556 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
+
+/* Version 10.0 — Teacher Intelligence Engine Foundation */
+(() => {
+  "use strict";
+
+  const STORE = "thh-v100:intelligence-engine";
+  const WEEK_STORE = "thh-v73:weekly-plan";
+
+  let config = null;
+  let state = {
+    selectedWeek: "2026-07-27",
+    weeks: {},
+    exceptions: [],
+    curriculumOverrides: {},
+    generatedAt: ""
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(r => r.json());
+      try {
+        state = { ...state, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
+      } catch {}
+      ensureCoreWeeks();
+      waitForShell();
+    } catch (error) {
+      console.warn("Version 10.0 could not start.", error);
+    }
+  }
+
+  function save() {
+    localStorage.setItem(STORE, JSON.stringify(state));
+  }
+
+  function ensureCoreWeeks() {
+    if (!state.weeks["2026-07-27"]) {
+      state.weeks["2026-07-27"] = {
+        ...config.yearPlannerDefaultsV10.launchWeek,
+        status: "Protected",
+        pillar: "Heart",
+        curriculumLocked: true
+      };
+    }
+
+    if (!state.weeks["2026-08-03"]) {
+      state.weeks["2026-08-03"] = {
+        ...config.yearPlannerDefaultsV10.curriculumWeek1,
+        status: "Ready to Build",
+        pillar: "Heart",
+        curriculumLocked: false,
+        openCourtUnit: 1,
+        openCourtLesson: 1,
+        eurekaModule: 1,
+        eurekaStartingLesson: 1,
+        heggerty: config.curriculumRegistryV10.heggerty.defaultFocus,
+        ufli: config.curriculumRegistryV10.ufli.defaultFocus,
+        writing: config.curriculumRegistryV10.writing.defaultProgram,
+        science: config.curriculumRegistryV10.science.defaultFocus,
+        socialStudies: config.curriculumRegistryV10.socialStudies.defaultFocus
+      };
+    }
+
+    save();
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    window.addEventListener("hashchange", route);
+
+    new MutationObserver(() => {
+      const current = location.hash.replace("#", "") || "dashboard";
+      if (current === "intelligence-engine" && !$("#v100Engine")) renderEngine();
+      if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+      if (current === "lesson-plans") setTimeout(injectPlanningCard, 0);
+      if (current === "health") setTimeout(injectHealthCard, 0);
+    }).observe($("#pageHost"), { childList: true, subtree: true });
+
+    route();
+  }
+
+  function route() {
+    const current = location.hash.replace("#", "") || "dashboard";
+    if (current === "intelligence-engine") setTimeout(renderEngine, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "lesson-plans") setTimeout(injectPlanningCard, 0);
+    if (current === "health") setTimeout(injectHealthCard, 0);
+  }
+
+  function sortedWeeks() {
+    return Object.values(state.weeks).sort((a, b) => a.weekOf.localeCompare(b.weekOf));
+  }
+
+  function formatDate(value) {
+    const date = new Date(`${value}T12:00:00`);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+
+  function currentWeek() {
+    return state.weeks[state.selectedWeek] || sortedWeeks()[0];
+  }
+
+  function renderEngine() {
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const week = currentWeek();
+    const registry = config.curriculumRegistryV10;
+
+    host.innerHTML = `
+      <section id="v100Engine">
+        <section class="page-header">
+          <div>
+            <p>VERSION 10.0</p>
+            <h2>Teacher Intelligence Engine</h2>
+            <span>One curriculum registry, one school-year timeline, and one source of truth for weekly planning.</span>
+          </div>
+          <div class="button-row">
+            <button id="v100GenerateYear" class="primary-button">Generate School-Year Weeks</button>
+            <button id="v100SendWeek" class="secondary-button">Send Selected Week to Planning</button>
+          </div>
+        </section>
+
+        <section class="v100-start-rules">
+          <article>
+            <span>LAUNCH WEEK</span>
+            <strong>July 27–31, 2026</strong>
+            <p>Routines, procedures, community, and readiness only.</p>
+          </article>
+          <article class="curriculum">
+            <span>CORE CURRICULUM START</span>
+            <strong>August 3, 2026</strong>
+            <p>The Mice Who Lived in a Shoe and Eureka Math² Module 1 begin.</p>
+          </article>
+          <article>
+            <span>CENTRAL REGISTRY</span>
+            <strong>${config.teacherIntelligenceEngine.curriculumAreas.length} curriculum areas</strong>
+            <p>All weekly assignments reference one shared registry.</p>
+          </article>
+        </section>
+
+        <section class="v100-layout">
+          <aside class="panel v100-week-list">
+            <div class="v100-list-heading">
+              <h3>School-Year Weeks</h3>
+              <button id="v100AddWeek">Add Week</button>
+            </div>
+            <div>
+              ${sortedWeeks().map(item => `
+                <button data-v100-week="${esc(item.weekOf)}" class="${item.weekOf === state.selectedWeek ? "active" : ""}">
+                  <span>${esc(formatDate(item.weekOf))}</span>
+                  <strong>${esc(item.title)}</strong>
+                  <small>${esc(item.weekType)}</small>
+                </button>
+              `).join("")}
+            </div>
+          </aside>
+
+          <main class="v100-main">
+            ${week ? weekEditor(week) : `
+              <div class="empty-state">
+                <strong>No week selected.</strong>
+              </div>
+            `}
+          </main>
+
+          <aside class="panel v100-registry">
+            <h3>Curriculum Registry</h3>
+            ${registryCard("Open Court", registry.openCourt.startDate, "Unit 1, Lesson 1", registry.openCourt.startTitle)}
+            ${registryCard("Eureka Math²", registry.eurekaMath.startDate, "Module 1, Lesson 1", "Regular pacing begins")}
+            ${registryCard("Heggerty", registry.heggerty.startDate, "Foundational Reading", registry.heggerty.defaultFocus)}
+            ${registryCard("UFLI", registry.ufli.startDate, "Foundational Reading", registry.ufli.defaultFocus)}
+            ${registryCard("Writing / GUM", registry.writing.startDate, "Writing", registry.writing.defaultProgram)}
+            ${registryCard("Science", registry.science.startDate, "Science", registry.science.defaultFocus)}
+            ${registryCard("Social Studies", registry.socialStudies.startDate, "Social Studies", registry.socialStudies.defaultFocus)}
+          </aside>
+        </section>
+      </section>
+    `;
+
+    wireEngine();
+  }
+
+  function registryCard(title, date, label, detail) {
+    return `
+      <article>
+        <span>${esc(title)}</span>
+        <strong>${esc(label)}</strong>
+        <small>Starts ${esc(formatDate(date))}</small>
+        <p>${esc(detail)}</p>
+      </article>
+    `;
+  }
+
+  function weekEditor(week) {
+    return `
+      <section class="panel v100-week-editor ${week.curriculumLocked ? "locked" : ""}">
+        <div class="v100-week-heading">
+          <div>
+            <p>${esc(week.weekType)}</p>
+            <h2>${esc(week.title)}</h2>
+            <span>Week of ${esc(formatDate(week.weekOf))}</span>
+          </div>
+          <b>${week.curriculumLocked ? "Curriculum Locked" : esc(week.status || "Draft")}</b>
+        </div>
+
+        <div class="v100-form-grid">
+          ${textField("title", "Week Title", week.title)}
+          ${selectField("weekType", "Week Type", config.teacherIntelligenceEngine.defaultWeekTypes, week.weekType)}
+          ${textField("pillar", "Pillar", week.pillar || "Heart")}
+          ${textField("status", "Status", week.status || "Draft")}
+        </div>
+
+        ${week.curriculumLocked ? `
+          <section class="v100-lock-message">
+            <strong>Launch Week is protected.</strong>
+            <p>Open Court, Eureka Math², and regular curriculum pacing are unavailable before August 3, 2026.</p>
+          </section>
+        ` : `
+          <section class="v100-curriculum-editor">
+            <h3>Weekly Curriculum Assignment</h3>
+            <div class="v100-form-grid">
+              ${numberField("openCourtUnit", "Open Court Unit", week.openCourtUnit || 1, 1, 6)}
+              ${numberField("openCourtLesson", "Open Court Lesson", week.openCourtLesson || 1, 1, 6)}
+              ${numberField("eurekaModule", "Eureka Module", week.eurekaModule || 1, 1, 6)}
+              ${numberField("eurekaStartingLesson", "Starting Math Lesson", week.eurekaStartingLesson || 1, 1, 60)}
+              ${textField("heggerty", "Heggerty Focus", week.heggerty || "")}
+              ${textField("ufli", "UFLI Focus", week.ufli || "")}
+              ${textField("writing", "Writing / GUM", week.writing || "")}
+              ${textField("science", "Science", week.science || "")}
+              ${textField("socialStudies", "Social Studies", week.socialStudies || "")}
+            </div>
+          </section>
+        `}
+
+        <label class="v100-notes">
+          <span>Week Notes</span>
+          <textarea data-v100-field="notes">${esc(week.notes || "")}</textarea>
+        </label>
+
+        <div class="button-row">
+          <button id="v100SaveWeek" class="primary-button">Save Week</button>
+          ${week.curriculumLocked ? "" : `<button id="v100BuildAssignment" class="secondary-button">Build Automatic Assignment</button>`}
+          <button id="v100DeleteWeek" class="danger-button">Delete Week</button>
+        </div>
+      </section>
+    `;
+  }
+
+  function textField(key, label, value) {
+    return `<label><span>${esc(label)}</span><input data-v100-field="${key}" value="${esc(value || "")}"></label>`;
+  }
+
+  function numberField(key, label, value, min, max) {
+    return `<label><span>${esc(label)}</span><input data-v100-field="${key}" type="number" min="${min}" max="${max}" value="${esc(value)}"></label>`;
+  }
+
+  function selectField(key, label, options, value) {
+    return `
+      <label>
+        <span>${esc(label)}</span>
+        <select data-v100-field="${key}">
+          ${options.map(option => `<option ${option === value ? "selected" : ""}>${esc(option)}</option>`).join("")}
+        </select>
+      </label>
+    `;
+  }
+
+  function wireEngine() {
+    $$("[data-v100-week]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.selectedWeek = button.dataset.v100Week;
+        save();
+        renderEngine();
+      });
+    });
+
+    $("#v100AddWeek")?.addEventListener("click", addWeek);
+    $("#v100GenerateYear")?.addEventListener("click", generateYear);
+    $("#v100SendWeek")?.addEventListener("click", sendSelectedWeek);
+    $("#v100SaveWeek")?.addEventListener("click", saveCurrentWeek);
+    $("#v100BuildAssignment")?.addEventListener("click", buildAssignment);
+    $("#v100DeleteWeek")?.addEventListener("click", deleteCurrentWeek);
+  }
+
+  function collectWeekFields() {
+    const week = currentWeek();
+    $$("[data-v100-field]").forEach(control => {
+      const key = control.dataset.v100Field;
+      week[key] = control.type === "number" ? Number(control.value) : control.value;
+    });
+    return week;
+  }
+
+  function saveCurrentWeek() {
+    const week = collectWeekFields();
+    state.weeks[week.weekOf] = week;
+    save();
+    renderEngine();
+    toast("Week saved.");
+  }
+
+  function buildAssignment() {
+    const week = collectWeekFields();
+    const unit = config.openCourtUnits.find(item => item.unit === Number(week.openCourtUnit));
+    const lesson = unit?.lessons?.find(item => item.lesson === Number(week.openCourtLesson));
+
+    week.openCourt = lesson
+      ? `Unit ${week.openCourtUnit}, Lesson ${week.openCourtLesson} — ${lesson.title}`
+      : `Unit ${week.openCourtUnit}, Lesson ${week.openCourtLesson}`;
+
+    week.eureka = `Module ${week.eurekaModule}, starting Lesson ${week.eurekaStartingLesson}`;
+    week.status = "Assignment Built";
+    state.weeks[week.weekOf] = week;
+    save();
+    renderEngine();
+    toast("Automatic weekly assignment built.");
+  }
+
+  function addWeek() {
+    const weekOf = prompt("Enter the Monday date for this week (YYYY-MM-DD):", "");
+    if (!weekOf) return;
+
+    if (state.weeks[weekOf]) {
+      state.selectedWeek = weekOf;
+      save();
+      renderEngine();
+      return;
+    }
+
+    state.weeks[weekOf] = {
+      weekOf,
+      title: "New Planning Week",
+      weekType: "Custom Week",
+      pillar: "Heart",
+      status: "Draft",
+      curriculumLocked: weekOf < config.teacherIntelligenceEngine.curriculumStartDate,
+      notes: ""
+    };
+    state.selectedWeek = weekOf;
+    save();
+    renderEngine();
+  }
+
+  function generateYear() {
+    const start = new Date("2026-07-27T12:00:00");
+    const end = new Date("2027-05-31T12:00:00");
+    let cursor = new Date(start);
+    let curriculumWeek = 0;
+
+    while (cursor <= end) {
+      const weekOf = cursor.toISOString().slice(0,10);
+
+      if (!state.weeks[weekOf]) {
+        const locked = weekOf < config.teacherIntelligenceEngine.curriculumStartDate;
+        if (!locked) curriculumWeek += 1;
+
+        state.weeks[weekOf] = {
+          weekOf,
+          title: locked ? "Classroom Launch Week" : `Curriculum Week ${curriculumWeek}`,
+          weekType: locked ? "Launch Week" : "Curriculum Week",
+          pillar: "Heart",
+          status: locked ? "Protected" : "Draft",
+          curriculumLocked: locked,
+          openCourtUnit: 1,
+          openCourtLesson: 1,
+          eurekaModule: 1,
+          eurekaStartingLesson: Math.max(1, ((curriculumWeek - 1) * 5) + 1),
+          heggerty: config.curriculumRegistryV10.heggerty.defaultFocus,
+          ufli: config.curriculumRegistryV10.ufli.defaultFocus,
+          writing: config.curriculumRegistryV10.writing.defaultProgram,
+          science: config.curriculumRegistryV10.science.defaultFocus,
+          socialStudies: config.curriculumRegistryV10.socialStudies.defaultFocus,
+          notes: ""
+        };
+      }
+
+      cursor.setDate(cursor.getDate() + 7);
+    }
+
+    state.generatedAt = new Date().toISOString();
+    save();
+    renderEngine();
+    toast("School-year planning weeks generated.");
+  }
+
+  function deleteCurrentWeek() {
+    const week = currentWeek();
+    if (!week || ["2026-07-27","2026-08-03"].includes(week.weekOf)) {
+      toast("The Launch Week and Curriculum Week 1 records are protected.");
+      return;
+    }
+
+    if (!confirm(`Delete ${week.title}?`)) return;
+    delete state.weeks[week.weekOf];
+    state.selectedWeek = "2026-08-03";
+    save();
+    renderEngine();
+  }
+
+  function sendSelectedWeek() {
+    const week = currentWeek();
+    if (!week) return;
+
+    const days = {};
+    const dayNames = config.teacherIntelligenceEngine.weekdays;
+
+    dayNames.forEach((day, index) => {
+      days[day] = week.curriculumLocked
+        ? {
+            day,
+            focus: "Classroom Launch Week",
+            launchRoutine: "Routines, procedures, community, transitions, independence, and readiness.",
+            morningMeeting: "Community building and classroom procedure practice.",
+            reading: "",
+            math: "",
+            differentiation: config.curriculumWeek1?.defaultSupports || "",
+            assessment: "Teacher observation and informal readiness checks.",
+            notes: week.notes || "",
+            complete: false
+          }
+        : {
+            day,
+            focus: week.openCourt || `Open Court Unit ${week.openCourtUnit}, Lesson ${week.openCourtLesson}`,
+            openCourtLesson: week.openCourt || `Unit ${week.openCourtUnit}, Lesson ${week.openCourtLesson}`,
+            heggerty: week.heggerty || "",
+            ufli: week.ufli || "",
+            mowr: week.ufli || "",
+            phonics: "Use the aligned Open Court phonics skill and authorized Skills Practice.",
+            vocabulary: "Use the aligned Open Court weekly vocabulary.",
+            reading: week.openCourt || "",
+            writing: week.writing || "",
+            math: `Eureka Math² Module ${week.eurekaModule}, Lesson ${Number(week.eurekaStartingLesson) + index}`,
+            math2: "Spiral review, fact fluency, exit-ticket review, or small-group reteach.",
+            science: week.science || "",
+            socialStudies: week.socialStudies || "",
+            differentiation: config.curriculumWeek1?.defaultSupports || "",
+            assessment: day === "Friday"
+              ? "Complete approved weekly assessments and record evidence."
+              : "Use observation, oral response, student work, and exit tickets.",
+            materials: "",
+            notes: week.notes || "",
+            complete: false
+          };
+    });
+
+    const payload = {
+      title: week.title,
+      weekOf: week.weekOf,
+      pillar: week.pillar || "Heart",
+      days,
+      printQueue: [],
+      updatedAt: new Date().toISOString(),
+      source: "Teacher Intelligence Engine"
+    };
+
+    localStorage.setItem(WEEK_STORE, JSON.stringify(payload));
+    toast(`${week.title} sent to Weekly Planning.`);
+    setTimeout(() => location.hash = "lesson-plans", 650);
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v100DashboardCard")) return;
+
+    const card = document.createElement("section");
+    card.id = "v100DashboardCard";
+    card.className = "v100-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>TEACHER INTELLIGENCE ENGINE</p>
+        <h3>${sortedWeeks().length} school-year week record(s)</h3>
+        <span>Central curriculum registry and automatic weekly assignments.</span>
+      </div>
+      <button>Open Intelligence Engine</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "intelligence-engine";
+    dashboard.prepend(card);
+  }
+
+  function injectPlanningCard() {
+    const studio = $("#v73PlanningStudio");
+    if (!studio || $("#v100PlanningCard")) return;
+
+    const card = document.createElement("section");
+    card.id = "v100PlanningCard";
+    card.className = "v100-injected-card";
+    card.innerHTML = `
+      <div>
+        <p>CENTRAL WEEK ASSIGNMENT</p>
+        <h3>${esc(currentWeek()?.title || "No week selected")}</h3>
+        <span>Build or revise the selected week from the Teacher Intelligence Engine.</span>
+      </div>
+      <button>Open Engine</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "intelligence-engine";
+    $(".v73-planning-header", studio)?.insertAdjacentElement("afterend", card);
+  }
+
+  function injectHealthCard() {
+    const host = $("#pageHost");
+    if (!host || $("#v100HealthCard")) return;
+
+    const panel = document.createElement("section");
+    panel.id = "v100HealthCard";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 10.0 Intelligence Engine Health</h3>
+      <div class="health-grid">
+        ${healthItem("Curriculum registry", Boolean(config.curriculumRegistryV10), `${config.teacherIntelligenceEngine.curriculumAreas.length} areas`)}
+        ${healthItem("Launch Week protection", Boolean(state.weeks["2026-07-27"]?.curriculumLocked), "July 27–31")}
+        ${healthItem("Curriculum Week 1", Boolean(state.weeks["2026-08-03"]), "August 3")}
+        ${healthItem("School-year weeks", sortedWeeks().length > 2, `${sortedWeeks().length} generated`)}
+      </div>
+      <button class="secondary-button">Open Intelligence Engine</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "intelligence-engine";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div><span>${esc(title)}</span><small>${esc(detail)}</small></div>
+      </article>
+    `;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1900);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
