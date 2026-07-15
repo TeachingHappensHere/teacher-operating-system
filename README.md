@@ -1,8 +1,8 @@
 # TeachingHappensHere
 
-## Version 11.2.1 — Navigation Stability Repair
+## Version 12.0 — Live Teaching Center
 
-This is a full replacement repair release.
+This is a full replacement release.
 
 ## Upload all nine files
 
@@ -18,26 +18,42 @@ This is a full replacement repair release.
 
 ## Commit message
 
-Version 11.2.1 - Navigation Stability Repair
+Version 12.0 - Live Teaching Center
 
-## Fixed
+## Included
 
-The Planning section flashed open and closed because older Version 8.5 and Version 9.0 navigation controllers were still running alongside Version 11.
-
-This release:
-
-- removes the complete Version 8.5 navigation controller
-- removes the complete Version 9.0 navigation controller
-- keeps Version 11 as the only sidebar controller
-- preserves Workflow Hub and all Version 11.2 features
-- disables navigation animations that could look like flickering
-- forces a fresh service-worker cache
+- Dedicated Live Teaching page
+- Full-day schedule
+- Half-day testing schedule
+- Monday–Friday selector
+- Current block
+- Next block
+- Daily completion percentage
+- Lesson and objective details from Weekly Planning
+- Materials and assessment information
+- Teacher notes by block
+- Previous and next block controls
+- Complete and advance control
+- Pauseable countdown timer
+- One-, three-, five-, ten-, and twenty-minute quick timers
+- Attendance completion
+- Behavior notes
+- Student notes
+- Materials check
+- End-of-day reflection
+- Dashboard Live Teaching status
+- Workflow Hub Live Teaching status
+- Health checks
+- Responsive desktop, iPad, and phone layout
+- Fresh service-worker cache
 
 ## After deployment
 
-1. Wait for GitHub Pages to deploy.
-2. Open the site in an incognito/private window.
-3. Expand and collapse Planning several times.
-4. Confirm it stays open or closed without flashing.
-5. Open Workflow Hub and verify the one-click weekly workflow.
-6. Hard-refresh the regular browser with Ctrl+Shift+R.
+1. Open the site in an incognito/private window.
+2. Expand Today and select Live Teaching.
+3. Choose Monday and Full Day.
+4. Select Start Teaching Day.
+5. Test the timer.
+6. Complete a block and confirm the next block opens.
+7. Save a teacher note and end-of-day reflection.
+8. Return to Workflow Hub and confirm Live Teaching opens correctly.

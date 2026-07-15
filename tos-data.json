@@ -1,6 +1,6 @@
 {
-  "version": "11.2.1 Navigation Stability Repair",
-  "releaseStatus": "Removes the legacy Version 8.5 and Version 9.0 navigation controllers that competed with the Version 11 authoritative sidebar.",
+  "version": "12.0 Live Teaching Center",
+  "releaseStatus": "Adds a dedicated live classroom teaching screen with the current block, next block, timers, lesson details, completion tracking, and teacher notes.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2107,5 +2107,192 @@
       "Version 9.0 Unified Navigation controller"
     ],
     "kept": "Version 11 Clean Stable Foundation navigation"
+  },
+  "liveTeachingV120": {
+    "fullDaySchedule": [
+      [
+        "7:45",
+        "8:10",
+        "Breakfast"
+      ],
+      [
+        "8:10",
+        "8:20",
+        "Morning Work"
+      ],
+      [
+        "8:20",
+        "9:15",
+        "MOWR"
+      ],
+      [
+        "9:15",
+        "9:25",
+        "Heggerty"
+      ],
+      [
+        "9:25",
+        "9:45",
+        "Phonics"
+      ],
+      [
+        "9:45",
+        "9:55",
+        "Vocabulary"
+      ],
+      [
+        "9:55",
+        "10:45",
+        "Reading (Open Court)"
+      ],
+      [
+        "10:45",
+        "11:00",
+        "Lunch"
+      ],
+      [
+        "11:00",
+        "11:10",
+        "Lunch Recess"
+      ],
+      [
+        "11:10",
+        "11:40",
+        "Writing"
+      ],
+      [
+        "11:40",
+        "12:40",
+        "Math"
+      ],
+      [
+        "12:40",
+        "1:15",
+        "Workout"
+      ],
+      [
+        "1:15",
+        "1:20",
+        "Recess"
+      ],
+      [
+        "1:20",
+        "1:40",
+        "Math 2"
+      ],
+      [
+        "1:40",
+        "2:15",
+        "Science"
+      ],
+      [
+        "2:15",
+        "2:55",
+        "Social Studies"
+      ],
+      [
+        "2:55",
+        "3:00",
+        "Pack-Up / Clean-Up"
+      ],
+      [
+        "3:00",
+        "3:30",
+        "Dismissal"
+      ]
+    ],
+    "halfDaySchedule": [
+      [
+        "7:45",
+        "8:10",
+        "Arrival / Breakfast"
+      ],
+      [
+        "8:10",
+        "8:20",
+        "Phonics Test"
+      ],
+      [
+        "8:20",
+        "8:40",
+        "Vocabulary Test"
+      ],
+      [
+        "8:40",
+        "9:00",
+        "Spelling Test"
+      ],
+      [
+        "9:00",
+        "9:20",
+        "Grammar, Usage & Mechanics Test"
+      ],
+      [
+        "9:20",
+        "9:40",
+        "Transition / Make-Up Time"
+      ],
+      [
+        "9:40",
+        "10:20",
+        "Reading Test"
+      ],
+      [
+        "10:20",
+        "10:40",
+        "Indoor Lunch / Recess"
+      ],
+      [
+        "10:40",
+        "11:10",
+        "Math / Tests"
+      ],
+      [
+        "11:10",
+        "11:30",
+        "Science & Social Studies Tests"
+      ],
+      [
+        "11:30",
+        "11:40",
+        "First Buses: Clean-Up & Pack-Up"
+      ],
+      [
+        "11:40",
+        "12:00",
+        "Pack-Up / End of Day"
+      ],
+      [
+        "12:00",
+        "12:05",
+        "Dismissal"
+      ]
+    ],
+    "quickActions": [
+      [
+        "attendance",
+        "Take Attendance"
+      ],
+      [
+        "behavior",
+        "Behavior Note"
+      ],
+      [
+        "student-note",
+        "Student Note"
+      ],
+      [
+        "timer",
+        "Quick Timer"
+      ],
+      [
+        "materials",
+        "Materials Check"
+      ],
+      [
+        "reflection",
+        "End-of-Day Reflection"
+      ]
+    ]
   }
 }

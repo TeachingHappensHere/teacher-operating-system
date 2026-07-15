@@ -6203,3 +6203,640 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     stabilizeNavigation();
   }
 })();
+
+
+/* =====================================================================
+   Version 12.0 — Live Teaching Center
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const STORE = "thh-v120:live-teaching";
+  const WEEK_STORE = "thh-v73:weekly-plan";
+  const PREPARED_STORE = "thh-v90:teach-day";
+
+  let config = null;
+  let state = {
+    selectedDay: "Monday",
+    dayType: "Full Day",
+    activeIndex: 0,
+    completed: {},
+    blockNotes: {},
+    quickTimerSeconds: 300,
+    timerEndsAt: null,
+    pausedSeconds: null,
+    reflection: "",
+    attendanceComplete: false,
+    behaviorNotes: [],
+    studentNotes: [],
+    startedAt: "",
+    endedAt: ""
+  };
+
+  let timerInterval = null;
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+
+      try {
+        state = { ...state, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
+      } catch {}
+
+      loadPreparedDay();
+      waitForShell();
+    } catch (error) {
+      console.error("Version 12.0 failed to initialize.", error);
+    }
+  }
+
+  function save() {
+    localStorage.setItem(STORE, JSON.stringify(state));
+  }
+
+  function loadPreparedDay() {
+    try {
+      const prepared = JSON.parse(localStorage.getItem(PREPARED_STORE) || "null");
+      if (prepared?.day) state.selectedDay = prepared.day;
+      if (prepared?.dayType) state.dayType = prepared.dayType;
+    } catch {}
+    save();
+  }
+
+  function weeklyPlan() {
+    try {
+      return JSON.parse(localStorage.getItem(WEEK_STORE) || "{}");
+    } catch {
+      return {};
+    }
+  }
+
+  function schedule() {
+    const source = state.dayType === "Half Day"
+      ? config.liveTeachingV120.halfDaySchedule
+      : config.liveTeachingV120.fullDaySchedule;
+
+    return source.map(([start, end, subject], index) => ({
+      id: `${state.dayType}-${index}-${subject}`,
+      start,
+      end,
+      subject,
+      ...detailsForSubject(subject)
+    }));
+  }
+
+  function dayPlan() {
+    return weeklyPlan().days?.[state.selectedDay] || {};
+  }
+
+  function detailsForSubject(subject) {
+    const day = dayPlan();
+    const normalized = subject.toLowerCase();
+
+    if (normalized.includes("mowr")) {
+      return lessonDetails(day.mowr, day.mowr, day.materials, day.assessment);
+    }
+    if (normalized.includes("heggerty")) {
+      return lessonDetails(day.heggerty, day.heggerty, day.materials, day.assessment);
+    }
+    if (normalized === "phonics" || normalized.includes("phonics test")) {
+      return lessonDetails(day.phonics, day.phonics, day.materials, day.assessment);
+    }
+    if (normalized.includes("vocabulary")) {
+      return lessonDetails(day.vocabulary, day.vocabulary, day.materials, day.assessment);
+    }
+    if (normalized.includes("reading")) {
+      return lessonDetails(day.reading || day.openCourtLesson, day.reading, day.materials, day.assessment);
+    }
+    if (normalized.includes("writing") || normalized.includes("grammar")) {
+      return lessonDetails(day.writing, day.writing, day.materials, day.assessment);
+    }
+    if (normalized === "math" || normalized.includes("math / tests")) {
+      return lessonDetails(day.math, day.math, day.materials, day.assessment);
+    }
+    if (normalized.includes("math 2")) {
+      return lessonDetails(day.math2, day.math2, day.materials, day.assessment);
+    }
+    if (normalized.includes("science") && normalized.includes("social studies")) {
+      return lessonDetails(
+        [day.science, day.socialStudies].filter(Boolean).join("\n\n"),
+        [day.science, day.socialStudies].filter(Boolean).join("\n\n"),
+        day.materials,
+        day.assessment
+      );
+    }
+    if (normalized.includes("science")) {
+      return lessonDetails(day.science, day.science, day.materials, day.assessment);
+    }
+    if (normalized.includes("social studies")) {
+      return lessonDetails(day.socialStudies, day.socialStudies, day.materials, day.assessment);
+    }
+
+    return lessonDetails(
+      day.launchRoutine || day.focus || "",
+      day.launchRoutine || "",
+      day.materials || "",
+      day.assessment || "Teacher observation."
+    );
+  }
+
+  function lessonDetails(title, lesson, materials, assessment) {
+    return {
+      title: String(title || "").split("\n")[0] || "Routine / Transition",
+      lesson: lesson || "",
+      materials: materials || "",
+      assessment: assessment || ""
+    };
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    window.addEventListener("hashchange", route);
+    new MutationObserver(route).observe($("#pageHost"), { childList: true, subtree: true });
+    route();
+  }
+
+  function route() {
+    const current = location.hash.replace("#","") || "dashboard";
+    if (current === "teachday" && !$("#v120LiveTeaching")) setTimeout(renderLiveTeaching, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "workflow-hub") setTimeout(injectWorkflowStatus, 0);
+    if (current === "health") setTimeout(injectHealthPanel, 0);
+  }
+
+  function renderLiveTeaching() {
+    stopTimerInterval();
+
+    const host = $("#pageHost");
+    if (!host) return;
+
+    const blocks = schedule();
+    if (state.activeIndex >= blocks.length) state.activeIndex = Math.max(0, blocks.length - 1);
+
+    const current = blocks[state.activeIndex];
+    const next = blocks[state.activeIndex + 1] || null;
+    const progress = Math.round(
+      (Object.values(state.completed).filter(Boolean).length / Math.max(blocks.length, 1)) * 100
+    );
+
+    host.innerHTML = `
+      <section id="v120LiveTeaching">
+        <section class="page-header">
+          <div>
+            <p>VERSION 12.0</p>
+            <h2>Live Teaching Center</h2>
+            <span>Keep this screen open while teaching and advance through the day one block at a time.</span>
+          </div>
+          <div class="button-row">
+            <select id="v120DaySelect">
+              ${["Monday","Tuesday","Wednesday","Thursday","Friday"].map(day => `
+                <option ${day === state.selectedDay ? "selected" : ""}>${day}</option>
+              `).join("")}
+            </select>
+            <select id="v120DayType">
+              <option ${state.dayType === "Full Day" ? "selected" : ""}>Full Day</option>
+              <option ${state.dayType === "Half Day" ? "selected" : ""}>Half Day</option>
+            </select>
+            <button id="v120StartDay" class="primary-button">
+              ${state.startedAt ? "Day Started" : "Start Teaching Day"}
+            </button>
+          </div>
+        </section>
+
+        <section class="v120-status-strip">
+          <article>
+            <span>NOW</span>
+            <strong>${esc(current.subject)}</strong>
+            <small>${esc(current.start)}–${esc(current.end)}</small>
+          </article>
+          <article>
+            <span>NEXT</span>
+            <strong>${next ? esc(next.subject) : "End of Day"}</strong>
+            <small>${next ? `${esc(next.start)}–${esc(next.end)}` : "No additional blocks"}</small>
+          </article>
+          <article>
+            <span>DAY PROGRESS</span>
+            <strong>${progress}%</strong>
+            <small>${Object.values(state.completed).filter(Boolean).length}/${blocks.length} completed</small>
+          </article>
+          <article>
+            <span>ATTENDANCE</span>
+            <strong>${state.attendanceComplete ? "Complete" : "Not Taken"}</strong>
+            <small>${state.attendanceComplete ? "Recorded for today" : "Use the quick action below"}</small>
+          </article>
+        </section>
+
+        <section class="v120-layout">
+          <aside class="panel v120-schedule">
+            <h3>Today's Schedule</h3>
+            <div>
+              ${blocks.map((block,index) => `
+                <button data-v120-block="${index}" class="${index === state.activeIndex ? "active" : ""} ${state.completed[block.id] ? "complete" : ""}">
+                  <span>${esc(block.start)}</span>
+                  <strong>${esc(block.subject)}</strong>
+                  <small>${state.completed[block.id] ? "Complete" : esc(block.end)}</small>
+                </button>
+              `).join("")}
+            </div>
+          </aside>
+
+          <main class="v120-main">
+            <section class="panel v120-current">
+              <div class="v120-current-heading">
+                <div>
+                  <p>${esc(current.start)}–${esc(current.end)}</p>
+                  <h2>${esc(current.subject)}</h2>
+                  <span>${esc(current.title)}</span>
+                </div>
+                <div class="v120-timer" id="v120TimerDisplay">${formatSeconds(timerRemaining())}</div>
+              </div>
+
+              <div class="v120-detail-grid">
+                <article>
+                  <span>LESSON / OBJECTIVE</span>
+                  <div>${formatText(current.lesson || "No lesson details have been entered yet.")}</div>
+                </article>
+                <article>
+                  <span>MATERIALS</span>
+                  <div>${formatText(current.materials || "No materials have been entered yet.")}</div>
+                </article>
+                <article>
+                  <span>ASSESSMENT / EVIDENCE</span>
+                  <div>${formatText(current.assessment || "Teacher observation.")}</div>
+                </article>
+                <article>
+                  <span>TEACHER NOTES</span>
+                  <textarea id="v120BlockNotes" placeholder="Notes for this block...">${esc(state.blockNotes[current.id] || "")}</textarea>
+                </article>
+              </div>
+
+              <div class="v120-control-row">
+                <button id="v120Previous" class="secondary-button" ${state.activeIndex === 0 ? "disabled" : ""}>Previous Block</button>
+                <button id="v120TimerStart" class="secondary-button">Start Timer</button>
+                <button id="v120TimerPause" class="secondary-button">Pause Timer</button>
+                <button id="v120CompleteBlock" class="primary-button">
+                  ${state.completed[current.id] ? "Mark Incomplete" : "Complete & Go Next"}
+                </button>
+              </div>
+            </section>
+
+            <section class="panel v120-next-card">
+              <div>
+                <p>COMING UP NEXT</p>
+                <h3>${next ? esc(next.subject) : "End of Day Reflection"}</h3>
+                <span>${next ? `${esc(next.start)}–${esc(next.end)} • ${esc(next.title)}` : "Complete your reflection and close the teaching day."}</span>
+              </div>
+              ${next ? `<button id="v120GoNext" class="secondary-button">Open Next Block</button>` : ""}
+            </section>
+          </main>
+
+          <aside class="v120-tools">
+            <section class="panel">
+              <h3>Quick Actions</h3>
+              <div class="v120-action-grid">
+                ${config.liveTeachingV120.quickActions.map(([id,label]) => `
+                  <button data-v120-action="${esc(id)}">${esc(label)}</button>
+                `).join("")}
+              </div>
+            </section>
+
+            <section class="panel">
+              <h3>Quick Timer</h3>
+              <div class="v120-quick-times">
+                ${[60,180,300,600,1200].map(seconds => `
+                  <button data-v120-time="${seconds}">${seconds < 60 ? seconds : seconds / 60}${seconds < 60 ? " sec" : " min"}</button>
+                `).join("")}
+              </div>
+            </section>
+
+            <section class="panel">
+              <h3>End-of-Day Reflection</h3>
+              <textarea id="v120Reflection" placeholder="What worked? What needs reteaching?">${esc(state.reflection || "")}</textarea>
+              <button id="v120SaveReflection" class="secondary-button">Save Reflection</button>
+              <button id="v120EndDay" class="primary-button">End Teaching Day</button>
+            </section>
+          </aside>
+        </section>
+      </section>
+    `;
+
+    wireLiveTeaching();
+    startTimerInterval();
+  }
+
+  function formatText(value) {
+    return esc(value).replaceAll("\n", "<br>");
+  }
+
+  function wireLiveTeaching() {
+    $("#v120DaySelect")?.addEventListener("change", event => {
+      state.selectedDay = event.target.value;
+      state.activeIndex = 0;
+      save();
+      renderLiveTeaching();
+    });
+
+    $("#v120DayType")?.addEventListener("change", event => {
+      state.dayType = event.target.value;
+      state.activeIndex = 0;
+      state.completed = {};
+      save();
+      renderLiveTeaching();
+    });
+
+    $("#v120StartDay")?.addEventListener("click", () => {
+      if (!state.startedAt) state.startedAt = new Date().toISOString();
+      state.endedAt = "";
+      save();
+      renderLiveTeaching();
+      toast("Teaching day started.");
+    });
+
+    $$("[data-v120-block]").forEach(button => {
+      button.addEventListener("click", () => {
+        saveCurrentBlockNote();
+        state.activeIndex = Number(button.dataset.v120Block);
+        resetBlockTimer();
+        save();
+        renderLiveTeaching();
+      });
+    });
+
+    $("#v120BlockNotes")?.addEventListener("input", event => {
+      const current = schedule()[state.activeIndex];
+      state.blockNotes[current.id] = event.target.value;
+      save();
+    });
+
+    $("#v120Previous")?.addEventListener("click", () => {
+      saveCurrentBlockNote();
+      state.activeIndex = Math.max(0, state.activeIndex - 1);
+      resetBlockTimer();
+      save();
+      renderLiveTeaching();
+    });
+
+    $("#v120GoNext")?.addEventListener("click", () => {
+      saveCurrentBlockNote();
+      state.activeIndex = Math.min(schedule().length - 1, state.activeIndex + 1);
+      resetBlockTimer();
+      save();
+      renderLiveTeaching();
+    });
+
+    $("#v120CompleteBlock")?.addEventListener("click", () => {
+      saveCurrentBlockNote();
+      const blocks = schedule();
+      const current = blocks[state.activeIndex];
+
+      if (state.completed[current.id]) {
+        state.completed[current.id] = false;
+      } else {
+        state.completed[current.id] = true;
+        if (state.activeIndex < blocks.length - 1) state.activeIndex += 1;
+      }
+
+      resetBlockTimer();
+      save();
+      renderLiveTeaching();
+    });
+
+    $("#v120TimerStart")?.addEventListener("click", startTimer);
+    $("#v120TimerPause")?.addEventListener("click", pauseTimer);
+
+    $$("[data-v120-time]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.quickTimerSeconds = Number(button.dataset.v120Time);
+        state.timerEndsAt = null;
+        state.pausedSeconds = state.quickTimerSeconds;
+        save();
+        updateTimerDisplay();
+      });
+    });
+
+    $$("[data-v120-action]").forEach(button => {
+      button.addEventListener("click", () => handleAction(button.dataset.v120Action));
+    });
+
+    $("#v120SaveReflection")?.addEventListener("click", () => {
+      state.reflection = $("#v120Reflection").value.trim();
+      save();
+      toast("Reflection saved.");
+    });
+
+    $("#v120EndDay")?.addEventListener("click", () => {
+      state.reflection = $("#v120Reflection").value.trim();
+      state.endedAt = new Date().toISOString();
+      save();
+      toast("Teaching day completed.");
+      renderLiveTeaching();
+    });
+  }
+
+  function saveCurrentBlockNote() {
+    const current = schedule()[state.activeIndex];
+    const field = $("#v120BlockNotes");
+    if (current && field) {
+      state.blockNotes[current.id] = field.value;
+    }
+  }
+
+  function handleAction(action) {
+    if (action === "attendance") {
+      state.attendanceComplete = true;
+      save();
+      renderLiveTeaching();
+      toast("Attendance marked complete.");
+      return;
+    }
+
+    if (action === "behavior") {
+      const note = prompt("Enter the behavior note:");
+      if (note) {
+        state.behaviorNotes.unshift({ note, date: new Date().toISOString() });
+        save();
+        toast("Behavior note saved.");
+      }
+      return;
+    }
+
+    if (action === "student-note") {
+      const note = prompt("Enter the student note:");
+      if (note) {
+        state.studentNotes.unshift({ note, date: new Date().toISOString() });
+        save();
+        toast("Student note saved.");
+      }
+      return;
+    }
+
+    if (action === "timer") {
+      startTimer();
+      return;
+    }
+
+    if (action === "materials") {
+      const current = schedule()[state.activeIndex];
+      alert(current.materials || "No materials have been entered for this block.");
+      return;
+    }
+
+    if (action === "reflection") {
+      $("#v120Reflection")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  function timerRemaining() {
+    if (state.timerEndsAt) {
+      return Math.max(0, Math.ceil((new Date(state.timerEndsAt).getTime() - Date.now()) / 1000));
+    }
+    if (typeof state.pausedSeconds === "number") return Math.max(0, state.pausedSeconds);
+    return state.quickTimerSeconds || 300;
+  }
+
+  function startTimer() {
+    const remaining = timerRemaining();
+    state.timerEndsAt = new Date(Date.now() + remaining * 1000).toISOString();
+    state.pausedSeconds = null;
+    save();
+    updateTimerDisplay();
+  }
+
+  function pauseTimer() {
+    state.pausedSeconds = timerRemaining();
+    state.timerEndsAt = null;
+    save();
+    updateTimerDisplay();
+  }
+
+  function resetBlockTimer() {
+    state.timerEndsAt = null;
+    state.pausedSeconds = state.quickTimerSeconds || 300;
+  }
+
+  function startTimerInterval() {
+    stopTimerInterval();
+    timerInterval = setInterval(updateTimerDisplay, 1000);
+  }
+
+  function stopTimerInterval() {
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  function updateTimerDisplay() {
+    const display = $("#v120TimerDisplay");
+    if (!display) return;
+    const remaining = timerRemaining();
+    display.textContent = formatSeconds(remaining);
+
+    if (remaining <= 0 && state.timerEndsAt) {
+      state.timerEndsAt = null;
+      state.pausedSeconds = 0;
+      save();
+      display.classList.add("finished");
+      toast("Timer complete.");
+    }
+  }
+
+  function formatSeconds(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainder = seconds % 60;
+    return `${String(minutes).padStart(2,"0")}:${String(remainder).padStart(2,"0")}`;
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v120DashboardCard")) return;
+
+    const blocks = schedule();
+    const current = blocks[state.activeIndex] || blocks[0];
+    const card = document.createElement("section");
+    card.id = "v120DashboardCard";
+    card.className = "v120-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>LIVE TEACHING CENTER</p>
+        <h3>${state.startedAt && !state.endedAt ? `Now: ${esc(current.subject)}` : "Ready for the teaching day"}</h3>
+        <span>${esc(state.selectedDay)} • ${esc(state.dayType)} • ${Object.values(state.completed).filter(Boolean).length}/${blocks.length} complete</span>
+      </div>
+      <button>Open Live Teaching</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "teachday";
+    dashboard.prepend(card);
+  }
+
+  function injectWorkflowStatus() {
+    const hub = $("#v111WorkflowHub");
+    if (!hub || $("#v120WorkflowStatus")) return;
+
+    const card = document.createElement("section");
+    card.id = "v120WorkflowStatus";
+    card.className = "v120-workflow-status";
+    card.innerHTML = `
+      <div>
+        <p>LIVE TEACHING MODULE</p>
+        <h3>Dedicated teaching screen installed</h3>
+        <span>Schedule, timers, lesson details, notes, and completion tracking are ready.</span>
+      </div>
+      <button>Open Live Teaching</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "teachday";
+    $(".page-header", hub)?.insertAdjacentElement("afterend", card);
+  }
+
+  function injectHealthPanel() {
+    const host = $("#pageHost");
+    if (!host || $("#v120HealthPanel")) return;
+
+    const planReady = Boolean(weeklyPlan().days?.[state.selectedDay]);
+    const panel = document.createElement("section");
+    panel.id = "v120HealthPanel";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 12.0 Live Teaching Health</h3>
+      <div class="health-grid">
+        ${healthItem("Full-day schedule", config.liveTeachingV120.fullDaySchedule.length === 18, `${config.liveTeachingV120.fullDaySchedule.length} blocks`)}
+        ${healthItem("Half-day schedule", config.liveTeachingV120.halfDaySchedule.length === 13, `${config.liveTeachingV120.halfDaySchedule.length} blocks`)}
+        ${healthItem("Selected-day plan", planReady, planReady ? state.selectedDay : "No plan found")}
+        ${healthItem("Live teaching storage", true, "Connected")}
+      </div>
+      <button class="secondary-button">Open Live Teaching</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "teachday";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div><span>${esc(title)}</span><small>${esc(detail)}</small></div>
+      </article>
+    `;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1900);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
