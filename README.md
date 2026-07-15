@@ -1,6 +1,6 @@
 # TeachingHappensHere
 
-## Version 11.1 — System Connection Audit & Workflow Hub
+## Version 11.2 — One-Click Weekly Workflow & Guided Handoff
 
 This is a full replacement release.
 
@@ -18,34 +18,31 @@ This is a full replacement release.
 
 ## Commit message
 
-Version 11.1 - System Connection Audit and Workflow Hub
+Version 11.2 - One Click Weekly Workflow and Guided Handoff
 
 ## Included
 
-- Workflow Hub permanently under Planning
-- Five-stage weekly workflow:
-  1. Teacher Intelligence
-  2. Weekly Planning
-  3. Lesson Attachments
-  4. Daily Lesson Packets
-  5. Live Teaching
-- Route registration audit
-- Saved-data detection
-- Manual test checkboxes
-- Overall readiness percentage
-- Audit notes
-- Dashboard connection card
-- Health connection checks
-- Print-friendly audit report
+- Week selector inside Workflow Hub
+- One-click full weekly workflow
+- Selected Teacher Intelligence week
+- Automatic Weekly Planning handoff
+- Automatic attachment checklist
+- Automatic print queue
+- Automatic Monday Live Teaching preparation
+- Individual Run Step buttons
+- Workflow completion tracking
+- Selected-week summary
+- Dashboard status card
+- Health handoff checks
 - Fresh service-worker cache
 - Full JavaScript and JSON validation
 
 ## After deployment
 
 1. Open the site in an incognito/private window.
-2. Expand Planning.
-3. Open Workflow Hub.
-4. Select Run Connection Audit.
-5. Open and test each of the five stages.
-6. Mark each stage successfully tested.
-7. Review Health for any missing routes.
+2. Expand Planning and open Workflow Hub.
+3. Select August 3, 2026 — Curriculum Week 1.
+4. Choose Run Full Weekly Workflow.
+5. Confirm Weekly Planning was created.
+6. Confirm Lesson Attachments and Print Center contain the generated checklist.
+7. Open Live Teaching and confirm Monday is prepared.

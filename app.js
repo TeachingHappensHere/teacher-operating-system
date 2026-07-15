@@ -5988,3 +5988,508 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
+
+
+/* =====================================================================
+   Version 11.2 — One-Click Weekly Workflow & Guided Handoff
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const STORE = "thh-v112:weekly-workflow";
+  const ENGINE_STORE = "thh-v100:intelligence-engine";
+  const WEEK_STORE = "thh-v73:weekly-plan";
+  const ATTACHMENT_STORE = "thh-v74:attachments";
+  const PRINT_STORE = "thh-v74:print-center";
+  const LIVE_STORE = "thh-v90:teach-day";
+
+  let config = null;
+  let state = {
+    selectedWeek: "2026-08-03",
+    completed: {},
+    lastRun: "",
+    log: []
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  async function start() {
+    try {
+      config = await fetch("tos-data.json", { cache: "no-store" }).then(response => response.json());
+      try {
+        state = { ...state, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
+      } catch {}
+      waitForShell();
+    } catch (error) {
+      console.error("Version 11.2 failed to initialize.", error);
+    }
+  }
+
+  function save() {
+    localStorage.setItem(STORE, JSON.stringify(state));
+  }
+
+  function intelligenceState() {
+    try {
+      return JSON.parse(localStorage.getItem(ENGINE_STORE) || "{}");
+    } catch {
+      return {};
+    }
+  }
+
+  function availableWeeks() {
+    const engine = intelligenceState();
+    const weeks = Object.values(engine.weeks || {});
+    if (!weeks.length) {
+      return [
+        {
+          weekOf: "2026-07-27",
+          title: "Classroom Launch Week",
+          weekType: "Launch Week",
+          curriculumLocked: true,
+          pillar: "Heart"
+        },
+        {
+          weekOf: "2026-08-03",
+          title: "Curriculum Week 1",
+          weekType: "Curriculum Week",
+          curriculumLocked: false,
+          pillar: "Heart",
+          openCourtUnit: 1,
+          openCourtLesson: 1,
+          openCourt: "Unit 1, Lesson 1 — The Mice Who Lived in a Shoe",
+          eurekaModule: 1,
+          eurekaStartingLesson: 1,
+          heggerty: "Enter the current Heggerty week and lesson.",
+          ufli: "Enter the aligned UFLI lesson or foundational skill.",
+          writing: "Building the Foundation / Open Court GUM",
+          science: "Select the current Arizona science unit and lesson.",
+          socialStudies: "Select the current Arizona Social Studies, iCivics, or 180 Days lesson."
+        }
+      ];
+    }
+    return weeks.sort((a,b) => a.weekOf.localeCompare(b.weekOf));
+  }
+
+  function selectedWeek() {
+    return availableWeeks().find(week => week.weekOf === state.selectedWeek) || availableWeeks()[0];
+  }
+
+  function waitForShell() {
+    if (!$("#pageHost") || !$("#mainNav")) {
+      setTimeout(waitForShell, 100);
+      return;
+    }
+
+    window.addEventListener("hashchange", route);
+    new MutationObserver(route).observe($("#pageHost"), { childList:true, subtree:true });
+    route();
+  }
+
+  function route() {
+    const current = location.hash.replace("#","") || "dashboard";
+    if (current === "workflow-hub") setTimeout(injectGuidedWorkflow, 0);
+    if (current === "dashboard") setTimeout(injectDashboardCard, 0);
+    if (current === "health") setTimeout(injectHealthPanel, 0);
+  }
+
+  function injectGuidedWorkflow() {
+    const hub = $("#v111WorkflowHub");
+    if (!hub || $("#v112GuidedWorkflow")) return;
+
+    const section = document.createElement("section");
+    section.id = "v112GuidedWorkflow";
+    section.className = "v112-guided-workflow";
+    section.innerHTML = renderGuidedWorkflow();
+
+    const header = $(".page-header", hub);
+    header?.insertAdjacentElement("afterend", section);
+    wireGuidedWorkflow();
+  }
+
+  function renderGuidedWorkflow() {
+    const week = selectedWeek();
+    const steps = config.weeklyWorkflowV112?.steps || [];
+    const progress = Math.round(
+      (steps.filter(step => state.completed[step.id]).length / Math.max(steps.length,1)) * 100
+    );
+
+    return `
+      <section class="v112-header-card">
+        <div>
+          <p>ONE-CLICK WEEKLY WORKFLOW</p>
+          <h3>${esc(week.title)}</h3>
+          <span>Week of ${esc(formatDate(week.weekOf))} • ${esc(week.weekType)}</span>
+        </div>
+        <div class="v112-header-actions">
+          <select id="v112WeekSelect">
+            ${availableWeeks().map(item => `
+              <option value="${esc(item.weekOf)}" ${item.weekOf === week.weekOf ? "selected" : ""}>
+                ${esc(formatDate(item.weekOf))} — ${esc(item.title)}
+              </option>
+            `).join("")}
+          </select>
+          <button id="v112RunAll" class="primary-button">Run Full Weekly Workflow</button>
+        </div>
+      </section>
+
+      <section class="v112-progress">
+        <div class="v112-progress-track"><span style="width:${progress}%"></span></div>
+        <strong>${progress}% complete</strong>
+      </section>
+
+      <section class="v112-step-grid">
+        ${steps.map((step,index) => `
+          <article class="panel v112-step ${state.completed[step.id] ? "complete" : ""}">
+            <div class="v112-step-number">${index + 1}</div>
+            <div>
+              <span>${state.completed[step.id] ? "COMPLETE" : "READY"}</span>
+              <h3>${esc(step.title)}</h3>
+              <p>${esc(step.description)}</p>
+            </div>
+            <button data-v112-step="${esc(step.id)}" class="${state.completed[step.id] ? "secondary-button" : "primary-button"}">
+              ${state.completed[step.id] ? "Run Again" : "Run Step"}
+            </button>
+          </article>
+        `).join("")}
+      </section>
+
+      <section class="panel v112-summary-card">
+        <h3>Selected Week Summary</h3>
+        <div class="v112-summary-grid">
+          <article><span>Open Court</span><strong>${esc(week.openCourt || "Launch Week — no core curriculum")}</strong></article>
+          <article><span>Eureka Math²</span><strong>${week.curriculumLocked ? "Launch Week — no core sequence" : `Module ${week.eurekaModule || 1}, starting Lesson ${week.eurekaStartingLesson || 1}`}</strong></article>
+          <article><span>Writing</span><strong>${esc(week.writing || "Launch routines and readiness")}</strong></article>
+          <article><span>Science</span><strong>${esc(week.science || "Observation and readiness activities")}</strong></article>
+          <article><span>Social Studies</span><strong>${esc(week.socialStudies || "Classroom community and routines")}</strong></article>
+          <article><span>Last Workflow Run</span><strong>${state.lastRun ? new Date(state.lastRun).toLocaleString() : "Not run yet"}</strong></article>
+        </div>
+      </section>
+    `;
+  }
+
+  function wireGuidedWorkflow() {
+    $("#v112WeekSelect")?.addEventListener("change", event => {
+      state.selectedWeek = event.target.value;
+      state.completed = {};
+      save();
+      refreshGuidedWorkflow();
+    });
+
+    $$("[data-v112-step]").forEach(button => {
+      button.addEventListener("click", () => runStep(button.dataset.v112Step));
+    });
+
+    $("#v112RunAll")?.addEventListener("click", runAll);
+  }
+
+  function refreshGuidedWorkflow() {
+    const old = $("#v112GuidedWorkflow");
+    if (!old) return;
+    old.innerHTML = renderGuidedWorkflow();
+    wireGuidedWorkflow();
+  }
+
+  function runStep(stepId) {
+    const week = selectedWeek();
+
+    if (stepId === "select") {
+      completeStep("select", `Selected ${week.title}.`);
+      return;
+    }
+
+    if (stepId === "plan") {
+      buildWeeklyPlan(week);
+      completeStep("plan", `${week.title} sent to Weekly Planning.`);
+      return;
+    }
+
+    if (stepId === "attachments") {
+      buildAttachments(week);
+      completeStep("attachments", "Attachment checklist created.");
+      return;
+    }
+
+    if (stepId === "print") {
+      buildPrintQueue(week);
+      completeStep("print", "Print queue created.");
+      return;
+    }
+
+    if (stepId === "teach") {
+      prepareLiveTeaching(week);
+      completeStep("teach", "Monday prepared for Live Teaching.");
+    }
+  }
+
+  function runAll() {
+    const week = selectedWeek();
+    buildWeeklyPlan(week);
+    buildAttachments(week);
+    buildPrintQueue(week);
+    prepareLiveTeaching(week);
+
+    (config.weeklyWorkflowV112?.steps || []).forEach(step => {
+      state.completed[step.id] = true;
+    });
+    state.lastRun = new Date().toISOString();
+    state.log.unshift({
+      date: state.lastRun,
+      weekOf: week.weekOf,
+      title: week.title,
+      action: "Full weekly workflow completed"
+    });
+    save();
+    refreshGuidedWorkflow();
+    toast(`${week.title} completed through Live Teaching.`);
+  }
+
+  function completeStep(stepId, message) {
+    state.completed[stepId] = true;
+    state.lastRun = new Date().toISOString();
+    state.log.unshift({
+      date: state.lastRun,
+      weekOf: selectedWeek().weekOf,
+      title: selectedWeek().title,
+      action: message
+    });
+    save();
+    refreshGuidedWorkflow();
+    toast(message);
+  }
+
+  function buildWeeklyPlan(week) {
+    const dayNames = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+    const days = {};
+
+    dayNames.forEach((day,index) => {
+      if (week.curriculumLocked) {
+        days[day] = {
+          day,
+          focus: "Classroom Launch Week",
+          launchRoutine: "Routines, procedures, community, transitions, independence, and readiness.",
+          morningMeeting: "Community building and classroom procedure practice.",
+          reading: "",
+          writing: "First-week writing and classroom-community activity.",
+          math: "Math routines, manipulatives, discussion expectations, and readiness.",
+          science: "Observation and science-notebook routines.",
+          socialStudies: "Classroom community, rules, and responsibilities.",
+          differentiation: "Visuals, gestures, sentence frames, partner support, repeated directions, and approved accommodations.",
+          assessment: "Teacher observation and informal readiness checks.",
+          materials: "",
+          notes: week.notes || "",
+          complete: false
+        };
+      } else {
+        days[day] = {
+          day,
+          focus: week.openCourt || `Unit ${week.openCourtUnit || 1}, Lesson ${week.openCourtLesson || 1}`,
+          openCourtLesson: week.openCourt || `Unit ${week.openCourtUnit || 1}, Lesson ${week.openCourtLesson || 1}`,
+          heggerty: week.heggerty || "",
+          ufli: week.ufli || "",
+          mowr: week.ufli || "",
+          phonics: "Use the aligned Open Court phonics skill and authorized Skills Practice.",
+          vocabulary: "Use the aligned Open Court weekly vocabulary.",
+          reading: week.openCourt || "",
+          writing: week.writing || "",
+          math: `Eureka Math² Module ${week.eurekaModule || 1}, Lesson ${(week.eurekaStartingLesson || 1) + index}`,
+          math2: "Spiral review, fact fluency, exit-ticket review, or small-group reteach.",
+          science: week.science || "",
+          socialStudies: week.socialStudies || "",
+          differentiation: config.curriculumWeek1?.defaultSupports || "Visuals, sentence frames, partner support, chunked directions, manipulatives, and approved accommodations.",
+          assessment: day === "Friday"
+            ? "Complete approved weekly assessments and record evidence."
+            : "Use observation, oral response, student work, and exit tickets.",
+          materials: "",
+          notes: week.notes || "",
+          complete: false
+        };
+      }
+    });
+
+    localStorage.setItem(WEEK_STORE, JSON.stringify({
+      title: week.title,
+      weekOf: week.weekOf,
+      pillar: week.pillar || "Heart",
+      days,
+      printQueue: [],
+      updatedAt: new Date().toISOString(),
+      source: "Version 11.2 One-Click Workflow"
+    }));
+  }
+
+  function buildAttachments(week) {
+    let items = [];
+    try {
+      items = JSON.parse(localStorage.getItem(ATTACHMENT_STORE) || "[]");
+    } catch {}
+
+    const dayNames = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+    const types = config.weeklyWorkflowV112?.defaultAttachmentTypes || [];
+
+    const generated = [];
+    dayNames.forEach(day => {
+      types.forEach((type,index) => {
+        generated.push({
+          id: `v112-${week.weekOf}-${day}-${index}`,
+          day,
+          lesson: week.curriculumLocked ? "Classroom Launch Week" : (week.openCourt || week.title),
+          title: type,
+          category: categoryFor(type),
+          type: type.includes("Assessment") || type.includes("Exit Ticket") ? "Assessment" : "Printable Page",
+          url: "",
+          notes: week.curriculumLocked ? "Use only launch-week or readiness materials." : "Add the authorized school-provided resource.",
+          print: true,
+          copies: 1,
+          status: "Missing"
+        });
+      });
+    });
+
+    const prefix = `v112-${week.weekOf}-`;
+    items = [...items.filter(item => !String(item.id).startsWith(prefix)), ...generated];
+    localStorage.setItem(ATTACHMENT_STORE, JSON.stringify(items));
+  }
+
+  function categoryFor(type) {
+    if (type.includes("Open Court") || type.includes("Vocabulary") || type.includes("Phonics")) return "Open Court";
+    if (type.includes("Eureka")) return "Eureka Math²";
+    if (type.includes("Writing")) return "Writing / GUM";
+    if (type.includes("Science")) return "Science";
+    if (type.includes("Social Studies")) return "Social Studies";
+    return "Assessment";
+  }
+
+  function buildPrintQueue(week) {
+    let queue = [];
+    try {
+      queue = JSON.parse(localStorage.getItem(PRINT_STORE) || "[]");
+    } catch {}
+
+    const attachments = (() => {
+      try {
+        return JSON.parse(localStorage.getItem(ATTACHMENT_STORE) || "[]");
+      } catch {
+        return [];
+      }
+    })();
+
+    const generated = attachments
+      .filter(item => String(item.id).startsWith(`v112-${week.weekOf}-`))
+      .map(item => ({
+        id: `print-${item.id}`,
+        source: "Version 11.2 Weekly Workflow",
+        day: item.day,
+        title: item.title,
+        category: item.category,
+        copies: item.copies || 1,
+        notes: item.notes || "",
+        url: item.url || "",
+        complete: false
+      }));
+
+    queue = [
+      ...queue.filter(item => !String(item.id).startsWith(`print-v112-${week.weekOf}-`)),
+      ...generated
+    ];
+
+    localStorage.setItem(PRINT_STORE, JSON.stringify(queue));
+  }
+
+  function prepareLiveTeaching(week) {
+    const weeklyPlan = (() => {
+      try {
+        return JSON.parse(localStorage.getItem(WEEK_STORE) || "{}");
+      } catch {
+        return {};
+      }
+    })();
+
+    const monday = weeklyPlan.days?.Monday || {};
+    localStorage.setItem(LIVE_STORE, JSON.stringify({
+      day: "Monday",
+      weekOf: week.weekOf,
+      title: week.title,
+      dayType: "Full Day",
+      source: "Version 11.2 One-Click Workflow",
+      monday,
+      blocks: [],
+      preparedAt: new Date().toISOString()
+    }));
+  }
+
+  function formatDate(value) {
+    const date = new Date(`${value}T12:00:00`);
+    return date.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" });
+  }
+
+  function injectDashboardCard() {
+    const dashboard = $("#v72Dashboard");
+    if (!dashboard || $("#v112DashboardCard")) return;
+
+    const complete = Object.values(state.completed).filter(Boolean).length;
+    const card = document.createElement("section");
+    card.id = "v112DashboardCard";
+    card.className = "v112-dashboard-card";
+    card.innerHTML = `
+      <div>
+        <p>ONE-CLICK WEEKLY WORKFLOW</p>
+        <h3>${complete}/5 workflow steps complete</h3>
+        <span>${esc(selectedWeek()?.title || "Select a week")} → Planning → Attachments → Packets → Teaching</span>
+      </div>
+      <button>Open Workflow Hub</button>
+    `;
+    card.querySelector("button").onclick = () => location.hash = "workflow-hub";
+    dashboard.prepend(card);
+  }
+
+  function injectHealthPanel() {
+    const host = $("#pageHost");
+    if (!host || $("#v112HealthPanel")) return;
+
+    const planReady = Boolean(localStorage.getItem(WEEK_STORE));
+    const attachmentReady = Boolean(localStorage.getItem(ATTACHMENT_STORE));
+    const printReady = Boolean(localStorage.getItem(PRINT_STORE));
+    const liveReady = Boolean(localStorage.getItem(LIVE_STORE));
+
+    const panel = document.createElement("section");
+    panel.id = "v112HealthPanel";
+    panel.className = "panel";
+    panel.innerHTML = `
+      <h3>Version 11.2 Weekly Workflow Health</h3>
+      <div class="health-grid">
+        ${healthItem("Weekly Planning handoff", planReady, planReady ? "Ready" : "Not generated")}
+        ${healthItem("Attachment checklist", attachmentReady, attachmentReady ? "Ready" : "Not generated")}
+        ${healthItem("Print queue", printReady, printReady ? "Ready" : "Not generated")}
+        ${healthItem("Live Teaching handoff", liveReady, liveReady ? "Ready" : "Not generated")}
+      </div>
+      <button class="secondary-button">Open Workflow Hub</button>
+    `;
+    panel.querySelector("button").onclick = () => location.hash = "workflow-hub";
+    host.appendChild(panel);
+  }
+
+  function healthItem(title, ok, detail) {
+    return `
+      <article class="${ok ? "ready" : "missing"}">
+        <strong>${ok ? "✓" : "!"}</strong>
+        <div><span>${esc(title)}</span><small>${esc(detail)}</small></div>
+      </article>
+    `;
+  }
+
+  function toast(message) {
+    const element = $("#toast");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.add("show");
+    setTimeout(() => element.classList.remove("show"), 1900);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();

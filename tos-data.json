@@ -1,6 +1,6 @@
 {
-  "version": "11.1 System Connection Audit & Workflow Hub",
-  "releaseStatus": "Adds a built-in connection audit and a guided workflow from curriculum assignment through planning, production, and live teaching.",
+  "version": "11.2 One-Click Weekly Workflow & Guided Handoff",
+  "releaseStatus": "Turns the Workflow Hub into a guided one-click weekly process that carries the selected week from Teacher Intelligence into Weekly Planning, attachments, print preparation, and Live Teaching.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2057,6 +2057,46 @@
       "eureka-math",
       "afternoon-studios",
       "health"
+    ]
+  },
+  "weeklyWorkflowV112": {
+    "steps": [
+      {
+        "id": "select",
+        "title": "Select Week",
+        "description": "Choose a week from Teacher Intelligence."
+      },
+      {
+        "id": "plan",
+        "title": "Build Weekly Plan",
+        "description": "Create a five-day planning record from the selected assignment."
+      },
+      {
+        "id": "attachments",
+        "title": "Create Attachment Checklist",
+        "description": "Prepare the authorized resource checklist."
+      },
+      {
+        "id": "print",
+        "title": "Build Print Queue",
+        "description": "Add weekly print and preparation tasks."
+      },
+      {
+        "id": "teach",
+        "title": "Prepare Live Teaching",
+        "description": "Send Monday into the live teaching workspace."
+      }
+    ],
+    "defaultAttachmentTypes": [
+      "Open Court Skills Practice",
+      "Open Court Lesson Assessment",
+      "Vocabulary Practice",
+      "Phonics / Spelling Practice",
+      "Writing / GUM Page",
+      "Eureka Math\u00b2 Lesson Materials",
+      "Eureka Math\u00b2 Exit Ticket",
+      "Science Student Page",
+      "Social Studies Student Page"
     ]
   }
 }
