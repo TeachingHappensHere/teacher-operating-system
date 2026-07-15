@@ -135,12 +135,70 @@
       "classroom-launch": renderClassroomLaunch,
       "lesson-plans": renderLessonPlans,
       "small-groups": () => {
-        if (typeof window.THH_RENDER_SMALL_GROUPS === "function") window.THH_RENDER_SMALL_GROUPS();
-        else { renderFeatureLoading("Small Groups"); setTimeout(() => window.THH_RENDER_SMALL_GROUPS?.(), 80); }
+        if (typeof window.THH_RENDER_SMALL_GROUPS === "function") {
+          window.THH_RENDER_SMALL_GROUPS();
+          return;
+        }
+
+        renderFeatureLoading("Small Groups");
+
+        let attempts = 0;
+        const waitForSmallGroups = window.setInterval(() => {
+          attempts += 1;
+
+          if (location.hash.replace("#", "") !== "small-groups") {
+            window.clearInterval(waitForSmallGroups);
+            return;
+          }
+
+          if (typeof window.THH_RENDER_SMALL_GROUPS === "function") {
+            window.clearInterval(waitForSmallGroups);
+            window.THH_RENDER_SMALL_GROUPS();
+            return;
+          }
+
+          if (attempts >= 50) {
+            window.clearInterval(waitForSmallGroups);
+            $("#pageHost").innerHTML = `
+              <section class="v150-module-error">
+                <strong>Small Groups did not finish loading.</strong>
+                <span>Refresh the page once or open Health for diagnostics.</span>
+              </section>`;
+          }
+        }, 100);
       },
       intervention: () => {
-        if (typeof window.THH_RENDER_INTERVENTION === "function") window.THH_RENDER_INTERVENTION();
-        else { renderFeatureLoading("Intervention"); setTimeout(() => window.THH_RENDER_INTERVENTION?.(), 80); }
+        if (typeof window.THH_RENDER_INTERVENTION === "function") {
+          window.THH_RENDER_INTERVENTION();
+          return;
+        }
+
+        renderFeatureLoading("Intervention");
+
+        let attempts = 0;
+        const waitForIntervention = window.setInterval(() => {
+          attempts += 1;
+
+          if (location.hash.replace("#", "") !== "intervention") {
+            window.clearInterval(waitForIntervention);
+            return;
+          }
+
+          if (typeof window.THH_RENDER_INTERVENTION === "function") {
+            window.clearInterval(waitForIntervention);
+            window.THH_RENDER_INTERVENTION();
+            return;
+          }
+
+          if (attempts >= 50) {
+            window.clearInterval(waitForIntervention);
+            $("#pageHost").innerHTML = `
+              <section class="v150-module-error">
+                <strong>Intervention did not finish loading.</strong>
+                <span>Refresh the page once or open Health for diagnostics.</span>
+              </section>`;
+          }
+        }, 100);
       },
       assessments: renderAssessments,
       "classroom-systems": renderClassroomSystems,
@@ -7985,7 +8043,11 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       <div>
         <p>STUDENT DATA CONNECTION</p>
         <h3>Current Reading Groups</h3>
-        <span>${groups.map(item => `${item.group.split(" — ")[0]}: ${item.count}`).join(" • ")}</span>
+        <span>${["Red — Far Below Level","Yellow — Below Level","Green — Benchmark","Blue — Above Level"]
+          .map(groupName => {
+            const item = groups.find(group => group.group === groupName);
+            return `${groupName.split(" — ")[0]}: ${item?.count || 0}`;
+          }).join(" • ")}</span>
       </div>
       <button>Open Student Profiles</button>
     `;
@@ -8066,12 +8128,188 @@ const STUDENTS="thh-v140:student-records",PLANS="thh-v141:group-plans",NOTES="th
 let cfg,students=[],plans={},notes=[],ui={group:"Red — Far Below Level",day:"Monday",tier:"All"};
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
-async function start(){cfg=await fetch("tos-data.json",{cache:"no-store"}).then(r=>r.json());try{students=JSON.parse(localStorage.getItem(STUDENTS)||"[]")}catch{}try{plans=JSON.parse(localStorage.getItem(PLANS)||"{}")}catch{}try{notes=JSON.parse(localStorage.getItem(NOTES)||"[]")}catch{}try{ui={...ui,...JSON.parse(localStorage.getItem(UI)||"{}")}}catch{}ensure();window.THH_RENDER_SMALL_GROUPS=renderGroups;window.THH_RENDER_INTERVENTION=renderIntervention;window.addEventListener("hashchange",route);route()}
-function save(){localStorage.setItem(PLANS,JSON.stringify(plans));localStorage.setItem(NOTES,JSON.stringify(notes));localStorage.setItem(UI,JSON.stringify(ui))}
-function ensure(){cfg.interventionCenterV141.readingGroups.forEach(g=>cfg.interventionCenterV141.days.forEach(day=>{const k=`${g.name}|${day}`;if(!plans[k])plans[k]={objective:"",skill:g.focus,text:"",materials:"",assessment:"Teacher observation and brief progress evidence",notes:"",complete:false}}));save()}
+const FALLBACK_GROUP_CONFIG = {
+  readingGroups: [
+    {
+      name: "Red — Far Below Level",
+      frequency: "Daily",
+      minutes: 15,
+      focus: "Intensive decoding, phoneme-grapheme mapping, accuracy, and controlled-text reading"
+    },
+    {
+      name: "Yellow — Below Level",
+      frequency: "3–4 times weekly",
+      minutes: 12,
+      focus: "Strategic decoding, accuracy, word recognition, phrasing, and supported fluency"
+    },
+    {
+      name: "Green — Benchmark",
+      frequency: "1–2 times weekly",
+      minutes: 10,
+      focus: "Benchmark-level fluency, comprehension, vocabulary, and grade-level application"
+    },
+    {
+      name: "Blue — Above Level",
+      frequency: "1–2 times weekly",
+      minutes: 10,
+      focus: "Above-level prosody, deeper comprehension, vocabulary, author’s craft, and extension"
+    }
+  ],
+  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  measures: [
+    "ORF Words Correct",
+    "ORF Accuracy %",
+    "Maze",
+    "NWF CLS",
+    "Phonics Skill Check",
+    "Teacher Observation"
+  ]
+};
+
+async function start(){
+  // Register route renderers immediately so the central router never waits
+  // on data repair or network loading.
+  window.THH_RENDER_SMALL_GROUPS = renderGroups;
+  window.THH_RENDER_INTERVENTION = renderIntervention;
+
+  try {
+    cfg = await fetch("tos-data.json", { cache: "no-store" }).then(response => {
+      if (!response.ok) throw new Error(`Configuration request failed: ${response.status}`);
+      return response.json();
+    });
+  } catch (error) {
+    console.warn("Version 14.1 is using fallback group configuration.", error);
+    cfg = {};
+  }
+
+  cfg.interventionCenterV141 = validateGroupConfig(
+    cfg.interventionCenterV141 || FALLBACK_GROUP_CONFIG
+  );
+
+  try {
+    const value = JSON.parse(localStorage.getItem(STUDENTS) || "[]");
+    students = Array.isArray(value) ? value : [];
+  } catch {
+    students = [];
+  }
+
+  try {
+    const value = JSON.parse(localStorage.getItem(PLANS) || "{}");
+    plans = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  } catch {
+    plans = {};
+  }
+
+  try {
+    const value = JSON.parse(localStorage.getItem(NOTES) || "[]");
+    notes = Array.isArray(value) ? value : [];
+  } catch {
+    notes = [];
+  }
+
+  try {
+    const value = JSON.parse(localStorage.getItem(UI) || "{}");
+    ui = value && typeof value === "object" && !Array.isArray(value)
+      ? { ...ui, ...value }
+      : ui;
+  } catch {}
+
+  repairUiSelection();
+  ensure();
+  window.addEventListener("hashchange", route);
+  route();
+}
+
+function validateGroupConfig(value) {
+  const groups = Array.isArray(value?.readingGroups)
+    ? value.readingGroups.filter(group => group && typeof group.name === "string")
+    : [];
+
+  const days = Array.isArray(value?.days) && value.days.length
+    ? value.days
+    : FALLBACK_GROUP_CONFIG.days;
+
+  const measures = Array.isArray(value?.measures) && value.measures.length
+    ? value.measures
+    : FALLBACK_GROUP_CONFIG.measures;
+
+  return {
+    readingGroups: groups.length ? groups : FALLBACK_GROUP_CONFIG.readingGroups,
+    days,
+    measures
+  };
+}
+
+function repairUiSelection() {
+  const names = cfg.interventionCenterV141.readingGroups.map(group => group.name);
+
+  if (!names.includes(ui.group)) {
+    ui.group = names[0] || "Red — Far Below Level";
+  }
+
+  if (!cfg.interventionCenterV141.days.includes(ui.day)) {
+    ui.day = cfg.interventionCenterV141.days[0] || "Monday";
+  }
+}
+
+function save(){
+  localStorage.setItem(PLANS, JSON.stringify(plans));
+  localStorage.setItem(NOTES, JSON.stringify(notes));
+  localStorage.setItem(UI, JSON.stringify(ui));
+}
+
+function ensure(){
+  const validPlans = {};
+
+  cfg.interventionCenterV141.readingGroups.forEach(group => {
+    cfg.interventionCenterV141.days.forEach(day => {
+      const key = `${group.name}|${day}`;
+      const existing = plans[key];
+
+      validPlans[key] = existing && typeof existing === "object" && !Array.isArray(existing)
+        ? {
+            objective: String(existing.objective || ""),
+            skill: String(existing.skill || group.focus || ""),
+            text: String(existing.text || ""),
+            materials: String(existing.materials || ""),
+            assessment: String(existing.assessment || "Teacher observation and brief progress evidence"),
+            notes: String(existing.notes || ""),
+            complete: Boolean(existing.complete)
+          }
+        : {
+            objective: "",
+            skill: group.focus || "",
+            text: "",
+            materials: "",
+            assessment: "Teacher observation and brief progress evidence",
+            notes: "",
+            complete: false
+          };
+    });
+  });
+
+  plans = validPlans;
+  save();
+}
 function route(){const r=location.hash.slice(1)||"dashboard";if(r==="small-groups")setTimeout(renderGroups);if(r==="intervention")setTimeout(renderIntervention);if(r==="dashboard")setTimeout(dash);if(r==="health")setTimeout(health)}
 function members(group){return students.filter(s=>s.readingGroup===group)}
-function renderGroups(){if(location.hash.slice(1)!=="small-groups")return;const g=cfg.interventionCenterV141.readingGroups.find(x=>x.name===ui.group),p=plans[`${ui.group}|${ui.day}`],m=members(ui.group);$("#pageHost").innerHTML=`<section id="v141Groups"><section class="page-header"><div><p>VERSION 14.1</p><h2>Small-Group & MOWR Center</h2><span>Teacher-table plans connected to Student Data reading groups.</span></div><div class="button-row"><button id="students" class="secondary-button">Open Student Data</button><button id="print" class="secondary-button">Print Group Plan</button></div></section><section class="v141-group-tabs">${cfg.interventionCenterV141.readingGroups.map(x=>`<button data-group="${esc(x.name)}" class="${x.name===ui.group?"active":""}"><strong>${esc(x.name)}</strong><span>${members(x.name).length} students • ${esc(x.frequency)}</span></button>`).join("")}</section><section class="v141-layout"><aside class="panel"><h3>${esc(ui.group)}</h3><p>${esc(g.focus)}</p><div class="v141-roster">${m.length?m.map(s=>`<article><strong>${esc(s.displayName)}</strong><span>${esc(s.interventionTier||"Not Assigned")}</span></article>`).join(""):"<p>No students assigned.</p>"}</div></aside><main class="panel"><div class="v141-heading"><div><p>${esc(ui.day)}</p><h2>${esc(ui.group)}</h2><span>${g.minutes} recommended minutes</span></div><select id="day">${cfg.interventionCenterV141.days.map(d=>`<option ${d===ui.day?"selected":""}>${d}</option>`).join("")}</select></div><div class="v141-plan-grid">${area("objective","Objective",p.objective)}${area("skill","Skill / Focus",p.skill)}${area("text","Text / Decodable",p.text)}${area("materials","Materials",p.materials)}${area("assessment","Progress Evidence",p.assessment)}${area("notes","Teacher Notes",p.notes)}</div><div class="button-row"><button id="save" class="primary-button">Save Group Plan</button><button id="complete" class="${p.complete?"secondary-button":"primary-button"}">${p.complete?"Mark Incomplete":"Mark Complete"}</button><button id="progress" class="secondary-button">Add Progress Note</button></div></main><aside class="panel"><h3>Weekly Status</h3><div class="v141-status">${cfg.interventionCenterV141.days.map(d=>{const x=plans[`${ui.group}|${d}`];return`<article class="${x.complete?"complete":""}"><strong>${d}</strong><span>${x.complete?"Complete":"Pending"}</span></article>`}).join("")}</div></aside></section></section>`;wireGroups()}
+function renderGroups(){
+  if(location.hash.slice(1)!=="small-groups") return;
+
+  if (!cfg?.interventionCenterV141) {
+    cfg = { interventionCenterV141: FALLBACK_GROUP_CONFIG };
+  }
+
+  cfg.interventionCenterV141 = validateGroupConfig(cfg.interventionCenterV141);
+  repairUiSelection();
+  ensure();
+
+  const g = cfg.interventionCenterV141.readingGroups.find(x => x.name === ui.group)
+    || cfg.interventionCenterV141.readingGroups[0];
+  const p = plans[`${g.name}|${ui.day}`];
+  const m = members(g.name);
+  ui.group = g.name;
+$("#pageHost").innerHTML=`<section id="v141Groups"><section class="page-header"><div><p>VERSION 14.1</p><h2>Small-Group & MOWR Center</h2><span>Teacher-table plans connected to Student Data reading groups.</span></div><div class="button-row"><button id="students" class="secondary-button">Open Student Data</button><button id="print" class="secondary-button">Print Group Plan</button></div></section><section class="v141-group-tabs">${cfg.interventionCenterV141.readingGroups.map(x=>`<button data-group="${esc(x.name)}" class="${x.name===ui.group?"active":""}"><strong>${esc(x.name)}</strong><span>${members(x.name).length} students • ${esc(x.frequency)}</span></button>`).join("")}</section><section class="v141-layout"><aside class="panel"><h3>${esc(ui.group)}</h3><p>${esc(g.focus)}</p><div class="v141-roster">${m.length?m.map(s=>`<article><strong>${esc(s.displayName)}</strong><span>${esc(s.interventionTier||"Not Assigned")}</span></article>`).join(""):"<p>No students assigned.</p>"}</div></aside><main class="panel"><div class="v141-heading"><div><p>${esc(ui.day)}</p><h2>${esc(ui.group)}</h2><span>${g.minutes} recommended minutes</span></div><select id="day">${cfg.interventionCenterV141.days.map(d=>`<option ${d===ui.day?"selected":""}>${d}</option>`).join("")}</select></div><div class="v141-plan-grid">${area("objective","Objective",p.objective)}${area("skill","Skill / Focus",p.skill)}${area("text","Text / Decodable",p.text)}${area("materials","Materials",p.materials)}${area("assessment","Progress Evidence",p.assessment)}${area("notes","Teacher Notes",p.notes)}</div><div class="button-row"><button id="save" class="primary-button">Save Group Plan</button><button id="complete" class="${p.complete?"secondary-button":"primary-button"}">${p.complete?"Mark Incomplete":"Mark Complete"}</button><button id="progress" class="secondary-button">Add Progress Note</button></div></main><aside class="panel"><h3>Weekly Status</h3><div class="v141-status">${cfg.interventionCenterV141.days.map(d=>{const x=plans[`${ui.group}|${d}`];return`<article class="${x.complete?"complete":""}"><strong>${d}</strong><span>${x.complete?"Complete":"Pending"}</span></article>`}).join("")}</div></aside></section></section>`;wireGroups()}
 function area(id,label,val){return`<label><span>${label}</span><textarea id="${id}">${esc(val)}</textarea></label>`}
 function wireGroups(){$("#students").onclick=()=>location.hash="students";$("#print").onclick=()=>print();$$("[data-group]").forEach(b=>b.onclick=()=>{ui.group=b.dataset.group;save();renderGroups()});$("#day").onchange=e=>{ui.day=e.target.value;save();renderGroups()};$("#save").onclick=()=>savePlan(true);$("#complete").onclick=()=>{savePlan(false);const p=plans[`${ui.group}|${ui.day}`];p.complete=!p.complete;save();renderGroups()};$("#progress").onclick=()=>renderProgress()}
 function savePlan(show){const p=plans[`${ui.group}|${ui.day}`];["objective","skill","text","materials","assessment","notes"].forEach(k=>p[k]=$(`#${k}`).value.trim());save();if(show)toast("Group plan saved.")}
@@ -8910,5 +9148,162 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     document.addEventListener("DOMContentLoaded", boot);
   } else {
     boot();
+  }
+})();
+
+
+/* =====================================================================
+   Version 15.0.1 — Reading Group Order Repair
+   ===================================================================== */
+(() => {
+  "use strict";
+
+  const ORDER = [
+    "Red — Far Below Level",
+    "Yellow — Below Level",
+    "Green — Benchmark",
+    "Blue — Above Level"
+  ];
+
+  const SHORT = {
+    "Red — Far Below Level": "Red",
+    "Yellow — Below Level": "Yellow",
+    "Green — Benchmark": "Green",
+    "Blue — Above Level": "Blue"
+  };
+
+  function records() {
+    try {
+      const value = JSON.parse(localStorage.getItem("thh-v140:student-records") || "[]");
+      return Array.isArray(value) ? value : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function counts() {
+    const list = records();
+    return ORDER.map(group => ({
+      group,
+      label: SHORT[group],
+      count: list.filter(student => student.readingGroup === group).length
+    }));
+  }
+
+  function summaryText() {
+    return counts().map(item => `${item.label}: ${item.count}`).join(" • ");
+  }
+
+  function repairVisibleSummaries() {
+    const route = location.hash.replace("#", "") || "dashboard";
+
+    const candidates = [
+      "#v140GroupingCard span",
+      "#v140StudentDataCard span",
+      ".v140-connected-card span",
+      "[data-reading-group-summary]"
+    ];
+
+    candidates.forEach(selector => {
+      document.querySelectorAll(selector).forEach(element => {
+        if (/Red:.*Yellow:.*(Blue|Green):/.test(element.textContent || "")) {
+          element.textContent = summaryText();
+        }
+      });
+    });
+
+    if (route === "small-groups") {
+      const tabs = [...document.querySelectorAll("[data-group], [data-v141-group]")];
+      const orderIndex = label => {
+        const text = label.textContent || "";
+        return ORDER.findIndex(group => text.includes(SHORT[group]));
+      };
+
+      tabs
+        .sort((a, b) => orderIndex(a) - orderIndex(b))
+        .forEach(tab => tab.parentElement?.appendChild(tab));
+    }
+  }
+
+  function migrateLegacyAssignments() {
+    const key = "thh-v140:student-records";
+    const mapping = {
+      "Red — Intensive": "Red — Far Below Level",
+      "Yellow — Strategic": "Yellow — Below Level",
+      "Green — Extension": "Green — Benchmark",
+      "Blue — Developing Fluency": "Blue — Above Level"
+    };
+
+    try {
+      const list = records();
+      let changed = false;
+
+      list.forEach(student => {
+        if (mapping[student.readingGroup]) {
+          student.readingGroup = mapping[student.readingGroup];
+          changed = true;
+        }
+      });
+
+      if (changed) localStorage.setItem(key, JSON.stringify(list));
+    } catch {}
+  }
+
+  function start() {
+    migrateLegacyAssignments();
+    window.addEventListener("hashchange", () => setTimeout(repairVisibleSummaries, 150));
+
+    new MutationObserver(() => {
+      setTimeout(repairVisibleSummaries, 0);
+    }).observe(document.body, { childList: true, subtree: true });
+
+    repairVisibleSummaries();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();
+
+
+/* Version 15.0.2 — Small Groups Startup Diagnostics */
+(() => {
+  "use strict";
+
+  const KEY = "thh-v1502:small-groups-health";
+
+  function save(value) {
+    localStorage.setItem(KEY, JSON.stringify(value));
+  }
+
+  function check() {
+    const state = {
+      checkedAt: new Date().toISOString(),
+      smallGroupsRenderer: typeof window.THH_RENDER_SMALL_GROUPS === "function",
+      interventionRenderer: typeof window.THH_RENDER_INTERVENTION === "function",
+      route: location.hash.replace("#", "") || "dashboard"
+    };
+
+    save(state);
+
+    if (state.route === "small-groups" && state.smallGroupsRenderer &&
+        !document.querySelector("#v141Groups")) {
+      window.THH_RENDER_SMALL_GROUPS();
+    }
+
+    if (state.route === "intervention" && state.interventionRenderer &&
+        !document.querySelector("#v141Intervention")) {
+      window.THH_RENDER_INTERVENTION();
+    }
+  }
+
+  window.addEventListener("hashchange", () => setTimeout(check, 250));
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => setTimeout(check, 250));
+  } else {
+    setTimeout(check, 250);
   }
 })();

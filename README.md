@@ -1,34 +1,26 @@
 # Teacher Operating System
 
-## Version 15.0 — Core Refactor & Stabilization
+## Version 15.0.2 — Small Groups Startup Repair
 
-This package contains the complete repository. Extract it and upload all contents to the GitHub repository root.
+Upload the complete extracted repository to the GitHub repository root.
 
 ### Commit message
-Version 15.0 - Core Refactor and Stabilization
+Version 15.0.2 - Small Groups Startup Repair
 
-### Repairs included
-- Permanently removes the obsolete Assessment Decision Center page.
-- Makes Version 14.2 Assessments & Progress Monitoring the only assessment renderer.
-- Adds a persistent module-loading check instead of an 80-millisecond one-time handoff.
-- Cache-busts `app.js` and `style.css` with Version 15 query parameters.
-- Uses network-first loading for core application files.
-- Migrates existing local reading groups:
-  - Red = far below level
-  - Yellow = below level
-  - Green = benchmark
-  - Blue = above level / highest group
-- Migrates saved student group assignments and teacher-table plan keys.
-- Preserves browser-saved student, assessment, intervention, planning, attachment, and print data.
-- Adds framework route diagnostics.
+### Fixed
+- Registers Small Groups and Intervention renderers immediately.
+- Prevents data-loading problems from leaving a permanent loading screen.
+- Validates and repairs malformed saved group-plan data.
+- Repairs invalid saved day or group selections.
+- Uses a built-in fallback group configuration when `tos-data.json` cannot load.
+- Keeps the correct Red, Yellow, Green, Blue hierarchy.
+- Adds direct startup diagnostics and route recovery.
+- Updates the application and service-worker cache versions.
 
-### First deployment test
-1. Wait for GitHub Pages to finish deploying.
-2. Open the site in a private/incognito window.
-3. Open Assessments & Data.
-4. Confirm the title is **Assessments & Progress Monitoring**.
-5. Confirm **Build Screening Checklist** appears.
-6. Open Small Groups and verify the order is Red, Yellow, Green, Blue.
-7. Confirm Blue is identified as above level and Green as benchmark.
-8. Test Print Center, Live Teaching, Students, Small Groups, Intervention, and Assessments.
-9. Hard-refresh the regular browser with Ctrl+Shift+R.
+### Test
+1. Open Small Groups.
+2. Confirm the Small-Group & MOWR Center appears instead of the loading screen.
+3. Confirm group tabs display Red, Yellow, Green, Blue.
+4. Select each group and each weekday.
+5. Save a test group plan.
+6. Open Intervention and confirm it also loads.

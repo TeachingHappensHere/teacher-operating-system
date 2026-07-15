@@ -1,6 +1,6 @@
 {
-  "version": "15.0 Core Refactor & Stabilization",
-  "releaseStatus": "Removes the obsolete assessment renderer, establishes authoritative feature renderers, corrects reading-group hierarchy, and cache-busts core application assets.",
+  "version": "15.0.2 Small Groups Startup Repair",
+  "releaseStatus": "Registers Small Groups and Intervention renderers before asynchronous data loading, repairs malformed local group plans, and prevents permanent loading screens.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2710,6 +2710,33 @@
     "assessmentRenderer": "Version 14.2 Assessments & Progress Monitoring",
     "assetVersion": "15.0.0",
     "readingGroupHierarchy": [
+      "Red \u2014 Far Below Level",
+      "Yellow \u2014 Below Level",
+      "Green \u2014 Benchmark",
+      "Blue \u2014 Above Level"
+    ]
+  },
+  "readingGroupOrderV1501": {
+    "order": [
+      "Red \u2014 Far Below Level",
+      "Yellow \u2014 Below Level",
+      "Green \u2014 Benchmark",
+      "Blue \u2014 Above Level"
+    ],
+    "displayLabels": {
+      "Red \u2014 Far Below Level": "Red",
+      "Yellow \u2014 Below Level": "Yellow",
+      "Green \u2014 Benchmark": "Green",
+      "Blue \u2014 Above Level": "Blue"
+    },
+    "highestGroup": "Blue \u2014 Above Level",
+    "benchmarkGroup": "Green \u2014 Benchmark"
+  },
+  "smallGroupsStartupV1502": {
+    "rendererRegistration": "Immediate",
+    "savedPlanValidation": true,
+    "fallbackConfiguration": true,
+    "groupOrder": [
       "Red \u2014 Far Below Level",
       "Yellow \u2014 Below Level",
       "Green \u2014 Benchmark",
