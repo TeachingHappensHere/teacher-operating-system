@@ -1,505 +1,694 @@
-
-// TeachingHappensHere Version 5.0
-// Launch Candidate & Installation Center
-(function () {
-  "use strict";
-
-  const VERSION = "5.0";
-  const ONBOARDING_KEY = "thh-v50:onboarding-complete";
-  let deferredInstallPrompt = null;
-  let overlay = null;
-
-  const FEATURES = [
-    ["Home Dashboard", "Your classroom command center"],
-    ["Teach My Day", "Guided block-by-block teaching flow"],
-    ["Live Teaching Workspace", "One-screen instructional workspace"],
-    ["Lesson Builder", "Curriculum, groups, assessments, and print planning"],
-    ["Classroom Systems", "Procedures, anchor charts, and coaching notes"],
-    ["Classroom Launch", "First-week routine teaching support"],
-    ["Small Groups", "Red, Yellow, Blue, and Green intervention structure"],
-    ["Assessments & Data", "DIBELS, Open Court, and reteach connections"],
-    ["Smart Print Center", "Print needs organized by teaching purpose"],
-    ["Teacher Brain", "Searchable veteran-teacher reminders"],
-    ["Resource Library", "File locations, status, and lesson connections"],
-    ["Student Dashboard", "Student support overview"],
-    ["Communication Hub", "Family messages, newsletters, and contact notes"],
-    ["Universal Search", "Search the entire operating system"],
-    ["Saved Progress", "Checklists, notes, drafts, and place-saving"],
-    ["App Health", "Launch-readiness and file checks"],
-    ["Backup & Transfer", "Move saved work between devices"]
-  ];
-
-  function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  }
-
-  function isStandalone() {
-    return window.matchMedia("(display-mode: standalone)").matches ||
-      window.navigator.standalone === true;
-  }
-
-  function browserName() {
-    const ua = navigator.userAgent;
-    if (/Edg\//.test(ua)) return "Microsoft Edge";
-    if (/Chrome\//.test(ua) && !/Edg\//.test(ua)) return "Google Chrome";
-    if (/Safari\//.test(ua) && !/Chrome\//.test(ua)) return "Safari";
-    if (/Firefox\//.test(ua)) return "Firefox";
-    return "Browser";
-  }
-
-  function platformName() {
-    if (isIOS()) return /iPad/.test(navigator.userAgent) || navigator.platform === "MacIntel"
-      ? "iPad"
-      : "iPhone";
-    if (/Windows/.test(navigator.userAgent)) return "Windows";
-    if (/Macintosh/.test(navigator.userAgent)) return "Mac";
-    if (/Android/.test(navigator.userAgent)) return "Android";
-    return "Device";
-  }
-
-  function installInstructions() {
-    if (isStandalone()) {
-      return {
-        title: "TeachingHappensHere is installed",
-        steps: [
-          "Open it from your Home Screen, Dock, Start menu, or Applications.",
-          "Keep GitHub Pages available so updates can be downloaded.",
-          "Use Backup & Transfer before changing devices."
-        ]
-      };
-    }
-
-    if (isIOS()) {
-      return {
-        title: `Install on this ${platformName()}`,
-        steps: [
-          "Open TeachingHappensHere in Safari.",
-          "Tap the Share button.",
-          "Scroll down and tap Add to Home Screen.",
-          "Confirm the name and tap Add.",
-          "Open the new TeachingHappensHere icon from the Home Screen."
-        ]
-      };
-    }
-
-    return {
-      title: `Install using ${browserName()}`,
-      steps: [
-        "Look for the install icon in the browser address bar.",
-        "Select Install or Install app.",
-        "Confirm the installation.",
-        "Open TeachingHappensHere from the desktop, Start menu, Dock, or Applications.",
-        "If no install icon appears, use the browser menu and choose Install app or Apps."
+{
+  "version": "5.1 Complete Instructional Content Release",
+  "releaseStatus": "Content foundation ready; exact page files can be attached as they are uploaded.",
+  "units": [
+    {
+      "id": "open-court-unit-1",
+      "subject": "Open Court Reading",
+      "grade": "2",
+      "title": "Unit 1",
+      "lessons": [
+        {
+          "id": "u1l1",
+          "lessonNumber": 1,
+          "title": "The Mice Who Lived in a Shoe",
+          "status": "Instructional content ready",
+          "objective": "Students will read and discuss the selection, use lesson vocabulary in context, practice the target phonics skill, identify common and proper nouns, and explain cause-and-effect relationships.",
+          "learningTarget": "I can read closely, use new vocabulary, and explain what happened and why.",
+          "successCriteria": [
+            "I can use lesson vocabulary in a complete sentence.",
+            "I can read words with the lesson phonics pattern.",
+            "I can identify a cause and its effect.",
+            "I can distinguish common and proper nouns."
+          ],
+          "standards": [
+            "Use the current Arizona Grade 2 reading-literature standard for asking and answering questions.",
+            "Use the current Arizona Grade 2 reading-literature standard for recounting stories and identifying the lesson or central message.",
+            "Use the current Arizona Grade 2 language standard for common and proper nouns.",
+            "Use the current Arizona Grade 2 foundational-skills standard that matches the phonics focus."
+          ],
+          "phonics": "Use the Open Court Lesson 1 phonics sequence from the teacher materials.",
+          "highFrequencyWords": [],
+          "vocabulary": [
+            {
+              "word": "merchant",
+              "studentDefinition": "A person who buys and sells things.",
+              "support": "Show a picture of a shopkeeper or market. Connect the word to a store owner."
+            }
+          ],
+          "readingSkill": "Cause and Effect",
+          "grammar": "Common and Proper Nouns",
+          "writingConnection": "Write about one event in the story and explain what caused it.",
+          "iDo": [
+            "Preview the story and model how a reader uses the title and illustrations to make a prediction.",
+            "Teach merchant with a visual and a student-friendly example.",
+            "Model one cause-and-effect relationship using a because sentence.",
+            "Model sorting one common noun and one proper noun."
+          ],
+          "weDo": [
+            "Read a short section together.",
+            "Identify what happened and discuss why it happened.",
+            "Complete one cause-and-effect example as a class.",
+            "Sort additional common and proper nouns together."
+          ],
+          "youDo": [
+            "Students complete the connected skills-practice page.",
+            "Students write one cause-and-effect sentence.",
+            "Students identify common and proper nouns in a short sentence."
+          ],
+          "teacherBrain": [
+            "Merchant will need extra visuals and oral examples.",
+            "Use partner talk before written responses.",
+            "Do not skip the Open Court packet; it reinforces skills students may not otherwise practice.",
+            "Use oral rehearsal for students who struggle to begin writing."
+          ],
+          "smallGroups": {
+            "red": "Review the phonics pattern, blend words, and read a short decodable passage.",
+            "yellow": "Reread a short story section and practice vocabulary in oral sentences.",
+            "blue": "Practice fluency and answer cause-and-effect questions.",
+            "green": "Use text evidence to explain more than one cause or effect."
+          },
+          "differentiation": {
+            "EL": [
+              "Use picture-word cards.",
+              "Provide the frame: The cause was ____. The effect was ____.",
+              "Allow oral rehearsal before writing."
+            ],
+            "IEP504": [
+              "Chunk the reading.",
+              "Reduce the number of written items when appropriate.",
+              "Allow oral response, dictation, or a graphic organizer.",
+              "Highlight cause and effect in different ways."
+            ],
+            "extension": [
+              "Have students identify a chain of events.",
+              "Ask students to explain how changing one cause might change the outcome."
+            ]
+          },
+          "assessment": [
+            "Phonics check",
+            "Vocabulary check",
+            "Cause-and-effect response",
+            "Common and proper noun check"
+          ],
+          "printNeeds": [
+            "U1L1 Skills Practice Packet",
+            "Cause and Effect Organizer",
+            "Phonics Assessment",
+            "Vocabulary Assessment",
+            "Comprehension Assessment",
+            "GUM Assessment"
+          ],
+          "attachments": [
+            {
+              "title": "U1L1 Skills Practice Packet",
+              "path": "resources/open-court/unit-1/lesson-1/u1l1-skills-practice.pdf",
+              "status": "Needs Upload"
+            },
+            {
+              "title": "U1L1 Phonics Assessment",
+              "path": "resources/open-court/unit-1/lesson-1/u1l1-phonics-assessment.pdf",
+              "status": "Needs Upload"
+            },
+            {
+              "title": "U1L1 Vocabulary Assessment",
+              "path": "resources/open-court/unit-1/lesson-1/u1l1-vocabulary-assessment.pdf",
+              "status": "Needs Upload"
+            },
+            {
+              "title": "U1L1 Comprehension Assessment",
+              "path": "resources/open-court/unit-1/lesson-1/u1l1-comprehension-assessment.pdf",
+              "status": "Needs Upload"
+            }
+          ]
+        },
+        {
+          "id": "u1l2",
+          "lessonNumber": 2,
+          "title": "Ants and Aphids Work Together",
+          "status": "Instructional structure ready",
+          "objective": "Students will read informational text, identify key details, discuss how living things work together, and use lesson vocabulary.",
+          "learningTarget": "I can explain how ants and aphids help one another.",
+          "successCriteria": [
+            "I can identify important details.",
+            "I can explain how two living things work together.",
+            "I can use lesson vocabulary when I speak or write."
+          ],
+          "standards": [
+            "Use the current Arizona Grade 2 informational-reading standard for asking and answering questions.",
+            "Use the current Arizona Grade 2 informational-reading standard for identifying a main topic and key details.",
+            "Use the current Arizona Grade 2 foundational-skills standard that matches the phonics focus."
+          ],
+          "phonics": "Use the Open Court Lesson 2 phonics sequence from the teacher materials.",
+          "highFrequencyWords": [],
+          "vocabulary": [],
+          "readingSkill": "Main Topic and Key Details",
+          "grammar": "Use the Open Court Lesson 2 GUM focus.",
+          "writingConnection": "Explain how two living things help each other.",
+          "iDo": [
+            "Model how to use headings, illustrations, and captions.",
+            "Think aloud to identify the main topic.",
+            "Model selecting one key detail."
+          ],
+          "weDo": [
+            "Read a section together.",
+            "Identify the topic and supporting details.",
+            "Discuss the relationship between ants and aphids."
+          ],
+          "youDo": [
+            "Complete a topic-and-details organizer.",
+            "Write one sentence explaining how the animals work together."
+          ],
+          "teacherBrain": [
+            "Use visuals for aphids because many students will not know the insect.",
+            "Connect the text to teamwork and classroom community."
+          ],
+          "smallGroups": {
+            "red": "Decode lesson words and read a short supported passage.",
+            "yellow": "Reread and match details to pictures.",
+            "blue": "Practice fluent informational reading.",
+            "green": "Explain the relationship using evidence from the text."
+          },
+          "differentiation": {
+            "EL": [
+              "Use picture cards and a help-each-other sentence frame."
+            ],
+            "IEP504": [
+              "Use a partially completed organizer and chunked text."
+            ],
+            "extension": [
+              "Compare ants and aphids with another animal partnership."
+            ]
+          },
+          "assessment": [
+            "Main-topic response",
+            "Vocabulary check",
+            "Phonics check"
+          ],
+          "printNeeds": [
+            "Skills Practice",
+            "Topic and Details Organizer",
+            "Assessment Pages"
+          ],
+          "attachments": []
+        },
+        {
+          "id": "u1l3",
+          "lessonNumber": 3,
+          "title": "The Bat, Birds, and Beasts",
+          "status": "Instructional structure ready",
+          "objective": "Students will recount a fable, identify important events, discuss character choices, and explain the lesson of the story.",
+          "learningTarget": "I can recount a fable and explain its lesson.",
+          "successCriteria": [
+            "I can tell the important events in order.",
+            "I can describe a character's choices.",
+            "I can explain the story's lesson."
+          ],
+          "standards": [
+            "Use the current Arizona Grade 2 reading-literature standard for recounting stories and determining a central message.",
+            "Use the current Arizona Grade 2 reading-literature standard for describing how characters respond to events.",
+            "Use the current Arizona Grade 2 foundational-skills standard that matches the phonics focus."
+          ],
+          "phonics": "Use the Open Court Lesson 3 phonics sequence from the teacher materials.",
+          "highFrequencyWords": [],
+          "vocabulary": [],
+          "readingSkill": "Sequence and Central Message",
+          "grammar": "Use the Open Court Lesson 3 GUM focus.",
+          "writingConnection": "Write what the bat should have done differently and why.",
+          "iDo": [
+            "Model recounting the beginning, middle, and end.",
+            "Think aloud about the bat's decision.",
+            "Model stating a lesson learned."
+          ],
+          "weDo": [
+            "Sequence major events together.",
+            "Discuss how the character's choices affected the outcome."
+          ],
+          "youDo": [
+            "Complete a sequence organizer.",
+            "Write one sentence explaining the lesson."
+          ],
+          "teacherBrain": [
+            "Keep the central-message discussion concrete.",
+            "Let students orally rehearse the lesson before writing."
+          ],
+          "smallGroups": {
+            "red": "Supported rereading and sequence cards.",
+            "yellow": "Fluency reread with event retell.",
+            "blue": "Character response and lesson discussion.",
+            "green": "Compare the character's choice with an alternative."
+          },
+          "differentiation": {
+            "EL": [
+              "Use first-next-then-last frames."
+            ],
+            "IEP504": [
+              "Provide event picture cards and oral-response choices."
+            ],
+            "extension": [
+              "Write a new ending that demonstrates a different lesson."
+            ]
+          },
+          "assessment": [
+            "Sequence response",
+            "Central-message response",
+            "Phonics check"
+          ],
+          "printNeeds": [
+            "Sequence Organizer",
+            "Skills Practice",
+            "Assessment Pages"
+          ],
+          "attachments": []
+        },
+        {
+          "id": "u1l4",
+          "lessonNumber": 4,
+          "title": "A Cherokee Stickball Game",
+          "status": "Instructional structure ready",
+          "objective": "Students will read about a cultural tradition, identify important details, and explain how a community participates in an event.",
+          "learningTarget": "I can use details to explain a cultural tradition.",
+          "successCriteria": [
+            "I can identify important details.",
+            "I can explain what happens during the event.",
+            "I can speak respectfully about another culture."
+          ],
+          "standards": [
+            "Use the current Arizona Grade 2 informational-reading standard for key ideas and details.",
+            "Use the current Arizona Grade 2 speaking-and-listening standard for collaborative discussion.",
+            "Use the current Arizona Grade 2 foundational-skills standard that matches the phonics focus."
+          ],
+          "phonics": "Use the Open Court Lesson 4 phonics sequence from the teacher materials.",
+          "highFrequencyWords": [],
+          "vocabulary": [],
+          "readingSkill": "Key Details and Cultural Context",
+          "grammar": "Use the Open Court Lesson 4 GUM focus.",
+          "writingConnection": "Explain one tradition in the selection and why it matters.",
+          "iDo": [
+            "Preview respectful language for discussing culture.",
+            "Model locating a detail that explains the event."
+          ],
+          "weDo": [
+            "Read and identify who, what, where, and why.",
+            "Discuss how the community participates."
+          ],
+          "youDo": [
+            "Complete a key-details organizer.",
+            "Write one fact and explain its importance."
+          ],
+          "teacherBrain": [
+            "Avoid treating the tradition as a curiosity; center respect and community.",
+            "Connect carefully to students' own traditions without requiring personal disclosure."
+          ],
+          "smallGroups": {
+            "red": "Vocabulary visuals and supported reading.",
+            "yellow": "Reread for who, what, and where.",
+            "blue": "Fluency and key-detail response.",
+            "green": "Explain the tradition's importance using evidence."
+          },
+          "differentiation": {
+            "EL": [
+              "Use labeled visuals and who/what/where frames."
+            ],
+            "IEP504": [
+              "Use chunked text and a four-box organizer."
+            ],
+            "extension": [
+              "Compare the community event with another tradition discussed in class."
+            ]
+          },
+          "assessment": [
+            "Key-details response",
+            "Vocabulary check",
+            "Phonics check"
+          ],
+          "printNeeds": [
+            "Key Details Organizer",
+            "Skills Practice",
+            "Assessment Pages"
+          ],
+          "attachments": []
+        },
+        {
+          "id": "u1l5",
+          "lessonNumber": 5,
+          "title": "The Final Game",
+          "status": "Instructional structure ready",
+          "objective": "Students will read a narrative, identify character feelings and responses, and explain how events lead to the ending.",
+          "learningTarget": "I can explain how a character responds to an important event.",
+          "successCriteria": [
+            "I can describe a character's feelings.",
+            "I can identify the event that caused those feelings.",
+            "I can use story details in my answer."
+          ],
+          "standards": [
+            "Use the current Arizona Grade 2 reading-literature standard for describing character responses.",
+            "Use the current Arizona Grade 2 reading-literature standard for sequence of events.",
+            "Use the current Arizona Grade 2 foundational-skills standard that matches the phonics focus."
+          ],
+          "phonics": "Use the Open Court Lesson 5 phonics sequence from the teacher materials.",
+          "highFrequencyWords": [],
+          "vocabulary": [],
+          "readingSkill": "Character Response and Sequence",
+          "grammar": "Use the Open Court Lesson 5 GUM focus.",
+          "writingConnection": "Write how the character felt before and after the final event.",
+          "iDo": [
+            "Model identifying a feeling and the detail that proves it.",
+            "Model a before-and-after response."
+          ],
+          "weDo": [
+            "Track how the character responds to one event.",
+            "Use text evidence together."
+          ],
+          "youDo": [
+            "Complete a character-response organizer.",
+            "Write a supported response using because."
+          ],
+          "teacherBrain": [
+            "Require evidence instead of accepting a feeling word alone.",
+            "Use emotion visuals for students who need language support."
+          ],
+          "smallGroups": {
+            "red": "Supported reading and emotion-picture matching.",
+            "yellow": "Reread for character feelings.",
+            "blue": "Fluency and evidence-based response.",
+            "green": "Explain how the response changes across the text."
+          },
+          "differentiation": {
+            "EL": [
+              "Use the frame: The character felt ____ because ____."
+            ],
+            "IEP504": [
+              "Offer emotion choices and highlighted evidence."
+            ],
+            "extension": [
+              "Write from the character's point of view."
+            ]
+          },
+          "assessment": [
+            "Character-response response",
+            "Sequence response",
+            "Phonics check"
+          ],
+          "printNeeds": [
+            "Character Response Organizer",
+            "Skills Practice",
+            "Assessment Pages"
+          ],
+          "attachments": []
+        },
+        {
+          "id": "u1l6",
+          "lessonNumber": 6,
+          "title": "Ellie's Long Walk",
+          "status": "Instructional content and attachment map ready",
+          "objective": "Students will identify the main idea and supporting details, practice fluent reading, and use selection vocabulary in context.",
+          "learningTarget": "I can state the main idea and identify details that support it.",
+          "successCriteria": [
+            "I can explain what the passage is mostly about.",
+            "I can identify at least two supporting details.",
+            "I can read with accuracy, expression, and attention to punctuation.",
+            "I can use selection vocabulary in context."
+          ],
+          "standards": [
+            "Use the current Arizona Grade 2 informational-reading standard for identifying the main topic and key details.",
+            "Use the current Arizona Grade 2 foundational-skills standard for reading with accuracy and fluency.",
+            "Use the current Arizona Grade 2 language standard for determining or clarifying word meaning."
+          ],
+          "phonics": "Use the Open Court Lesson 6 phonics sequence from the teacher materials.",
+          "highFrequencyWords": [],
+          "vocabulary": [
+            {
+              "word": "journey",
+              "studentDefinition": "A trip from one place to another.",
+              "support": "Connect to a long trip or walk."
+            },
+            {
+              "word": "slope",
+              "studentDefinition": "Ground that goes up or down.",
+              "support": "Use a ramp or tilted hand gesture."
+            },
+            {
+              "word": "surface",
+              "studentDefinition": "The outside or top layer of something.",
+              "support": "Touch a desk surface and compare textures."
+            }
+          ],
+          "readingSkill": "Main Idea and Supporting Details",
+          "grammar": "Use the Open Court Lesson 6 GUM focus.",
+          "writingConnection": "State the main idea and explain it with two details.",
+          "iDo": [
+            "Model asking: What is this mostly about?",
+            "Think aloud while separating the main idea from a small detail.",
+            "Model fluent reading with attention to punctuation.",
+            "Demonstrate the fluency checklist before reading A Trip."
+          ],
+          "weDo": [
+            "Read a short passage together.",
+            "Choose the best main-idea statement.",
+            "Highlight two details that support it.",
+            "Echo read a section for phrasing and expression."
+          ],
+          "youDo": [
+            "Complete Main Idea and Details pages 75\u201376.",
+            "Complete the fluency practice and reflection.",
+            "Use journey, slope, or surface in a written sentence."
+          ],
+          "teacherBrain": [
+            "Use the fluency checklist before reading A Trip.",
+            "Have students listen for rate, accuracy, expression, and punctuation.",
+            "Preteach journey, slope, and surface with visuals and gestures.",
+            "Use partner talk before students write the main idea."
+          ],
+          "smallGroups": {
+            "red": "Preview vocabulary with visuals, decode selected words, and read a shortened passage.",
+            "yellow": "Repeated reading with immediate correction and a main-idea frame.",
+            "blue": "Fluency practice with expression and a supporting-details check.",
+            "green": "Cite details and explain why each detail supports the main idea."
+          },
+          "differentiation": {
+            "EL": [
+              "Use picture cards and gestures.",
+              "Provide the frame: The main idea is ____. One detail is ____.",
+              "Allow oral rehearsal before writing."
+            ],
+            "IEP504": [
+              "Chunk the passage.",
+              "Highlight possible supporting details.",
+              "Allow oral responses or dictation.",
+              "Use a partially completed main-idea organizer."
+            ],
+            "extension": [
+              "Ask students to identify an irrelevant detail.",
+              "Have students write a new title based on the main idea."
+            ]
+          },
+          "assessment": [
+            "Fluency pages 71\u201372",
+            "Vocabulary pages 73\u201374",
+            "Main Idea and Details pages 75\u201376",
+            "Vocabulary Assessment"
+          ],
+          "printNeeds": [
+            "Fluency pp. 71\u201372",
+            "Vocabulary pp. 73\u201374",
+            "Main Idea & Details pp. 75\u201376",
+            "Vocabulary Assessment"
+          ],
+          "attachments": [
+            {
+              "title": "U1L6 Fluency pp. 71\u201372",
+              "path": "resources/open-court/unit-1/lesson-6/u1l6-fluency-71-72.pdf",
+              "status": "Ready for File"
+            },
+            {
+              "title": "U1L6 Vocabulary pp. 73\u201374",
+              "path": "resources/open-court/unit-1/lesson-6/u1l6-vocabulary-73-74.pdf",
+              "status": "Ready for File"
+            },
+            {
+              "title": "U1L6 Main Idea & Details pp. 75\u201376",
+              "path": "resources/open-court/unit-1/lesson-6/u1l6-main-idea-details-75-76.pdf",
+              "status": "Ready for File"
+            }
+          ]
+        },
+        {
+          "id": "u1l7",
+          "lessonNumber": 7,
+          "title": "Mattland",
+          "status": "Instructional structure ready",
+          "objective": "Students will read a narrative, describe the setting and important events, and explain how imagination or creativity affects the story.",
+          "learningTarget": "I can describe the setting and explain how it affects the story.",
+          "successCriteria": [
+            "I can identify where and when the story happens.",
+            "I can describe important setting details.",
+            "I can explain how the setting connects to the events."
+          ],
+          "standards": [
+            "Use the current Arizona Grade 2 reading-literature standard for describing story structure and setting.",
+            "Use the current Arizona Grade 2 writing standard for an explanatory or narrative response.",
+            "Use the current Arizona Grade 2 foundational-skills standard that matches the phonics focus."
+          ],
+          "phonics": "Use the Open Court Lesson 7 phonics sequence from the teacher materials.",
+          "highFrequencyWords": [],
+          "vocabulary": [],
+          "readingSkill": "Setting and Story Events",
+          "grammar": "Use the Open Court Lesson 7 GUM focus.",
+          "writingConnection": "Describe a place created through imagination.",
+          "iDo": [
+            "Model identifying setting details and explaining why they matter."
+          ],
+          "weDo": [
+            "Collect setting details and connect them to one event."
+          ],
+          "youDo": [
+            "Complete a setting organizer and written response."
+          ],
+          "teacherBrain": [
+            "Let students sketch the setting before writing."
+          ],
+          "smallGroups": {
+            "red": "Supported decoding and picture-supported retell.",
+            "yellow": "Reread for setting words.",
+            "blue": "Fluency and setting-event connection.",
+            "green": "Analyze how the story would change in another setting."
+          },
+          "differentiation": {
+            "EL": [
+              "Use a setting word bank."
+            ],
+            "IEP504": [
+              "Offer drawing plus oral explanation."
+            ],
+            "extension": [
+              "Rewrite one event in a new setting."
+            ]
+          },
+          "assessment": [
+            "Setting response",
+            "Vocabulary check",
+            "Phonics check"
+          ],
+          "printNeeds": [
+            "Setting Organizer",
+            "Skills Practice",
+            "Assessment Pages"
+          ],
+          "attachments": []
+        },
+        {
+          "id": "u1l8",
+          "lessonNumber": 8,
+          "title": "A River of Ice",
+          "status": "Instructional structure ready",
+          "objective": "Students will read informational text about glaciers, identify the main topic and details, and explain how ice changes land.",
+          "learningTarget": "I can explain what a glacier is and how it changes the land.",
+          "successCriteria": [
+            "I can identify the main topic.",
+            "I can list important details.",
+            "I can explain a cause-and-effect relationship."
+          ],
+          "standards": [
+            "Use the current Arizona Grade 2 informational-reading standard for main topic and key details.",
+            "Use the current Arizona Grade 2 informational-reading standard for connections between scientific ideas.",
+            "Use the current Arizona Grade 2 foundational-skills standard that matches the phonics focus."
+          ],
+          "phonics": "Use the Open Court Lesson 8 phonics sequence from the teacher materials.",
+          "highFrequencyWords": [],
+          "vocabulary": [],
+          "readingSkill": "Main Topic, Details, and Cause and Effect",
+          "grammar": "Use the Open Court Lesson 8 GUM focus.",
+          "writingConnection": "Explain one way a glacier changes the land.",
+          "iDo": [
+            "Preview glacier visuals.",
+            "Model identifying a scientific cause and effect.",
+            "Model using a diagram or image as evidence."
+          ],
+          "weDo": [
+            "Read a section and identify the topic.",
+            "Connect a glacier movement to a land change."
+          ],
+          "youDo": [
+            "Complete a topic-and-details organizer.",
+            "Write a cause-and-effect science explanation."
+          ],
+          "teacherBrain": [
+            "Connect this lesson to the science glaciers unit.",
+            "Use visuals before asking students to explain erosion or land change."
+          ],
+          "smallGroups": {
+            "red": "Vocabulary visuals and supported informational reading.",
+            "yellow": "Reread and match causes with effects.",
+            "blue": "Fluency and science-vocabulary practice.",
+            "green": "Use evidence to explain more than one land change."
+          },
+          "differentiation": {
+            "EL": [
+              "Use diagram labels and a glacier-moves/land-changes frame."
+            ],
+            "IEP504": [
+              "Use picture-supported cause-and-effect cards."
+            ],
+            "extension": [
+              "Compare glaciers with another force that changes land."
+            ]
+          },
+          "assessment": [
+            "Main-topic response",
+            "Cause-and-effect response",
+            "Vocabulary check"
+          ],
+          "printNeeds": [
+            "Glacier Organizer",
+            "Skills Practice",
+            "Assessment Pages"
+          ],
+          "attachments": []
+        }
       ]
-    };
-  }
-
-  function createOverlay() {
-    overlay = document.createElement("div");
-    overlay.id = "launchCandidateOverlay";
-    overlay.className = "launch-candidate-overlay";
-
-    overlay.innerHTML = `
-      <section class="launch-candidate-dialog" role="dialog" aria-modal="true" aria-label="TeachingHappensHere launch center">
-        <header class="launch-candidate-header">
-          <div>
-            <p class="eyebrow">Version ${VERSION} Launch Candidate</p>
-            <h2>Welcome to TeachingHappensHere</h2>
-            <p>Your classroom operating system is ready for installation, testing, and daily use.</p>
-          </div>
-          <button id="closeLaunchCandidate" aria-label="Close launch center">×</button>
-        </header>
-
-        <section class="launch-candidate-hero">
-          <div class="launch-candidate-logo">THH</div>
-          <div>
-            <strong>Mrs. Parrish’s Scholar System</strong>
-            <span id="launchDeviceSummary"></span>
-          </div>
-          <button id="installTeachingHappensHere">Install App</button>
-        </section>
-
-        <div class="launch-candidate-tabs">
-          <button class="active" data-launch-tab="setup">First-Time Setup</button>
-          <button data-launch-tab="install">Install</button>
-          <button data-launch-tab="features">What’s Included</button>
-          <button data-launch-tab="readiness">Launch Readiness</button>
-        </div>
-
-        <section id="launchSetupTab" class="launch-tab-panel"></section>
-        <section id="launchInstallTab" class="launch-tab-panel hidden"></section>
-        <section id="launchFeaturesTab" class="launch-tab-panel hidden"></section>
-        <section id="launchReadinessTab" class="launch-tab-panel hidden"></section>
-
-        <footer class="launch-candidate-footer">
-          <span id="launchCandidateStatus">Launch Center ready</span>
-          <div>
-            <button id="finishOnboarding">Setup Complete</button>
-            <button id="openMyClassroom">Open My Classroom</button>
-          </div>
-        </footer>
-      </section>
-    `;
-
-    document.body.appendChild(overlay);
-
-    document.getElementById("closeLaunchCandidate").addEventListener("click", closeCenter);
-    document.getElementById("installTeachingHappensHere").addEventListener("click", installApp);
-    document.getElementById("finishOnboarding").addEventListener("click", finishOnboarding);
-    document.getElementById("openMyClassroom").addEventListener("click", openClassroom);
-
-    overlay.addEventListener("click", event => {
-      if (event.target === overlay) closeCenter();
-    });
-
-    document.querySelectorAll("[data-launch-tab]").forEach(button => {
-      button.addEventListener("click", () => showTab(button.dataset.launchTab));
-    });
-  }
-
-  function showTab(tab) {
-    const map = {
-      setup: "launchSetupTab",
-      install: "launchInstallTab",
-      features: "launchFeaturesTab",
-      readiness: "launchReadinessTab"
-    };
-
-    document.querySelectorAll("[data-launch-tab]").forEach(button => {
-      button.classList.toggle("active", button.dataset.launchTab === tab);
-    });
-
-    document.querySelectorAll(".launch-tab-panel").forEach(panel => {
-      panel.classList.add("hidden");
-    });
-
-    document.getElementById(map[tab]).classList.remove("hidden");
-  }
-
-  function renderSetup() {
-    document.getElementById("launchSetupTab").innerHTML = `
-      <div class="launch-candidate-section">
-        <h3>First-Time Setup Checklist</h3>
-        <div class="launch-setup-grid">
-          ${[
-            "Open App Health and resolve required file issues",
-            "Test Universal Search with Ctrl/Command + K",
-            "Open Teach My Day",
-            "Open Live Teaching Workspace",
-            "Confirm Classroom Systems load",
-            "Confirm Smart Print Center loads",
-            "Create a Backup & Transfer file",
-            "Install TeachingHappensHere on this device",
-            "Add available classroom resources",
-            "Practice opening the app in installed mode"
-          ].map((step, index) => `
-            <label>
-              <input type="checkbox" data-save-key="v50-setup-${index}">
-              <span>${step}</span>
-            </label>
-          `).join("")}
-        </div>
-      </div>
-
-      <div class="launch-candidate-section">
-        <h3>Recommended Launch Order</h3>
-        <div class="launch-order">
-          <article><b>1</b><strong>Check</strong><span>Run App Health.</span></article>
-          <article><b>2</b><strong>Protect</strong><span>Download a backup.</span></article>
-          <article><b>3</b><strong>Install</strong><span>Add the app to the device.</span></article>
-          <article><b>4</b><strong>Practice</strong><span>Open Teach My Day and Workspace.</span></article>
-          <article><b>5</b><strong>Launch</strong><span>Use it during a real teaching block.</span></article>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderInstall() {
-    const instructions = installInstructions();
-    const installed = isStandalone();
-
-    document.getElementById("launchInstallTab").innerHTML = `
-      <div class="launch-candidate-section">
-        <div class="install-status-card ${installed ? "installed" : ""}">
-          <span>${installed ? "✓" : "＋"}</span>
-          <div>
-            <strong>${instructions.title}</strong>
-            <p>${installed
-              ? "The application is currently running in installed mode."
-              : `Detected: ${platformName()} using ${browserName()}.`}</p>
-          </div>
-        </div>
-
-        <ol class="installation-steps">
-          ${instructions.steps.map(step => `<li>${step}</li>`).join("")}
-        </ol>
-
-        <button class="launch-primary-action" id="installFromInstructions">
-          ${installed ? "Already Installed" : "Try Install Prompt"}
-        </button>
-      </div>
-
-      <div class="launch-candidate-section">
-        <h3>After Installation</h3>
-        <div class="launch-after-install">
-          <p>Open the installed app once while online so current files can be cached.</p>
-          <p>Run App Health inside the installed app.</p>
-          <p>Use Backup & Transfer before moving to another device.</p>
-          <p>Refresh after each GitHub deployment to receive the newest version.</p>
-        </div>
-      </div>
-    `;
-
-    document.getElementById("installFromInstructions").addEventListener("click", installApp);
-  }
-
-  function renderFeatures() {
-    document.getElementById("launchFeaturesTab").innerHTML = `
-      <div class="launch-candidate-section">
-        <h3>Version 5.0 Operating System</h3>
-        <div class="launch-feature-grid">
-          ${FEATURES.map(([title, description]) => `
-            <article>
-              <span>✓</span>
-              <div><strong>${title}</strong><p>${description}</p></div>
-            </article>
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }
-
-  async function renderReadiness() {
-    const serviceWorker = await checkServiceWorker();
-    const manifest = Boolean(document.querySelector('link[rel="manifest"]'));
-    const secure = window.isSecureContext;
-    const storage = typeof localStorage !== "undefined";
-    const search = Boolean(document.getElementById("universalSearchButton"));
-    const health = Boolean(document.getElementById("appHealthButton"));
-    const backup = Boolean(document.getElementById("backupExportButton"));
-
-    const checks = [
-      ["Secure HTTPS connection", secure],
-      ["PWA manifest linked", manifest],
-      ["Service worker registered", serviceWorker],
-      ["Saved Progress available", storage],
-      ["Universal Search detected", search],
-      ["App Health detected", health],
-      ["Backup & Transfer detected", backup],
-      ["Installed app mode", isStandalone()]
-    ];
-
-    const readyCount = checks.filter(([, ready]) => ready).length;
-
-    document.getElementById("launchReadinessTab").innerHTML = `
-      <div class="launch-candidate-section">
-        <div class="launch-readiness-score">
-          <strong>${readyCount}/${checks.length}</strong>
-          <span>Launch checks ready</span>
-        </div>
-
-        <div class="launch-readiness-grid">
-          ${checks.map(([title, ready]) => `
-            <article class="${ready ? "ready" : "needs-attention"}">
-              <span>${ready ? "✓" : "!"}</span>
-              <strong>${title}</strong>
-              <small>${ready ? "Ready" : title === "Installed app mode" ? "Install when ready" : "Needs attention"}</small>
-            </article>
-          `).join("")}
-        </div>
-
-        <div class="launch-readiness-actions">
-          <button id="openHealthFromLaunch">Open App Health</button>
-          <button id="openBackupFromLaunch">Create Backup</button>
-          <button id="refreshLaunchChecks">Run Checks Again</button>
-        </div>
-      </div>
-    `;
-
-    document.getElementById("openHealthFromLaunch").addEventListener("click", () => {
-      closeCenter();
-      document.getElementById("appHealthButton")?.click();
-    });
-
-    document.getElementById("openBackupFromLaunch").addEventListener("click", () => {
-      closeCenter();
-      document.getElementById("backupExportButton")?.click();
-    });
-
-    document.getElementById("refreshLaunchChecks").addEventListener("click", renderReadiness);
-  }
-
-  async function checkServiceWorker() {
-    if (!("serviceWorker" in navigator)) return false;
-
-    try {
-      const registration = await navigator.serviceWorker.getRegistration();
-      return Boolean(
-        registration &&
-        (registration.active || registration.waiting || registration.installing)
-      );
-    } catch {
-      return false;
     }
+  ],
+  "sharedInstructionalSupports": {
+    "lessonStructure": [
+      "I Do",
+      "We Do",
+      "You Do",
+      "Quick Check",
+      "Reteach or Extend"
+    ],
+    "EL": [
+      "Visuals and gestures",
+      "Picture-word cards",
+      "Sentence frames",
+      "Echo reading",
+      "Oral rehearsal",
+      "Partner support"
+    ],
+    "IEP504": [
+      "Chunked directions",
+      "Reduced response load when appropriate",
+      "Quiet testing",
+      "Oral response or dictation",
+      "Graphic organizers",
+      "Visual timer",
+      "Manipulatives and color coding"
+    ],
+    "universal": [
+      "Choral reading",
+      "Think-pair-share",
+      "Modeled response",
+      "Word bank",
+      "Highlighting evidence",
+      "Frequent checks for understanding"
+    ]
+  },
+  "curriculumConnections": {
+    "Heggerty": "Use the current daily Heggerty Bridge lesson as the phonemic-awareness warm-up.",
+    "UFLI": "Use the public UFLI Foundations Toolbox for intervention and skill review; match the lesson to student decoding needs.",
+    "MOWR": "Prioritize Red daily, Yellow 3\u20134 times weekly, Blue twice weekly, and Green 1\u20132 times weekly.",
+    "Writing": "Use Building the Foundation writing materials and oral rehearsal before independent writing.",
+    "Science": "Connect Open Court informational texts to the science workbook and Arizona science content.",
+    "SocialStudies": "Connect cultural and community selections to respectful discussion and iCivics or 180 Days resources."
   }
-
-  function installApp() {
-    if (isStandalone()) {
-      setStatus("TeachingHappensHere is already installed.");
-      showTab("install");
-      return;
-    }
-
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      deferredInstallPrompt.userChoice.then(choice => {
-        setStatus(choice.outcome === "accepted"
-          ? "Installation accepted."
-          : "Installation was dismissed.");
-        deferredInstallPrompt = null;
-        renderInstall();
-      });
-      return;
-    }
-
-    showTab("install");
-    setStatus(isIOS()
-      ? "Use Safari’s Share menu and choose Add to Home Screen."
-      : "Use the browser’s Install app option.");
-  }
-
-  function finishOnboarding() {
-    localStorage.setItem(ONBOARDING_KEY, "true");
-    setStatus("First-time setup marked complete.");
-    setTimeout(closeCenter, 500);
-  }
-
-  function openClassroom() {
-    localStorage.setItem(ONBOARDING_KEY, "true");
-    closeCenter();
-
-    const teachButton = document.querySelector('[data-page="teachday"]');
-    const dashboardButton = document.querySelector('[data-page="dashboard"]');
-
-    (teachButton || dashboardButton)?.click();
-  }
-
-  function addButton() {
-    if (document.getElementById("launchCandidateButton")) return;
-
-    const button = document.createElement("button");
-    button.id = "launchCandidateButton";
-    button.className = "launch-candidate-button";
-    button.innerHTML = `
-      <span>★</span>
-      <strong>Launch Center</strong>
-      <small>v${VERSION}</small>
-    `;
-    button.addEventListener("click", openCenter);
-
-    const backupButton = document.getElementById("backupExportButton");
-    if (backupButton) {
-      backupButton.insertAdjacentElement("afterend", button);
-      return;
-    }
-
-    const healthButton = document.getElementById("appHealthButton");
-    if (healthButton) {
-      healthButton.insertAdjacentElement("afterend", button);
-      return;
-    }
-
-    const nav = document.querySelector(".side-nav, .sidebar nav");
-    nav?.insertAdjacentElement("afterend", button);
-  }
-
-  function openCenter() {
-    overlay.classList.add("open");
-    document.body.classList.add("launch-candidate-open");
-    document.getElementById("launchDeviceSummary").textContent =
-      `${platformName()} • ${browserName()} • ${isStandalone() ? "Installed" : "Browser mode"}`;
-    renderReadiness();
-    setStatus("Launch Center ready");
-  }
-
-  function closeCenter() {
-    overlay.classList.remove("open");
-    document.body.classList.remove("launch-candidate-open");
-  }
-
-  function setStatus(message) {
-    const status = document.getElementById("launchCandidateStatus");
-    if (status) status.textContent = message;
-  }
-
-  function restoreSetupChecks() {
-    const stateValue = localStorage.getItem("thh-v46:state");
-    if (!stateValue) return;
-
-    try {
-      const state = JSON.parse(stateValue);
-      document.querySelectorAll("[data-save-key]").forEach((checkbox, index) => {
-        const matching = Object.entries(state.checkboxes || {})
-          .find(([key]) => key.includes(checkbox.dataset.saveKey));
-
-        if (matching) checkbox.checked = Boolean(matching[1]);
-      });
-    } catch {}
-  }
-
-  function start() {
-    const css = document.createElement("link");
-    css.rel = "stylesheet";
-    css.href = "style-additions-v5-0.css";
-    document.head.appendChild(css);
-
-    createOverlay();
-    renderSetup();
-    renderInstall();
-    renderFeatures();
-    renderReadiness();
-    addButton();
-
-    setTimeout(restoreSetupChecks, 500);
-
-    document.addEventListener("keydown", event => {
-      if (
-        (event.ctrlKey || event.metaKey) &&
-        event.shiftKey &&
-        event.key.toLowerCase() === "l"
-      ) {
-        event.preventDefault();
-        openCenter();
-      }
-
-      if (event.key === "Escape" && overlay.classList.contains("open")) {
-        closeCenter();
-      }
-    });
-
-    const completed = localStorage.getItem(ONBOARDING_KEY) === "true";
-    if (!completed) {
-      setTimeout(openCenter, 1200);
-    }
-  }
-
-  window.addEventListener("beforeinstallprompt", event => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
-    setStatus("Install prompt is available.");
-  });
-
-  window.addEventListener("appinstalled", () => {
-    deferredInstallPrompt = null;
-    setStatus("TeachingHappensHere was installed.");
-    renderInstall();
-    renderReadiness();
-  });
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", start);
-  } else {
-    start();
-  }
-})();
+}

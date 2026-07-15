@@ -1,63 +1,65 @@
-
-const CACHE = "teaching-happens-here-v16-2-sidebar";
-const CORE = [
-  "./",
-  "./index.html",
-  "./style.css?v=16.2.0",
-  "./teacher-intelligence-v1602.css?v=16.0.2",
-  "./style-additions-v7-1.css",
-  "./app.js?v=16.2.0",
-  "./teacher-intelligence-v1602.js?v=16.0.2",
-  "./launch-stabilization-v7-1.js",
-  "./tos-data.json",
-  "./manifest.json",
-  "./icon-192.svg",
-  "./icon-512.svg"
-];
-
-self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)));
-  self.skipWaiting();
-});
-
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.map(key => key === CACHE ? null : caches.delete(key))))
-  );
-  self.clients.claim();
-});
-
-self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
-
-  const url = new URL(event.request.url);
-  const isCore =
-    url.pathname.endsWith("/app.js?v=16.2.0") ||
-    url.pathname.endsWith("/style.css?v=16.2.0") ||
-    url.pathname.endsWith("/tos-data.json") ||
-    url.pathname.endsWith("/index.html") ||
-    url.pathname.endsWith("/");
-
-  if (isCore) {
-    event.respondWith(
-      fetch(event.request, { cache: "no-store" })
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
-    return;
-  }
-
-  event.respondWith(
-    caches.match(event.request).then(cached =>
-      cached || fetch(event.request).then(response => {
-        const copy = response.clone();
-        caches.open(CACHE).then(cache => cache.put(event.request, copy));
-        return response;
-      })
-    )
-  );
-});
+{
+  "items": [
+    {
+      "title": "Lesson 1",
+      "category": "Open Court",
+      "keywords": [
+        "merchant",
+        "cause and effect",
+        "admired",
+        "phonics",
+        "vocabulary"
+      ],
+      "description": "The Mice Who Lived in a Shoe"
+    },
+    {
+      "title": "Lesson 6",
+      "category": "Open Court",
+      "keywords": [
+        "main idea",
+        "journey",
+        "fluency",
+        "ellie"
+      ],
+      "description": "Ellie's Long Walk"
+    },
+    {
+      "title": "Volcano Project",
+      "category": "Teacher Brain",
+      "keywords": [
+        "volcano",
+        "project",
+        "science"
+      ],
+      "description": "High-impact Open Court extension"
+    },
+    {
+      "title": "Habitats in a Shoebox",
+      "category": "Teacher Brain",
+      "keywords": [
+        "habitat",
+        "shoebox",
+        "project"
+      ],
+      "description": "Annual favorite project"
+    },
+    {
+      "title": "How to Line Up",
+      "category": "Classroom Systems",
+      "keywords": [
+        "line",
+        "routine"
+      ],
+      "description": "Anchor chart and teaching routine"
+    },
+    {
+      "title": "Building the Foundation",
+      "category": "Writing",
+      "keywords": [
+        "writing",
+        "foundation"
+      ],
+      "description": "Writing curriculum"
+    }
+  ]
+}

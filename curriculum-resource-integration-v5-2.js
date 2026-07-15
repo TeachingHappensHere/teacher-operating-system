@@ -1,180 +1,189 @@
 
 (function(){
-  let data, overlay, current;
+  const css = document.createElement("link");
+  css.rel = "stylesheet";
+  css.href = "style-additions-v4-5.css";
+  document.head.appendChild(css);
 
-  const esc = value => String(value ?? "")
-    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-
-  async function start(){
-    const css=document.createElement("link");
-    css.rel="stylesheet";
-    css.href="style-additions-v5-2.css";
-    document.head.appendChild(css);
-
+  async function loadCommunicationHub(){
     try{
-      data=await (await fetch("curriculum-resource-integration-v5-2.json",{cache:"no-store"})).json();
-      build();
-      addButton();
-    }catch(error){console.warn("Version 5.2 failed to load.",error)}
-  }
-
-  function allResources(){
-    return data.curriculumAreas.flatMap(area =>
-      area.resources.map(resource => ({...resource, areaId:area.id}))
-    );
-  }
-
-  function build(){
-    overlay=document.createElement("div");
-    overlay.className="v52-overlay";
-    overlay.innerHTML=`
-      <section class="v52-dialog">
-        <header>
-          <div><p>VERSION 5.2</p><h2>Curriculum & Resource Integration</h2><span>${esc(data.releaseStatus)}</span></div>
-          <button id="v52Close">×</button>
-        </header>
-        <div id="v52Stats" class="v52-stats"></div>
-        <div class="v52-toolbar">
-          <input id="v52Search" placeholder="Search resources, files, folders, status...">
-          <select id="v52Status"><option value="All">All Statuses</option></select>
-          <button id="v52CheckAll">Check Displayed Paths</button>
-        </div>
-        <div class="v52-layout">
-          <aside id="v52Areas"></aside>
-          <main id="v52Detail"></main>
-        </div>
-        <footer><span id="v52Message">Ready</span><span>TeachingHappensHere v5.2</span></footer>
-      </section>`;
-    document.body.appendChild(overlay);
-
-    const statuses=[...new Set(allResources().map(r=>r.status))];
-    document.getElementById("v52Status").innerHTML += statuses.map(s=>`<option>${esc(s)}</option>`).join("");
-    document.getElementById("v52Areas").innerHTML=data.curriculumAreas.map((a,i)=>`
-      <button data-v52-area="${a.id}" class="${i===0?"active":""}">
-        <span>${a.icon}</span><div><strong>${esc(a.title)}</strong><small>${esc(a.status)}</small></div>
-      </button>`).join("");
-
-    document.querySelectorAll("[data-v52-area]").forEach(b=>b.onclick=()=>renderArea(b.dataset.v52Area));
-    document.getElementById("v52Search").oninput=filter;
-    document.getElementById("v52Status").onchange=filter;
-    document.getElementById("v52CheckAll").onclick=checkAll;
-    document.getElementById("v52Close").onclick=close;
-    overlay.onclick=e=>{if(e.target===overlay)close()};
-
-    renderStats();
-    renderArea(data.curriculumAreas[0].id);
-  }
-
-  function renderStats(){
-    const resources=allResources();
-    const folders=data.curriculumAreas.flatMap(a=>a.folders);
-    document.getElementById("v52Stats").innerHTML=`
-      <article><strong>${data.curriculumAreas.length}</strong><span>Curriculum Areas</span></article>
-      <article><strong>${resources.length}</strong><span>Resource Slots</span></article>
-      <article><strong>${folders.length}</strong><span>Folder Paths</span></article>
-      <article><strong>${resources.filter(r=>r.status==="Needs Upload").length}</strong><span>Need Upload</span></article>
-      <article><strong>${resources.filter(r=>r.status==="Ready for File").length}</strong><span>Ready for File</span></article>`;
-  }
-
-  function renderArea(id){
-    current=data.curriculumAreas.find(a=>a.id===id);
-    document.querySelectorAll("[data-v52-area]").forEach(b=>b.classList.toggle("active",b.dataset.v52Area===id));
-    document.getElementById("v52Search").value="";
-    document.getElementById("v52Status").value="All";
-    renderDetail(current.resources);
-  }
-
-  function cards(resources){
-    return resources.map(r=>`
-      <article class="v52-card" data-path="${esc(r.path||"")}">
-        <div><small>${esc(r.type)}</small><span>${esc(r.status)}</span></div>
-        <h3>${esc(r.title)}</h3>
-        ${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.url)}</a>`:`<code>${esc(r.path)}</code>`}
-        <section>
-          ${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">Open</a>`:
-          `<a href="${esc(r.path)}" target="_blank" rel="noopener">Open</a>
-           <button data-copy="${esc(r.path)}">Copy Path</button>
-           <button data-check="${esc(r.path)}">Check</button>`}
-        </section>
-        <p class="v52-result">${r.url?"Public link ready.":"Not checked yet."}</p>
-      </article>`).join("") || "<p>No matching resources.</p>";
-  }
-
-  function renderDetail(resources){
-    document.getElementById("v52Detail").innerHTML=`
-      <div class="v52-heading">
-        <div><p>${current.icon} CURRICULUM AREA</p><h2>${esc(current.title)}</h2><span>${esc(current.description)}</span></div>
-        <b>${esc(current.status)}</b>
-      </div>
-      <section class="v52-section">
-        <h3>Recommended GitHub Folders</h3>
-        ${current.folders.map(f=>`<div class="v52-folder"><code>${esc(f)}</code><button data-copy="${esc(f)}">Copy</button></div>`).join("")}
-      </section>
-      <section class="v52-section">
-        <div class="v52-section-title"><div><h3>Resources</h3><p>${resources.length} matching item(s)</p></div><button onclick="window.print()">Print List</button></div>
-        <div id="v52Grid" class="v52-grid">${cards(resources)}</div>
-      </section>
-      <section class="v52-section">
-        <h3>Status Definitions</h3>
-        <div class="v52-definitions">${Object.entries(data.statusDefinitions).map(([k,v])=>`<article><strong>${esc(k)}</strong><p>${esc(v)}</p></article>`).join("")}</div>
-      </section>`;
-    wire();
-  }
-
-  function wire(){
-    document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{
-      await navigator.clipboard.writeText(b.dataset.copy);
-      const old=b.textContent;b.textContent="Copied";setTimeout(()=>b.textContent=old,800);
-    });
-    document.querySelectorAll("[data-check]").forEach(b=>b.onclick=()=>checkOne(b.dataset.check,b.closest(".v52-card")));
-  }
-
-  function filter(){
-    const q=document.getElementById("v52Search").value.toLowerCase().trim();
-    const status=document.getElementById("v52Status").value;
-    const resources=current.resources.filter(r=>(status==="All"||r.status===status)&&(!q||JSON.stringify(r).toLowerCase().includes(q)));
-    renderDetail(resources);
-  }
-
-  async function checkOne(path,card){
-    const result=card.querySelector(".v52-result");result.textContent="Checking…";
-    try{
-      const response=await fetch(path+"?check="+Date.now(),{cache:"no-store"});
-      const ok=response.ok;
-      result.textContent=ok?"File found.":`Not found (${response.status}).`;
-      card.classList.toggle("found",ok);card.classList.toggle("missing",!ok);
-    }catch{
-      result.textContent="Could not load this path.";card.classList.add("missing");
+      const response = await fetch("communication-hub.json", {cache:"no-store"});
+      const data = await response.json();
+      renderHub(data);
+    }catch(error){
+      console.warn("Communication Hub could not load.", error);
     }
   }
 
-  async function checkAll(){
-    const cards=[...document.querySelectorAll(".v52-card[data-path]")].filter(c=>c.dataset.path);
-    document.getElementById("v52Message").textContent=`Checking ${cards.length} path(s)…`;
-    for(const card of cards) await checkOne(card.dataset.path,card);
-    const found=cards.filter(c=>c.classList.contains("found")).length;
-    document.getElementById("v52Message").textContent=`${found}/${cards.length} displayed files found.`;
+  function renderHub(data){
+    const page = document.getElementById("communication");
+    if(!page) return;
+
+    page.classList.remove("placeholder");
+    page.innerHTML = `
+      <div class="systems-hero">
+        <div>
+          <p class="eyebrow">Version 4.5</p>
+          <h2>Parent Communication Hub</h2>
+          <p>Messages, contact notes, conference documentation, and weekly family updates.</p>
+        </div>
+      </div>
+
+      <div class="communication-tabs">
+        <button class="active" data-comm-tab="templates">Message Templates</button>
+        <button data-comm-tab="log">Contact Log</button>
+        <button data-comm-tab="newsletter">Newsletter Builder</button>
+        <button data-comm-tab="quick">Quick Messages</button>
+      </div>
+
+      <section id="commTemplates" class="communication-section"></section>
+      <section id="commLog" class="communication-section hidden"></section>
+      <section id="commNewsletter" class="communication-section hidden"></section>
+      <section id="commQuick" class="communication-section hidden"></section>
+    `;
+
+    renderTemplates(data);
+    renderContactLog(data);
+    renderNewsletter(data);
+    renderQuickMessages(data);
+
+    document.querySelectorAll("[data-comm-tab]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-comm-tab]").forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+
+        const map = {
+          templates: "commTemplates",
+          log: "commLog",
+          newsletter: "commNewsletter",
+          quick: "commQuick"
+        };
+
+        document.querySelectorAll(".communication-section").forEach(section => {
+          section.classList.add("hidden");
+        });
+
+        document.getElementById(map[button.dataset.commTab]).classList.remove("hidden");
+      });
+    });
   }
 
-  function addButton(){
-    const button=document.createElement("button");
-    button.id="curriculumIntegrationButton";
-    button.className="v52-button";
-    button.innerHTML="<span>5.2</span><strong>Curriculum Integration</strong><small>Resources</small>";
-    button.onclick=open;
-    const prior=document.getElementById("instructionalContentButton");
-    if(prior) prior.insertAdjacentElement("afterend",button);
-    else document.querySelector(".side-nav,.sidebar nav")?.insertAdjacentElement("afterend",button);
+  function renderTemplates(data){
+    const section = document.getElementById("commTemplates");
+    section.innerHTML = `
+      <div class="panel">
+        <input id="communicationSearch" class="communication-search" placeholder="Search message templates...">
+        <select id="communicationCategory">
+          <option value="All">All Categories</option>
+          ${data.categories.map(category => `<option value="${category}">${category}</option>`).join("")}
+        </select>
+      </div>
+      <div id="communicationTemplateGrid" class="communication-grid"></div>
+    `;
+
+    const search = document.getElementById("communicationSearch");
+    const category = document.getElementById("communicationCategory");
+
+    function draw(){
+      const q = search.value.toLowerCase().trim();
+      const selected = category.value;
+      const results = data.templates.filter(template =>
+        (selected === "All" || template.category === selected) &&
+        (!q || JSON.stringify(template).toLowerCase().includes(q))
+      );
+
+      document.getElementById("communicationTemplateGrid").innerHTML = results.map(template => `
+        <article class="communication-card">
+          <p class="eyebrow">${template.category}</p>
+          <h3>${template.title}</h3>
+          <p><strong>Subject:</strong> ${template.subject}</p>
+          <textarea>${template.body}</textarea>
+          <div class="communication-actions">
+            <button onclick="copyCommunicationText(this)">Copy Message</button>
+            <button onclick="window.print()">Print</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    search.addEventListener("input", draw);
+    category.addEventListener("change", draw);
+    draw();
   }
 
-  function open(){overlay.classList.add("open");document.body.classList.add("v52-open")}
-  function close(){overlay.classList.remove("open");document.body.classList.remove("v52-open")}
+  function renderContactLog(data){
+    const section = document.getElementById("commLog");
+    section.innerHTML = `
+      <div class="panel">
+        <h3>Parent Contact Log</h3>
+        <div class="contact-form">
+          ${data.contactLogFields.map(field => `
+            <label>
+              <span>${field}</span>
+              ${field === "Summary"
+                ? `<textarea placeholder="${field}"></textarea>`
+                : `<input placeholder="${field}">`
+              }
+            </label>
+          `).join("")}
+        </div>
+        <button class="wide-button">Save Contact Note</button>
+        <p class="communication-note">Current version provides the structure. Saved records will be added in a future database sprint.</p>
+      </div>
+    `;
+  }
 
-  document.addEventListener("keydown",e=>{
-    if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==="r"){e.preventDefault();if(overlay)open()}
-    if(e.key==="Escape"&&overlay?.classList.contains("open"))close()
-  });
+  function renderNewsletter(data){
+    const newsletter = data.templates.find(t => t.id === "weekly-newsletter");
+    const section = document.getElementById("commNewsletter");
+    section.innerHTML = `
+      <article class="communication-card newsletter-card">
+        <p class="eyebrow">Weekly Newsletter</p>
+        <h3>${newsletter.title}</h3>
+        <input value="${newsletter.subject}">
+        <textarea>${newsletter.body}</textarea>
+        <div class="communication-actions">
+          <button onclick="copyCommunicationText(this)">Copy Newsletter</button>
+          <button onclick="window.print()">Print Newsletter</button>
+        </div>
+      </article>
+    `;
+  }
 
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+  function renderQuickMessages(data){
+    const section = document.getElementById("commQuick");
+    section.innerHTML = `
+      <div class="communication-grid">
+        ${data.quickMessages.map(message => `
+          <article class="quick-message-card">
+            <p>${message}</p>
+            <button onclick="navigator.clipboard.writeText(${JSON.stringify(message)})">Copy</button>
+          </article>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  window.copyCommunicationText = function(button){
+    const card = button.closest(".communication-card");
+    const textarea = card.querySelector("textarea");
+    const subject = card.querySelector("input");
+    const text = subject
+      ? `Subject: ${subject.value}\n\n${textarea.value}`
+      : textarea.value;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const original = button.textContent;
+      button.textContent = "Copied!";
+      setTimeout(() => button.textContent = original, 1200);
+    });
+  };
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", loadCommunicationHub);
+  }else{
+    loadCommunicationHub();
+  }
+
+  setTimeout(loadCommunicationHub, 800);
 })();

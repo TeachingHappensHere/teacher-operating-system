@@ -1,6 +1,6 @@
 {
-  "version": "16.2 Navigation & Collapsible Sidebar",
-  "releaseStatus": "Adds a scrollable, collapsible, pinnable left sidebar without changing the central router.",
+  "version": "16.3 Science Intelligence",
+  "releaseStatus": "Adds the complete corrected science workbook library and an isolated Science Intelligence module.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2944,5 +2944,17 @@
     "hoverExpansion": true,
     "accordionNavigationPreserved": true,
     "preferenceStorage": "Local browser storage"
+  },
+  "scienceIntelligenceV163": {
+    "route": "science-intelligence",
+    "libraryFile": "science-intelligence-v163.json",
+    "pdfFolder": "science-workbook",
+    "workbookSections": 11,
+    "correctedOrientation": true,
+    "connections": [
+      "Weekly Planning",
+      "Lesson Attachments",
+      "Print Center"
+    ]
   }
 }

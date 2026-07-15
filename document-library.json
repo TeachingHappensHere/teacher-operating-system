@@ -1,265 +1,150 @@
 {
-  "version": "Sprint 3 - Document Library",
-  "categories": [
-    "Open Court Reading",
-    "Writing Studio",
-    "Science Studio",
-    "Classroom Systems",
-    "Assessment Center",
-    "Teacher Brain"
+  "version": "Dashboard Redesign Patch",
+  "teacher": "Mrs. Parrish",
+  "title": "Mrs. Parrish\u2019s Scholar System",
+  "quote": "The influence of a good teacher can never be erased.",
+  "date": "May 16, 2024",
+  "schedule": [
+    [
+      "7:30 \u2013 8:00",
+      "Morning Routine"
+    ],
+    [
+      "8:00 \u2013 8:30",
+      "Heggerty"
+    ],
+    [
+      "8:30 \u2013 10:00",
+      "Open Court \u2013 ELA Block"
+    ],
+    [
+      "10:00 \u2013 10:15",
+      "Recess"
+    ],
+    [
+      "10:15 \u2013 10:45",
+      "Small Groups"
+    ],
+    [
+      "10:45 \u2013 11:30",
+      "UFLI"
+    ],
+    [
+      "11:30 \u2013 12:00",
+      "Lunch"
+    ],
+    [
+      "12:00 \u2013 12:45",
+      "Eureka Math\u00b2"
+    ],
+    [
+      "12:45 \u2013 1:30",
+      "Science / Social Studies"
+    ],
+    [
+      "1:30 \u2013 2:00",
+      "Intervention / MOWR"
+    ],
+    [
+      "2:00 \u2013 2:45",
+      "Centers"
+    ],
+    [
+      "2:45 \u2013 3:15",
+      "Read Aloud & Wrap Up"
+    ]
   ],
-  "documents": [
-    {
-      "title": "U1L1 Skills Practice Packet",
-      "category": "Open Court Reading",
-      "unit": "Unit 1",
-      "lesson": "Lesson 1",
-      "type": "Skills Practice",
-      "status": "Uploaded",
-      "tags": [
-        "The Mice Who Lived in a Shoe",
-        "phonics",
-        "vocabulary",
-        "cause and effect",
-        "GUM"
-      ]
-    },
-    {
-      "title": "U1L1 Phonics Assessment",
-      "category": "Assessment Center",
-      "unit": "Unit 1",
-      "lesson": "Lesson 1",
-      "type": "Assessment",
-      "status": "Uploaded",
-      "tags": [
-        "phonics",
-        "digraphs",
-        "assessment"
-      ]
-    },
-    {
-      "title": "U1L1 Vocabulary Assessment",
-      "category": "Assessment Center",
-      "unit": "Unit 1",
-      "lesson": "Lesson 1",
-      "type": "Assessment",
-      "status": "Uploaded",
-      "tags": [
-        "vocabulary",
-        "assessment",
-        "merchant",
-        "admired"
-      ]
-    },
-    {
-      "title": "U1L1 Comprehension Assessment",
-      "category": "Assessment Center",
-      "unit": "Unit 1",
-      "lesson": "Lesson 1",
-      "type": "Assessment",
-      "status": "Uploaded",
-      "tags": [
-        "comprehension",
-        "cause and effect",
-        "assessment"
-      ]
-    },
-    {
-      "title": "U1L1 GUM Assessment",
-      "category": "Assessment Center",
-      "unit": "Unit 1",
-      "lesson": "Lesson 1",
-      "type": "Assessment",
-      "status": "Uploaded",
-      "tags": [
-        "GUM",
-        "grammar",
-        "common nouns",
-        "proper nouns"
-      ]
-    },
-    {
-      "title": "U1L6 Fluency Pages 71-72",
-      "category": "Open Court Reading",
-      "unit": "Unit 1",
-      "lesson": "Lesson 6",
-      "type": "Fluency",
-      "status": "Uploaded",
-      "tags": [
-        "Ellie's Long Walk",
-        "fluency",
-        "A Trip",
-        "rate",
-        "accuracy",
-        "expression"
-      ]
-    },
-    {
-      "title": "U1L6 Vocabulary Pages 73-74",
-      "category": "Open Court Reading",
-      "unit": "Unit 1",
-      "lesson": "Lesson 6",
-      "type": "Vocabulary",
-      "status": "Uploaded",
-      "tags": [
-        "Ellie's Long Walk",
-        "journey",
-        "panic",
-        "slick",
-        "slope",
-        "surface",
-        "startled"
-      ]
-    },
-    {
-      "title": "U1L6 Main Idea and Details Pages 75-76",
-      "category": "Open Court Reading",
-      "unit": "Unit 1",
-      "lesson": "Lesson 6",
-      "type": "Reading Skill",
-      "status": "Uploaded",
-      "tags": [
-        "Ellie's Long Walk",
-        "main idea",
-        "details",
-        "comprehension"
-      ]
-    },
-    {
-      "title": "U1L6 Vocabulary Assessment",
-      "category": "Assessment Center",
-      "unit": "Unit 1",
-      "lesson": "Lesson 6",
-      "type": "Assessment",
-      "status": "Uploaded",
-      "tags": [
-        "Ellie's Long Walk",
-        "vocabulary",
-        "startled",
-        "panic",
-        "slick",
-        "slope",
-        "journey"
-      ]
-    },
-    {
-      "title": "End of Unit 1 Vocabulary and Comprehension Cold Read",
-      "category": "Assessment Center",
-      "unit": "Unit 1",
-      "lesson": "End of Unit",
-      "type": "Unit Assessment",
-      "status": "Uploaded",
-      "tags": [
-        "cold read",
-        "vocabulary",
-        "comprehension",
-        "main idea",
-        "inference"
-      ]
-    },
-    {
-      "title": "End of Unit 1 GUM and Spelling",
-      "category": "Assessment Center",
-      "unit": "Unit 1",
-      "lesson": "End of Unit",
-      "type": "Unit Assessment",
-      "status": "Uploaded",
-      "tags": [
-        "GUM",
-        "spelling",
-        "grammar",
-        "proper nouns",
-        "verbs"
-      ]
-    },
-    {
-      "title": "End of Unit 1 Phonics Assessments",
-      "category": "Assessment Center",
-      "unit": "Unit 1",
-      "lesson": "End of Unit",
-      "type": "Unit Assessment",
-      "status": "Uploaded",
-      "tags": [
-        "phonics",
-        "closed syllables",
-        "digraphs",
-        "r-controlled vowels"
-      ]
-    },
-    {
-      "title": "Building the Foundation Writing",
-      "category": "Writing Studio",
-      "unit": "Writing",
-      "lesson": "Core Curriculum",
-      "type": "Writing Curriculum",
-      "status": "Uploaded",
-      "tags": [
-        "writing",
-        "informative",
-        "opinion",
-        "narrative",
-        "sentences"
-      ]
-    },
-    {
-      "title": "DIBELS Grade 2 Benchmark Materials",
-      "category": "Assessment Center",
-      "unit": "DIBELS",
-      "lesson": "Benchmark",
-      "type": "Benchmark Assessment",
-      "status": "Uploaded",
-      "tags": [
-        "DIBELS",
-        "NWF",
-        "WRF",
-        "ORF",
-        "Maze",
-        "benchmark"
-      ]
-    },
-    {
-      "title": "Beginning of Year Anchor Charts",
-      "category": "Classroom Systems",
-      "unit": "Beginning of Year",
-      "lesson": "Procedures",
-      "type": "Anchor Charts",
-      "status": "Created",
-      "tags": [
-        "line up",
-        "morning routine",
-        "carpet",
-        "pencils",
-        "restroom",
-        "dismissal"
-      ]
-    },
-    {
-      "title": "Habitats in a Shoebox Project",
-      "category": "Teacher Brain",
-      "unit": "Projects",
-      "lesson": "Science Connection",
-      "type": "Teacher Favorite",
-      "status": "Teacher Brain",
-      "tags": [
-        "habitats",
-        "shoebox",
-        "project",
-        "admin praised"
-      ]
-    },
-    {
-      "title": "Volcano Assignment",
-      "category": "Teacher Brain",
-      "unit": "Projects",
-      "lesson": "Open Court Connection",
-      "type": "Teacher Favorite",
-      "status": "Teacher Brain",
-      "tags": [
-        "volcano",
-        "project",
-        "Open Court packet",
-        "science"
-      ]
-    }
-  ]
+  "curriculum": [
+    [
+      "\ud83d\udcd9",
+      "Open Court"
+    ],
+    [
+      "\ud83e\uddea",
+      "Science"
+    ],
+    [
+      "\ud83d\udd24",
+      "UFLI Foundations"
+    ],
+    [
+      "\ud83c\udf0e",
+      "Social Studies"
+    ],
+    [
+      "\ud83d\udd35",
+      "MOWR"
+    ],
+    [
+      "\u2764\ufe0f",
+      "Health"
+    ],
+    [
+      "\ud83e\uddf1",
+      "Heggerty"
+    ],
+    [
+      "\ud83c\udfa8",
+      "Art"
+    ],
+    [
+      "\ud83d\udcd7",
+      "Eureka Math\u00b2"
+    ],
+    [
+      "\ud83c\udfb5",
+      "Music"
+    ]
+  ],
+  "classroomLinks": [
+    "Classroom Layout",
+    "Our Procedures",
+    "Classroom Expectations",
+    "Line-Up Routines",
+    "Small Group Organization",
+    "Supply List",
+    "Classroom Jobs"
+  ],
+  "shortcuts": [
+    "Take Attendance",
+    "Print Center",
+    "Behavior Tracker",
+    "Timer",
+    "Student Notes",
+    "Random Grouping",
+    "Quick Email",
+    "Class Dojo"
+  ],
+  "lowerCards": {
+    "Student Data": [
+      "Data Tracker",
+      "Assessment Data",
+      "Progress Monitoring",
+      "Intervention Notes"
+    ],
+    "Communication": [
+      "Parent Contact Log",
+      "Newsletters",
+      "Parent Conference Notes",
+      "Email Templates"
+    ],
+    "Classroom Inspiration": [
+      "Bulletin Board Ideas",
+      "Classroom Decor",
+      "Door Decor Ideas",
+      "Celebrations"
+    ],
+    "Forms & Printables": [
+      "IEP / 504 / ELL Guide",
+      "Parent Forms",
+      "Behavior Forms",
+      "Miscellaneous Forms"
+    ],
+    "Teacher Self-Care": [
+      "Self-Care Ideas",
+      "Encouragement",
+      "Gratitude",
+      "You\u2019ve Got This!"
+    ]
+  }
 }

@@ -1,213 +1,180 @@
-{
-  "version": "3.5 Small Groups + Intervention Engine",
-  "overview": {
-    "title": "Small Groups + Intervention",
-    "structure": "MOWR / Reading Intervention",
-    "dailyFlow": [
-      "0\u20135 Warm-Up",
-      "5\u201320 UFLI",
-      "20\u201350 Centers",
-      "50\u201355 ORF Reflection"
-    ],
-    "centers": [
-      "Teacher Table",
-      "Word Work / UFLI",
-      "Fluency & Rereading",
-      "Comprehension & Prosody"
-    ],
-    "notes": "Prioritize Red and Yellow groups first. Use data to adjust rotation frequency."
-  },
-  "groups": [
-    {
-      "id": "red",
-      "name": "Red Group",
-      "level": "Intensive Decoding / Accuracy",
-      "priority": "Daily",
-      "focus": [
-        "UFLI digraph review",
-        "Blending",
-        "Segmenting",
-        "Word mapping",
-        "Decodable reading"
-      ],
-      "teacherTable": "Direct teacher support with phonics, blending, decodable text, and immediate correction.",
-      "dibelsConnection": [
-        "NWF",
-        "WRF",
-        "ORF accuracy"
-      ],
-      "materials": [
-        "UFLI lesson support",
-        "Elkonin boxes",
-        "Blending board",
-        "Decodable text",
-        "Whiteboards"
-      ],
-      "teacherBrain": "This group needs explicit, repeated practice and quick wins. Keep the pace supportive, not rushed.",
-      "printPrep": [
-        "Decodable practice",
-        "Word mapping sheet",
-        "Progress monitoring tracker"
-      ]
-    },
-    {
-      "id": "yellow",
-      "name": "Yellow Group",
-      "level": "Developing Accuracy / Fluency",
-      "priority": "3\u20134 times per week",
-      "focus": [
-        "Blending review",
-        "Rereading",
-        "Phrase reading",
-        "Accuracy check",
-        "Vocabulary support"
-      ],
-      "teacherTable": "Guide students through rereading and correcting miscues while building confidence.",
-      "dibelsConnection": [
-        "ORF accuracy",
-        "WRF",
-        "Fluency"
-      ],
-      "materials": [
-        "Decodable text",
-        "Fluency folder",
-        "Vocabulary cards",
-        "Partner reading routine"
-      ],
-      "teacherBrain": "This group benefits from immediate feedback and short repeated readings.",
-      "printPrep": [
-        "Fluency passage",
-        "Vocabulary support page",
-        "Partner reading checklist"
-      ]
-    },
-    {
-      "id": "blue",
-      "name": "Blue Group",
-      "level": "Developing Fluency",
-      "priority": "2 times per week",
-      "focus": [
-        "Fluency",
-        "Expression",
-        "Punctuation",
-        "Vocabulary in context",
-        "Comprehension"
-      ],
-      "teacherTable": "Use modeled reading, echo reading, partner reading, and quick comprehension checks.",
-      "dibelsConnection": [
-        "ORF",
-        "Maze"
-      ],
-      "materials": [
-        "Fluency passage",
-        "Timer",
-        "Comprehension prompt",
-        "Vocabulary notebook"
-      ],
-      "teacherBrain": "Focus on reading like it sounds when we talk. Expression and punctuation matter here.",
-      "printPrep": [
-        "Fluency tracker",
-        "Comprehension question card"
-      ]
-    },
-    {
-      "id": "green",
-      "name": "Green Group",
-      "level": "Extension / Prosody",
-      "priority": "1\u20132 times per week",
-      "focus": [
-        "Prosody",
-        "Higher-order questions",
-        "Text evidence",
-        "Vocabulary extension",
-        "Partner discussion"
-      ],
-      "teacherTable": "Challenge students to explain thinking, cite details, and use academic language.",
-      "dibelsConnection": [
-        "Maze",
-        "ORF expression",
-        "Comprehension"
-      ],
-      "materials": [
-        "Discussion cards",
-        "Text evidence frames",
-        "Vocabulary extension task"
-      ],
-      "teacherBrain": "Do not let this group become busywork. Give them meaningful discussion and response tasks.",
-      "printPrep": [
-        "Text evidence organizer",
-        "Extension response page"
-      ]
+
+(() => {
+  "use strict";
+
+  const STORE = "thh-v162:sidebar";
+  const MOBILE_BREAKPOINT = 760;
+
+  let state = {
+    collapsed: false,
+    pinned: true
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+  function load() {
+    try {
+      state = { ...state, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
+    } catch {}
+  }
+
+  function save() {
+    localStorage.setItem(STORE, JSON.stringify(state));
+  }
+
+  function desktop() {
+    return window.innerWidth > MOBILE_BREAKPOINT;
+  }
+
+  function waitForSidebar() {
+    const sidebar = $("#sidebar");
+    const nav = $("#mainNav");
+
+    if (!sidebar || !nav) {
+      window.setTimeout(waitForSidebar, 100);
+      return;
     }
-  ],
-  "rotationPlan": [
-    {
-      "day": "Monday",
-      "teacherTable": "Red",
-      "centerFocus": "UFLI + decodable accuracy"
-    },
-    {
-      "day": "Tuesday",
-      "teacherTable": "Red / Yellow",
-      "centerFocus": "Blending + fluency reread"
-    },
-    {
-      "day": "Wednesday",
-      "teacherTable": "Red / Blue",
-      "centerFocus": "Fluency + vocabulary"
-    },
-    {
-      "day": "Thursday",
-      "teacherTable": "Yellow / Green",
-      "centerFocus": "Comprehension + prosody"
-    },
-    {
-      "day": "Friday",
-      "teacherTable": "Progress Monitoring",
-      "centerFocus": "ORF / Maze / Reflection"
+
+    installControls(sidebar);
+    observeNavigation(nav);
+    applyState();
+    scrollActiveIntoView(false);
+  }
+
+  function installControls(sidebar) {
+    if ($("#v162SidebarControls")) return;
+
+    const controls = document.createElement("div");
+    controls.id = "v162SidebarControls";
+    controls.className = "v162-sidebar-controls";
+    controls.innerHTML = `
+      <button id="v162SidebarToggle" type="button" aria-label="Collapse sidebar" title="Collapse sidebar">
+        <span aria-hidden="true">◀</span>
+        <strong>Collapse</strong>
+      </button>
+      <button id="v162SidebarPin" type="button" aria-label="Unpin sidebar" title="Keep sidebar open">
+        <span aria-hidden="true">📌</span>
+      </button>
+    `;
+
+    const brand = $(".brand", sidebar);
+    if (brand) brand.insertAdjacentElement("afterend", controls);
+    else sidebar.prepend(controls);
+
+    $("#v162SidebarToggle").addEventListener("click", () => {
+      state.collapsed = !state.collapsed;
+      if (!state.collapsed) state.pinned = true;
+      save();
+      applyState();
+    });
+
+    $("#v162SidebarPin").addEventListener("click", () => {
+      state.pinned = !state.pinned;
+      if (!state.pinned) state.collapsed = true;
+      save();
+      applyState();
+    });
+
+    sidebar.addEventListener("mouseenter", () => {
+      if (desktop() && !state.pinned && state.collapsed) {
+        document.body.classList.add("v162-sidebar-peek");
+      }
+    });
+
+    sidebar.addEventListener("mouseleave", () => {
+      document.body.classList.remove("v162-sidebar-peek");
+    });
+
+    sidebar.addEventListener("focusin", () => {
+      if (desktop() && !state.pinned && state.collapsed) {
+        document.body.classList.add("v162-sidebar-peek");
+      }
+    });
+
+    sidebar.addEventListener("focusout", event => {
+      if (!sidebar.contains(event.relatedTarget)) {
+        document.body.classList.remove("v162-sidebar-peek");
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      document.body.classList.remove("v162-sidebar-peek");
+      applyState();
+    });
+
+    window.addEventListener("hashchange", () => {
+      window.setTimeout(() => scrollActiveIntoView(true), 120);
+    });
+  }
+
+  function applyState() {
+    const collapsed = desktop() && state.collapsed;
+
+    document.body.classList.toggle("v162-sidebar-collapsed", collapsed);
+    document.body.classList.toggle("v162-sidebar-pinned", state.pinned);
+    document.body.classList.toggle("v162-sidebar-unpinned", !state.pinned);
+
+    const toggle = $("#v162SidebarToggle");
+    const pin = $("#v162SidebarPin");
+
+    if (toggle) {
+      toggle.setAttribute("aria-expanded", String(!collapsed));
+      toggle.setAttribute("aria-label", collapsed ? "Expand sidebar" : "Collapse sidebar");
+      toggle.title = collapsed ? "Expand sidebar" : "Collapse sidebar";
+      toggle.querySelector("span").textContent = collapsed ? "▶" : "◀";
+      toggle.querySelector("strong").textContent = collapsed ? "Expand" : "Collapse";
     }
-  ],
-  "interventionTools": [
-    {
-      "title": "UFLI Support",
-      "purpose": "Explicit phonics and decoding intervention.",
-      "useWhen": "Students need support with phoneme-grapheme mapping, blending, or decoding.",
-      "materials": [
-        "UFLI Toolbox",
-        "Blending board",
-        "Word chains",
-        "Dictation"
-      ]
-    },
-    {
-      "title": "Elkonin Boxes",
-      "purpose": "Support phoneme segmentation and mapping.",
-      "useWhen": "Students struggle to hear or map sounds in words.",
-      "materials": [
-        "Elkonin box mat",
-        "Counters",
-        "Whiteboard"
-      ]
-    },
-    {
-      "title": "Fluency Reread",
-      "purpose": "Build accuracy, rate, and expression.",
-      "useWhen": "Students read accurately but need smoother reading.",
-      "materials": [
-        "Fluency passage",
-        "Timer",
-        "Partner checklist"
-      ]
-    },
-    {
-      "title": "Vocabulary Visuals",
-      "purpose": "Support EL students and students with limited background knowledge.",
-      "useWhen": "Vocabulary is unfamiliar or abstract.",
-      "materials": [
-        "Picture cards",
-        "Sentence frames",
-        "Student-friendly definition"
-      ]
+
+    if (pin) {
+      pin.setAttribute("aria-pressed", String(state.pinned));
+      pin.setAttribute("aria-label", state.pinned ? "Unpin sidebar" : "Pin sidebar open");
+      pin.title = state.pinned ? "Sidebar stays open" : "Pin sidebar open";
+      pin.querySelector("span").textContent = state.pinned ? "📌" : "📍";
     }
-  ]
-}
+
+    updateTooltips();
+  }
+
+  function observeNavigation(nav) {
+    new MutationObserver(() => {
+      updateTooltips();
+      window.setTimeout(() => scrollActiveIntoView(false), 40);
+    }).observe(nav, { childList: true, subtree: true });
+  }
+
+  function updateTooltips() {
+    $$(".v110-route").forEach(button => {
+      const label = $("strong", button)?.textContent?.trim();
+      if (label) {
+        button.title = label;
+        button.setAttribute("aria-label", label);
+      }
+    });
+
+    $$(".v110-nav-heading").forEach(button => {
+      const label = $("span", button)?.textContent?.trim();
+      if (label) button.title = label;
+    });
+  }
+
+  function scrollActiveIntoView(smooth) {
+    const active = $(".v110-route.active");
+    const scroller = $("#mainNav");
+    if (!active || !scroller) return;
+
+    active.scrollIntoView({
+      block: "nearest",
+      inline: "nearest",
+      behavior: smooth ? "smooth" : "auto"
+    });
+  }
+
+  load();
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", waitForSidebar);
+  } else {
+    waitForSidebar();
+  }
+})();

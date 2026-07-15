@@ -1,180 +1,299 @@
 
-(() => {
-  "use strict";
+/* Version 16.2 — Navigation & Collapsible Sidebar */
+:root {
+  --v162-sidebar-expanded: var(--sidebar, 270px);
+  --v162-sidebar-collapsed: 82px;
+}
 
-  const STORE = "thh-v162:sidebar";
-  const MOBILE_BREAKPOINT = 760;
+#sidebar {
+  overflow: hidden !important;
+}
 
-  let state = {
-    collapsed: false,
-    pinned: true
-  };
+#sidebar .brand {
+  flex: 0 0 auto;
+}
 
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+#mainNav {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-right: 3px;
+}
 
-  function load() {
-    try {
-      state = { ...state, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
-    } catch {}
+/* Visible, easy-to-grab navigation scrollbar */
+#mainNav {
+  scrollbar-width: auto;
+  scrollbar-color: rgba(157,32,58,.52) rgba(255,255,255,.34);
+}
+
+#mainNav::-webkit-scrollbar {
+  width: 12px;
+}
+
+#mainNav::-webkit-scrollbar-track {
+  margin: 4px 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.38);
+}
+
+#mainNav::-webkit-scrollbar-thumb {
+  min-height: 48px;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: rgba(157,32,58,.50);
+  background-clip: padding-box;
+}
+
+#mainNav::-webkit-scrollbar-thumb:hover {
+  background: rgba(157,32,58,.74);
+  background-clip: padding-box;
+}
+
+.v162-sidebar-controls {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 42px;
+  gap: 7px;
+  flex: 0 0 auto;
+  padding: 0 6px;
+}
+
+.v162-sidebar-controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255,255,255,.70);
+  color: var(--accent-dark);
+  font-weight: 800;
+}
+
+.v162-sidebar-controls button:hover {
+  background: #fff;
+}
+
+.v162-sidebar-controls button span {
+  line-height: 1;
+}
+
+.v162-sidebar-controls button strong {
+  font-size: 11px;
+}
+
+.sidebar-reminder,
+#customizeButton {
+  flex: 0 0 auto;
+}
+
+/* Desktop collapsed icon rail */
+@media (min-width: 761px) {
+  body.v162-sidebar-collapsed .app-shell {
+    grid-template-columns: var(--v162-sidebar-collapsed) minmax(0,1fr);
   }
 
-  function save() {
-    localStorage.setItem(STORE, JSON.stringify(state));
+  body.v162-sidebar-collapsed #sidebar {
+    width: var(--v162-sidebar-collapsed);
+    padding-inline: 8px;
   }
 
-  function desktop() {
-    return window.innerWidth > MOBILE_BREAKPOINT;
+  body.v162-sidebar-collapsed #sidebar .brand {
+    justify-content: center;
+    padding-inline: 0;
   }
 
-  function waitForSidebar() {
-    const sidebar = $("#sidebar");
-    const nav = $("#mainNav");
-
-    if (!sidebar || !nav) {
-      window.setTimeout(waitForSidebar, 100);
-      return;
-    }
-
-    installControls(sidebar);
-    observeNavigation(nav);
-    applyState();
-    scrollActiveIntoView(false);
+  body.v162-sidebar-collapsed #sidebar .brand > div:last-child,
+  body.v162-sidebar-collapsed #sidebar .sidebar-reminder,
+  body.v162-sidebar-collapsed #sidebar #customizeButton,
+  body.v162-sidebar-collapsed .v162-sidebar-controls button strong,
+  body.v162-sidebar-collapsed .v110-nav-heading > span,
+  body.v162-sidebar-collapsed .v110-nav-heading > b,
+  body.v162-sidebar-collapsed .v110-route > strong,
+  body.v162-sidebar-collapsed .v110-route.active::after {
+    display: none !important;
   }
 
-  function installControls(sidebar) {
-    if ($("#v162SidebarControls")) return;
-
-    const controls = document.createElement("div");
-    controls.id = "v162SidebarControls";
-    controls.className = "v162-sidebar-controls";
-    controls.innerHTML = `
-      <button id="v162SidebarToggle" type="button" aria-label="Collapse sidebar" title="Collapse sidebar">
-        <span aria-hidden="true">◀</span>
-        <strong>Collapse</strong>
-      </button>
-      <button id="v162SidebarPin" type="button" aria-label="Unpin sidebar" title="Keep sidebar open">
-        <span aria-hidden="true">📌</span>
-      </button>
-    `;
-
-    const brand = $(".brand", sidebar);
-    if (brand) brand.insertAdjacentElement("afterend", controls);
-    else sidebar.prepend(controls);
-
-    $("#v162SidebarToggle").addEventListener("click", () => {
-      state.collapsed = !state.collapsed;
-      if (!state.collapsed) state.pinned = true;
-      save();
-      applyState();
-    });
-
-    $("#v162SidebarPin").addEventListener("click", () => {
-      state.pinned = !state.pinned;
-      if (!state.pinned) state.collapsed = true;
-      save();
-      applyState();
-    });
-
-    sidebar.addEventListener("mouseenter", () => {
-      if (desktop() && !state.pinned && state.collapsed) {
-        document.body.classList.add("v162-sidebar-peek");
-      }
-    });
-
-    sidebar.addEventListener("mouseleave", () => {
-      document.body.classList.remove("v162-sidebar-peek");
-    });
-
-    sidebar.addEventListener("focusin", () => {
-      if (desktop() && !state.pinned && state.collapsed) {
-        document.body.classList.add("v162-sidebar-peek");
-      }
-    });
-
-    sidebar.addEventListener("focusout", event => {
-      if (!sidebar.contains(event.relatedTarget)) {
-        document.body.classList.remove("v162-sidebar-peek");
-      }
-    });
-
-    window.addEventListener("resize", () => {
-      document.body.classList.remove("v162-sidebar-peek");
-      applyState();
-    });
-
-    window.addEventListener("hashchange", () => {
-      window.setTimeout(() => scrollActiveIntoView(true), 120);
-    });
+  body.v162-sidebar-collapsed #sidebar .brand-mark {
+    font-size: 28px;
   }
 
-  function applyState() {
-    const collapsed = desktop() && state.collapsed;
-
-    document.body.classList.toggle("v162-sidebar-collapsed", collapsed);
-    document.body.classList.toggle("v162-sidebar-pinned", state.pinned);
-    document.body.classList.toggle("v162-sidebar-unpinned", !state.pinned);
-
-    const toggle = $("#v162SidebarToggle");
-    const pin = $("#v162SidebarPin");
-
-    if (toggle) {
-      toggle.setAttribute("aria-expanded", String(!collapsed));
-      toggle.setAttribute("aria-label", collapsed ? "Expand sidebar" : "Collapse sidebar");
-      toggle.title = collapsed ? "Expand sidebar" : "Collapse sidebar";
-      toggle.querySelector("span").textContent = collapsed ? "▶" : "◀";
-      toggle.querySelector("strong").textContent = collapsed ? "Expand" : "Collapse";
-    }
-
-    if (pin) {
-      pin.setAttribute("aria-pressed", String(state.pinned));
-      pin.setAttribute("aria-label", state.pinned ? "Unpin sidebar" : "Pin sidebar open");
-      pin.title = state.pinned ? "Sidebar stays open" : "Pin sidebar open";
-      pin.querySelector("span").textContent = state.pinned ? "📌" : "📍";
-    }
-
-    updateTooltips();
+  body.v162-sidebar-collapsed .v162-sidebar-controls {
+    grid-template-columns: 1fr;
+    padding: 0;
   }
 
-  function observeNavigation(nav) {
-    new MutationObserver(() => {
-      updateTooltips();
-      window.setTimeout(() => scrollActiveIntoView(false), 40);
-    }).observe(nav, { childList: true, subtree: true });
+  body.v162-sidebar-collapsed .v162-sidebar-controls button {
+    width: 46px;
+    min-height: 40px;
+    margin: 0 auto;
+    padding: 7px;
   }
 
-  function updateTooltips() {
-    $$(".v110-route").forEach(button => {
-      const label = $("strong", button)?.textContent?.trim();
-      if (label) {
-        button.title = label;
-        button.setAttribute("aria-label", label);
-      }
-    });
-
-    $$(".v110-nav-heading").forEach(button => {
-      const label = $("span", button)?.textContent?.trim();
-      if (label) button.title = label;
-    });
+  body.v162-sidebar-collapsed #mainNav {
+    padding-right: 0;
   }
 
-  function scrollActiveIntoView(smooth) {
-    const active = $(".v110-route.active");
-    const scroller = $("#mainNav");
-    if (!active || !scroller) return;
-
-    active.scrollIntoView({
-      block: "nearest",
-      inline: "nearest",
-      behavior: smooth ? "smooth" : "auto"
-    });
+  body.v162-sidebar-collapsed #mainNav::-webkit-scrollbar {
+    width: 7px;
   }
 
-  load();
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", waitForSidebar);
-  } else {
-    waitForSidebar();
+  body.v162-sidebar-collapsed .v110-navigation {
+    padding-inline: 0;
   }
-})();
+
+  body.v162-sidebar-collapsed .v110-nav-group {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  body.v162-sidebar-collapsed .v110-nav-heading {
+    justify-content: center;
+    min-height: 8px;
+    padding: 3px 0;
+    background: transparent;
+  }
+
+  body.v162-sidebar-collapsed .v110-nav-heading::before {
+    content: "";
+    width: 26px;
+    height: 1px;
+    background: rgba(113,102,109,.25);
+  }
+
+  body.v162-sidebar-collapsed .v110-nav-body {
+    display: grid !important;
+    padding: 2px 0 6px;
+  }
+
+  body.v162-sidebar-collapsed .v110-route {
+    display: flex !important;
+    justify-content: center;
+    width: 48px;
+    min-height: 43px !important;
+    margin: 0 auto;
+    padding: 5px !important;
+  }
+
+  body.v162-sidebar-collapsed .v110-route > span {
+    width: 31px;
+    height: 31px;
+    font-size: 16px;
+  }
+
+  /* Temporarily expand an unpinned sidebar on hover/focus */
+  body.v162-sidebar-collapsed.v162-sidebar-peek .app-shell {
+    grid-template-columns: var(--v162-sidebar-expanded) minmax(0,1fr);
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek #sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 120;
+    width: var(--v162-sidebar-expanded);
+    padding: 18px 14px;
+    box-shadow: 18px 0 36px rgba(91,43,58,.16);
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek #sidebar .brand {
+    justify-content: flex-start;
+    padding: 0 8px 12px;
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek #sidebar .brand > div:last-child,
+  body.v162-sidebar-collapsed.v162-sidebar-peek #sidebar .sidebar-reminder,
+  body.v162-sidebar-collapsed.v162-sidebar-peek #sidebar #customizeButton,
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v162-sidebar-controls button strong,
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-nav-heading > span,
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-nav-heading > b,
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-route > strong {
+    display: revert !important;
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v162-sidebar-controls {
+    grid-template-columns: minmax(0,1fr) 42px;
+    padding: 0 6px;
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v162-sidebar-controls button {
+    width: auto;
+    min-height: 38px;
+    margin: 0;
+    padding: 7px 9px;
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-navigation {
+    padding: 3px 6px 14px;
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-nav-group {
+    overflow: hidden;
+    border: 1px solid rgba(116,75,86,.12);
+    background: rgba(255,255,255,.36);
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-nav-heading {
+    justify-content: space-between;
+    min-height: 36px;
+    padding: 9px 11px;
+    background: rgba(255,255,255,.60);
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-nav-heading::before {
+    display: none;
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-nav-body[hidden] {
+    display: none !important;
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-route {
+    display: grid !important;
+    grid-template-columns: 27px minmax(0,1fr);
+    justify-content: initial;
+    width: 100%;
+    min-height: 37px !important;
+    margin: 0;
+    padding: 7px 9px !important;
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-route > span {
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+  }
+
+  body.v162-sidebar-collapsed.v162-sidebar-peek .v110-route.active::after {
+    display: block !important;
+  }
+}
+
+/* Mobile keeps the existing slide-out drawer behavior */
+@media (max-width: 760px) {
+  .v162-sidebar-controls {
+    grid-template-columns: 1fr;
+  }
+
+  #v162SidebarPin {
+    display: none;
+  }
+
+  .v162-sidebar-controls button strong {
+    display: inline;
+  }
+
+  #mainNav {
+    scrollbar-gutter: auto;
+  }
+}
+
+@media print {
+  .v162-sidebar-controls {
+    display: none !important;
+  }
+}

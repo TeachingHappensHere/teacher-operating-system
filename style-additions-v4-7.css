@@ -1,171 +1,64 @@
 
-/* Version 4.7 Universal Search & Command Center */
-.search-open{
-  overflow:hidden;
-}
-.universal-search-button{
-  width:100%;
-  margin:14px 0 4px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  border:1px solid var(--line,#f1d7d7);
-  background:rgba(255,255,255,.78);
-  color:var(--ink,#1e1820);
-  border-radius:11px;
-  padding:10px 12px;
-}
-.universal-search-button strong{
-  margin-right:auto;
-}
-.universal-search-button kbd,
-.universal-search-input-wrap kbd{
-  border:1px solid #e2d2d5;
-  background:#fff7f5;
-  border-radius:6px;
-  padding:3px 6px;
-  font-size:11px;
-  color:#6f636b;
-}
-.universal-search-backdrop{
-  display:none;
+/* Version 4.6 Saved Progress & Personalization */
+.saved-progress-toolbar{
   position:fixed;
-  inset:0;
-  z-index:20000;
-  padding:5vh 16px;
-  background:rgba(41,25,45,.45);
-  backdrop-filter:blur(8px);
-}
-.universal-search-backdrop.open{
-  display:block;
-}
-.universal-search-dialog{
-  width:min(900px,100%);
-  max-height:90vh;
-  margin:0 auto;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  background:#fffaf8;
-  border:1px solid #f1d7d7;
-  border-radius:22px;
-  box-shadow:0 30px 90px rgba(50,20,35,.28);
-}
-.universal-search-dialog header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:16px;
-  padding:20px 22px 8px;
-}
-.universal-search-dialog header h2{
-  margin:4px 0 0;
-}
-#closeUniversalSearch{
-  width:40px;
-  height:40px;
-  display:grid;
-  place-items:center;
-  border:0;
-  border-radius:50%;
-  background:#fff1f2;
-  color:#a52b44;
-  font-size:26px;
-}
-.universal-search-input-wrap{
-  margin:10px 22px 0;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  gap:10px;
-  border:2px solid #ffcfd2;
-  background:#fff;
-  border-radius:15px;
-  padding:12px 14px;
-}
-.universal-search-input-wrap input{
-  width:100%;
-  border:0;
-  outline:0;
-  background:transparent;
-  font-size:17px;
-}
-.universal-search-meta{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:10px 24px;
-  color:#6f636b;
-  font-size:12px;
-  font-weight:700;
-}
-.universal-search-results{
-  overflow:auto;
-  padding:0 14px 18px;
-}
-.universal-result{
-  width:100%;
-  display:block;
-  text-align:left;
-  border:1px solid transparent;
-  border-radius:14px;
-  background:transparent;
-  padding:13px 14px;
-  color:#1e1820;
-}
-.universal-result:hover,
-.universal-result:focus{
-  outline:0;
-  border-color:#f1d7d7;
-  background:#fff;
-  box-shadow:0 8px 20px rgba(122,73,73,.08);
-}
-.universal-result strong{
-  display:block;
-  margin:5px 0;
-  font-size:16px;
-}
-.universal-result p{
-  margin:0;
-  color:#6f636b;
-  line-height:1.4;
-}
-.universal-result-top{
+  right:18px;
+  bottom:18px;
+  z-index:9999;
   display:flex;
   align-items:center;
   gap:8px;
-  color:#8b7480;
+  padding:10px;
+  background:rgba(255,255,255,.96);
+  border:1px solid var(--line,#f1d7d7);
+  border-radius:14px;
+  box-shadow:0 12px 32px rgba(90,45,60,.18);
+  backdrop-filter:blur(10px);
+}
+.saved-progress-toolbar > div{
+  display:grid;
+  min-width:110px;
+}
+.saved-progress-toolbar strong{
+  font-size:13px;
+  color:#c4314d;
+}
+.saved-progress-toolbar span{
   font-size:12px;
-}
-.universal-result-type{
-  display:inline-block;
-  border-radius:999px;
-  padding:4px 8px;
-  background:#ffdfe3;
-  color:#a52b44;
-  font-weight:800;
-}
-.universal-empty{
-  padding:40px 20px;
-  text-align:center;
   color:#6f636b;
+}
+.saved-progress-toolbar button{
+  border:0;
+  border-radius:9px;
+  padding:8px 10px;
+  font-weight:700;
+  background:#ffcfd2;
+  color:#a52b44;
+}
+.saved-progress-toolbar #resetSavedProgress{
+  background:#fff1f2;
+}
+.saved-progress-toolbar input:checked + span,
+.teach-check:has(input:checked),
+.launch-check:has(input:checked),
+.print-item:has(input:checked){
+  opacity:.7;
+}
+.teach-check:has(input:checked),
+.launch-check:has(input:checked){
+  text-decoration:line-through;
 }
 @media(max-width:700px){
-  .universal-search-backdrop{
-    padding:0;
+  .saved-progress-toolbar{
+    right:8px;
+    bottom:8px;
+    left:8px;
+    justify-content:flex-end;
   }
-  .universal-search-dialog{
-    min-height:100vh;
-    max-height:100vh;
-    border-radius:0;
-  }
-  .universal-search-dialog header{
-    padding-top:18px;
+  .saved-progress-toolbar > div{
+    margin-right:auto;
   }
 }
 @media print{
-  .universal-search-button,
-  .universal-search-backdrop{
-    display:none!important;
-  }
+  .saved-progress-toolbar{display:none!important}
 }

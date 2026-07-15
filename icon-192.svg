@@ -1,6 +1,265 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<rect width="512" height="512" rx="110" fill="#fff0f3"/>
-<path d="M256 410C211 374 100 298 100 195c0-57 41-95 93-95 31 0 52 16 63 34 11-18 32-34 63-34 52 0 93 38 93 95 0 103-111 179-156 215Z" fill="#c73350"/>
-<rect x="184" y="165" width="144" height="184" rx="18" fill="#fff"/>
-<path d="M215 210h82M215 250h82M215 290h60" stroke="#c73350" stroke-width="18" stroke-linecap="round"/>
-</svg>
+{
+  "version": "Sprint 3 - Document Library",
+  "categories": [
+    "Open Court Reading",
+    "Writing Studio",
+    "Science Studio",
+    "Classroom Systems",
+    "Assessment Center",
+    "Teacher Brain"
+  ],
+  "documents": [
+    {
+      "title": "U1L1 Skills Practice Packet",
+      "category": "Open Court Reading",
+      "unit": "Unit 1",
+      "lesson": "Lesson 1",
+      "type": "Skills Practice",
+      "status": "Uploaded",
+      "tags": [
+        "The Mice Who Lived in a Shoe",
+        "phonics",
+        "vocabulary",
+        "cause and effect",
+        "GUM"
+      ]
+    },
+    {
+      "title": "U1L1 Phonics Assessment",
+      "category": "Assessment Center",
+      "unit": "Unit 1",
+      "lesson": "Lesson 1",
+      "type": "Assessment",
+      "status": "Uploaded",
+      "tags": [
+        "phonics",
+        "digraphs",
+        "assessment"
+      ]
+    },
+    {
+      "title": "U1L1 Vocabulary Assessment",
+      "category": "Assessment Center",
+      "unit": "Unit 1",
+      "lesson": "Lesson 1",
+      "type": "Assessment",
+      "status": "Uploaded",
+      "tags": [
+        "vocabulary",
+        "assessment",
+        "merchant",
+        "admired"
+      ]
+    },
+    {
+      "title": "U1L1 Comprehension Assessment",
+      "category": "Assessment Center",
+      "unit": "Unit 1",
+      "lesson": "Lesson 1",
+      "type": "Assessment",
+      "status": "Uploaded",
+      "tags": [
+        "comprehension",
+        "cause and effect",
+        "assessment"
+      ]
+    },
+    {
+      "title": "U1L1 GUM Assessment",
+      "category": "Assessment Center",
+      "unit": "Unit 1",
+      "lesson": "Lesson 1",
+      "type": "Assessment",
+      "status": "Uploaded",
+      "tags": [
+        "GUM",
+        "grammar",
+        "common nouns",
+        "proper nouns"
+      ]
+    },
+    {
+      "title": "U1L6 Fluency Pages 71-72",
+      "category": "Open Court Reading",
+      "unit": "Unit 1",
+      "lesson": "Lesson 6",
+      "type": "Fluency",
+      "status": "Uploaded",
+      "tags": [
+        "Ellie's Long Walk",
+        "fluency",
+        "A Trip",
+        "rate",
+        "accuracy",
+        "expression"
+      ]
+    },
+    {
+      "title": "U1L6 Vocabulary Pages 73-74",
+      "category": "Open Court Reading",
+      "unit": "Unit 1",
+      "lesson": "Lesson 6",
+      "type": "Vocabulary",
+      "status": "Uploaded",
+      "tags": [
+        "Ellie's Long Walk",
+        "journey",
+        "panic",
+        "slick",
+        "slope",
+        "surface",
+        "startled"
+      ]
+    },
+    {
+      "title": "U1L6 Main Idea and Details Pages 75-76",
+      "category": "Open Court Reading",
+      "unit": "Unit 1",
+      "lesson": "Lesson 6",
+      "type": "Reading Skill",
+      "status": "Uploaded",
+      "tags": [
+        "Ellie's Long Walk",
+        "main idea",
+        "details",
+        "comprehension"
+      ]
+    },
+    {
+      "title": "U1L6 Vocabulary Assessment",
+      "category": "Assessment Center",
+      "unit": "Unit 1",
+      "lesson": "Lesson 6",
+      "type": "Assessment",
+      "status": "Uploaded",
+      "tags": [
+        "Ellie's Long Walk",
+        "vocabulary",
+        "startled",
+        "panic",
+        "slick",
+        "slope",
+        "journey"
+      ]
+    },
+    {
+      "title": "End of Unit 1 Vocabulary and Comprehension Cold Read",
+      "category": "Assessment Center",
+      "unit": "Unit 1",
+      "lesson": "End of Unit",
+      "type": "Unit Assessment",
+      "status": "Uploaded",
+      "tags": [
+        "cold read",
+        "vocabulary",
+        "comprehension",
+        "main idea",
+        "inference"
+      ]
+    },
+    {
+      "title": "End of Unit 1 GUM and Spelling",
+      "category": "Assessment Center",
+      "unit": "Unit 1",
+      "lesson": "End of Unit",
+      "type": "Unit Assessment",
+      "status": "Uploaded",
+      "tags": [
+        "GUM",
+        "spelling",
+        "grammar",
+        "proper nouns",
+        "verbs"
+      ]
+    },
+    {
+      "title": "End of Unit 1 Phonics Assessments",
+      "category": "Assessment Center",
+      "unit": "Unit 1",
+      "lesson": "End of Unit",
+      "type": "Unit Assessment",
+      "status": "Uploaded",
+      "tags": [
+        "phonics",
+        "closed syllables",
+        "digraphs",
+        "r-controlled vowels"
+      ]
+    },
+    {
+      "title": "Building the Foundation Writing",
+      "category": "Writing Studio",
+      "unit": "Writing",
+      "lesson": "Core Curriculum",
+      "type": "Writing Curriculum",
+      "status": "Uploaded",
+      "tags": [
+        "writing",
+        "informative",
+        "opinion",
+        "narrative",
+        "sentences"
+      ]
+    },
+    {
+      "title": "DIBELS Grade 2 Benchmark Materials",
+      "category": "Assessment Center",
+      "unit": "DIBELS",
+      "lesson": "Benchmark",
+      "type": "Benchmark Assessment",
+      "status": "Uploaded",
+      "tags": [
+        "DIBELS",
+        "NWF",
+        "WRF",
+        "ORF",
+        "Maze",
+        "benchmark"
+      ]
+    },
+    {
+      "title": "Beginning of Year Anchor Charts",
+      "category": "Classroom Systems",
+      "unit": "Beginning of Year",
+      "lesson": "Procedures",
+      "type": "Anchor Charts",
+      "status": "Created",
+      "tags": [
+        "line up",
+        "morning routine",
+        "carpet",
+        "pencils",
+        "restroom",
+        "dismissal"
+      ]
+    },
+    {
+      "title": "Habitats in a Shoebox Project",
+      "category": "Teacher Brain",
+      "unit": "Projects",
+      "lesson": "Science Connection",
+      "type": "Teacher Favorite",
+      "status": "Teacher Brain",
+      "tags": [
+        "habitats",
+        "shoebox",
+        "project",
+        "admin praised"
+      ]
+    },
+    {
+      "title": "Volcano Assignment",
+      "category": "Teacher Brain",
+      "unit": "Projects",
+      "lesson": "Open Court Connection",
+      "type": "Teacher Favorite",
+      "status": "Teacher Brain",
+      "tags": [
+        "volcano",
+        "project",
+        "Open Court packet",
+        "science"
+      ]
+    }
+  ]
+}

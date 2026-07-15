@@ -1,247 +1,231 @@
-{
-  "version": "5.4 Assessment, Reteach & Small-Group Sync",
-  "releaseStatus": "Assessment results can now drive reteach plans, group recommendations, and Teach My Day next steps.",
-  "skillAreas": [
-    {
-      "id": "phonics",
-      "title": "Phonics & Decoding",
-      "description": "Sound-symbol knowledge, blending, word reading, and spelling patterns.",
-      "thresholds": {
-        "secure": 80,
-        "developing": 65
-      },
-      "recommendations": {
-        "secure": {
-          "group": "Green",
-          "action": "Extension word work, morphology, and connected-text application.",
-          "tools": [
-            "Word chains",
-            "Vocabulary extension",
-            "Text application"
-          ]
-        },
-        "developing": {
-          "group": "Yellow",
-          "action": "Guided blending, word mapping, dictation, and immediate correction.",
-          "tools": [
-            "UFLI review",
-            "Blending board",
-            "Whiteboards",
-            "Word mapping"
-          ]
-        },
-        "reteach": {
-          "group": "Red",
-          "action": "Explicit UFLI intervention with phoneme-grapheme mapping and decodable practice.",
-          "tools": [
-            "UFLI Toolbox",
-            "Elkonin boxes",
-            "Counters",
-            "Decodable text"
-          ]
-        }
-      }
-    },
-    {
-      "id": "fluency",
-      "title": "Fluency",
-      "description": "Accuracy, rate, phrasing, punctuation, and expression.",
-      "thresholds": {
-        "secure": 80,
-        "developing": 65
-      },
-      "recommendations": {
-        "secure": {
-          "group": "Green",
-          "action": "Prosody, performance reading, and meaning-based expression.",
-          "tools": [
-            "Reader's theater",
-            "Discussion cards",
-            "Prosody rubric"
-          ]
-        },
-        "developing": {
-          "group": "Blue",
-          "action": "Modeled reading, echo reading, partner practice, and repeated reading.",
-          "tools": [
-            "Fluency passage",
-            "Timer",
-            "Partner checklist"
-          ]
-        },
-        "reteach": {
-          "group": "Yellow",
-          "action": "Short repeated reading with immediate correction and phrase marking.",
-          "tools": [
-            "Decodable passage",
-            "Phrase-cued text",
-            "Teacher feedback"
-          ]
-        }
-      }
-    },
-    {
-      "id": "vocabulary",
-      "title": "Vocabulary",
-      "description": "Student-friendly meanings, oral use, context, and transfer to reading and writing.",
-      "thresholds": {
-        "secure": 80,
-        "developing": 65
-      },
-      "recommendations": {
-        "secure": {
-          "group": "Green",
-          "action": "Use words in discussion, writing, comparison, and word relationships.",
-          "tools": [
-            "Semantic map",
-            "Writing prompt",
-            "Discussion cards"
-          ]
-        },
-        "developing": {
-          "group": "Blue",
-          "action": "Review words with examples, nonexamples, context, and partner talk.",
-          "tools": [
-            "Vocabulary cards",
-            "Sentence frames",
-            "Context sentences"
-          ]
-        },
-        "reteach": {
-          "group": "Yellow",
-          "action": "Teach with pictures, gestures, oral rehearsal, and repeated exposure.",
-          "tools": [
-            "Picture cards",
-            "Gestures",
-            "Bilingual support",
-            "Word bank"
-          ]
-        }
-      }
-    },
-    {
-      "id": "comprehension",
-      "title": "Reading Comprehension",
-      "description": "Main idea, details, cause and effect, sequence, character response, and text evidence.",
-      "thresholds": {
-        "secure": 80,
-        "developing": 65
-      },
-      "recommendations": {
-        "secure": {
-          "group": "Green",
-          "action": "Higher-order questions, text evidence, comparison, and written explanation.",
-          "tools": [
-            "Text evidence frame",
-            "Discussion prompts",
-            "Extension response"
-          ]
-        },
-        "developing": {
-          "group": "Blue",
-          "action": "Guided rereading, graphic organizer, partner explanation, and evidence selection.",
-          "tools": [
-            "Graphic organizer",
-            "Highlighted text",
-            "Sentence frame"
-          ]
-        },
-        "reteach": {
-          "group": "Yellow",
-          "action": "Use a shorter passage, explicit modeling, pictures, and oral retell before writing.",
-          "tools": [
-            "Chunked text",
-            "Picture sequence",
-            "Teacher think-aloud",
-            "Oral response"
-          ]
-        }
-      }
-    },
-    {
-      "id": "grammar",
-      "title": "Grammar / GUM",
-      "description": "Weekly grammar skill and application in sentences and writing.",
-      "thresholds": {
-        "secure": 80,
-        "developing": 65
-      },
-      "recommendations": {
-        "secure": {
-          "group": "Green",
-          "action": "Apply the skill during revision and editing.",
-          "tools": [
-            "Editing checklist",
-            "Sentence expansion",
-            "Writing application"
-          ]
-        },
-        "developing": {
-          "group": "Blue",
-          "action": "Model, sort, practice, and apply in one supported sentence.",
-          "tools": [
-            "Sentence sort",
-            "Color coding",
-            "Guided practice"
-          ]
-        },
-        "reteach": {
-          "group": "Yellow",
-          "action": "Use concrete examples, oral sentences, manipulatives, and immediate feedback.",
-          "tools": [
-            "Word cards",
-            "Sentence frames",
-            "Pocket-chart sort"
-          ]
-        }
-      }
-    },
-    {
-      "id": "writing",
-      "title": "Writing",
-      "description": "Ideas, organization, sentence structure, conventions, and revision.",
-      "thresholds": {
-        "secure": 80,
-        "developing": 65
-      },
-      "recommendations": {
-        "secure": {
-          "group": "Green",
-          "action": "Revision, craft, elaboration, and publication.",
-          "tools": [
-            "Revision checklist",
-            "Author's craft prompt",
-            "Publishing page"
-          ]
-        },
-        "developing": {
-          "group": "Blue",
-          "action": "Oral rehearsal, modeled sentence, graphic organizer, and guided drafting.",
-          "tools": [
-            "Writing organizer",
-            "Sentence frame",
-            "Teacher conference"
-          ]
-        },
-        "reteach": {
-          "group": "Yellow",
-          "action": "Use drawing, oral storytelling, dictation, and one-sentence success criteria.",
-          "tools": [
-            "Picture plan",
-            "Oral rehearsal",
-            "Dictation",
-            "Reduced writing load"
-          ]
-        }
-      }
+
+(function(){
+  "use strict";
+  let data, overlay, activeSkill;
+
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  async function start(){
+    const css=document.createElement("link");
+    css.rel="stylesheet";
+    css.href="style-additions-v5-4.css";
+    document.head.appendChild(css);
+
+    try{
+      data=await (await fetch("assessment-reteach-v5-4.json",{cache:"no-store"})).json();
+      build();
+      addButton();
+    }catch(error){console.warn("Version 5.4 could not load.",error)}
+  }
+
+  function build(){
+    overlay=document.createElement("div");
+    overlay.className="v54-overlay";
+    overlay.innerHTML=`
+      <section class="v54-dialog">
+        <header>
+          <div><p>VERSION 5.4</p><h2>Assessment, Reteach & Small-Group Sync</h2><span>${esc(data.releaseStatus)}</span></div>
+          <button id="v54Close">×</button>
+        </header>
+
+        <div class="v54-toolbar">
+          <select id="v54Skill"></select>
+          <input id="v54Lesson" placeholder="Lesson or assessment name">
+          <input id="v54Score" type="number" min="0" max="100" placeholder="Class or group score %">
+          <button id="v54Analyze">Analyze Results</button>
+        </div>
+
+        <div class="v54-layout">
+          <aside id="v54SkillList"></aside>
+          <main id="v54Detail"></main>
+        </div>
+
+        <footer><span id="v54Status">Ready</span><span>TeachingHappensHere v5.4</span></footer>
+      </section>`;
+    document.body.appendChild(overlay);
+
+    document.getElementById("v54Skill").innerHTML=data.skillAreas.map(s=>`<option value="${s.id}">${esc(s.title)}</option>`).join("");
+    document.getElementById("v54SkillList").innerHTML=data.skillAreas.map((s,i)=>`
+      <button data-v54-skill="${s.id}" class="${i===0?"active":""}">
+        <strong>${esc(s.title)}</strong><span>${esc(s.description)}</span>
+      </button>`).join("");
+
+    document.querySelectorAll("[data-v54-skill]").forEach(b=>b.onclick=()=>selectSkill(b.dataset.v54Skill));
+    document.getElementById("v54Skill").onchange=e=>selectSkill(e.target.value);
+    document.getElementById("v54Analyze").onclick=analyze;
+    document.getElementById("v54Close").onclick=close;
+    overlay.onclick=e=>{if(e.target===overlay)close()};
+
+    selectSkill(data.skillAreas[0].id);
+  }
+
+  function selectSkill(id){
+    activeSkill=data.skillAreas.find(s=>s.id===id);
+    document.getElementById("v54Skill").value=id;
+    document.querySelectorAll("[data-v54-skill]").forEach(b=>b.classList.toggle("active",b.dataset.v54Skill===id));
+    renderEmpty();
+  }
+
+  function levelFor(score){
+    if(score>=activeSkill.thresholds.secure)return "secure";
+    if(score>=activeSkill.thresholds.developing)return "developing";
+    return "reteach";
+  }
+
+  function renderEmpty(){
+    document.getElementById("v54Detail").innerHTML=`
+      <div class="v54-heading">
+        <div><p>SKILL AREA</p><h2>${esc(activeSkill.title)}</h2><span>${esc(activeSkill.description)}</span></div>
+        <b>Secure: ${activeSkill.thresholds.secure}%+</b>
+      </div>
+
+      <section class="v54-section">
+        <h3>Decision Bands</h3>
+        <div class="v54-bands">
+          ${["secure","developing","reteach"].map(level=>{
+            const recommendation=activeSkill.recommendations[level];
+            return `<article class="${level}">
+              <strong>${level==="secure"?"Secure":level==="developing"?"Developing":"Needs Reteach"}</strong>
+              <span>Recommended ${esc(recommendation.group)} Group</span>
+              <p>${esc(recommendation.action)}</p>
+            </article>`;
+          }).join("")}
+        </div>
+      </section>
+
+      <section class="v54-section">
+        <h3>Assessment Sources</h3>
+        <div class="v54-source-grid">${data.assessmentSources.map(x=>`<span>${esc(x)}</span>`).join("")}</div>
+      </section>`;
+  }
+
+  function analyze(){
+    const score=Number(document.getElementById("v54Score").value);
+    const lesson=document.getElementById("v54Lesson").value.trim()||"Current assessment";
+    if(!Number.isFinite(score)||score<0||score>100){
+      document.getElementById("v54Status").textContent="Enter a score from 0 to 100.";
+      return;
     }
-  ],
-  "assessmentSources": [
-    "Open Court weekly assessments",
-    "DIBELS benchmark and progress monitoring",
-    "Teacher observation",
-    "Fluency checks",
-    "Writing rubrics",
-    "Science and math exit tickets"
-  ]
-}
+
+    const level=levelFor(score);
+    const recommendation=activeSkill.recommendations[level];
+    const label=level==="secure"?"Secure":level==="developing"?"Developing":"Needs Reteach";
+
+    document.getElementById("v54Detail").innerHTML=`
+      <div class="v54-heading">
+        <div><p>${esc(lesson.toUpperCase())}</p><h2>${esc(activeSkill.title)}</h2><span>Assessment result: ${score}%</span></div>
+        <b class="${level}">${label}</b>
+      </div>
+
+      <section class="v54-result ${level}">
+        <div class="v54-score"><strong>${score}%</strong><span>${label}</span></div>
+        <div>
+          <h3>Recommended ${esc(recommendation.group)} Group</h3>
+          <p>${esc(recommendation.action)}</p>
+        </div>
+      </section>
+
+      <div class="v54-two">
+        <section class="v54-section">
+          <h3>Intervention Tools</h3>
+          ${recommendation.tools.map((tool,i)=>`
+            <label><input type="checkbox" data-save-key="v54-${activeSkill.id}-${level}-tool-${i}"> ${esc(tool)}</label>`).join("")}
+        </section>
+
+        <section class="v54-section">
+          <h3>Next-Step Checklist</h3>
+          ${[
+            "Confirm the result with student work or observation",
+            "Place students in the recommended group",
+            "Prepare materials",
+            "Teach the targeted support",
+            "Check progress after instruction",
+            "Adjust the group if needed"
+          ].map((step,i)=>`
+            <label><input type="checkbox" data-save-key="v54-${activeSkill.id}-${level}-step-${i}"> ${esc(step)}</label>`).join("")}
+        </section>
+      </div>
+
+      <section class="v54-section">
+        <h3>Teacher Notes</h3>
+        <textarea data-save-key="v54-${activeSkill.id}-${lesson}-notes" placeholder="Students, patterns noticed, misconceptions, and follow-up date..."></textarea>
+      </section>
+
+      <section class="v54-actions">
+        <button id="v54SendPlanner">Send to Weekly Planner</button>
+        <button id="v54SendTeachDay">Send to Teach My Day</button>
+        <button onclick="window.print()">Print Reteach Plan</button>
+      </section>`;
+
+    document.getElementById("v54SendPlanner").onclick=()=>saveDecision("planner",lesson,score,level,recommendation);
+    document.getElementById("v54SendTeachDay").onclick=()=>saveDecision("teachday",lesson,score,level,recommendation);
+    document.getElementById("v54Status").textContent=`${activeSkill.title}: ${label}.`;
+  }
+
+  function saveDecision(destination,lesson,score,level,recommendation){
+    const payload={
+      version:"5.4",
+      destination,
+      createdAt:new Date().toISOString(),
+      lesson,
+      score,
+      level,
+      skillId:activeSkill.id,
+      skillTitle:activeSkill.title,
+      group:recommendation.group,
+      action:recommendation.action,
+      tools:recommendation.tools
+    };
+
+    const key=destination==="planner"?"thh-v54:planner-next-step":"thh-v54:teachday-next-step";
+    localStorage.setItem(key,JSON.stringify(payload));
+
+    close();
+    if(destination==="planner"){
+      document.getElementById("weeklyPlannerButton")?.click();
+      setTimeout(()=>notice("v54PlannerNotice","Weekly Planner",payload),350);
+    }else{
+      document.querySelector('[data-page="teachday"]')?.click();
+      setTimeout(()=>notice("v54TeachDayNotice","Teach My Day",payload),350);
+    }
+  }
+
+  function notice(id,title,payload){
+    const target=title==="Teach My Day"?document.getElementById("teachday"):document.querySelector(".v53-dialog");
+    if(!target)return;
+    let box=document.getElementById(id);
+    if(!box){
+      box=document.createElement("div");
+      box.id=id;
+      box.className="v54-notice";
+      target.prepend(box);
+    }
+    box.innerHTML=`
+      <strong>${esc(payload.skillTitle)}: ${esc(payload.level)}</strong>
+      <span>${esc(payload.group)} Group — ${esc(payload.action)}</span>`;
+  }
+
+  function addButton(){
+    const button=document.createElement("button");
+    button.id="assessmentReteachButton";
+    button.className="v54-button";
+    button.innerHTML="<span>5.4</span><strong>Assessment & Reteach</strong><small>Small Groups</small>";
+    button.onclick=open;
+
+    const prior=document.getElementById("weeklyPlannerButton");
+    if(prior)prior.insertAdjacentElement("afterend",button);
+    else document.querySelector(".side-nav,.sidebar nav")?.insertAdjacentElement("afterend",button);
+  }
+
+  function open(){overlay.classList.add("open");document.body.classList.add("v54-open")}
+  function close(){overlay.classList.remove("open");document.body.classList.remove("v54-open")}
+
+  document.addEventListener("keydown",e=>{
+    if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==="a"){e.preventDefault();if(overlay)open()}
+    if(e.key==="Escape"&&overlay?.classList.contains("open"))close()
+  });
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+})();
