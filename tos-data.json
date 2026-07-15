@@ -1,6 +1,6 @@
 {
-  "version": "16.0.1 Teacher Intelligence Week Engine",
-  "releaseStatus": "Installs one authoritative school-week engine, removes duplicate Curriculum Week 1, locks Classroom Launch to July 27\u201331, and starts core curriculum August 3, 2026.",
+  "version": "16.0.2 Isolated Teacher Intelligence Recovery",
+  "releaseStatus": "Restores the last working application router and loads Teacher Intelligence as an isolated module.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -2418,7 +2418,7 @@
     {
       "id": "intelligence-engine",
       "label": "Teacher Intelligence",
-      "owner": "v16.0.1"
+      "owner": "v16.0"
     },
     {
       "id": "workflow-hub",
@@ -2780,19 +2780,12 @@
     "weekdayControl": "Compact",
     "sidebarReminderOverlapRepair": true
   },
-  "teacherIntelligenceWeekEngineV1601": {
-    "launchWeek": {
-      "start": "2026-07-27",
-      "end": "2026-07-31",
-      "label": "Classroom Launch Week",
-      "curriculumAllowed": false
-    },
+  "teacherIntelligenceIsolationV1602": {
+    "coreAppModified": false,
+    "isolatedScript": "teacher-intelligence-v1602.js",
+    "isolatedStyles": "teacher-intelligence-v1602.css",
+    "launchWeek": "2026-07-27",
     "curriculumStart": "2026-08-03",
-    "firstCurriculumWeek": 1,
-    "firstOpenCourtStory": "The Mice Who Lived in a Shoe",
-    "firstOpenCourtUnit": 1,
-    "firstOpenCourtLesson": 1,
-    "weekNumberingRule": "Advance only on instructional curriculum weeks.",
-    "duplicateProtection": true
+    "duplicateWeekProtection": true
   }
 }

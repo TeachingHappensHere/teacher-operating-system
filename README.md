@@ -1,29 +1,27 @@
 # Teacher Operating System
 
-## Version 16.0.1 — Teacher Intelligence Week Engine
+## Version 16.0.2 — Isolated Teacher Intelligence Recovery
 
-Built directly from `teacher-operating-system-main (2).zip`.
+Built from the last uploaded repository where existing navigation worked.
 
 ### Commit message
-Version 16.0.1 - Teacher Intelligence Week Engine
+Version 16.0.2 - Isolated Teacher Intelligence Recovery
 
-### Included
-- One authoritative week list
-- Permanent duplicate-date protection
-- July 27–31 locked as Classroom Launch Week
-- Curriculum Week 1 begins August 3, 2026
-- The Mice Who Lived in a Shoe begins August 3, 2026
-- One-click Build My Week
-- Weekly Planning, Attachments, Print Center, Live Teaching, and Small Groups outputs
-- Dashboard and Health diagnostics
+### What changed
+- Restores the previous working `app.js` instead of extending Version 16.0.1.
+- Does not alter the central router.
+- Loads Teacher Intelligence from its own isolated JavaScript file.
+- Loads Teacher Intelligence styling from its own isolated CSS file.
+- Keeps July 27–31 as Classroom Launch.
+- Keeps August 3 as the single Curriculum Week 1.
+- Provides Build My Week outputs without interfering with other routes.
 
-### Important
-This release fixes duplicate week numbering and establishes the correct launch/curriculum boundary. Full holiday, iDay, break, and shortened-week alignment still requires the complete official 2026–2027 school calendar file.
+### Required test order
+1. Small Groups
+2. Intervention
+3. Assessments & Data
+4. Students
+5. Communication
+6. Teacher Intelligence
 
-### Test
-1. Open Teacher Intelligence.
-2. Confirm July 27 is Classroom Launch Week.
-3. Confirm August 3 is Curriculum Week 1.
-4. Confirm there is only one Curriculum Week 1.
-5. Select August 3 and click Build My Week.
-6. Open Weekly Planning, Attachments, Print Center, Live Teaching, and Small Groups.
+All first five pages should work exactly as they did before. Then test Teacher Intelligence.
