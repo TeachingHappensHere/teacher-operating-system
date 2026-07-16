@@ -1,0 +1,79 @@
+{
+  "version": "17.1",
+  "launchStart": "2026-07-27",
+  "launchEnd": "2026-07-31",
+  "coreStart": "2026-08-03",
+  "label": "Classroom Launch \u2014 No Core Curriculum",
+  "days": {
+    "Monday": {
+      "focus": "Welcome, belonging, and how our classroom works",
+      "blocks": {
+        "Breakfast / Morning Work": "Entering the room, unpacking, breakfast cleanup, and starting morning work.",
+        "MOWR / Morning Meeting": "Introductions, carpet expectations, active listening, turn-and-talk, and classroom community.",
+        "Heggerty / Phonics / Vocabulary": "Practice attention signals, responding together, handling materials, and returning supplies.",
+        "Reading": "Read aloud and discuss classroom belonging; practice listening stamina and partner talk.",
+        "Writing": "Pencil procedures, notebook setup, name and date, and drawing/writing about hopes for second grade.",
+        "Math": "Practice whiteboards, manipulatives, partner talk, cleanup, and explaining thinking with a simple review game.",
+        "Science": "Science safety, observation language, asking questions, and handling materials carefully.",
+        "Social Studies": "What makes a classroom community? Introduce classroom rules and the Class Promise.",
+        "Pack-up / Dismissal": "Backpack procedures, dismissal groups, waiting safely, and leaving calmly."
+      }
+    },
+    "Tuesday": {
+      "focus": "Rules, expectations, and voice levels",
+      "blocks": {
+        "Breakfast / Morning Work": "Independent start, asking for help, finished-work choices, and voice levels.",
+        "MOWR / Morning Meeting": "Review class rules, model expected and unexpected behaviors, and practice attention signals.",
+        "Heggerty / Phonics / Vocabulary": "Whole-group response routines, hand signals, turn-taking, and quick transitions.",
+        "Reading": "Book care, choosing a reading spot, partner-reading expectations, and building stamina.",
+        "Writing": "Using supplies responsibly, complete sentences, sharing materials, and peer-listening expectations.",
+        "Math": "Math partner roles, using manipulatives, productive struggle, and asking for clarification.",
+        "Science": "Safe versus unsafe choices during investigations; practice cleanup roles.",
+        "Social Studies": "Rights and responsibilities in our classroom community.",
+        "Pack-up / Dismissal": "Practice pack-up using a visual checklist and dismissal voice levels."
+      }
+    },
+    "Wednesday": {
+      "focus": "Transitions, teamwork, and problem solving",
+      "blocks": {
+        "Breakfast / Morning Work": "Practice a timed but calm arrival routine and transitions to morning meeting.",
+        "MOWR / Morning Meeting": "Team-building activity, respectful disagreement, and solving small problems peacefully.",
+        "Heggerty / Phonics / Vocabulary": "Transition practice between carpet, seats, partners, and independent work.",
+        "Reading": "Partner A/Partner B roles, sharing ideas, and responding to a text read aloud.",
+        "Writing": "Writing-stamina practice and how to request, borrow, and return classroom supplies.",
+        "Math": "Cooperative math challenge emphasizing partner roles, encouragement, and cleanup.",
+        "Science": "Observation challenge using classroom objects; practice recording and sharing observations.",
+        "Social Studies": "Classroom jobs, leadership, and how each job helps the community.",
+        "Pack-up / Dismissal": "Practice emergency changes, early dismissal, and listening for names."
+      }
+    },
+    "Thursday": {
+      "focus": "Consequences, reflection, and independence",
+      "blocks": {
+        "Breakfast / Morning Work": "Complete the arrival routine with reduced teacher prompting.",
+        "MOWR / Morning Meeting": "Review logical consequences, reflection, making repairs, and trying again.",
+        "Heggerty / Phonics / Vocabulary": "Independent material routines and what to do when confused.",
+        "Reading": "Independent reading stamina, book-return procedures, and quiet help signals.",
+        "Writing": "Complete a short independent writing task and practice sharing work respectfully.",
+        "Math": "Independent task routine, checking work, early-finisher choices, and math cleanup.",
+        "Science": "Follow a short investigation routine from materials pickup through cleanup.",
+        "Social Studies": "Practice classroom problem scenarios and choose responsible solutions.",
+        "Pack-up / Dismissal": "Complete pack-up and dismissal with minimal reminders."
+      }
+    },
+    "Friday": {
+      "focus": "Practice the full schedule and celebrate readiness",
+      "blocks": {
+        "Breakfast / Morning Work": "Run the full arrival routine independently.",
+        "MOWR / Morning Meeting": "Review the Class Promise, compliment circle, and celebrate progress.",
+        "Heggerty / Phonics / Vocabulary": "Practice the full literacy transition sequence without formal curriculum.",
+        "Reading": "Read aloud, partner discussion, and independent reading-stamina celebration.",
+        "Writing": "Reflect: What I know about being a successful second grader.",
+        "Math": "Review routines through a cooperative math game; no Eureka Math\u00b2 lesson.",
+        "Science": "Review safety and observation routines; no science workbook lesson.",
+        "Social Studies": "Classroom community reflection and goal setting; no formal social studies lesson.",
+        "Pack-up / Dismissal": "Final full-schedule practice and celebration of classroom readiness."
+      }
+    }
+  }
+}

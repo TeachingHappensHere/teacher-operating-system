@@ -1,5 +1,5 @@
 {
-  "version": "16.7 Separate Science and Social Studies Studios",
+  "version": "17.1 Classroom Launch Week Lockout",
   "releaseStatus": "Replaces the crowded dashboard with a calm daily command center and moves secondary workflow cards into expandable compartments.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
@@ -3020,5 +3020,33 @@
       "Social Studies Studio"
     ],
     "combinedStudioPreserved": true
+  },
+  "teacherExperienceV170": {
+    "morningFocus": true,
+    "fourSubjectCards": true,
+    "checklistInsteadOfWarnings": true,
+    "collapsibleSystemDrawers": true,
+    "teachingMode": true,
+    "readingGroupSummary": true
+  },
+  "classroomLaunchV171": {
+    "launchDates": [
+      "2026-07-27",
+      "2026-07-28",
+      "2026-07-29",
+      "2026-07-30",
+      "2026-07-31"
+    ],
+    "coreStart": "2026-08-03",
+    "noCoreCurriculum": true,
+    "protectedSubjects": [
+      "Open Court",
+      "Eureka Math\u00b2",
+      "Science",
+      "Social Studies",
+      "Formal Writing Curriculum"
+    ],
+    "schedulePractice": true,
+    "routineBuilder": true
   }
 }
