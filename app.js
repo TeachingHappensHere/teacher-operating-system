@@ -2460,7 +2460,18 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 
   function route() {
     const current = location.hash.replace("#","") || "dashboard";
-    if (current === "afternoon-studios") setTimeout(renderStudio, 0);
+    if (current === "afternoon-studios") {
+      if (window.__THH_REQUESTED_AFTERNOON_STUDIO__) {
+        const requested = window.__THH_REQUESTED_AFTERNOON_STUDIO__;
+        if (["writing", "science", "socialStudies"].includes(requested)) {
+          state.activeStudio = requested;
+          ensureLesson(requested);
+          save();
+        }
+        delete window.__THH_REQUESTED_AFTERNOON_STUDIO__;
+      }
+      setTimeout(renderStudio, 0);
+    }
     if (current === "lesson-plans") setTimeout(injectPlanningCard, 0);
     if (current === "teachday") setTimeout(injectTeachDayCards, 0);
     if (current === "production") setTimeout(injectPacketCard, 0);
