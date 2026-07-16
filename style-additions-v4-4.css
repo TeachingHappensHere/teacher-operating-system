@@ -1,92 +1,10 @@
 
-/* Version 4.3 Resource Library Viewer */
-.resource-stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:12px;
-  margin:12px 0;
-}
-.resource-stats article{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:16px;
-  box-shadow:var(--shadow);
-}
-.resource-stats strong{
-  display:block;
-  font-size:28px;
-  color:#c4314d;
-}
-.resource-stats span{
-  color:var(--muted);
-  font-weight:700;
-}
-.folder-grid,.resource-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:12px;
-}
-.folder-card,.resource-card{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px;
-  box-shadow:var(--shadow);
-}
-.folder-card strong{
-  display:block;
-  color:#c4314d;
-  word-break:break-word;
-}
-.resource-search{
-  width:100%;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px;
-}
-.resource-card code{
-  display:block;
-  background:#fff7f5;
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:8px;
-  word-break:break-word;
-  font-size:12px;
-}
-.resource-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-}
-.status-pill{
-  display:inline-block;
-  border-radius:999px;
-  padding:6px 10px;
-  font-size:12px;
-  font-weight:800;
-  background:#fff1df;
-  color:#8c4a00;
-}
-.status-pill.needs-upload{background:#ffe2e7;color:#a3213f}
-.status-pill.ready-for-file{background:#e9f4e2;color:#356b2f}
-.status-pill.needs-link{background:#eaf0ff;color:#2c4f91}
-.status-pill.teacher-favorite{background:#efeafb;color:#5c3e91}
-.resource-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-.resource-actions button{
-  border:0;
-  background:#ffcfd2;
-  color:#c4314d;
-  border-radius:8px;
-  padding:8px 10px;
-}
-.resource-actions button:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
+/* Version 4.2 Live Teaching Workspace additions */
+.workspace-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.classroom-mode .sidebar{display:none}
+.classroom-mode .app-shell{grid-template-columns:1fr}
+.classroom-mode .main-content{padding:22px}
+.classroom-mode #workspace .lesson-list{display:none}
+.classroom-mode #workspace .lesson-layout{grid-template-columns:1fr}
+.classroom-mode #workspace h2{font-size:44px}
+.classroom-mode #workspace .system-section{font-size:20px}

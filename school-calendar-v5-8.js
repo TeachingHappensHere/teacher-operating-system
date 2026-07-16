@@ -1,190 +1,113 @@
-{
-  "version": "2.1 Scholar System Dashboard",
-  "teacherName": "Mrs. Parrish",
-  "quote": "The influence of a good teacher can never be erased.",
-  "quoteAuthor": "Unknown",
-  "date": "May 16, 2024",
-  "schedule": [
-    [
-      "7:30 \u2013 8:00",
-      "Morning Routine"
-    ],
-    [
-      "8:00 \u2013 8:30",
-      "Heggerty"
-    ],
-    [
-      "8:30 \u2013 10:00",
-      "Open Court \u2013 ELA Block"
-    ],
-    [
-      "10:00 \u2013 10:15",
-      "Recess"
-    ],
-    [
-      "10:15 \u2013 10:45",
-      "Small Groups"
-    ],
-    [
-      "10:45 \u2013 11:30",
-      "UFLI"
-    ],
-    [
-      "11:30 \u2013 12:00",
-      "Lunch"
-    ],
-    [
-      "12:00 \u2013 12:45",
-      "Eureka Math\u00b2"
-    ],
-    [
-      "12:45 \u2013 1:30",
-      "Science / Social Studies"
-    ],
-    [
-      "1:30 \u2013 2:00",
-      "Intervention / MOWR"
-    ],
-    [
-      "2:00 \u2013 2:45",
-      "Centers"
-    ],
-    [
-      "2:45 \u2013 3:15",
-      "Read Aloud & Wrap Up"
-    ]
-  ],
-  "curriculum": [
-    [
-      "\ud83d\udcd9",
-      "Open Court",
-      "lessons"
-    ],
-    [
-      "\ud83e\uddea",
-      "Science",
-      "science"
-    ],
-    [
-      "\ud83d\udd24",
-      "UFLI Foundations",
-      "ufli"
-    ],
-    [
-      "\ud83c\udf0e",
-      "Social Studies",
-      "social"
-    ],
-    [
-      "\ud83d\udd35",
-      "MOWR",
-      "mowr"
-    ],
-    [
-      "\u2764\ufe0f",
-      "Health",
-      "health"
-    ],
-    [
-      "\ud83e\uddf1",
-      "Heggerty",
-      "heggerty"
-    ],
-    [
-      "\ud83c\udfa8",
-      "Art",
-      "art"
-    ],
-    [
-      "\ud83d\udcd7",
-      "Eureka Math\u00b2",
-      "math"
-    ],
-    [
-      "\ud83c\udfb5",
-      "Music",
-      "music"
-    ]
-  ],
-  "classroomLinks": [
-    "Classroom Layout",
-    "Our Procedures",
-    "Classroom Expectations",
-    "Line-Up Routines",
-    "Small Group Organization",
-    "Supply List",
-    "Classroom Jobs"
-  ],
-  "teacherShortcuts": [
-    [
-      "Take Attendance",
-      "attendance"
-    ],
-    [
-      "Print Center",
-      "print"
-    ],
-    [
-      "Behavior Tracker",
-      "behavior"
-    ],
-    [
-      "Timer",
-      "timer"
-    ],
-    [
-      "Student Notes",
-      "notes"
-    ],
-    [
-      "Random Grouping",
-      "groups"
-    ],
-    [
-      "Quick Email",
-      "email"
-    ],
-    [
-      "Class Dojo",
-      "dojo"
-    ]
-  ],
-  "importantLinks": [
-    "Champion Schools Teacher Resources",
-    "Our Grade Level Google Drive",
-    "School Website",
-    "District Portal"
-  ],
-  "lowerCards": {
-    "Student Data": [
-      "Data Tracker",
-      "Assessment Data",
-      "Progress Monitoring",
-      "Intervention Notes"
-    ],
-    "Communication": [
-      "Parent Contact Log",
-      "Newsletters",
-      "Parent Conference Notes",
-      "Email Templates"
-    ],
-    "Classroom Inspiration": [
-      "Bulletin Board Ideas",
-      "Classroom Decor",
-      "Door Decor Ideas",
-      "Celebrations"
-    ],
-    "Forms & Printables": [
-      "IEP / 504 / ELL Guide",
-      "Parent Forms",
-      "Behavior Forms",
-      "Miscellaneous Forms"
-    ],
-    "Teacher Self-Care": [
-      "Self-Care Ideas",
-      "Encouragement",
-      "Gratitude",
-      "You\u2019ve Got This!"
-    ]
+
+// Version 4.3 - Resource Library Viewer
+(function(){
+  const css = document.createElement("link");
+  css.rel = "stylesheet";
+  css.href = "style-additions-v4-3.css";
+  document.head.appendChild(css);
+
+  async function loadResourceLibrary(){
+    try{
+      const res = await fetch("resource-files.json", {cache:"no-store"});
+      const data = await res.json();
+      renderResourceLibrary(data);
+    }catch(err){
+      console.warn("Resource library not loaded yet.", err);
+    }
   }
-}
+
+  function statusClass(status){
+    return (status || "").toLowerCase().replaceAll(" ","-");
+  }
+
+  function renderResourceLibrary(data){
+    const resourcePage = document.getElementById("resources");
+    if(!resourcePage) return;
+
+    const resources = data.resources || [];
+    const needsUpload = resources.filter(r => r.status === "Needs Upload").length;
+    const ready = resources.filter(r => r.status === "Ready for File").length;
+    const links = resources.filter(r => r.status === "Needs Link").length;
+    const favorites = resources.filter(r => r.status === "Teacher Favorite").length;
+
+    resourcePage.innerHTML = `
+      <div class="systems-hero">
+        <div>
+          <p class="eyebrow">Version 4.3</p>
+          <h2>Resource Library Viewer</h2>
+          <p>Track files, folders, links, upload status, and lesson connections.</p>
+        </div>
+      </div>
+
+      <div class="resource-stats">
+        <article><strong>${resources.length}</strong><span>Total Resources</span></article>
+        <article><strong>${needsUpload}</strong><span>Need Upload</span></article>
+        <article><strong>${ready}</strong><span>Ready for File</span></article>
+        <article><strong>${links}</strong><span>Need Link</span></article>
+        <article><strong>${favorites}</strong><span>Teacher Favorites</span></article>
+      </div>
+
+      <section class="panel">
+        <h3>Recommended Folder Structure</h3>
+        <div class="folder-grid">
+          ${Object.entries(data.folderPlan || {}).map(([folder,desc]) => `
+            <div class="folder-card">
+              <strong>${folder}</strong>
+              <p>${desc}</p>
+            </div>
+          `).join("")}
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Resource Search</h3>
+        <input id="resourceSearch" class="resource-search" placeholder="Search resources, subjects, lessons, statuses...">
+      </section>
+
+      <section class="resource-grid" id="resourceGrid"></section>
+    `;
+
+    const input = document.getElementById("resourceSearch");
+    input.addEventListener("input", () => renderCards(resources, input.value));
+    renderCards(resources, "");
+  }
+
+  function renderCards(resources, query){
+    const q = (query || "").toLowerCase().trim();
+    const filtered = resources.filter(r => !q || JSON.stringify(r).toLowerCase().includes(q));
+    const grid = document.getElementById("resourceGrid");
+    if(!grid) return;
+
+    grid.innerHTML = filtered.map(r => `
+      <article class="resource-card">
+        <div class="resource-top">
+          <p class="eyebrow">${r.subject} • ${r.type}</p>
+          <span class="status-pill ${statusClass(r.status)}">${r.status}</span>
+        </div>
+        <h3>${r.title}</h3>
+        <p><strong>Unit:</strong> ${r.unit}</p>
+        <p><strong>Lesson:</strong> ${r.lesson}</p>
+        <p><strong>File Path:</strong></p>
+        <code>${r.filePath}</code>
+        <p><strong>Connects to:</strong></p>
+        <div class="chips">
+          ${(r.connectedTo || []).map(c => `<span class="chip">${c}</span>`).join("")}
+        </div>
+        <div class="resource-actions">
+          <button disabled>Open</button>
+          <button disabled>Preview</button>
+          <button disabled>Print</button>
+        </div>
+      </article>
+    `).join("") || `<div class="panel"><p>No resources match that search.</p></div>`;
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", loadResourceLibrary);
+  } else {
+    loadResourceLibrary();
+  }
+
+  window.addEventListener("hashchange", loadResourceLibrary);
+  setTimeout(loadResourceLibrary, 800);
+})();
