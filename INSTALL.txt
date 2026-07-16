@@ -1,17 +1,13 @@
-VERSION 17.1 PATCH ONLY
+VERSION 17.2 — CLASSROOM LAUNCH CONTENT PATCH
 
-ADD these new files to the repository root:
+REPLACE these three files in the repository root:
+- classroom-launch-v171.json
 - classroom-launch-v171.js
 - classroom-launch-v171.css
-- classroom-launch-v171.json
 
-REPLACE these existing files in the repository root:
-- index.html
-- service-worker.js
-- tos-data.json
+No other files need to be changed.
 
 Commit message:
-Version 17.1 - Classroom Launch Week Lockout
+Version 17.2 - Complete Classroom Launch Week Plans
 
-After GitHub Pages deploys:
-Press Ctrl + Shift + R once.
+After GitHub Pages deploys, press Ctrl + Shift + R once.

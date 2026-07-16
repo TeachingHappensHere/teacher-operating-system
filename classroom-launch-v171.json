@@ -1,79 +1,95 @@
 {
-  "version": "17.1",
+  "version": "17.2",
   "launchStart": "2026-07-27",
   "launchEnd": "2026-07-31",
   "coreStart": "2026-08-03",
-  "label": "Classroom Launch \u2014 No Core Curriculum",
+  "label": "Classroom Launch — No Core Curriculum",
+  "teachingCycle": ["Explain", "Model", "Practice Together", "Independent Practice", "Reflect", "Reteach"],
   "days": {
     "Monday": {
-      "focus": "Welcome, belonging, and how our classroom works",
-      "blocks": {
-        "Breakfast / Morning Work": "Entering the room, unpacking, breakfast cleanup, and starting morning work.",
-        "MOWR / Morning Meeting": "Introductions, carpet expectations, active listening, turn-and-talk, and classroom community.",
-        "Heggerty / Phonics / Vocabulary": "Practice attention signals, responding together, handling materials, and returning supplies.",
-        "Reading": "Read aloud and discuss classroom belonging; practice listening stamina and partner talk.",
-        "Writing": "Pencil procedures, notebook setup, name and date, and drawing/writing about hopes for second grade.",
-        "Math": "Practice whiteboards, manipulatives, partner talk, cleanup, and explaining thinking with a simple review game.",
-        "Science": "Science safety, observation language, asking questions, and handling materials carefully.",
-        "Social Studies": "What makes a classroom community? Introduce classroom rules and the Class Promise.",
-        "Pack-up / Dismissal": "Backpack procedures, dismissal groups, waiting safely, and leaving calmly."
-      }
+      "theme": "Welcome, Belonging, and Learning Our Classroom",
+      "readAloud": "First Day Jitters",
+      "pillar": "Heart",
+      "tour": "Classroom tour",
+      "blocks": [
+        {"time":"7:45–8:10","title":"Arrival and Breakfast","objective":"Enter, unpack, eat, clean, and begin morning work.","procedures":["Door greeting","Backpacks","Water bottles","Breakfast cleanup","Morning work"],"teacher":"Model each arrival step and praise exact behaviors.","students":"Practice the visual arrival checklist.","materials":["Name tags","Arrival checklist","Welcome page"],"success":"Students begin morning work with limited prompting."},
+        {"time":"8:10–9:15","title":"Morning Meeting and Community","objective":"Learn carpet expectations, listening, speaking, and belonging routines.","procedures":["Carpet space","Hands and body","Raise hand","Turn-and-talk","Return to seats"],"teacher":"Read First Day Jitters and begin the Class Promise.","students":"Introduce themselves and name one way to help classmates feel welcome.","materials":["First Day Jitters","Chart paper","Talking piece"],"success":"Students transition to the carpet and participate respectfully."},
+        {"time":"9:15–10:45","title":"Literacy Routine Practice","objective":"Practice attention signals, book care, partner roles, and reading stamina without Open Court.","procedures":["Attention signal","Book care","Partner A/B","Voice levels","Independent reading"],"teacher":"Model correct and incorrect examples, then rehearse short cycles.","students":"Practice getting books, partner talk, and three to five minutes of reading stamina.","materials":["Picture books","Book-care chart","Voice-level chart"],"success":"Students respond to the signal and handle books responsibly."},
+        {"time":"10:45–11:10","title":"Lunch and Recess Procedures","objective":"Practice line, hallway, cafeteria, playground, and return routines.","procedures":["Line order","Hallway","Cafeteria","Freeze signal","Return to class"],"teacher":"Model every transition before students practice it.","students":"Rehearse safe movement and signal response.","materials":["Line cards","Expectation visuals"],"success":"Students move safely and respond to adult signals."},
+        {"time":"11:10–11:40","title":"Writing Tools and All About Me","objective":"Learn pencil, supply, notebook, and sharing procedures.","procedures":["Pencils","Supplies","Name/date","Sharing","Finished work"],"teacher":"Model how to request, use, and return materials.","students":"Complete an All About Me drawing and sentence.","materials":["Pencils","Crayons","All About Me page"],"success":"Students use and return supplies correctly."},
+        {"time":"11:40–1:40","title":"Math Routine Practice","objective":"Learn whiteboard, manipulative, partner, and cleanup routines without Eureka.","procedures":["Whiteboards","Manipulatives","Partner roles","Explain thinking","Cleanup"],"teacher":"Run a low-risk number game and timed cleanup rehearsal.","students":"Take turns, explain one idea, and return materials.","materials":["Whiteboards","Markers","Manipulatives","Number cards"],"success":"Students use math tools safely and clean up efficiently."},
+        {"time":"1:40–2:55","title":"Science Safety and Classroom Tour","objective":"Learn science safety and the purpose of classroom spaces.","procedures":["Safe materials","Observation language","Library","Supply station","Restroom signal","Technology"],"teacher":"Lead a classroom tour and connect room care to Heart.","students":"Identify each area and practice using it.","materials":["Tour checklist","Safety cards"],"success":"Students name one expectation for each major classroom area."},
+        {"time":"2:55–3:30","title":"Pack-Up and Dismissal","objective":"Learn folder, backpack, dismissal-group, and waiting procedures.","procedures":["Pack-up checklist","Folders","Backpacks","Dismissal groups","Waiting"],"teacher":"Model each step and rehearse dismissal changes.","students":"Pack and move to the correct location.","materials":["Pack-up checklist","Dismissal chart"],"success":"Students pack and dismiss safely."}
+      ],
+      "reflection": ["What helped you feel welcome?", "Which routine went well?", "What should we practice tomorrow?"]
     },
     "Tuesday": {
-      "focus": "Rules, expectations, and voice levels",
-      "blocks": {
-        "Breakfast / Morning Work": "Independent start, asking for help, finished-work choices, and voice levels.",
-        "MOWR / Morning Meeting": "Review class rules, model expected and unexpected behaviors, and practice attention signals.",
-        "Heggerty / Phonics / Vocabulary": "Whole-group response routines, hand signals, turn-taking, and quick transitions.",
-        "Reading": "Book care, choosing a reading spot, partner-reading expectations, and building stamina.",
-        "Writing": "Using supplies responsibly, complete sentences, sharing materials, and peer-listening expectations.",
-        "Math": "Math partner roles, using manipulatives, productive struggle, and asking for clarification.",
-        "Science": "Safe versus unsafe choices during investigations; practice cleanup roles.",
-        "Social Studies": "Rights and responsibilities in our classroom community.",
-        "Pack-up / Dismissal": "Practice pack-up using a visual checklist and dismissal voice levels."
-      }
+      "theme": "Rules, Expectations, Voice Levels, and School Tour",
+      "readAloud": "A Letter from Your Teacher",
+      "pillar": "Heart",
+      "tour": "School tour",
+      "blocks": [
+        {"time":"7:45–8:10","title":"Independent Arrival Practice","objective":"Complete arrival with fewer prompts.","procedures":["Arrival checklist","Help signal","Morning work"],"teacher":"Observe and reteach only when needed.","students":"Follow the visual checklist.","materials":["Arrival checklist"],"success":"Most students begin independently."},
+        {"time":"8:10–9:15","title":"Rules and Expectations","objective":"Explain how rules keep everyone safe and ready to learn.","procedures":["Be safe","Be respectful","Be responsible","Follow directions"],"teacher":"Read A Letter from Your Teacher and co-create positively worded rules.","students":"Sort expected and unexpected behaviors.","materials":["Read-aloud","Rule chart","Scenario cards"],"success":"Students explain one rule and its purpose."},
+        {"time":"9:15–10:45","title":"Voice Levels and Literacy Routines","objective":"Use the correct voice level for whole group, partners, and independent work.","procedures":["Voice 0","Voice 1","Partner voice","Attention signal"],"teacher":"Model and rehearse rapid changes between voice levels.","students":"Match activities to voice levels and practice reading routines.","materials":["Voice-level chart","Books"],"success":"Students change voice level when signaled."},
+        {"time":"10:45–11:10","title":"School Tour","objective":"Identify important school locations and safe movement expectations.","procedures":["Office","Nurse","Cafeteria","Playground","Restrooms","Emergency exits"],"teacher":"Lead the tour and model hallway expectations.","students":"Walk safely and identify where to get help.","materials":["School tour checklist"],"success":"Students name key locations and expectations."},
+        {"time":"11:10–11:40","title":"Writing Goals","objective":"Use writing procedures while naming one second-grade goal.","procedures":["Supply use","Goal sentence","Turn in work"],"teacher":"Model a simple goal sentence.","students":"Write and illustrate one goal.","materials":["Writing paper","Sentence frame"],"success":"Students complete and submit a short task."},
+        {"time":"11:40–1:40","title":"Math Partner Roles","objective":"Practice taking turns, asking questions, and productive struggle.","procedures":["Partner A/B","Ask for clarification","Encourage","Share tools"],"teacher":"Model helpful math-talk stems.","students":"Complete a simple partner challenge.","materials":["Manipulatives","Role cards"],"success":"Partners share materials and take turns."},
+        {"time":"1:40–2:55","title":"Rights, Responsibilities, and Consequences","objective":"Connect classroom rights to responsibilities and logical consequences.","procedures":["Reminder","Reteach","Reflection","Logical consequence","Repair"],"teacher":"Teach consequences as calm opportunities to learn and repair.","students":"Choose responsible responses to scenarios.","materials":["Scenario cards","Rights/responsibilities chart"],"success":"Students name a logical response to one scenario."},
+        {"time":"2:55–3:30","title":"Pack-Up Accuracy","objective":"Improve pack-up while staying calm and accurate.","procedures":["Visual checklist","Check folder","Dismissal voice level"],"teacher":"Time the routine without creating pressure.","students":"Complete the checklist and self-check.","materials":["Pack-up checklist"],"success":"Students improve without rushing unsafely."}
+      ],
+      "reflection": ["Which rule helps our class most?", "How did you show Heart?", "What tour location should we review?"]
     },
     "Wednesday": {
-      "focus": "Transitions, teamwork, and problem solving",
-      "blocks": {
-        "Breakfast / Morning Work": "Practice a timed but calm arrival routine and transitions to morning meeting.",
-        "MOWR / Morning Meeting": "Team-building activity, respectful disagreement, and solving small problems peacefully.",
-        "Heggerty / Phonics / Vocabulary": "Transition practice between carpet, seats, partners, and independent work.",
-        "Reading": "Partner A/Partner B roles, sharing ideas, and responding to a text read aloud.",
-        "Writing": "Writing-stamina practice and how to request, borrow, and return classroom supplies.",
-        "Math": "Cooperative math challenge emphasizing partner roles, encouragement, and cleanup.",
-        "Science": "Observation challenge using classroom objects; practice recording and sharing observations.",
-        "Social Studies": "Classroom jobs, leadership, and how each job helps the community.",
-        "Pack-up / Dismissal": "Practice emergency changes, early dismissal, and listening for names."
-      }
+      "theme": "Teamwork, Transitions, and Peaceful Problem Solving",
+      "readAloud": "Teacher-selected teamwork read-aloud",
+      "pillar": "Heart",
+      "tour": "Review classroom and school locations",
+      "blocks": [
+        {"time":"7:45–8:10","title":"Arrival Challenge","objective":"Complete arrival calmly and on time.","procedures":["Arrival","Breakfast cleanup","Morning work"],"teacher":"Use positive narration.","students":"Complete the routine independently.","materials":["Arrival checklist"],"success":"The class begins with minimal prompting."},
+        {"time":"8:10–9:15","title":"Team Building and Problem Solving","objective":"Use respectful words to solve small problems.","procedures":["Stop","Breathe","State the problem","Listen","Choose a solution"],"teacher":"Model scenarios and respectful disagreement.","students":"Role-play peaceful solutions.","materials":["Scenario cards","Problem-solving chart"],"success":"Students use a taught step."},
+        {"time":"9:15–10:45","title":"Transition Boot Camp","objective":"Move among carpet, desks, partners, and independent work safely.","procedures":["Carpet to desk","Desk to partner","Partner to independent","Cleanup"],"teacher":"Model, practice, reflect, and repeat.","students":"Rehearse transitions.","materials":["Transition visual"],"success":"Transitions become calm and efficient."},
+        {"time":"10:45–11:10","title":"Recess Conflict Practice","objective":"Practice inclusion, compromise, walking away, and asking for help.","procedures":["Invite others","Compromise","Walk away","Seek adult help"],"teacher":"Model playground scenarios.","students":"Practice responses.","materials":["Recess scenario cards"],"success":"Students identify peaceful solutions."},
+        {"time":"11:10–11:40","title":"Writing Stamina","objective":"Write independently and manage supplies.","procedures":["What to do when stuck","Help signal","Supply independence"],"teacher":"Set a short stamina goal.","students":"Write for the agreed time.","materials":["Writing paper","Pencils"],"success":"Students sustain writing."},
+        {"time":"11:40–1:40","title":"Cooperative Math Challenge","objective":"Use partner roles and encouragement.","procedures":["Take turns","Explain","Encourage","Cleanup"],"teacher":"Assign roles and monitor teamwork.","students":"Complete a hands-on challenge.","materials":["Number cards","Manipulatives"],"success":"Students share tools and ideas."},
+        {"time":"1:40–2:55","title":"Classroom Jobs and Observation Challenge","objective":"Understand jobs and practice notice/wonder observations.","procedures":["Job responsibilities","Materials pickup","Notice/wonder","Cleanup"],"teacher":"Introduce jobs and model observation language.","students":"Practice jobs and record one notice and wonder.","materials":["Job cards","Objects","Observation sheet"],"success":"Students explain how jobs help the class."},
+        {"time":"2:55–3:30","title":"Dismissal Changes","objective":"Respond safely when dismissal plans change.","procedures":["Listen for name","Wait for verified direction","Move calmly"],"teacher":"Simulate a change.","students":"Practice moving to the correct group.","materials":["Dismissal chart"],"success":"Students remain calm and accurate."}
+      ],
+      "reflection": ["How did teamwork help?", "Which transition improved?", "When should we ask an adult for help?"]
     },
     "Thursday": {
-      "focus": "Consequences, reflection, and independence",
-      "blocks": {
-        "Breakfast / Morning Work": "Complete the arrival routine with reduced teacher prompting.",
-        "MOWR / Morning Meeting": "Review logical consequences, reflection, making repairs, and trying again.",
-        "Heggerty / Phonics / Vocabulary": "Independent material routines and what to do when confused.",
-        "Reading": "Independent reading stamina, book-return procedures, and quiet help signals.",
-        "Writing": "Complete a short independent writing task and practice sharing work respectfully.",
-        "Math": "Independent task routine, checking work, early-finisher choices, and math cleanup.",
-        "Science": "Follow a short investigation routine from materials pickup through cleanup.",
-        "Social Studies": "Practice classroom problem scenarios and choose responsible solutions.",
-        "Pack-up / Dismissal": "Complete pack-up and dismissal with minimal reminders."
-      }
+      "theme": "Independence, Reflection, and Trying Again",
+      "readAloud": "Teacher-selected perseverance read-aloud",
+      "pillar": "Heart",
+      "tour": "Independent use of classroom spaces",
+      "blocks": [
+        {"time":"7:45–8:10","title":"Independent Arrival","objective":"Complete arrival using visual cues only.","procedures":["Self-check","Correct missed steps"],"teacher":"Use the visual rather than repeated directions.","students":"Follow and self-correct.","materials":["Arrival checklist"],"success":"Students complete most steps independently."},
+        {"time":"8:10–9:15","title":"Reflection and Repair","objective":"Understand how to reflect, repair, and try again after mistakes.","procedures":["Calm correction","Reflection","Repair","Rejoin learning"],"teacher":"Model a correction conversation.","students":"Practice repair language.","materials":["Reflection form","Scenarios"],"success":"Students describe how to try again."},
+        {"time":"9:15–10:45","title":"Independent Literacy Sequence","objective":"Complete literacy routines with reduced support.","procedures":["Listen","Partner talk","Book care","Independent reading","Cleanup"],"teacher":"Post visual directions and monitor.","students":"Follow the sequence.","materials":["Books","Visual directions"],"success":"Students need minimal prompting."},
+        {"time":"10:45–11:10","title":"Common-Area Independence","objective":"Apply hallway, lunch, and recess expectations consistently.","procedures":["Voice","Spacing","Safety","Return ready"],"teacher":"Give brief feedback after transitions.","students":"Self-monitor behavior.","materials":["Expectation visuals"],"success":"Students identify what went well."},
+        {"time":"11:10–11:40","title":"Independent Writing Process","objective":"Plan, write, illustrate, and turn in a short response.","procedures":["Read directions","Get supplies","Complete","Turn in"],"teacher":"Confer rather than direct every step.","students":"Complete the process.","materials":["Writing paper"],"success":"Students finish independently."},
+        {"time":"11:40–1:40","title":"Independent Math Routine","objective":"Complete setup, partner work, checking, and cleanup.","procedures":["Setup","Partner roles","Check work","Cleanup"],"teacher":"Reduce prompting and observe.","students":"Follow the routine.","materials":["Whiteboards","Manipulatives"],"success":"Students manage materials safely."},
+        {"time":"1:40–2:55","title":"Mini Investigation and Responsibility Scenarios","objective":"Follow a full investigation routine and solve classroom scenarios.","procedures":["Pickup","Observe","Record","Share","Cleanup"],"teacher":"Model one short investigation.","students":"Complete the routine and discuss responsibility.","materials":["Simple objects","Recording sheet","Scenarios"],"success":"Students follow safety and cleanup expectations."},
+        {"time":"2:55–3:30","title":"Independent Pack-Up","objective":"Pack and dismiss with minimal reminders.","procedures":["Checklist","Self-check","Dismissal group"],"teacher":"Use visual cues unless safety requires intervention.","students":"Complete the routine.","materials":["Pack-up checklist"],"success":"Students are accurate and calm."}
+      ],
+      "reflection": ["What can you do independently?", "How do we repair a mistake?", "What needs one more practice tomorrow?"]
     },
     "Friday": {
-      "focus": "Practice the full schedule and celebrate readiness",
-      "blocks": {
-        "Breakfast / Morning Work": "Run the full arrival routine independently.",
-        "MOWR / Morning Meeting": "Review the Class Promise, compliment circle, and celebrate progress.",
-        "Heggerty / Phonics / Vocabulary": "Practice the full literacy transition sequence without formal curriculum.",
-        "Reading": "Read aloud, partner discussion, and independent reading-stamina celebration.",
-        "Writing": "Reflect: What I know about being a successful second grader.",
-        "Math": "Review routines through a cooperative math game; no Eureka Math\u00b2 lesson.",
-        "Science": "Review safety and observation routines; no science workbook lesson.",
-        "Social Studies": "Classroom community reflection and goal setting; no formal social studies lesson.",
-        "Pack-up / Dismissal": "Final full-schedule practice and celebration of classroom readiness."
-      }
+      "theme": "Full Schedule Practice, Celebration, and Readiness",
+      "readAloud": "Oh, the Places You'll Go!",
+      "pillar": "Heart",
+      "tour": "Student-led location review",
+      "blocks": [
+        {"time":"7:45–8:10","title":"Full Arrival Routine","objective":"Complete arrival independently.","procedures":["All arrival steps"],"teacher":"Observe and celebrate growth.","students":"Complete the routine.","materials":["Arrival checklist"],"success":"The class starts calmly."},
+        {"time":"8:10–9:15","title":"Class Promise and Compliment Circle","objective":"Reflect on belonging and finalize class commitments.","procedures":["Compliment stems","Listen","Affirm Class Promise"],"teacher":"Read Oh, the Places You'll Go! and facilitate reflection.","students":"Give a specific compliment and affirm the promise.","materials":["Read-aloud","Class Promise","Compliment stems"],"success":"Students name how they will contribute."},
+        {"time":"9:15–10:45","title":"Full Literacy Rehearsal","objective":"Practice the entire literacy sequence without core curriculum.","procedures":["Transitions","Partner talk","Independent reading","Cleanup"],"teacher":"Run a mock literacy block with familiar texts.","students":"Follow the sequence confidently.","materials":["Familiar books","Visual schedule"],"success":"Students complete the sequence."},
+        {"time":"10:45–11:10","title":"Lunch and Recess Independence","objective":"Demonstrate common-area expectations.","procedures":["Line","Hallway","Cafeteria","Playground","Return"],"teacher":"Observe and reteach only as needed.","students":"Follow routines independently.","materials":["Expectation visuals"],"success":"Students return ready to learn."},
+        {"time":"11:10–11:40","title":"Successful Second Grader Reflection","objective":"Identify one strength and one goal.","procedures":["Reflect","Write","Share","Turn in"],"teacher":"Model a reflective response.","students":"Complete and share reflection.","materials":["Reflection page"],"success":"Students identify a strength and goal."},
+        {"time":"11:40–1:40","title":"Math Routine Celebration","objective":"Demonstrate math setup, teamwork, and cleanup through a game.","procedures":["Setup","Partner roles","Game rules","Cleanup"],"teacher":"Run a cooperative review game.","students":"Participate and follow procedures.","materials":["Review game materials"],"success":"Students manage tools and teamwork."},
+        {"time":"1:40–2:55","title":"Science Safety and Community Celebration","objective":"Review safety and classroom citizenship without formal curriculum.","procedures":["Safety choices","Observation","Responsibility","Cleanup"],"teacher":"Review scenarios and celebrate growth.","students":"Demonstrate safe and responsible choices.","materials":["Safety cards","Community chart"],"success":"Students explain expectations for Monday."},
+        {"time":"2:55–3:30","title":"Final Pack-Up and Dismissal Practice","objective":"Demonstrate end-of-day independence.","procedures":["Complete pack-up","Self-check","Dismiss safely"],"teacher":"Celebrate specific improvements.","students":"Complete the routine.","materials":["Pack-up checklist"],"success":"Students are ready for core instruction week."}
+      ],
+      "reflection": ["What are you proud of?", "How will you show Heart next week?", "What will help our class learn successfully Monday?"]
     }
   }
 }
