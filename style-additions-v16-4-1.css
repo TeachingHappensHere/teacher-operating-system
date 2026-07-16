@@ -1,0 +1,15 @@
+
+/* Version 16.4.1 — Afternoon Studio Tab Stabilization */
+.v83-studio-tabs button {
+  position: relative;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.v83-studio-tabs button.active,
+.v83-studio-tabs button[aria-pressed="true"] {
+  box-shadow: inset 0 -4px 0 var(--accent, #c73350);
+}
+.v83-studio-tabs button:focus-visible {
+  outline: 3px solid rgba(199, 51, 80, .25);
+  outline-offset: 2px;
+}

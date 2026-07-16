@@ -1,29 +1,22 @@
 # Teacher Operating System
 
-## Version 16.4 — Calm Dashboard & Morning Command Center
-
-Upload the complete extracted repository to GitHub.
+## Version 16.4.1 — Science Tab Stabilization
 
 ### Commit message
-Version 16.4 - Calm Dashboard and Morning Command Center
+Version 16.4.1 - Fix Science Studio Tab
 
-### Included
-- Calm morning greeting and current/next instructional block
-- Start Teaching button
-- Compact today's schedule with optional full-day expansion
-- Four focused lesson cards
-- Needs Your Attention panel
-- Small Groups and Intervention summary
-- Collapsed compartments for Planning, Curriculum, Students, Resources, and System Details
-- Existing injected workflow/status cards preserved inside System Details
-- Responsive iPad and phone layout
-- Isolated JavaScript and CSS so the central router remains unchanged
+### Fixed
+- Science tab flashing and returning to Writing
+- Duplicate afternoon-studio renderer conflict
+- Selected studio persists in local storage
+- Writing, Science, and Social Studies tabs use explicit button behavior
+- Tab clicks no longer bubble into competing handlers
+- Active-tab focus and selected-state styling
 
 ### Test
-1. Open Home Dashboard.
-2. Confirm the calm Morning Command Center appears.
-3. Expand and collapse the full schedule.
-4. Open each lesson card.
-5. Review Needs Your Attention.
-6. Expand each compartment.
-7. Open System Details and confirm older status cards are preserved there.
+1. Open Writing, Science & Social Studies Daily Studios.
+2. Select Science.
+3. Confirm the Science workspace remains open.
+4. Select Social Studies and then Writing.
+5. Return to Science.
+6. Refresh while Science is selected and confirm Science remains selected.

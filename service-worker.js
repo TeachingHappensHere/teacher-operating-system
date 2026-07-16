@@ -1,12 +1,12 @@
 
-const CACHE = "teaching-happens-here-v16-4-calm-dashboard";
+const CACHE = "teaching-happens-here-v16-4-1-science-tab-fix";
 const CORE = [
   "./",
   "./index.html",
   "./style.css?v=16.4.0",
   "./teacher-intelligence-v1602.css?v=16.0.2",
   "./style-additions-v7-1.css",
-  "./app.js?v=16.4.0",
+  "./app.js?v=16.4.1",
   "./teacher-intelligence-v1602.js?v=16.0.2",
   "./launch-stabilization-v7-1.js",
   "./tos-data.json",
@@ -32,7 +32,7 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(event.request.url);
   const isCore =
-    url.pathname.endsWith("/app.js?v=16.4.0") ||
+    url.pathname.endsWith("/app.js?v=16.4.1") ||
     url.pathname.endsWith("/style.css?v=16.4.0") ||
     url.pathname.endsWith("/tos-data.json") ||
     url.pathname.endsWith("/index.html") ||

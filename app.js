@@ -2274,6 +2274,11 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 (() => {
   "use strict";
 
+  // Version 16.4.1: prevent duplicate afternoon-studio instances from
+  // competing and restoring the default Writing view.
+  if (window.__THH_V83_AFTERNOON_STUDIOS_ACTIVE__) return;
+  window.__THH_V83_AFTERNOON_STUDIOS_ACTIVE__ = true;
+
   const STATE_KEY = "thh-v83:afternoon-studios";
   const WEEK_KEY = "thh-v73:weekly-plan";
   const ATTACHMENT_KEY = "thh-v74:attachments";
@@ -2307,6 +2312,11 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
       try {
         state = { ...state, ...JSON.parse(localStorage.getItem(STATE_KEY) || "{}") };
       } catch {}
+
+      if (!["writing", "science", "socialStudies"].includes(state.activeStudio)) {
+        state.activeStudio = "writing";
+      }
+
       ensureLesson("writing");
       ensureLesson("science");
       ensureLesson("socialStudies");
@@ -2487,7 +2497,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
             ["science","Science","1:40–2:15"],
             ["socialStudies","Social Studies","2:15–2:55"]
           ].map(([id,label,time]) => `
-            <button data-v83-studio="${id}" class="${id === studio ? "active" : ""}">
+            <button type="button" data-v83-studio="${id}" class="${id === studio ? "active" : ""}" aria-pressed="${id === studio ? "true" : "false"}">
               <strong>${label}</strong>
               <span>${time}</span>
             </button>`).join("")}
@@ -2745,12 +2755,26 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     const studio = state.activeStudio;
 
     $$("[data-v83-studio]").forEach(button => {
-      button.addEventListener("click", () => {
-        state.activeStudio = button.dataset.v83Studio;
-        ensureLesson(state.activeStudio);
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        const nextStudio = button.dataset.v83Studio;
+        if (!["writing", "science", "socialStudies"].includes(nextStudio)) return;
+
+        state.activeStudio = nextStudio;
+        ensureLesson(nextStudio);
         save();
-        renderStudio();
-      });
+
+        window.requestAnimationFrame(() => {
+          renderStudio();
+          window.requestAnimationFrame(() => {
+            const active = document.querySelector(`[data-v83-studio="${nextStudio}"]`);
+            active?.setAttribute("aria-pressed", "true");
+          });
+        });
+      }, true);
     });
 
     $$("[data-v83-section]").forEach(button => {
