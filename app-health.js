@@ -1,222 +1,266 @@
-{
-  "version": "3.3 Smart Print Center",
-  "sections": [
-    {
-      "id": "today",
-      "title": "Print Today",
-      "description": "Items pulled from Teach My Day and today\u2019s lesson flow.",
-      "items": [
-        {
-          "name": "Morning Work",
-          "source": "Teach My Day",
-          "type": "Routine",
-          "copies": 31,
-          "status": "Needed"
-        },
-        {
-          "name": "Decodable Practice",
-          "source": "MOWR / Reading Intervention",
-          "type": "Reading",
-          "copies": 31,
-          "status": "Optional"
-        },
-        {
-          "name": "Fluency Tracker",
-          "source": "MOWR / Reading Intervention",
-          "type": "Progress Monitoring",
-          "copies": 31,
-          "status": "Optional"
-        },
-        {
-          "name": "Vocabulary Page",
-          "source": "Open Court Vocabulary",
-          "type": "Vocabulary",
-          "copies": 31,
-          "status": "Needed"
-        },
-        {
-          "name": "Skills Practice Packet",
-          "source": "Open Court Reading",
-          "type": "Printable",
-          "copies": 31,
-          "status": "Needed"
-        },
-        {
-          "name": "Comprehension Assessment",
-          "source": "Open Court Reading",
-          "type": "Assessment",
-          "copies": 31,
-          "status": "As Needed"
-        },
-        {
-          "name": "Cause and Effect Organizer",
-          "source": "Open Court Reading",
-          "type": "Graphic Organizer",
-          "copies": 31,
-          "status": "Needed"
-        },
-        {
-          "name": "Math Exit Ticket",
-          "source": "Eureka Math\u00b2",
-          "type": "Exit Ticket",
-          "copies": 31,
-          "status": "Needed"
-        },
-        {
-          "name": "Writing Organizer",
-          "source": "Writing Studio",
-          "type": "Writing",
-          "copies": 31,
-          "status": "Needed"
-        },
-        {
-          "name": "Science Workbook Page",
-          "source": "Science Studio",
-          "type": "Science",
-          "copies": 31,
-          "status": "Needed"
+
+(function () {
+  "use strict";
+
+  const VERSION = "4.8";
+  const FILES = [
+    ["index.html", "Application shell", true],
+    ["style.css", "Core design", true],
+    ["app.js", "Main application", true],
+    ["manifest.json", "PWA manifest", true],
+    ["service-worker.js", "Offline support", true],
+    ["scholar-dashboard.json", "Dashboard data", true],
+    ["lesson-engine.json", "Lesson Engine", true],
+    ["classroom-systems.json", "Classroom Systems", true],
+    ["teach-my-day.json", "Teach My Day", true],
+    ["classroom-launch.json", "Classroom Launch", true],
+    ["print-center.json", "Print Center", true],
+    ["teacher-brain.json", "Teacher Brain", true],
+    ["small-groups.json", "Small Groups", true],
+    ["assessment-data.json", "Assessments", true],
+    ["planner-engine.json", "Planner", true],
+    ["lesson-builder.json", "Lesson Builder", true],
+    ["teaching-workspace.json", "Live Workspace", true],
+    ["resource-files.json", "Resources", true],
+    ["communication-hub.json", "Communication Hub", true],
+    ["student-dashboard.json", "Student Dashboard", true],
+    ["saved-progress.js", "Saved Progress", true],
+    ["universal-search.js", "Universal Search", true],
+    ["resource-files-viewer.js", "Resource Viewer", false],
+    ["student-dashboard-viewer.js", "Student Viewer", false],
+    ["communication-hub-viewer.js", "Communication Viewer", false]
+  ];
+
+  let results = [];
+  let overlay;
+
+  async function checkFile([file, label, required]) {
+    try {
+      const response = await fetch(file + "?health=" + Date.now(), { cache: "no-store" });
+      let ok = response.ok;
+      let detail = ok ? "Loaded successfully" : `${response.status} ${response.statusText}`;
+
+      if (ok && file.endsWith(".json")) {
+        try {
+          await response.clone().json();
+          detail = "Loaded and valid JSON";
+        } catch {
+          ok = false;
+          detail = "Invalid JSON";
         }
-      ]
-    },
-    {
-      "id": "unit1",
-      "title": "Open Court Unit 1 Printables",
-      "description": "Lesson attachments and assessment materials for Unit 1.",
-      "items": [
-        {
-          "name": "U1L1 Skills Practice Packet",
-          "source": "Lesson 1",
-          "type": "Skills Practice",
-          "copies": 31,
-          "status": "Ready to attach"
-        },
-        {
-          "name": "U1L1 Phonics Assessment",
-          "source": "Lesson 1",
-          "type": "Assessment",
-          "copies": 31,
-          "status": "Ready to attach"
-        },
-        {
-          "name": "U1L1 Vocabulary Assessment",
-          "source": "Lesson 1",
-          "type": "Assessment",
-          "copies": 31,
-          "status": "Ready to attach"
-        },
-        {
-          "name": "U1L1 Comprehension Assessment",
-          "source": "Lesson 1",
-          "type": "Assessment",
-          "copies": 31,
-          "status": "Ready to attach"
-        },
-        {
-          "name": "U1L1 GUM Assessment",
-          "source": "Lesson 1",
-          "type": "Assessment",
-          "copies": 31,
-          "status": "Ready to attach"
-        },
-        {
-          "name": "U1L6 Fluency pp. 71\u201372",
-          "source": "Lesson 6",
-          "type": "Fluency",
-          "copies": 31,
-          "status": "Uploaded"
-        },
-        {
-          "name": "U1L6 Vocabulary pp. 73\u201374",
-          "source": "Lesson 6",
-          "type": "Vocabulary",
-          "copies": 31,
-          "status": "Uploaded"
-        },
-        {
-          "name": "U1L6 Main Idea & Details pp. 75\u201376",
-          "source": "Lesson 6",
-          "type": "Reading Skill",
-          "copies": 31,
-          "status": "Uploaded"
-        },
-        {
-          "name": "U1L6 Vocabulary Assessment",
-          "source": "Lesson 6",
-          "type": "Assessment",
-          "copies": 31,
-          "status": "Uploaded"
-        }
-      ]
-    },
-    {
-      "id": "launch",
-      "title": "Classroom Launch Printables",
-      "description": "Beginning-of-year launch materials and anchor chart printables.",
-      "items": [
-        {
-          "name": "Entering the Classroom Anchor Chart",
-          "source": "Classroom Systems",
-          "type": "Anchor Chart",
-          "copies": 1,
-          "status": "Ready"
-        },
-        {
-          "name": "Morning Routine Anchor Chart",
-          "source": "Classroom Systems",
-          "type": "Anchor Chart",
-          "copies": 1,
-          "status": "Ready"
-        },
-        {
-          "name": "How to Line Up Anchor Chart",
-          "source": "Classroom Systems",
-          "type": "Anchor Chart",
-          "copies": 1,
-          "status": "Ready"
-        },
-        {
-          "name": "Hallway Expectations Anchor Chart",
-          "source": "Classroom Systems",
-          "type": "Anchor Chart",
-          "copies": 1,
-          "status": "Ready"
-        },
-        {
-          "name": "How to Sit on the Carpet Anchor Chart",
-          "source": "Classroom Systems",
-          "type": "Anchor Chart",
-          "copies": 1,
-          "status": "Ready"
-        },
-        {
-          "name": "Pencil Procedures Anchor Chart",
-          "source": "Classroom Systems",
-          "type": "Anchor Chart",
-          "copies": 1,
-          "status": "Ready"
-        },
-        {
-          "name": "Restroom Signal Anchor Chart",
-          "source": "Classroom Systems",
-          "type": "Anchor Chart",
-          "copies": 1,
-          "status": "Ready"
-        },
-        {
-          "name": "Voice Levels Anchor Chart",
-          "source": "Classroom Systems",
-          "type": "Anchor Chart",
-          "copies": 1,
-          "status": "Ready"
-        },
-        {
-          "name": "Dismissal Routine Anchor Chart",
-          "source": "Classroom Systems",
-          "type": "Anchor Chart",
-          "copies": 1,
-          "status": "Ready"
-        }
-      ]
+      }
+      return { file, label, required, ok, detail };
+    } catch {
+      return { file, label, required, ok: false, detail: "Could not load" };
     }
-  ]
-}
+  }
+
+  async function runChecks() {
+    setStatus("Running checks…");
+    results = await Promise.all(FILES.map(checkFile));
+    renderFiles();
+    await renderEnvironment();
+    setStatus("Checks complete");
+  }
+
+  function totals() {
+    const required = results.filter(r => r.required);
+    const optional = results.filter(r => !r.required);
+    return {
+      requiredReady: required.filter(r => r.ok).length,
+      requiredTotal: required.length,
+      optionalReady: optional.filter(r => r.ok).length,
+      optionalTotal: optional.length,
+      issues: required.filter(r => !r.ok).length
+    };
+  }
+
+  function renderFiles() {
+    const t = totals();
+    document.getElementById("healthStats").innerHTML = `
+      <article><strong>${t.requiredReady}/${t.requiredTotal}</strong><span>Required Files</span></article>
+      <article><strong>${t.optionalReady}/${t.optionalTotal}</strong><span>Optional Files</span></article>
+      <article class="${t.issues ? "danger" : "success"}"><strong>${t.issues}</strong><span>Required Issues</span></article>
+      <article><strong>v${VERSION}</strong><span>Health Center</span></article>
+    `;
+
+    document.getElementById("healthFileResults").innerHTML = results.map(r => `
+      <article class="health-file ${r.ok ? "healthy" : r.required ? "missing" : "optional"}">
+        <b>${r.ok ? "✓" : r.required ? "!" : "–"}</b>
+        <div><strong>${escapeHTML(r.label)}</strong><code>${escapeHTML(r.file)}</code><small>${escapeHTML(r.detail)}</small></div>
+        <span>${r.ok ? "Ready" : r.required ? "Required" : "Optional"}</span>
+      </article>
+    `).join("");
+  }
+
+  async function renderEnvironment() {
+    let worker = false;
+    if ("serviceWorker" in navigator) {
+      try {
+        const registration = await navigator.serviceWorker.getRegistration();
+        worker = Boolean(registration && (registration.active || registration.waiting || registration.installing));
+      } catch {}
+    }
+
+    const checks = [
+      ["Secure Context", window.isSecureContext, window.isSecureContext ? "HTTPS is active." : "PWA features require HTTPS."],
+      ["Service Worker", worker, worker ? "Registered." : "Not currently registered."],
+      ["Manifest Link", Boolean(document.querySelector('link[rel="manifest"]')), "Manifest link in page."],
+      ["Saved Progress", typeof localStorage !== "undefined", "Browser storage available."],
+      ["Universal Search", Boolean(document.getElementById("universalSearchButton")), "Search button detected."],
+      ["Installed Mode", matchMedia("(display-mode: standalone)").matches || navigator.standalone === true, "Browser mode is normal before installation."]
+    ];
+
+    document.getElementById("healthEnvironment").innerHTML = checks.map(([name, ok, detail], index) => `
+      <article class="${ok ? "healthy" : index === 5 ? "warning" : "missing"}">
+        <b>${ok ? "✓" : index === 5 ? "○" : "!"}</b>
+        <div><strong>${name}</strong><small>${detail}</small></div>
+      </article>
+    `).join("");
+  }
+
+  function createOverlay() {
+    overlay = document.createElement("div");
+    overlay.className = "health-overlay";
+    overlay.innerHTML = `
+      <section class="health-dialog">
+        <header>
+          <div><p>VERSION 4.8</p><h2>App Health & Launch Readiness</h2><span>Verify files, PWA support, and launch readiness.</span></div>
+          <button id="closeHealth">×</button>
+        </header>
+
+        <div id="healthStats" class="health-stats"></div>
+
+        <section class="health-section">
+          <div class="health-title"><div><h3>Environment</h3><p>Browser and PWA checks.</p></div><button id="rerunHealth">Run Again</button></div>
+          <div id="healthEnvironment" class="health-environment"></div>
+        </section>
+
+        <section class="health-section">
+          <h3>Project Files</h3>
+          <div id="healthFileResults"></div>
+        </section>
+
+        <section class="health-section">
+          <h3>Launch Checklist</h3>
+          <div class="launch-checks">
+            ${[
+              "Dashboard loads without errors",
+              "Teach My Day opens",
+              "Lesson Engine opens Unit 1",
+              "Classroom Systems search works",
+              "Print Center displays items",
+              "Teacher Brain search works",
+              "Student Dashboard opens",
+              "Communication Hub opens",
+              "Universal Search opens",
+              "Saved Progress remains after refresh",
+              "App installs on iPad/iPhone/computer"
+            ].map(text => `<label><input type="checkbox"> ${text}</label>`).join("")}
+          </div>
+        </section>
+
+        <section class="health-actions">
+          <button id="refreshHealthApp">Refresh App</button>
+          <button id="clearHealthCaches">Clear App Caches</button>
+          <button id="copyHealthReport">Copy Report</button>
+        </section>
+
+        <footer><span id="healthStatus">Ready</span><span>TeachingHappensHere v4.8</span></footer>
+      </section>
+    `;
+    document.body.appendChild(overlay);
+
+    document.getElementById("closeHealth").onclick = close;
+    document.getElementById("rerunHealth").onclick = runChecks;
+    document.getElementById("refreshHealthApp").onclick = () => location.reload();
+    document.getElementById("clearHealthCaches").onclick = clearCaches;
+    document.getElementById("copyHealthReport").onclick = copyReport;
+    overlay.onclick = event => { if (event.target === overlay) close(); };
+  }
+
+  function addButton() {
+    const button = document.createElement("button");
+    button.id = "appHealthButton";
+    button.className = "app-health-button";
+    button.innerHTML = "<span>✓</span><strong>App Health</strong><small>v4.8</small>";
+    button.onclick = open;
+
+    const search = document.getElementById("universalSearchButton");
+    if (search) search.insertAdjacentElement("afterend", button);
+    else document.querySelector(".side-nav, .sidebar nav")?.insertAdjacentElement("afterend", button);
+  }
+
+  function open() {
+    overlay.classList.add("open");
+    document.body.classList.add("health-open");
+    runChecks();
+  }
+
+  function close() {
+    overlay.classList.remove("open");
+    document.body.classList.remove("health-open");
+  }
+
+  async function clearCaches() {
+    if (!("caches" in window)) return setStatus("Cache API unavailable.");
+    if (!confirm("Clear cached application files? Saved notes will remain.")) return;
+    const keys = await caches.keys();
+    await Promise.all(keys.map(key => caches.delete(key)));
+    setStatus("Caches cleared. Refresh the app.");
+  }
+
+  async function copyReport() {
+    const t = totals();
+    const report = [
+      "TeachingHappensHere Health Report",
+      `Version: ${VERSION}`,
+      `Required files: ${t.requiredReady}/${t.requiredTotal}`,
+      `Optional files: ${t.optionalReady}/${t.optionalTotal}`,
+      "",
+      ...results.filter(r => !r.ok).map(r => `${r.required ? "REQUIRED" : "OPTIONAL"}: ${r.file} — ${r.detail}`)
+    ].join("\n");
+
+    try {
+      await navigator.clipboard.writeText(report);
+      setStatus("Report copied.");
+    } catch {
+      setStatus("Could not copy report.");
+    }
+  }
+
+  function setStatus(text) {
+    const status = document.getElementById("healthStatus");
+    if (status) status.textContent = text;
+  }
+
+  function escapeHTML(text) {
+    return String(text ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function start() {
+    const css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = "style-additions-v4-8.css";
+    document.head.appendChild(css);
+
+    createOverlay();
+    addButton();
+
+    document.addEventListener("keydown", event => {
+      if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key.toLowerCase() === "h") {
+        event.preventDefault();
+        open();
+      }
+      if (event.key === "Escape") close();
+    });
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();

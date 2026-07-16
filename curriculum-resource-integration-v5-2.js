@@ -1,98 +1,180 @@
-{
-  "version": "4.5 Parent Communication Hub",
-  "categories": [
-    "Positive Message",
-    "Academic Update",
-    "Behavior Follow-Up",
-    "Attendance",
-    "Intervention",
-    "Conference",
-    "Weekly Newsletter",
-    "General Reminder"
-  ],
-  "templates": [
-    {
-      "id": "positive-message",
-      "title": "Positive Student Message",
-      "category": "Positive Message",
-      "subject": "A wonderful update about [Student Name]",
-      "body": "Hello [Family Name],\n\nI wanted to share a positive update about [Student Name]. Today, [he/she/they] showed [specific strength or behavior]. I was especially proud of [specific example].\n\nThank you for supporting [Student Name]. It is a joy to have [him/her/them] in class.\n\nWarmly,\nMrs. Parrish"
-    },
-    {
-      "id": "academic-update",
-      "title": "Academic Progress Update",
-      "category": "Academic Update",
-      "subject": "Academic update for [Student Name]",
-      "body": "Hello [Family Name],\n\nI wanted to provide an update on [Student Name]'s progress in [subject/skill]. [Student Name] is currently showing strength in [strength] and is continuing to work on [growth area].\n\nAt school, we are supporting this through [support or intervention]. At home, it may help to [simple home support].\n\nThank you for partnering with us.\n\nWarmly,\nMrs. Parrish"
-    },
-    {
-      "id": "behavior-follow-up",
-      "title": "Behavior Follow-Up",
-      "category": "Behavior Follow-Up",
-      "subject": "Follow-up regarding today",
-      "body": "Hello [Family Name],\n\nI wanted to follow up about a situation involving [Student Name] today. The concern was [brief factual description]. We addressed it by [school response].\n\n[Student Name] was given the opportunity to reflect, reset, and return to learning. Tomorrow, we will continue reinforcing [expected behavior or routine].\n\nPlease contact me with any questions.\n\nWarmly,\nMrs. Parrish"
-    },
-    {
-      "id": "attendance-reminder",
-      "title": "Attendance Reminder",
-      "category": "Attendance",
-      "subject": "Attendance reminder for [Student Name]",
-      "body": "Hello [Family Name],\n\nThis is a friendly reminder that regular attendance is very important for [Student Name]'s academic progress. When students miss school, they also miss direct instruction, practice, and classroom routines.\n\nPlease let us know if there is anything we can do to support consistent attendance.\n\nThank you,\nMrs. Parrish"
-    },
-    {
-      "id": "intervention-update",
-      "title": "Reading Intervention Update",
-      "category": "Intervention",
-      "subject": "Reading support update for [Student Name]",
-      "body": "Hello [Family Name],\n\nI wanted to share an update about the reading support [Student Name] is receiving. We are currently focusing on [decoding/fluency/comprehension skill] through [UFLI, MOWR, small group, rereading, etc.].\n\nRecent progress shows [progress note]. Our next instructional step is [next step].\n\nAt home, continuing to read for 20\u201330 minutes and practicing [specific skill] will be helpful.\n\nWarmly,\nMrs. Parrish"
-    },
-    {
-      "id": "conference-notes",
-      "title": "Parent Conference Notes",
-      "category": "Conference",
-      "subject": "Conference notes for [Student Name]",
-      "body": "Student strengths:\n- \n\nAcademic data:\n- Reading:\n- Math:\n- Writing:\n\nBehavior / classroom habits:\n- \n\nCurrent supports:\n- \n\nFamily questions or concerns:\n- \n\nNext steps:\n- \n\nFollow-up date:\n- "
-    },
-    {
-      "id": "weekly-newsletter",
-      "title": "Weekly Classroom Newsletter",
-      "category": "Weekly Newsletter",
-      "subject": "Mrs. Parrish's Weekly Classroom Update",
-      "body": "Hello Families,\n\nHere is what we are learning this week:\n\nReading:\n[Reading focus]\n\nPhonics:\n[Phonics focus]\n\nVocabulary:\n[Vocabulary focus]\n\nMath:\n[Math focus]\n\nWriting:\n[Writing focus]\n\nScience / Social Studies:\n[Content focus]\n\nImportant reminders:\n- [Reminder]\n- [Reminder]\n\nThank you for your continued support!\n\nWarmly,\nMrs. Parrish"
-    },
-    {
-      "id": "iday-reminder",
-      "title": "iDay Reminder",
-      "category": "General Reminder",
-      "subject": "iDay reminder",
-      "body": "Hello Families,\n\nThis is a reminder that [date] is an iDay. Students should complete their assigned MobyMax work and read for 20\u201330 minutes using Beanstack.\n\nPlease contact me if you have questions or need support accessing the assignments.\n\nThank you,\nMrs. Parrish"
+
+(function(){
+  let data, overlay, current;
+
+  const esc = value => String(value ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+  async function start(){
+    const css=document.createElement("link");
+    css.rel="stylesheet";
+    css.href="style-additions-v5-2.css";
+    document.head.appendChild(css);
+
+    try{
+      data=await (await fetch("curriculum-resource-integration-v5-2.json",{cache:"no-store"})).json();
+      build();
+      addButton();
+    }catch(error){console.warn("Version 5.2 failed to load.",error)}
+  }
+
+  function allResources(){
+    return data.curriculumAreas.flatMap(area =>
+      area.resources.map(resource => ({...resource, areaId:area.id}))
+    );
+  }
+
+  function build(){
+    overlay=document.createElement("div");
+    overlay.className="v52-overlay";
+    overlay.innerHTML=`
+      <section class="v52-dialog">
+        <header>
+          <div><p>VERSION 5.2</p><h2>Curriculum & Resource Integration</h2><span>${esc(data.releaseStatus)}</span></div>
+          <button id="v52Close">×</button>
+        </header>
+        <div id="v52Stats" class="v52-stats"></div>
+        <div class="v52-toolbar">
+          <input id="v52Search" placeholder="Search resources, files, folders, status...">
+          <select id="v52Status"><option value="All">All Statuses</option></select>
+          <button id="v52CheckAll">Check Displayed Paths</button>
+        </div>
+        <div class="v52-layout">
+          <aside id="v52Areas"></aside>
+          <main id="v52Detail"></main>
+        </div>
+        <footer><span id="v52Message">Ready</span><span>TeachingHappensHere v5.2</span></footer>
+      </section>`;
+    document.body.appendChild(overlay);
+
+    const statuses=[...new Set(allResources().map(r=>r.status))];
+    document.getElementById("v52Status").innerHTML += statuses.map(s=>`<option>${esc(s)}</option>`).join("");
+    document.getElementById("v52Areas").innerHTML=data.curriculumAreas.map((a,i)=>`
+      <button data-v52-area="${a.id}" class="${i===0?"active":""}">
+        <span>${a.icon}</span><div><strong>${esc(a.title)}</strong><small>${esc(a.status)}</small></div>
+      </button>`).join("");
+
+    document.querySelectorAll("[data-v52-area]").forEach(b=>b.onclick=()=>renderArea(b.dataset.v52Area));
+    document.getElementById("v52Search").oninput=filter;
+    document.getElementById("v52Status").onchange=filter;
+    document.getElementById("v52CheckAll").onclick=checkAll;
+    document.getElementById("v52Close").onclick=close;
+    overlay.onclick=e=>{if(e.target===overlay)close()};
+
+    renderStats();
+    renderArea(data.curriculumAreas[0].id);
+  }
+
+  function renderStats(){
+    const resources=allResources();
+    const folders=data.curriculumAreas.flatMap(a=>a.folders);
+    document.getElementById("v52Stats").innerHTML=`
+      <article><strong>${data.curriculumAreas.length}</strong><span>Curriculum Areas</span></article>
+      <article><strong>${resources.length}</strong><span>Resource Slots</span></article>
+      <article><strong>${folders.length}</strong><span>Folder Paths</span></article>
+      <article><strong>${resources.filter(r=>r.status==="Needs Upload").length}</strong><span>Need Upload</span></article>
+      <article><strong>${resources.filter(r=>r.status==="Ready for File").length}</strong><span>Ready for File</span></article>`;
+  }
+
+  function renderArea(id){
+    current=data.curriculumAreas.find(a=>a.id===id);
+    document.querySelectorAll("[data-v52-area]").forEach(b=>b.classList.toggle("active",b.dataset.v52Area===id));
+    document.getElementById("v52Search").value="";
+    document.getElementById("v52Status").value="All";
+    renderDetail(current.resources);
+  }
+
+  function cards(resources){
+    return resources.map(r=>`
+      <article class="v52-card" data-path="${esc(r.path||"")}">
+        <div><small>${esc(r.type)}</small><span>${esc(r.status)}</span></div>
+        <h3>${esc(r.title)}</h3>
+        ${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.url)}</a>`:`<code>${esc(r.path)}</code>`}
+        <section>
+          ${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">Open</a>`:
+          `<a href="${esc(r.path)}" target="_blank" rel="noopener">Open</a>
+           <button data-copy="${esc(r.path)}">Copy Path</button>
+           <button data-check="${esc(r.path)}">Check</button>`}
+        </section>
+        <p class="v52-result">${r.url?"Public link ready.":"Not checked yet."}</p>
+      </article>`).join("") || "<p>No matching resources.</p>";
+  }
+
+  function renderDetail(resources){
+    document.getElementById("v52Detail").innerHTML=`
+      <div class="v52-heading">
+        <div><p>${current.icon} CURRICULUM AREA</p><h2>${esc(current.title)}</h2><span>${esc(current.description)}</span></div>
+        <b>${esc(current.status)}</b>
+      </div>
+      <section class="v52-section">
+        <h3>Recommended GitHub Folders</h3>
+        ${current.folders.map(f=>`<div class="v52-folder"><code>${esc(f)}</code><button data-copy="${esc(f)}">Copy</button></div>`).join("")}
+      </section>
+      <section class="v52-section">
+        <div class="v52-section-title"><div><h3>Resources</h3><p>${resources.length} matching item(s)</p></div><button onclick="window.print()">Print List</button></div>
+        <div id="v52Grid" class="v52-grid">${cards(resources)}</div>
+      </section>
+      <section class="v52-section">
+        <h3>Status Definitions</h3>
+        <div class="v52-definitions">${Object.entries(data.statusDefinitions).map(([k,v])=>`<article><strong>${esc(k)}</strong><p>${esc(v)}</p></article>`).join("")}</div>
+      </section>`;
+    wire();
+  }
+
+  function wire(){
+    document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{
+      await navigator.clipboard.writeText(b.dataset.copy);
+      const old=b.textContent;b.textContent="Copied";setTimeout(()=>b.textContent=old,800);
+    });
+    document.querySelectorAll("[data-check]").forEach(b=>b.onclick=()=>checkOne(b.dataset.check,b.closest(".v52-card")));
+  }
+
+  function filter(){
+    const q=document.getElementById("v52Search").value.toLowerCase().trim();
+    const status=document.getElementById("v52Status").value;
+    const resources=current.resources.filter(r=>(status==="All"||r.status===status)&&(!q||JSON.stringify(r).toLowerCase().includes(q)));
+    renderDetail(resources);
+  }
+
+  async function checkOne(path,card){
+    const result=card.querySelector(".v52-result");result.textContent="Checking…";
+    try{
+      const response=await fetch(path+"?check="+Date.now(),{cache:"no-store"});
+      const ok=response.ok;
+      result.textContent=ok?"File found.":`Not found (${response.status}).`;
+      card.classList.toggle("found",ok);card.classList.toggle("missing",!ok);
+    }catch{
+      result.textContent="Could not load this path.";card.classList.add("missing");
     }
-  ],
-  "contactLogFields": [
-    "Date",
-    "Student",
-    "Family Member",
-    "Method",
-    "Reason",
-    "Summary",
-    "Follow-Up Needed",
-    "Follow-Up Date"
-  ],
-  "methods": [
-    "Class Dojo",
-    "Email",
-    "Phone Call",
-    "In Person",
-    "Conference",
-    "Text",
-    "Other"
-  ],
-  "quickMessages": [
-    "Your child had a wonderful day today!",
-    "Please remember to return the folder tomorrow.",
-    "We are practicing reading fluency this week.",
-    "Thank you for supporting homework and reading at home.",
-    "Please contact me when you have a moment.",
-    "Your child showed kindness and leadership today."
-  ]
-}
+  }
+
+  async function checkAll(){
+    const cards=[...document.querySelectorAll(".v52-card[data-path]")].filter(c=>c.dataset.path);
+    document.getElementById("v52Message").textContent=`Checking ${cards.length} path(s)…`;
+    for(const card of cards) await checkOne(card.dataset.path,card);
+    const found=cards.filter(c=>c.classList.contains("found")).length;
+    document.getElementById("v52Message").textContent=`${found}/${cards.length} displayed files found.`;
+  }
+
+  function addButton(){
+    const button=document.createElement("button");
+    button.id="curriculumIntegrationButton";
+    button.className="v52-button";
+    button.innerHTML="<span>5.2</span><strong>Curriculum Integration</strong><small>Resources</small>";
+    button.onclick=open;
+    const prior=document.getElementById("instructionalContentButton");
+    if(prior) prior.insertAdjacentElement("afterend",button);
+    else document.querySelector(".side-nav,.sidebar nav")?.insertAdjacentElement("afterend",button);
+  }
+
+  function open(){overlay.classList.add("open");document.body.classList.add("v52-open")}
+  function close(){overlay.classList.remove("open");document.body.classList.remove("v52-open")}
+
+  document.addEventListener("keydown",e=>{
+    if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==="r"){e.preventDefault();if(overlay)open()}
+    if(e.key==="Escape"&&overlay?.classList.contains("open"))close()
+  });
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+})();

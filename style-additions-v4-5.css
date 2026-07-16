@@ -1,92 +1,110 @@
 
-/* Version 4.3 Resource Library Viewer */
-.resource-stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:12px;
+/* Version 4.5 Parent Communication Hub */
+.communication-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
   margin:12px 0;
 }
-.resource-stats article{
+.communication-tabs button{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:999px;
+  padding:9px 13px;
+  font-weight:700;
+}
+.communication-tabs button.active{
+  background:#ffcfd2;
+  color:#c4314d;
+}
+.communication-section.hidden{
+  display:none;
+}
+.communication-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:14px;
+}
+.communication-card,
+.quick-message-card{
   background:white;
   border:1px solid var(--line);
   border-radius:14px;
   padding:16px;
   box-shadow:var(--shadow);
 }
-.resource-stats strong{
-  display:block;
-  font-size:28px;
-  color:#c4314d;
-}
-.resource-stats span{
-  color:var(--muted);
-  font-weight:700;
-}
-.folder-grid,.resource-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:12px;
-}
-.folder-card,.resource-card{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px;
-  box-shadow:var(--shadow);
-}
-.folder-card strong{
-  display:block;
-  color:#c4314d;
-  word-break:break-word;
-}
-.resource-search{
+.communication-card textarea{
   width:100%;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px;
-}
-.resource-card code{
-  display:block;
-  background:#fff7f5;
+  min-height:260px;
   border:1px solid var(--line);
   border-radius:10px;
-  padding:8px;
-  word-break:break-word;
-  font-size:12px;
+  padding:12px;
+  resize:vertical;
+  line-height:1.45;
 }
-.resource-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
+.communication-card input{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:10px;
 }
-.status-pill{
-  display:inline-block;
-  border-radius:999px;
-  padding:6px 10px;
-  font-size:12px;
-  font-weight:800;
-  background:#fff1df;
-  color:#8c4a00;
-}
-.status-pill.needs-upload{background:#ffe2e7;color:#a3213f}
-.status-pill.ready-for-file{background:#e9f4e2;color:#356b2f}
-.status-pill.needs-link{background:#eaf0ff;color:#2c4f91}
-.status-pill.teacher-favorite{background:#efeafb;color:#5c3e91}
-.resource-actions{
+.communication-actions{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
-  margin-top:12px;
+  margin-top:10px;
 }
-.resource-actions button{
+.communication-actions button,
+.quick-message-card button{
   border:0;
   background:#ffcfd2;
   color:#c4314d;
   border-radius:8px;
-  padding:8px 10px;
+  padding:9px 11px;
 }
-.resource-actions button:disabled{
-  opacity:.55;
-  cursor:not-allowed;
+.communication-search{
+  width:min(680px,100%);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:11px;
+  margin-right:8px;
+}
+#communicationCategory{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:11px;
+}
+.contact-form{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:12px;
+}
+.contact-form label{
+  display:grid;
+  gap:6px;
+  font-weight:700;
+}
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+}
+.contact-form textarea{
+  min-height:110px;
+}
+.communication-note{
+  color:var(--muted);
+  font-size:13px;
+}
+.newsletter-card{
+  max-width:900px;
+}
+.quick-message-card{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
 }

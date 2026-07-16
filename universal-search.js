@@ -1,413 +1,528 @@
 
-(() => {
+// TeachingHappensHere Version 4.7
+// Universal Search & Command Center
+(function () {
   "use strict";
 
-  const ROUTE = "intelligence-engine";
-  const STORE = "thh-v1602:teacher-intelligence";
-  const WEEK_STORE = "thh-v73:weekly-plan";
-  const ATTACHMENT_STORE = "thh-v74:attachments";
-  const PRINT_STORE = "thh-v74:print-center";
-  const LIVE_STORE = "thh-v90:teach-day";
-  const GROUP_STORE = "thh-v141:group-plans";
-
-  const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
-  const GROUPS = [
-    "Red — Far Below Level",
-    "Yellow — Below Level",
-    "Green — Benchmark",
-    "Blue — Above Level"
+  const DATA_SOURCES = [
+    ["lesson-engine.json", "Lessons"],
+    ["classroom-systems.json", "Classroom Systems"],
+    ["teacher-brain.json", "Teacher Brain"],
+    ["resource-files.json", "Resources"],
+    ["assessment-data.json", "Assessments"],
+    ["small-groups.json", "Small Groups"],
+    ["communication-hub.json", "Communication"],
+    ["planner-engine.json", "Planner"],
+    ["teach-my-day.json", "Teach My Day"],
+    ["classroom-launch.json", "Classroom Launch"]
   ];
 
-  let state = {
-    selectedWeek: "2026-08-03",
-    completed: {}
-  };
+  let searchIndex = [];
+  let dialog = null;
 
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-  const esc = value => String(value ?? "")
-    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-
-  function load() {
+  async function loadJSON(file) {
     try {
-      state = { ...state, ...JSON.parse(localStorage.getItem(STORE) || "{}") };
-    } catch {}
-  }
-
-  function save() {
-    localStorage.setItem(STORE, JSON.stringify(state));
-  }
-
-  function currentRoute() {
-    return location.hash.replace("#","") || "dashboard";
-  }
-
-  function addDays(value, amount) {
-    const date = new Date(`${value}T12:00:00`);
-    date.setDate(date.getDate() + amount);
-    return date.toISOString().slice(0,10);
-  }
-
-  function weeks() {
-    const result = [{
-      start: "2026-07-27",
-      end: "2026-07-31",
-      label: "Classroom Launch Week",
-      type: "launch",
-      curriculumWeek: null
-    }];
-
-    let date = "2026-08-03";
-    for (let number = 1; number <= 43; number += 1) {
-      result.push({
-        start: date,
-        end: addDays(date, 4),
-        label: `Curriculum Week ${number}`,
-        type: "curriculum",
-        curriculumWeek: number
-      });
-      date = addDays(date, 7);
-    }
-
-    return result;
-  }
-
-  function selectedWeek() {
-    return weeks().find(week => week.start === state.selectedWeek)
-      || weeks().find(week => week.start === "2026-08-03");
-  }
-
-  function formatDate(value, short = false) {
-    return new Date(`${value}T12:00:00`).toLocaleDateString("en-US", short
-      ? { month:"short", day:"numeric" }
-      : { month:"short", day:"numeric", year:"numeric" });
-  }
-
-  function render() {
-    if (currentRoute() !== ROUTE) return;
-
-    const host = $("#pageHost");
-    if (!host) return;
-
-    const week = selectedWeek();
-    const completed = state.completed[week.start] || {};
-    const steps = ["planning","attachments","printing","live","groups"];
-    const percent = Math.round((steps.filter(step => completed[step]).length / steps.length) * 100);
-
-    host.innerHTML = `
-      <section id="v1602TeacherIntelligence">
-        <section class="page-header">
-          <div>
-            <p>VERSION 16.0.2</p>
-            <h2>Teacher Intelligence — Build My Week</h2>
-            <span>An isolated weekly command center that does not alter the application router.</span>
-          </div>
-          <button id="v1602BuildAll" class="primary-button">Build My Week</button>
-        </section>
-
-        <section class="panel v1602-week-row">
-          <label>
-            <span>School Week</span>
-            <select id="v1602Week">
-              ${weeks().map(item => `
-                <option value="${item.start}" ${item.start === week.start ? "selected" : ""}>
-                  ${formatDate(item.start)} — ${esc(item.label)}
-                </option>
-              `).join("")}
-            </select>
-          </label>
-
-          <article>
-            <span>WEEK</span>
-            <strong>${esc(week.label)}</strong>
-            <small>${formatDate(week.start)}–${formatDate(week.end, true)}</small>
-          </article>
-
-          <article>
-            <span>CURRICULUM</span>
-            <strong>${week.type === "launch" ? "Locked" : "Active"}</strong>
-            <small>${week.type === "launch" ? "Routines and classroom culture only" : "Core curriculum may be prepared"}</small>
-          </article>
-        </section>
-
-        <section class="v1602-progress">
-          <div><b style="width:${percent}%"></b></div>
-          <strong>${percent}%</strong>
-        </section>
-
-        ${week.type === "launch" ? launchView() : workflowView(week, completed)}
-
-        <section class="panel v1602-rules">
-          <article><strong>July 27–31</strong><span>Classroom Launch only</span></article>
-          <article><strong>August 3</strong><span>Curriculum Week 1</span></article>
-          <article><strong>Open Court</strong><span>The Mice Who Lived in a Shoe starts August 3</span></article>
-          <article><strong>Week Protection</strong><span>Only one record per Monday date</span></article>
-        </section>
-      </section>
-    `;
-
-    wire();
-  }
-
-  function launchView() {
-    return `
-      <section class="panel v1602-launch">
-        <span>CLASSROOM LAUNCH WEEK</span>
-        <h3>Teach routines, procedures, belonging, and independence.</h3>
-        <p>Core curriculum remains locked until Monday, August 3, 2026.</p>
-        <button id="v1602OpenLaunch" class="primary-button">Open Classroom Launch</button>
-      </section>
-    `;
-  }
-
-  function workflowView(week, completed) {
-    return `
-      <section class="v1602-grid">
-        ${card("planning","Weekly Planning",completed.planning)}
-        ${card("attachments","Lesson Attachments",completed.attachments)}
-        ${card("printing","Print Center",completed.printing)}
-        ${card("live","Live Teaching",completed.live)}
-        ${card("groups","Small Groups",completed.groups)}
-      </section>
-
-      <section class="v1602-summary">
-        <article class="panel">
-          <span>OPEN COURT</span>
-          <h3>${week.curriculumWeek === 1 ? "Unit 1, Lesson 1" : `Curriculum Week ${week.curriculumWeek}`}</h3>
-          <p>${week.curriculumWeek === 1 ? "The Mice Who Lived in a Shoe" : "Open Court sequence to be mapped in Open Court Intelligence"}</p>
-        </article>
-        <article class="panel">
-          <span>EUREKA MATH²</span>
-          <h3>Math sequence pending</h3>
-          <p>Eureka lesson mapping will be completed in Eureka Math Intelligence.</p>
-        </article>
-      </section>
-    `;
-  }
-
-  function card(step, title, complete) {
-    return `
-      <article class="panel v1602-card ${complete ? "complete" : ""}">
-        <span>${complete ? "COMPLETE" : "READY"}</span>
-        <h3>${esc(title)}</h3>
-        <p>Prepare the connected ${esc(title.toLowerCase())} records for this week.</p>
-        <button data-step="${step}" class="${complete ? "secondary-button" : "primary-button"}">
-          ${complete ? "Run Again" : "Run Step"}
-        </button>
-      </article>
-    `;
-  }
-
-  function wire() {
-    $("#v1602Week")?.addEventListener("change", event => {
-      state.selectedWeek = event.target.value;
-      save();
-      render();
-    });
-
-    $("#v1602BuildAll")?.addEventListener("click", () => {
-      const week = selectedWeek();
-      if (week.type === "launch") return notify("Curriculum is locked during Classroom Launch Week.");
-      ["planning","attachments","printing","live","groups"].forEach(step => runStep(step, false));
-      save();
-      notify("Weekly workflow prepared.");
-      render();
-    });
-
-    $("#v1602OpenLaunch")?.addEventListener("click", () => location.hash = "classroom-launch");
-
-    $$("[data-step]").forEach(button => {
-      button.addEventListener("click", () => runStep(button.dataset.step, true));
-    });
-  }
-
-  function runStep(step, rerender) {
-    const week = selectedWeek();
-    if (week.type === "launch") return notify("Curriculum is locked during Classroom Launch Week.");
-
-    if (step === "planning") buildPlanning(week);
-    if (step === "attachments") buildAttachments(week);
-    if (step === "printing") buildPrintQueue(week);
-    if (step === "live") buildLive(week);
-    if (step === "groups") buildGroups(week);
-
-    state.completed[week.start] = state.completed[week.start] || {};
-    state.completed[week.start][step] = true;
-    save();
-
-    if (rerender) {
-      notify("Step prepared.");
-      render();
+      const response = await fetch(file, { cache: "no-store" });
+      if (!response.ok) return null;
+      return await response.json();
+    } catch (error) {
+      return null;
     }
   }
 
-  function buildPlanning(week) {
-    const plan = {
-      version: "16.0.2",
-      title: week.label,
-      weekOf: week.start,
-      curriculumWeek: week.curriculumWeek,
-      days: {}
+  function cleanText(value) {
+    return String(value ?? "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function item(title, subtitle, body, type, page, keywords = [], meta = {}) {
+    return {
+      title: cleanText(title),
+      subtitle: cleanText(subtitle),
+      body: cleanText(body),
+      type,
+      page,
+      keywords: keywords.map(cleanText),
+      meta,
+      searchable: cleanText([
+        title,
+        subtitle,
+        body,
+        type,
+        page,
+        ...keywords,
+        JSON.stringify(meta)
+      ].join(" ")).toLowerCase()
     };
-
-    DAYS.forEach((day, index) => {
-      plan.days[day] = {
-        day,
-        reading: week.curriculumWeek === 1 ? "The Mice Who Lived in a Shoe" : "Open Court weekly story",
-        openCourtLesson: week.curriculumWeek === 1 ? "Unit 1, Lesson 1" : `Curriculum Week ${week.curriculumWeek}`,
-        phonics: "Open Court phonics sequence",
-        vocabulary: "Open Court weekly vocabulary",
-        heggerty: "Daily phonemic awareness",
-        mowr: "UFLI, teacher table, fluency, vocabulary, and writing centers",
-        writing: "Writing Building the Foundation / Open Court GUM",
-        math: `Eureka Math² lesson ${index + 1} — mapping pending`,
-        science: "Select the current Arizona science lesson",
-        socialStudies: "Select the aligned Arizona Social Studies lesson",
-        assessment: day === "Friday" ? "Weekly assessments" : "Teacher observation"
-      };
-    });
-
-    localStorage.setItem(WEEK_STORE, JSON.stringify(plan));
   }
 
-  function buildAttachments(week) {
-    let existing = [];
-    try {
-      existing = JSON.parse(localStorage.getItem(ATTACHMENT_STORE) || "[]");
-      if (!Array.isArray(existing)) existing = [];
-    } catch {}
-
-    const titles = [
-      ["Open Court","Skills Practice"],
-      ["Open Court","Assessment"],
-      ["Phonics","Practice"],
-      ["Vocabulary","Practice"],
-      ["Writing / GUM","Student Page"],
-      ["Eureka Math²","Student Materials"],
-      ["Eureka Math²","Exit Ticket"],
-      ["Science","Student Page"],
-      ["Social Studies","Student Page"]
-    ];
-
-    const generated = [];
-    DAYS.forEach(day => {
-      titles.forEach(([category, title], index) => generated.push({
-        id: `v1602-${week.start}-${day}-${index}`.toLowerCase(),
-        title: `${category} ${title}`,
-        day,
-        category,
-        type: "Student Page",
-        lesson: week.label,
-        url: "",
-        fileName: "",
-        notes: "Add the authorized school-provided resource.",
-        print: true,
-        copies: 33,
-        status: "Missing Link",
-        teacherOnly: false
-      }));
-    });
-
-    const ids = new Set(generated.map(item => item.id));
-    localStorage.setItem(
-      ATTACHMENT_STORE,
-      JSON.stringify([...existing.filter(item => !ids.has(item.id)), ...generated])
+  function buildLessonItems(data) {
+    return (data?.units || []).flatMap(unit =>
+      (unit.lessons || []).map(lesson =>
+        item(
+          `${lesson.lesson}: ${lesson.title}`,
+          unit.title || "Lesson Engine",
+          [
+            `Phonics: ${lesson.phonics || ""}`,
+            `Reading: ${lesson.readingSkill || ""}`,
+            `Grammar: ${lesson.grammar || ""}`,
+            `Writing: ${lesson.writing || ""}`,
+            `Vocabulary: ${(lesson.vocabulary || []).join(", ")}`
+          ].join(" • "),
+          "Lesson",
+          "lessons",
+          lesson.vocabulary || [],
+          { lessonId: lesson.id }
+        )
+      )
     );
   }
 
-  function buildPrintQueue(week) {
-    let attachments = [];
-    let queue = [];
-    try { attachments = JSON.parse(localStorage.getItem(ATTACHMENT_STORE) || "[]"); } catch {}
-    try { queue = JSON.parse(localStorage.getItem(PRINT_STORE) || "[]"); } catch {}
-    if (!Array.isArray(attachments)) attachments = [];
-    if (!Array.isArray(queue)) queue = [];
+  function buildSystemItems(data) {
+    return (data?.systems || []).map(system =>
+      item(
+        system.title,
+        system.category,
+        [
+          Array.isArray(system.anchorChart)
+            ? system.anchorChart.join(" ")
+            : system.anchorChart,
+          system.objective,
+          system.iDo || system.teachingScript,
+          system.weDo,
+          system.youDo,
+          system.reteachReminder,
+          system.micaylaNote
+        ].filter(Boolean).join(" • "),
+        "Classroom System",
+        "classroom",
+        [
+          ...(system.whatToPraise || []),
+          ...(system.commonMistakes || []),
+          ...(system.reteachMoments || [])
+        ],
+        { systemId: system.id }
+      )
+    );
+  }
 
-    attachments.filter(item => item.id?.includes(week.start)).forEach(item => {
-      const record = {
-        id: `print-${item.id}`,
-        source: "Teacher Intelligence 16.0.2",
-        day: item.day,
-        title: item.title,
-        category: item.category,
-        section: "Student Copies",
-        copies: item.copies || 33,
-        notes: item.notes,
-        url: item.url || "",
-        complete: false,
-        missingSource: !item.url
-      };
-      const index = queue.findIndex(existing => existing.id === record.id);
-      if (index >= 0) queue[index] = { ...record, complete: queue[index].complete };
-      else queue.push(record);
+  function buildBrainItems(data) {
+    return (data?.sections || []).flatMap(section =>
+      (section.notes || []).map(note =>
+        item(
+          note.title,
+          `${section.title} • ${note.category || ""}`,
+          note.note,
+          "Teacher Brain",
+          "brain",
+          note.tags || [],
+          { connectedTo: note.connectedTo }
+        )
+      )
+    );
+  }
+
+  function buildResourceItems(data) {
+    return (data?.resources || []).map(resource =>
+      item(
+        resource.title,
+        `${resource.subject} • ${resource.status}`,
+        `${resource.unit} • ${resource.lesson} • ${resource.filePath}`,
+        "Resource",
+        "resources",
+        resource.connectedTo || [],
+        { resourceId: resource.id, status: resource.status }
+      )
+    );
+  }
+
+  function buildAssessmentItems(data) {
+    const types = (data?.assessmentTypes || []).map(assessment =>
+      item(
+        assessment.title,
+        assessment.category,
+        `${assessment.whenToUse} • ${(assessment.skills || []).join(", ")} • ${assessment.teacherBrain || ""}`,
+        "Assessment",
+        "assessments",
+        assessment.connectedTo || [],
+        { assessmentId: assessment.id }
+      )
+    );
+
+    const unit = (data?.unit1Assessments || []).map(assessment =>
+      item(
+        `${assessment.lesson}: ${assessment.title}`,
+        "Open Court Unit 1 Assessment Map",
+        `Assessments: ${(assessment.assessments || []).join(", ")} • Reteach: ${(assessment.reteachWatch || []).join(", ")}`,
+        "Assessment Map",
+        "assessments",
+        assessment.reteachWatch || []
+      )
+    );
+
+    return [...types, ...unit];
+  }
+
+  function buildSmallGroupItems(data) {
+    const groups = (data?.groups || []).map(group =>
+      item(
+        group.name,
+        `${group.level} • ${group.priority}`,
+        `${group.teacherTable} • Focus: ${(group.focus || []).join(", ")} • DIBELS: ${(group.dibelsConnection || []).join(", ")}`,
+        "Small Group",
+        "smallgroups",
+        [
+          ...(group.materials || []),
+          ...(group.printPrep || [])
+        ],
+        { groupId: group.id }
+      )
+    );
+
+    const tools = (data?.interventionTools || []).map(tool =>
+      item(
+        tool.title,
+        "Intervention Tool",
+        `${tool.purpose} • Use when: ${tool.useWhen}`,
+        "Intervention",
+        "intervention",
+        tool.materials || []
+      )
+    );
+
+    return [...groups, ...tools];
+  }
+
+  function buildCommunicationItems(data) {
+    return (data?.templates || []).map(template =>
+      item(
+        template.title,
+        template.category,
+        `${template.subject} • ${template.body}`,
+        "Communication Template",
+        "communication",
+        [template.id],
+        { templateId: template.id }
+      )
+    );
+  }
+
+  function buildPlannerItems(data) {
+    return (data?.sections || []).flatMap(section =>
+      (section.items || []).map(entry =>
+        item(
+          entry,
+          section.title,
+          "Planner and calendar item",
+          "Planner",
+          "calendar"
+        )
+      )
+    );
+  }
+
+  function buildTeachDayItems(data) {
+    return (data?.blocks || []).map((block, index) =>
+      item(
+        block.title,
+        `${block.time} • ${block.type}`,
+        `${block.goal} • Materials: ${(block.materials || []).join(", ")} • Teacher Brain: ${block.teacherBrain || ""}`,
+        "Teach My Day",
+        "teachday",
+        [
+          ...(block.print || []),
+          ...(block.materials || [])
+        ],
+        { blockIndex: index }
+      )
+    );
+  }
+
+  function buildLaunchItems(data) {
+    return (data?.launchDays || []).map((day, index) =>
+      item(
+        `${day.day}: ${day.focus}`,
+        "Classroom Launch",
+        `${day.goal} • Systems: ${(day.systems || []).join(", ")} • ${day.teacherBrain || ""}`,
+        "Classroom Launch",
+        "launch",
+        day.systems || [],
+        { launchIndex: index }
+      )
+    );
+  }
+
+  function buildItems(file, data) {
+    switch (file) {
+      case "lesson-engine.json":
+        return buildLessonItems(data);
+      case "classroom-systems.json":
+        return buildSystemItems(data);
+      case "teacher-brain.json":
+        return buildBrainItems(data);
+      case "resource-files.json":
+        return buildResourceItems(data);
+      case "assessment-data.json":
+        return buildAssessmentItems(data);
+      case "small-groups.json":
+        return buildSmallGroupItems(data);
+      case "communication-hub.json":
+        return buildCommunicationItems(data);
+      case "planner-engine.json":
+        return buildPlannerItems(data);
+      case "teach-my-day.json":
+        return buildTeachDayItems(data);
+      case "classroom-launch.json":
+        return buildLaunchItems(data);
+      default:
+        return [];
+    }
+  }
+
+  async function buildIndex() {
+    const results = await Promise.all(
+      DATA_SOURCES.map(async ([file]) => [file, await loadJSON(file)])
+    );
+
+    searchIndex = results.flatMap(([file, data]) =>
+      data ? buildItems(file, data) : []
+    );
+
+    updateCount();
+  }
+
+  function scoreResult(entry, terms) {
+    let score = 0;
+    const title = entry.title.toLowerCase();
+    const subtitle = entry.subtitle.toLowerCase();
+
+    terms.forEach(term => {
+      if (title === term) score += 100;
+      if (title.startsWith(term)) score += 45;
+      if (title.includes(term)) score += 25;
+      if (subtitle.includes(term)) score += 12;
+      if (entry.searchable.includes(term)) score += 5;
     });
 
-    localStorage.setItem(PRINT_STORE, JSON.stringify(queue));
+    return score;
   }
 
-  function buildLive(week) {
-    localStorage.setItem(LIVE_STORE, JSON.stringify({
-      day: "Monday",
-      weekOf: week.start,
-      title: week.label,
-      preparedAt: new Date().toISOString()
-    }));
+  function search(query) {
+    const terms = query
+      .toLowerCase()
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
+    if (!terms.length) {
+      return searchIndex.slice(0, 18);
+    }
+
+    return searchIndex
+      .filter(entry => terms.every(term => entry.searchable.includes(term)))
+      .map(entry => ({ ...entry, score: scoreResult(entry, terms) }))
+      .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title))
+      .slice(0, 40);
   }
 
-  function buildGroups(week) {
-    let plans = {};
-    try { plans = JSON.parse(localStorage.getItem(GROUP_STORE) || "{}"); } catch {}
-    if (!plans || typeof plans !== "object" || Array.isArray(plans)) plans = {};
-
-    GROUPS.forEach(group => DAYS.forEach(day => {
-      const key = `${group}|${day}`;
-      plans[key] = {
-        ...(plans[key] || {}),
-        group,
-        day,
-        curriculumWeek: week.curriculumWeek,
-        objective: plans[key]?.objective || "",
-        skill: plans[key]?.skill || groupFocus(group),
-        text: plans[key]?.text || "",
-        materials: plans[key]?.materials || "",
-        assessment: plans[key]?.assessment || "Teacher observation and brief progress evidence",
-        notes: plans[key]?.notes || "",
-        complete: Boolean(plans[key]?.complete)
-      };
-    }));
-
-    localStorage.setItem(GROUP_STORE, JSON.stringify(plans));
+  function updateCount() {
+    const count = document.getElementById("universalSearchCount");
+    if (count) count.textContent = `${searchIndex.length} searchable items`;
   }
 
-  function groupFocus(group) {
-    if (group.startsWith("Red")) return "Intensive decoding, accuracy, and controlled-text reading";
-    if (group.startsWith("Yellow")) return "Strategic decoding, word recognition, and supported fluency";
-    if (group.startsWith("Green")) return "Benchmark fluency, comprehension, and grade-level application";
-    return "Above-level comprehension, prosody, vocabulary, and extension";
+  function openPage(page) {
+    const button = document.querySelector(`[data-page="${CSS.escape(page)}"]`);
+    if (button) {
+      button.click();
+    } else if (typeof window.showPage === "function") {
+      window.showPage(page);
+    }
   }
 
-  function notify(message) {
-    const toast = $("#toast");
-    if (!toast) return;
-    toast.textContent = message;
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 1800);
+  function openResult(result) {
+    closeDialog();
+    openPage(result.page);
+
+    setTimeout(() => {
+      if (result.meta.lessonId) {
+        document.querySelector(`[data-lesson="${CSS.escape(result.meta.lessonId)}"]`)?.click();
+      }
+      if (result.meta.systemId) {
+        document.querySelector(`[data-system="${CSS.escape(result.meta.systemId)}"]`)?.click();
+      }
+      if (result.meta.blockIndex !== undefined) {
+        document.querySelector(`[data-block="${result.meta.blockIndex}"]`)?.click();
+      }
+      if (result.meta.launchIndex !== undefined) {
+        document.querySelector(`[data-launch="${result.meta.launchIndex}"]`)?.click();
+      }
+
+      const target =
+        document.querySelector(".page.active h2") ||
+        document.querySelector(".page.active");
+
+      target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 350);
   }
 
-  function takeControl() {
-    if (currentRoute() !== ROUTE) return;
-    window.setTimeout(render, 25);
-    window.setTimeout(render, 250);
+  function renderResults(query) {
+    const results = search(query);
+    const container = document.getElementById("universalSearchResults");
+    if (!container) return;
+
+    container.innerHTML = results.length
+      ? results.map((result, index) => `
+          <button class="universal-result" data-result-index="${index}">
+            <div class="universal-result-top">
+              <span class="universal-result-type">${escapeHTML(result.type)}</span>
+              <span>${escapeHTML(result.subtitle)}</span>
+            </div>
+            <strong>${escapeHTML(result.title)}</strong>
+            <p>${escapeHTML(result.body).slice(0, 220)}${result.body.length > 220 ? "…" : ""}</p>
+          </button>
+        `).join("")
+      : `<div class="universal-empty">
+          <strong>No results found.</strong>
+          <p>Try a lesson title, vocabulary word, routine, assessment, student support, or resource name.</p>
+        </div>`;
+
+    container.querySelectorAll("[data-result-index]").forEach(button => {
+      button.addEventListener("click", () => {
+        openResult(results[Number(button.dataset.resultIndex)]);
+      });
+    });
   }
 
-  load();
-  window.THH_RENDER_TEACHER_INTELLIGENCE = render;
-  window.addEventListener("hashchange", takeControl);
+  function escapeHTML(text) {
+    return String(text ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function createDialog() {
+    if (dialog) return;
+
+    dialog = document.createElement("div");
+    dialog.id = "universalSearchDialog";
+    dialog.className = "universal-search-backdrop";
+    dialog.innerHTML = `
+      <section class="universal-search-dialog" role="dialog" aria-modal="true" aria-label="Universal search">
+        <header>
+          <div>
+            <p class="eyebrow">Version 4.7</p>
+            <h2>Search TeachingHappensHere</h2>
+          </div>
+          <button id="closeUniversalSearch" aria-label="Close search">×</button>
+        </header>
+
+        <div class="universal-search-input-wrap">
+          <span>⌕</span>
+          <input
+            id="universalSearchInput"
+            autocomplete="off"
+            placeholder="Search lessons, vocabulary, routines, resources, assessments..."
+          >
+          <kbd>Esc</kbd>
+        </div>
+
+        <div class="universal-search-meta">
+          <span id="universalSearchCount">Building search index…</span>
+          <span>Ctrl/⌘ + K</span>
+        </div>
+
+        <div id="universalSearchResults" class="universal-search-results"></div>
+      </section>
+    `;
+
+    document.body.appendChild(dialog);
+
+    document.getElementById("closeUniversalSearch").addEventListener("click", closeDialog);
+    document.getElementById("universalSearchInput").addEventListener("input", event => {
+      renderResults(event.target.value);
+    });
+
+    dialog.addEventListener("click", event => {
+      if (event.target === dialog) closeDialog();
+    });
+  }
+
+  function openDialog() {
+    createDialog();
+    dialog.classList.add("open");
+    document.body.classList.add("search-open");
+
+    const input = document.getElementById("universalSearchInput");
+    input.value = "";
+    renderResults("");
+    updateCount();
+
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function closeDialog() {
+    if (!dialog) return;
+    dialog.classList.remove("open");
+    document.body.classList.remove("search-open");
+  }
+
+  function addCommandButton() {
+    if (document.getElementById("universalSearchButton")) return;
+
+    const button = document.createElement("button");
+    button.id = "universalSearchButton";
+    button.className = "universal-search-button";
+    button.innerHTML = `
+      <span>⌕</span>
+      <strong>Search</strong>
+      <kbd>Ctrl K</kbd>
+    `;
+    button.addEventListener("click", openDialog);
+
+    const sidebar = document.querySelector(".sidebar");
+    const navigation = sidebar?.querySelector(".side-nav, nav");
+
+    if (navigation) {
+      navigation.insertAdjacentElement("afterend", button);
+    } else {
+      document.body.appendChild(button);
+    }
+  }
+
+  function addKeyboardShortcuts() {
+    document.addEventListener("keydown", event => {
+      const shortcut = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k";
+
+      if (shortcut) {
+        event.preventDefault();
+        openDialog();
+      }
+
+      if (event.key === "Escape") {
+        closeDialog();
+      }
+    });
+  }
+
+  async function start() {
+    const css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = "style-additions-v4-7.css";
+    document.head.appendChild(css);
+
+    createDialog();
+    addCommandButton();
+    addKeyboardShortcuts();
+    await buildIndex();
+    renderResults("");
+  }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", takeControl);
+    document.addEventListener("DOMContentLoaded", start);
   } else {
-    takeControl();
+    start();
   }
 })();

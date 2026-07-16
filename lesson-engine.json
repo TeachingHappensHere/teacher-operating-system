@@ -1,88 +1,248 @@
 {
-  "version": "4.0 Complete Lesson Builder",
-  "templates": [
+  "version": "2.1 Lesson Engine",
+  "units": [
     {
-      "id": "open-court",
-      "title": "Open Court Lesson Builder",
-      "sections": [
-        "Lesson Overview",
-        "Objective",
-        "Standards",
-        "Vocabulary",
-        "Phonics",
-        "Reading Skill",
-        "Grammar / GUM",
-        "Writing Connection",
-        "Teacher Brain",
-        "Small Groups",
-        "Assessment",
-        "Print Center",
-        "Teach My Day"
-      ]
-    },
-    {
-      "id": "science",
-      "title": "Science Lesson Builder",
-      "sections": [
-        "Lesson Topic",
-        "Vocabulary",
-        "Materials",
-        "Workbook Pages",
-        "Investigation",
-        "Video / Safe Link",
-        "Exit Ticket",
-        "Teacher Brain"
-      ]
-    },
-    {
-      "id": "writing",
-      "title": "Writing Lesson Builder",
-      "sections": [
-        "Writing Type",
-        "Mini Lesson",
-        "Model",
-        "Guided Practice",
-        "Independent Writing",
-        "Conference Notes",
-        "Rubric",
-        "Teacher Brain"
+      "id": "unit1",
+      "title": "Open Court Unit 1",
+      "lessons": [
+        {
+          "id": "u1l1",
+          "lesson": "Lesson 1",
+          "title": "The Mice Who Lived in a Shoe",
+          "phonics": "/ch/, /th/, /sh/, /wh/, /ar/",
+          "vocabulary": [
+            "admired",
+            "fetched",
+            "gathered",
+            "huddled",
+            "merchant",
+            "observed",
+            "platform",
+            "safety",
+            "shelter",
+            "timber"
+          ],
+          "grammar": "Common and proper nouns",
+          "readingSkill": "Cause and effect",
+          "writing": "Opinion writing connection",
+          "teacherTips": [
+            "Teach vocabulary before reading.",
+            "Spend extra time on merchant.",
+            "Use partner talk before cause/effect questions.",
+            "Do not skip the Open Court packet."
+          ],
+          "attachments": [
+            {
+              "name": "Skills Practice Packet",
+              "type": "Printable",
+              "status": "Ready to attach",
+              "file": ""
+            },
+            {
+              "name": "Phonics Assessment",
+              "type": "Assessment",
+              "status": "Ready to attach",
+              "file": ""
+            },
+            {
+              "name": "Vocabulary Assessment",
+              "type": "Assessment",
+              "status": "Ready to attach",
+              "file": ""
+            },
+            {
+              "name": "Comprehension Assessment",
+              "type": "Assessment",
+              "status": "Ready to attach",
+              "file": ""
+            },
+            {
+              "name": "GUM Assessment",
+              "type": "Assessment",
+              "status": "Ready to attach",
+              "file": ""
+            }
+          ]
+        },
+        {
+          "id": "u1l2",
+          "lesson": "Lesson 2",
+          "title": "Ants and Aphids Work Together",
+          "phonics": "Closed syllables; /j/ dge, /k/ ck, /ch/ tch",
+          "vocabulary": [
+            "colony",
+            "honeydew",
+            "liquid",
+            "partners",
+            "predators",
+            "relationship",
+            "scurry",
+            "shelter",
+            "symbiosis",
+            "team"
+          ],
+          "grammar": "Unit 1 GUM connection",
+          "readingSkill": "Informational text comprehension",
+          "writing": "Writing connection ready",
+          "teacherTips": [
+            "Use visuals for animal relationships.",
+            "Connect to working together and interdependence."
+          ],
+          "attachments": [
+            {
+              "name": "Skills Practice",
+              "type": "Printable",
+              "status": "Ready to attach",
+              "file": ""
+            }
+          ]
+        },
+        {
+          "id": "u1l3",
+          "lesson": "Lesson 3",
+          "title": "The Bat, Birds, and Beasts",
+          "phonics": "Inflectional endings -s, -es, -ed",
+          "vocabulary": [
+            "accepted",
+            "annual",
+            "emphasize",
+            "inquired",
+            "loyal",
+            "strategy"
+          ],
+          "grammar": "GUM practice",
+          "readingSkill": "Vocabulary and comprehension",
+          "writing": "Writing connection ready",
+          "teacherTips": [
+            "Model how endings change word meaning.",
+            "Use oral rehearsal before written responses."
+          ],
+          "attachments": [
+            {
+              "name": "Skills Practice",
+              "type": "Printable",
+              "status": "Ready to attach",
+              "file": ""
+            }
+          ]
+        },
+        {
+          "id": "u1l4",
+          "lesson": "Lesson 4",
+          "title": "A Cherokee Stickball Game",
+          "phonics": "/ng/, /nk/, -ing, schwa /\u0259l/",
+          "vocabulary": [
+            "disappointed",
+            "furious",
+            "humbly",
+            "part",
+            "pity",
+            "roared"
+          ],
+          "grammar": "GUM practice",
+          "readingSkill": "Folktale / culture connection",
+          "writing": "Writing connection ready",
+          "teacherTips": [
+            "Connect to social studies culture discussions.",
+            "Preview cultural context before reading."
+          ],
+          "attachments": [
+            {
+              "name": "Skills Practice",
+              "type": "Printable",
+              "status": "Ready to attach",
+              "file": ""
+            }
+          ]
+        },
+        {
+          "id": "u1l5",
+          "lesson": "Lesson 5",
+          "title": "The Final Game",
+          "phonics": "/er/ and /or/",
+          "vocabulary": [
+            "broke",
+            "checked",
+            "commotion",
+            "eagerness",
+            "grandstand",
+            "managed",
+            "opponent",
+            "piercing",
+            "sneered",
+            "tense"
+          ],
+          "grammar": "GUM practice",
+          "readingSkill": "Sports story comprehension",
+          "writing": "Writing connection ready",
+          "teacherTips": [
+            "Champion sports connection fits naturally here.",
+            "Use movement or team examples for vocabulary."
+          ],
+          "attachments": [
+            {
+              "name": "Skills Practice",
+              "type": "Printable",
+              "status": "Ready to attach",
+              "file": ""
+            }
+          ]
+        },
+        {
+          "id": "u1l6",
+          "lesson": "Lesson 6",
+          "title": "Ellie's Long Walk",
+          "phonics": "Unit review and application",
+          "vocabulary": [
+            "adopt",
+            "entire",
+            "face",
+            "inch",
+            "journey",
+            "panic",
+            "raged",
+            "slick",
+            "slope",
+            "startled",
+            "surface",
+            "turned"
+          ],
+          "grammar": "Unit review",
+          "readingSkill": "Main idea and details",
+          "writing": "Writing connection ready",
+          "teacherTips": [
+            "Use the fluency checklist before reading A Trip.",
+            "Connect journey/slope/surface to visuals.",
+            "Have students cite details from the text."
+          ],
+          "attachments": [
+            {
+              "name": "Fluency Checklist pp. 71\u201372",
+              "type": "Fluency",
+              "status": "Uploaded",
+              "file": "Open Court U1L6 Skills Practice pg 71-72.pdf"
+            },
+            {
+              "name": "Vocabulary pp. 73\u201374",
+              "type": "Vocabulary",
+              "status": "Uploaded",
+              "file": "Open Court U1L6 Skills Practice pg 73-74.pdf"
+            },
+            {
+              "name": "Main Idea & Details pp. 75\u201376",
+              "type": "Reading Skill",
+              "status": "Uploaded",
+              "file": "Open Court U1L6 Skills Practice pg 75-76.pdf"
+            },
+            {
+              "name": "Vocabulary Assessment",
+              "type": "Assessment",
+              "status": "Uploaded",
+              "file": ""
+            }
+          ]
+        }
       ]
     }
-  ],
-  "openCourtBuild": {
-    "defaultLesson": "u1l1",
-    "buildSteps": [
-      "Choose Open Court lesson",
-      "Review lesson focus",
-      "Confirm vocabulary and phonics",
-      "Add Teacher Brain reminders",
-      "Select small-group supports",
-      "Choose assessments",
-      "Generate print list",
-      "Send to Teach My Day"
-    ],
-    "teacherReminder": "Build the lesson around what students need, not just what the curriculum lists."
-  },
-  "smallGroupPullIns": [
-    "Red Group: UFLI + blending + decodable support",
-    "Yellow Group: fluency reread + vocabulary support",
-    "Blue Group: expression + comprehension",
-    "Green Group: text evidence + extension"
-  ],
-  "assessmentPullIns": [
-    "Phonics",
-    "Vocabulary",
-    "Comprehension",
-    "GUM",
-    "DIBELS connection",
-    "Reteach flag"
-  ],
-  "printPullIns": [
-    "Skills Practice",
-    "Vocabulary page",
-    "Graphic organizer",
-    "Assessment",
-    "Small-group support page",
-    "Exit ticket"
   ]
 }

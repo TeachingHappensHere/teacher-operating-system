@@ -1,193 +1,315 @@
-{
-  "version": "4.1 Resource Attachment Engine",
-  "folderPlan": {
-    "resources/open-court/unit-1/lesson-1": "Open Court Unit 1 Lesson 1 resources",
-    "resources/open-court/unit-1/lesson-6": "Open Court Unit 1 Lesson 6 resources",
-    "resources/writing": "Building the Foundation writing files",
-    "resources/science": "Science workbook and supplement pages",
-    "resources/dibels": "DIBELS benchmark and progress monitoring files",
-    "resources/classroom-systems": "Anchor charts and procedure printables",
-    "resources/projects": "Favorite projects such as habitats and volcanoes"
-  },
-  "resources": [
-    {
-      "id": "u1l1-skills-practice",
-      "title": "U1L1 Skills Practice Packet",
-      "subject": "Open Court",
-      "unit": "Unit 1",
-      "lesson": "Lesson 1",
-      "type": "Skills Practice",
-      "status": "Needs Upload",
-      "filePath": "resources/open-court/unit-1/lesson-1/u1l1-skills-practice.pdf",
-      "connectedTo": [
-        "Lesson Engine",
-        "Lesson Builder",
-        "Print Center"
-      ]
-    },
-    {
-      "id": "u1l1-phonics-assessment",
-      "title": "U1L1 Phonics Assessment",
-      "subject": "Open Court",
-      "unit": "Unit 1",
-      "lesson": "Lesson 1",
-      "type": "Assessment",
-      "status": "Needs Upload",
-      "filePath": "resources/open-court/unit-1/lesson-1/u1l1-phonics-assessment.pdf",
-      "connectedTo": [
-        "Assessments",
-        "Print Center"
-      ]
-    },
-    {
-      "id": "u1l1-vocabulary-assessment",
-      "title": "U1L1 Vocabulary Assessment",
-      "subject": "Open Court",
-      "unit": "Unit 1",
-      "lesson": "Lesson 1",
-      "type": "Assessment",
-      "status": "Needs Upload",
-      "filePath": "resources/open-court/unit-1/lesson-1/u1l1-vocabulary-assessment.pdf",
-      "connectedTo": [
-        "Assessments",
-        "Print Center"
-      ]
-    },
-    {
-      "id": "u1l1-comprehension-assessment",
-      "title": "U1L1 Comprehension Assessment",
-      "subject": "Open Court",
-      "unit": "Unit 1",
-      "lesson": "Lesson 1",
-      "type": "Assessment",
-      "status": "Needs Upload",
-      "filePath": "resources/open-court/unit-1/lesson-1/u1l1-comprehension-assessment.pdf",
-      "connectedTo": [
-        "Assessments",
-        "Print Center"
-      ]
-    },
-    {
-      "id": "u1l6-fluency-71-72",
-      "title": "U1L6 Fluency pp. 71\u201372",
-      "subject": "Open Court",
-      "unit": "Unit 1",
-      "lesson": "Lesson 6",
-      "type": "Fluency",
-      "status": "Ready for File",
-      "filePath": "resources/open-court/unit-1/lesson-6/u1l6-fluency-71-72.pdf",
-      "connectedTo": [
-        "Lesson Engine",
-        "Print Center",
-        "Small Groups"
-      ]
-    },
-    {
-      "id": "u1l6-vocabulary-73-74",
-      "title": "U1L6 Vocabulary pp. 73\u201374",
-      "subject": "Open Court",
-      "unit": "Unit 1",
-      "lesson": "Lesson 6",
-      "type": "Vocabulary",
-      "status": "Ready for File",
-      "filePath": "resources/open-court/unit-1/lesson-6/u1l6-vocabulary-73-74.pdf",
-      "connectedTo": [
-        "Lesson Engine",
-        "Print Center"
-      ]
-    },
-    {
-      "id": "u1l6-main-idea-75-76",
-      "title": "U1L6 Main Idea & Details pp. 75\u201376",
-      "subject": "Open Court",
-      "unit": "Unit 1",
-      "lesson": "Lesson 6",
-      "type": "Reading Skill",
-      "status": "Ready for File",
-      "filePath": "resources/open-court/unit-1/lesson-6/u1l6-main-idea-details-75-76.pdf",
-      "connectedTo": [
-        "Lesson Engine",
-        "Print Center",
-        "Assessments"
-      ]
-    },
-    {
-      "id": "writing-building-foundation",
-      "title": "Building the Foundation Writing",
-      "subject": "Writing",
-      "unit": "Core Writing",
-      "lesson": "Writing Studio",
-      "type": "Curriculum",
-      "status": "Needs Link",
-      "filePath": "resources/writing/building-the-foundation-writing.pdf",
-      "connectedTo": [
-        "Writing Studio",
-        "Lesson Builder"
-      ]
-    },
-    {
-      "id": "science-workbook",
-      "title": "Science Workbook Pages",
-      "subject": "Science",
-      "unit": "Science Studio",
-      "lesson": "Workbook",
-      "type": "Workbook",
-      "status": "Needs Upload",
-      "filePath": "resources/science/science-workbook-pages.pdf",
-      "connectedTo": [
-        "Science Studio",
-        "Teach My Day"
-      ]
-    },
-    {
-      "id": "dibels-benchmark",
-      "title": "DIBELS Grade 2 Benchmark Materials",
-      "subject": "Assessment",
-      "unit": "DIBELS",
-      "lesson": "Benchmark",
-      "type": "Benchmark",
-      "status": "Needs Upload",
-      "filePath": "resources/dibels/dibels-grade-2-benchmark.pdf",
-      "connectedTo": [
-        "Assessments",
-        "Small Groups",
-        "Intervention"
-      ]
-    },
-    {
-      "id": "habitats-shoebox",
-      "title": "Habitats in a Shoebox Project",
-      "subject": "Science",
-      "unit": "Projects",
-      "lesson": "Habitats",
-      "type": "Project",
-      "status": "Teacher Favorite",
-      "filePath": "resources/projects/habitats-in-a-shoebox.pdf",
-      "connectedTo": [
-        "Science Studio",
-        "Teacher Brain"
-      ]
-    },
-    {
-      "id": "volcano-assignment",
-      "title": "Volcano Assignment",
-      "subject": "Open Court / Science",
-      "unit": "Projects",
-      "lesson": "Volcano Connection",
-      "type": "Project",
-      "status": "Teacher Favorite",
-      "filePath": "resources/projects/volcano-assignment.pdf",
-      "connectedTo": [
-        "Open Court",
-        "Science Studio",
-        "Teacher Brain"
-      ]
+
+// TeachingHappensHere Version 4.6
+// Saved Progress & Personalization Engine
+(function () {
+  "use strict";
+
+  const STORAGE_PREFIX = "thh-v46:";
+  const STATE_KEY = `${STORAGE_PREFIX}state`;
+  let saveTimer = null;
+
+  function loadState() {
+    try {
+      return JSON.parse(localStorage.getItem(STATE_KEY) || "{}");
+    } catch (error) {
+      console.warn("Saved progress could not be read.", error);
+      return {};
     }
-  ],
-  "statusDefinitions": {
-    "Needs Upload": "The slot exists, but the file still needs to be uploaded into GitHub.",
-    "Ready for File": "The slot and file path are prepared; upload the matching PDF when available.",
-    "Needs Link": "This may connect to a Google Drive or public curriculum link instead of a PDF.",
-    "Teacher Favorite": "A high-value project or resource to preserve inside Teacher Brain."
   }
-}
+
+  function saveState(state) {
+    try {
+      localStorage.setItem(STATE_KEY, JSON.stringify(state));
+      updateSaveIndicator("Saved");
+    } catch (error) {
+      console.warn("Saved progress could not be written.", error);
+      updateSaveIndicator("Save unavailable");
+    }
+  }
+
+  function elementKey(element, index) {
+    if (element.dataset.saveKey) return element.dataset.saveKey;
+    if (element.id) return `id:${element.id}`;
+
+    const page = element.closest(".page");
+    const pageId = page ? page.id : "global";
+    const card = element.closest(
+      ".system-section, .launch-section, .print-item, .communication-card, .student-card, article"
+    );
+
+    let context = "";
+    if (card) {
+      const heading = card.querySelector("h2, h3, strong");
+      context = heading ? heading.textContent.trim().slice(0, 80) : "";
+    }
+
+    const label = element.closest("label");
+    const labelText = label ? label.textContent.trim().slice(0, 100) : "";
+    const placeholder = element.getAttribute("placeholder") || "";
+    const name = element.getAttribute("name") || "";
+    const type = element.type || element.tagName.toLowerCase();
+
+    return [
+      pageId,
+      context,
+      labelText,
+      placeholder,
+      name,
+      type,
+      index
+    ].join("|");
+  }
+
+  function collectState() {
+    const state = loadState();
+
+    state.fields = state.fields || {};
+    state.checkboxes = state.checkboxes || {};
+    state.selects = state.selects || {};
+
+    const fields = document.querySelectorAll(
+      "textarea, input:not([type='checkbox']):not([type='radio']):not([type='button']):not([type='submit'])"
+    );
+
+    fields.forEach((element, index) => {
+      const key = elementKey(element, index);
+      if (
+        element.id === "brainSearch" ||
+        element.id === "systemsSearch" ||
+        element.id === "resourceSearch" ||
+        element.id === "communicationSearch"
+      ) {
+        return;
+      }
+      state.fields[key] = element.value;
+    });
+
+    document.querySelectorAll("input[type='checkbox']").forEach((element, index) => {
+      state.checkboxes[elementKey(element, index)] = element.checked;
+    });
+
+    document.querySelectorAll("select").forEach((element, index) => {
+      if (
+        element.id === "systemsCategory" ||
+        element.id === "communicationCategory" ||
+        element.id === "studentFilter"
+      ) {
+        return;
+      }
+      state.selects[elementKey(element, index)] = element.value;
+    });
+
+    const activePage = document.querySelector(".page.active");
+    if (activePage) state.activePage = activePage.id;
+
+    const activeLesson = document.querySelector("[data-lesson].active");
+    if (activeLesson) state.activeLesson = activeLesson.dataset.lesson;
+
+    const activeWorkspace = document.querySelector("[data-workspace].active");
+    if (activeWorkspace) state.activeWorkspace = activeWorkspace.dataset.workspace;
+
+    const activeSystem = document.querySelector("[data-system].active");
+    if (activeSystem) state.activeSystem = activeSystem.dataset.system;
+
+    const activeLaunch = document.querySelector("[data-launch].active");
+    if (activeLaunch) state.activeLaunch = activeLaunch.dataset.launch;
+
+    const activeBlock = document.querySelector("[data-block].active");
+    if (activeBlock) state.activeBlock = activeBlock.dataset.block;
+
+    saveState(state);
+  }
+
+  function scheduleSave() {
+    clearTimeout(saveTimer);
+    updateSaveIndicator("Saving…");
+    saveTimer = setTimeout(collectState, 350);
+  }
+
+  function restoreState() {
+    const state = loadState();
+
+    const fields = document.querySelectorAll(
+      "textarea, input:not([type='checkbox']):not([type='radio']):not([type='button']):not([type='submit'])"
+    );
+
+    fields.forEach((element, index) => {
+      const key = elementKey(element, index);
+      if (Object.prototype.hasOwnProperty.call(state.fields || {}, key)) {
+        element.value = state.fields[key];
+      }
+    });
+
+    document.querySelectorAll("input[type='checkbox']").forEach((element, index) => {
+      const key = elementKey(element, index);
+      if (Object.prototype.hasOwnProperty.call(state.checkboxes || {}, key)) {
+        element.checked = Boolean(state.checkboxes[key]);
+      }
+    });
+
+    document.querySelectorAll("select").forEach((element, index) => {
+      const key = elementKey(element, index);
+      if (
+        Object.prototype.hasOwnProperty.call(state.selects || {}, key) &&
+        [...element.options].some(option => option.value === state.selects[key])
+      ) {
+        element.value = state.selects[key];
+      }
+    });
+
+    restoreNavigation(state);
+    updateSaveIndicator("Saved");
+  }
+
+  function clickSelector(selector) {
+    const element = document.querySelector(selector);
+    if (element) element.click();
+  }
+
+  function restoreNavigation(state) {
+    setTimeout(() => {
+      if (state.activePage && typeof window.showPage === "function") {
+        window.showPage(state.activePage);
+      } else if (state.activePage) {
+        clickSelector(`[data-page="${CSS.escape(state.activePage)}"]`);
+      }
+
+      if (state.activeLesson) {
+        clickSelector(`[data-lesson="${CSS.escape(state.activeLesson)}"]`);
+      }
+      if (state.activeWorkspace) {
+        clickSelector(`[data-workspace="${CSS.escape(state.activeWorkspace)}"]`);
+      }
+      if (state.activeSystem) {
+        clickSelector(`[data-system="${CSS.escape(state.activeSystem)}"]`);
+      }
+      if (state.activeLaunch !== undefined) {
+        clickSelector(`[data-launch="${CSS.escape(String(state.activeLaunch))}"]`);
+      }
+      if (state.activeBlock !== undefined) {
+        clickSelector(`[data-block="${CSS.escape(String(state.activeBlock))}"]`);
+      }
+
+      setTimeout(restoreStateWithoutNavigation, 300);
+    }, 150);
+  }
+
+  function restoreStateWithoutNavigation() {
+    const state = loadState();
+
+    document.querySelectorAll("textarea, input, select").forEach((element, index) => {
+      if (element.type === "checkbox") {
+        const key = elementKey(element, index);
+        if (Object.prototype.hasOwnProperty.call(state.checkboxes || {}, key)) {
+          element.checked = Boolean(state.checkboxes[key]);
+        }
+        return;
+      }
+
+      const key = elementKey(element, index);
+      if (element.tagName === "SELECT") {
+        if (
+          Object.prototype.hasOwnProperty.call(state.selects || {}, key) &&
+          [...element.options].some(option => option.value === state.selects[key])
+        ) {
+          element.value = state.selects[key];
+        }
+      } else if (Object.prototype.hasOwnProperty.call(state.fields || {}, key)) {
+        element.value = state.fields[key];
+      }
+    });
+  }
+
+  function updateSaveIndicator(message) {
+    const indicator = document.getElementById("savedProgressIndicator");
+    if (indicator) indicator.textContent = message;
+  }
+
+  function addToolbar() {
+    if (document.getElementById("savedProgressToolbar")) return;
+
+    const toolbar = document.createElement("div");
+    toolbar.id = "savedProgressToolbar";
+    toolbar.className = "saved-progress-toolbar";
+    toolbar.innerHTML = `
+      <div>
+        <strong>Saved Progress</strong>
+        <span id="savedProgressIndicator">Ready</span>
+      </div>
+      <button id="saveProgressNow" type="button">Save Now</button>
+      <button id="resetSavedProgress" type="button">Reset</button>
+    `;
+
+    document.body.appendChild(toolbar);
+
+    document.getElementById("saveProgressNow").addEventListener("click", collectState);
+    document.getElementById("resetSavedProgress").addEventListener("click", () => {
+      const confirmed = window.confirm(
+        "Reset all saved checklists, notes, drafts, and current selections on this device?"
+      );
+      if (!confirmed) return;
+
+      localStorage.removeItem(STATE_KEY);
+      window.location.reload();
+    });
+  }
+
+  function addListeners() {
+    document.addEventListener("input", event => {
+      if (event.target.matches("textarea, input, select")) scheduleSave();
+    });
+
+    document.addEventListener("change", event => {
+      if (event.target.matches("textarea, input, select")) scheduleSave();
+    });
+
+    document.addEventListener("click", event => {
+      if (
+        event.target.closest(
+          "[data-page], [data-lesson], [data-workspace], [data-system], [data-launch], [data-block], [data-build]"
+        )
+      ) {
+        setTimeout(() => {
+          restoreStateWithoutNavigation();
+          scheduleSave();
+        }, 250);
+      }
+    });
+
+    window.addEventListener("beforeunload", collectState);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") collectState();
+    });
+  }
+
+  function observeDynamicContent() {
+    const observer = new MutationObserver(() => {
+      clearTimeout(observer.restoreTimer);
+      observer.restoreTimer = setTimeout(restoreStateWithoutNavigation, 180);
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  function start() {
+    const css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = "style-additions-v4-6.css";
+    document.head.appendChild(css);
+
+    addToolbar();
+    addListeners();
+    observeDynamicContent();
+
+    setTimeout(restoreState, 1000);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();

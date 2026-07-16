@@ -1,173 +1,65 @@
 {
-  "version": "16.3",
-  "title": "Science Intelligence Workbook Library",
-  "defaultCopies": 33,
-  "library": [
+  "items": [
     {
-      "id": "science-001",
-      "file": "science-workbook/1161_001_right_side_up.pdf",
-      "sourcePages": "1-27",
-      "unit": "Unit A",
-      "title": "Plants and Living Things",
-      "topics": [
-        "Plant parts",
-        "Plant needs",
-        "Plant life cycles",
-        "Living and nonliving things"
+      "title": "Lesson 1",
+      "category": "Open Court",
+      "keywords": [
+        "merchant",
+        "cause and effect",
+        "admired",
+        "phonics",
+        "vocabulary"
       ],
-      "summary": "Introductory workbook pages on plants, their structures, needs, growth, and basic life science."
+      "description": "The Mice Who Lived in a Shoe"
     },
     {
-      "id": "science-028",
-      "file": "science-workbook/1161_028_right_side_up.pdf",
-      "sourcePages": "28-53",
-      "unit": "Unit A",
-      "title": "Animals and Their Needs",
-      "topics": [
-        "Animal body parts",
-        "Animal needs",
-        "Life cycles",
-        "Animal groups"
+      "title": "Lesson 6",
+      "category": "Open Court",
+      "keywords": [
+        "main idea",
+        "journey",
+        "fluency",
+        "ellie"
       ],
-      "summary": "Workbook practice focused on animals, survival needs, inherited traits, and life cycles."
+      "description": "Ellie's Long Walk"
     },
     {
-      "id": "science-054",
-      "file": "science-workbook/1161_054_right_side_up.pdf",
-      "sourcePages": "54-77",
-      "unit": "Unit A",
-      "title": "Habitats and Food Relationships",
-      "topics": [
-        "Habitats",
-        "Food chains",
-        "Predators and prey",
-        "Environmental needs"
+      "title": "Volcano Project",
+      "category": "Teacher Brain",
+      "keywords": [
+        "volcano",
+        "project",
+        "science"
       ],
-      "summary": "Pages on how plants and animals depend on habitats, food, water, and one another."
+      "description": "High-impact Open Court extension"
     },
     {
-      "id": "science-078",
-      "file": "science-workbook/1161_078_right_side_up.pdf",
-      "sourcePages": "78-101",
-      "unit": "Unit B",
-      "title": "Homes for Plants and Animals",
-      "topics": [
-        "Arctic habitats",
-        "Land habitats",
-        "Fresh water habitats",
-        "Salt water habitats"
+      "title": "Habitats in a Shoebox",
+      "category": "Teacher Brain",
+      "keywords": [
+        "habitat",
+        "shoebox",
+        "project"
       ],
-      "summary": "Habitat practice covering Arctic, woodland, desert, rain forest, ponds, streams, and oceans."
+      "description": "Annual favorite project"
     },
     {
-      "id": "science-102",
-      "file": "science-workbook/1161_102_right_side_up.pdf",
-      "sourcePages": "102-126",
-      "unit": "Units B-C",
-      "title": "Caring for Habitats and Water on Earth",
-      "topics": [
-        "Pollution",
-        "Recycling",
-        "Water cycle",
-        "Weather",
-        "Erosion"
+      "title": "How to Line Up",
+      "category": "Classroom Systems",
+      "keywords": [
+        "line",
+        "routine"
       ],
-      "summary": "Environmental care, water habitats, the water cycle, weather, and gradual Earth changes."
+      "description": "Anchor chart and teaching routine"
     },
     {
-      "id": "science-127",
-      "file": "science-workbook/1161_127_right_side_up.pdf",
-      "sourcePages": "127-152",
-      "unit": "Unit C",
-      "title": "Earth Changes and Fossils",
-      "topics": [
-        "Earthquakes",
-        "Volcanoes",
-        "Landslides",
-        "Fossils",
-        "Extinction"
+      "title": "Building the Foundation",
+      "category": "Writing",
+      "keywords": [
+        "writing",
+        "foundation"
       ],
-      "summary": "Fast and slow Earth changes plus fossil evidence and comparisons between past and present life."
-    },
-    {
-      "id": "science-153",
-      "file": "science-workbook/1161_153_right_side_up.pdf",
-      "sourcePages": "153-179",
-      "unit": "Units C-D",
-      "title": "Earth History, Sun, Day and Night, and Seasons",
-      "topics": [
-        "Fossils",
-        "Sun and Earth",
-        "Day and night",
-        "Earth's rotation",
-        "Seasons"
-      ],
-      "summary": "Transitions from fossils and Earth history into sunlight, rotation, day and night, and seasons."
-    },
-    {
-      "id": "science-180",
-      "file": "science-workbook/1161_180_right_side_up.pdf",
-      "sourcePages": "180-206",
-      "unit": "Unit D",
-      "title": "The Moon and Stars",
-      "topics": [
-        "Moon phases",
-        "Moon movement",
-        "Stars",
-        "Constellations",
-        "Night sky observations"
-      ],
-      "summary": "Practice on Moon appearance and phases, stars, constellations, and patterns in the night sky."
-    },
-    {
-      "id": "science-207",
-      "file": "science-workbook/1161_207_right_side_up.pdf",
-      "sourcePages": "207-234",
-      "unit": "Unit E",
-      "title": "Matter and Changes in Matter",
-      "topics": [
-        "Solids",
-        "Liquids",
-        "Gases",
-        "Physical changes",
-        "Chemical changes",
-        "Heat"
-      ],
-      "summary": "Matter, measurement, states of matter, physical and chemical changes, and heat energy."
-    },
-    {
-      "id": "science-235",
-      "file": "science-workbook/1161_235_right_side_up.pdf",
-      "sourcePages": "235-261",
-      "unit": "Unit E",
-      "title": "Light, Sound, and Energy",
-      "topics": [
-        "Light",
-        "Reflection",
-        "Refraction",
-        "Shadows",
-        "Sound",
-        "Pitch",
-        "Vibration",
-        "Energy"
-      ],
-      "summary": "Workbook pages on light behavior, sound waves and vibration, and basic forms of energy."
-    },
-    {
-      "id": "science-289",
-      "file": "science-workbook/1161_289_right_side_up.pdf",
-      "sourcePages": "289-316",
-      "unit": "Unit F",
-      "title": "Magnets, Forces, and Motion",
-      "topics": [
-        "Magnets",
-        "Magnetic poles",
-        "Magnetic fields",
-        "Gravity",
-        "Pushes and pulls",
-        "Motion"
-      ],
-      "summary": "Practice with magnets and magnetic fields, gravity, forces, and ways objects move."
+      "description": "Writing curriculum"
     }
   ]
 }

@@ -1,10 +1,4 @@
 
-/* Version 4.2 Live Teaching Workspace additions */
-.workspace-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-.classroom-mode .sidebar{display:none}
-.classroom-mode .app-shell{grid-template-columns:1fr}
-.classroom-mode .main-content{padding:22px}
-.classroom-mode #workspace .lesson-list{display:none}
-.classroom-mode #workspace .lesson-layout{grid-template-columns:1fr}
-.classroom-mode #workspace h2{font-size:44px}
-.classroom-mode #workspace .system-section{font-size:20px}
+.student-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.student-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.student-card textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:8px;padding:8px}

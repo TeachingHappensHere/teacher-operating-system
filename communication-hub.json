@@ -1,480 +1,98 @@
 {
-  "version": "3.1 Classroom Systems Content Build",
-  "systems": [
+  "version": "4.5 Parent Communication Hub",
+  "categories": [
+    "Positive Message",
+    "Academic Update",
+    "Behavior Follow-Up",
+    "Attendance",
+    "Intervention",
+    "Conference",
+    "Weekly Newsletter",
+    "General Reminder"
+  ],
+  "templates": [
     {
-      "id": "entering-classroom",
-      "title": "Entering the Classroom",
-      "category": "Beginning of Year",
-      "objective": "Students will enter the classroom calmly, unpack materials, and begin morning work independently.",
-      "materials": [
-        "Morning work",
-        "Folder basket",
-        "Backpack hooks/cubbies",
-        "Pencils",
-        "Visual routine chart"
-      ],
-      "anchorChart": [
-        "Walk in quietly.",
-        "Unpack backpack.",
-        "Turn in folder.",
-        "Put materials away.",
-        "Begin morning work."
-      ],
-      "iDo": "Model entering the classroom exactly the way students should do it. Walk in, unpack, turn in the folder, get materials, sit down, and begin morning work. Then model it incorrectly and ask students what went wrong.",
-      "weDo": "Have the whole class practice entering together. Narrate the positive choices you see: quiet feet, folders turned in, eyes on morning work.",
-      "youDo": "Send students outside or to the doorway in small groups and have them practice independently while you observe.",
-      "teacherLanguage": [
-        "Show me how scholars enter calmly.",
-        "Try that again with quiet feet.",
-        "I notice students getting started without reminders.",
-        "This is how we protect our learning time."
-      ],
-      "whatToPraise": [
-        "Quiet entry",
-        "Folder turned in",
-        "Backpack put away",
-        "Morning work started quickly",
-        "Students helping without talking"
-      ],
-      "commonMistakes": [
-        "Talking at the door",
-        "Wandering around the room",
-        "Forgetting folders",
-        "Playing with supplies",
-        "Waiting for the teacher instead of starting"
-      ],
-      "reteachMoments": [
-        "First week of school",
-        "After long weekends",
-        "After breaks",
-        "Any morning that begins loudly or scattered"
-      ],
-      "micaylaNote": "Do not assume students know how to enter. This routine sets the tone for the entire day. Practice it until it feels automatic."
+      "id": "positive-message",
+      "title": "Positive Student Message",
+      "category": "Positive Message",
+      "subject": "A wonderful update about [Student Name]",
+      "body": "Hello [Family Name],\n\nI wanted to share a positive update about [Student Name]. Today, [he/she/they] showed [specific strength or behavior]. I was especially proud of [specific example].\n\nThank you for supporting [Student Name]. It is a joy to have [him/her/them] in class.\n\nWarmly,\nMrs. Parrish"
     },
     {
-      "id": "morning-routine",
-      "title": "Morning Routine",
-      "category": "Beginning of Year",
-      "objective": "Students will follow a predictable morning routine so the school day begins smoothly.",
-      "materials": [
-        "Morning routine visual",
-        "Breakfast procedures",
-        "Morning work",
-        "Sharpened pencils",
-        "Turn-in basket"
-      ],
-      "anchorChart": [
-        "Unpack.",
-        "Breakfast if needed.",
-        "Turn in folder.",
-        "Get pencil.",
-        "Start morning work.",
-        "Be ready for morning meeting."
-      ],
-      "iDo": "Walk students through the entire routine step by step. Point to each part of the visual routine as you model.",
-      "weDo": "Practice as a class using a call-and-response: What do we do first? What comes next?",
-      "youDo": "Students complete the routine while you silently observe and note who needs support.",
-      "teacherLanguage": [
-        "Your morning routine is your first success of the day.",
-        "Check the chart if you forget.",
-        "I love how you started without waiting for me.",
-        "Our room feels peaceful when we all follow the routine."
-      ],
-      "whatToPraise": [
-        "Independence",
-        "Students checking the visual",
-        "Quiet breakfast",
-        "Morning work completed",
-        "Readiness for meeting"
-      ],
-      "commonMistakes": [
-        "Asking what to do",
-        "Talking instead of working",
-        "Skipping folder turn-in",
-        "Leaving breakfast trash out",
-        "Starting morning work late"
-      ],
-      "reteachMoments": [
-        "Every day during Week 1",
-        "Mondays",
-        "After schedule changes",
-        "When students begin relying on teacher reminders"
-      ],
-      "micaylaNote": "This routine prevents morning chaos. The more consistent you are here, the easier the rest of the day becomes."
+      "id": "academic-update",
+      "title": "Academic Progress Update",
+      "category": "Academic Update",
+      "subject": "Academic update for [Student Name]",
+      "body": "Hello [Family Name],\n\nI wanted to provide an update on [Student Name]'s progress in [subject/skill]. [Student Name] is currently showing strength in [strength] and is continuing to work on [growth area].\n\nAt school, we are supporting this through [support or intervention]. At home, it may help to [simple home support].\n\nThank you for partnering with us.\n\nWarmly,\nMrs. Parrish"
     },
     {
-      "id": "line-up",
-      "title": "How to Line Up",
-      "category": "Transitions",
-      "objective": "Students will line up safely, quietly, and quickly when called.",
-      "materials": [
-        "Line spots if available",
-        "Door area",
-        "Hallway expectations visual"
-      ],
-      "anchorChart": [
-        "Stand up.",
-        "Push chair in.",
-        "Walk to line.",
-        "Face forward.",
-        "Hands to self.",
-        "Voices off."
-      ],
-      "iDo": "Model each step slowly. Then model a messy line-up and let students name what needs fixing. Model correctly one more time.",
-      "weDo": "Call a small group to line up while the rest of the class notices what they did well. Repeat with another group.",
-      "youDo": "Have the whole class line up. If it is not correct, calmly reset and try again.",
-      "teacherLanguage": [
-        "Line up like scholars.",
-        "Reset. We can do this better.",
-        "I see hands to self and voices off.",
-        "A safe line helps us move through the school respectfully."
-      ],
-      "whatToPraise": [
-        "Pushed-in chairs",
-        "Walking feet",
-        "Facing forward",
-        "Quiet voices",
-        "Personal space"
-      ],
-      "commonMistakes": [
-        "Racing to line",
-        "Talking",
-        "Touching others",
-        "Leaving gaps",
-        "Turning around"
-      ],
-      "reteachMoments": [
-        "Before lunch",
-        "Before specials/workout",
-        "After recess",
-        "Anytime the line becomes unsafe"
-      ],
-      "micaylaNote": "Spend time here. If students line up well, transitions become much easier all year."
+      "id": "behavior-follow-up",
+      "title": "Behavior Follow-Up",
+      "category": "Behavior Follow-Up",
+      "subject": "Follow-up regarding today",
+      "body": "Hello [Family Name],\n\nI wanted to follow up about a situation involving [Student Name] today. The concern was [brief factual description]. We addressed it by [school response].\n\n[Student Name] was given the opportunity to reflect, reset, and return to learning. Tomorrow, we will continue reinforcing [expected behavior or routine].\n\nPlease contact me with any questions.\n\nWarmly,\nMrs. Parrish"
     },
     {
-      "id": "hallway",
-      "title": "Hallway Expectations",
-      "category": "Transitions",
-      "objective": "Students will move through the hallway safely and respectfully.",
-      "materials": [
-        "Hallway route",
-        "Stopping points",
-        "Hallway expectations chart"
-      ],
-      "anchorChart": [
-        "Walking feet.",
-        "Silent voices.",
-        "Hands by side.",
-        "Eyes forward.",
-        "Stay with the class."
-      ],
-      "iDo": "Model walking in the hallway with silent voice, hands by side, and eyes forward. Show what not to do and let students identify the problem.",
-      "weDo": "Practice walking to a nearby checkpoint and back. Stop and praise what is correct.",
-      "youDo": "Walk to lunch, recess, or specials using the expectations. Reset if needed.",
-      "teacherLanguage": [
-        "The hallway belongs to everyone.",
-        "Silent voices show respect.",
-        "Let\u2019s return and try again.",
-        "Our class can move calmly."
-      ],
-      "whatToPraise": [
-        "Silent voices",
-        "Straight line",
-        "Hands to self",
-        "Respect for displays",
-        "Stopping at checkpoints"
-      ],
-      "commonMistakes": [
-        "Touching walls",
-        "Talking",
-        "Skipping",
-        "Leaving the line",
-        "Rushing"
-      ],
-      "reteachMoments": [
-        "First week",
-        "After lunch/recess excitement",
-        "Before assemblies",
-        "Anytime another class is disrupted"
-      ],
-      "micaylaNote": "It is okay to stop, return, and practice again. That is teaching, not punishment."
+      "id": "attendance-reminder",
+      "title": "Attendance Reminder",
+      "category": "Attendance",
+      "subject": "Attendance reminder for [Student Name]",
+      "body": "Hello [Family Name],\n\nThis is a friendly reminder that regular attendance is very important for [Student Name]'s academic progress. When students miss school, they also miss direct instruction, practice, and classroom routines.\n\nPlease let us know if there is anything we can do to support consistent attendance.\n\nThank you,\nMrs. Parrish"
     },
     {
-      "id": "carpet",
-      "title": "How to Sit on the Carpet",
-      "category": "Whole Group",
-      "objective": "Students will sit on the carpet in a way that shows they are ready to learn.",
-      "materials": [
-        "Carpet area",
-        "Visual chart",
-        "Read aloud or mini lesson materials"
-      ],
-      "anchorChart": [
-        "Criss-cross.",
-        "Hands in lap.",
-        "Eyes on speaker.",
-        "Bubble in mouth.",
-        "Personal space."
-      ],
-      "iDo": "Model ready carpet body. Then model a not-ready body and ask students to explain the difference.",
-      "weDo": "Students practice moving from desks to carpet and showing ready body. Praise specific behaviors.",
-      "youDo": "During read aloud or mini lesson, students maintain ready body with quick teacher reminders.",
-      "teacherLanguage": [
-        "Show me a ready carpet body.",
-        "Bubble in mouth.",
-        "Eyes on the speaker.",
-        "Your body is showing me you are ready."
-      ],
-      "whatToPraise": [
-        "Eyes on speaker",
-        "Hands in lap",
-        "Still body",
-        "Personal space",
-        "Quiet listening"
-      ],
-      "commonMistakes": [
-        "Rolling on carpet",
-        "Touching classmates",
-        "Calling out",
-        "Turning away",
-        "Playing with shoes or objects"
-      ],
-      "reteachMoments": [
-        "Before read aloud",
-        "After breaks",
-        "When mini lessons become interrupted"
-      ],
-      "micaylaNote": "This routine will need quick refreshers often. Keep the language simple and consistent."
+      "id": "intervention-update",
+      "title": "Reading Intervention Update",
+      "category": "Intervention",
+      "subject": "Reading support update for [Student Name]",
+      "body": "Hello [Family Name],\n\nI wanted to share an update about the reading support [Student Name] is receiving. We are currently focusing on [decoding/fluency/comprehension skill] through [UFLI, MOWR, small group, rereading, etc.].\n\nRecent progress shows [progress note]. Our next instructional step is [next step].\n\nAt home, continuing to read for 20\u201330 minutes and practicing [specific skill] will be helpful.\n\nWarmly,\nMrs. Parrish"
     },
     {
-      "id": "pencils",
-      "title": "Pencil Procedures",
-      "category": "Materials",
-      "objective": "Students will manage pencils without interrupting instruction.",
-      "materials": [
-        "Sharp pencil cup",
-        "Dull pencil cup",
-        "Borrowed pencil system",
-        "Sharpener"
-      ],
-      "anchorChart": [
-        "Dull? Sharpen it.",
-        "Broken? Sharpen it.",
-        "No pencil? Borrow one.",
-        "Return borrowed pencils."
-      ],
-      "iDo": "Show students exactly what to do with a dull pencil, broken pencil, and missing pencil.",
-      "weDo": "Practice scenarios: My pencil breaks during writing. What do I do? I do not have a pencil. What do I do?",
-      "youDo": "Students use the pencil system during independent work without asking aloud.",
-      "teacherLanguage": [
-        "Use the pencil system.",
-        "This is a tool, not a toy.",
-        "Solve the pencil problem quietly.",
-        "Thank you for returning borrowed pencils."
-      ],
-      "whatToPraise": [
-        "Quiet problem solving",
-        "Returning borrowed pencils",
-        "Using the correct cup",
-        "Staying seated during instruction"
-      ],
-      "commonMistakes": [
-        "Sharpening during teaching",
-        "Playing at sharpener",
-        "Not returning pencils",
-        "Interrupting to ask for a pencil"
-      ],
-      "reteachMoments": [
-        "During writing block",
-        "When pencils begin disappearing",
-        "When sharpening interrupts lessons"
-      ],
-      "micaylaNote": "Pencils can steal instructional time. A clear system saves your sanity."
+      "id": "conference-notes",
+      "title": "Parent Conference Notes",
+      "category": "Conference",
+      "subject": "Conference notes for [Student Name]",
+      "body": "Student strengths:\n- \n\nAcademic data:\n- Reading:\n- Math:\n- Writing:\n\nBehavior / classroom habits:\n- \n\nCurrent supports:\n- \n\nFamily questions or concerns:\n- \n\nNext steps:\n- \n\nFollow-up date:\n- "
     },
     {
-      "id": "restroom",
-      "title": "Restroom Signal",
-      "category": "Procedures",
-      "objective": "Students will request and use the restroom without interrupting learning.",
-      "materials": [
-        "Restroom pass",
-        "Hand signal chart"
-      ],
-      "anchorChart": [
-        "Use hand signal.",
-        "Wait for permission.",
-        "Take pass.",
-        "Return quickly.",
-        "Rejoin quietly."
-      ],
-      "iDo": "Model the hand signal and quiet permission process. Show how to leave and rejoin without interrupting.",
-      "weDo": "Practice the signal as a class. Role-play what to do if the teacher is speaking.",
-      "youDo": "Students use the signal during the day and wait for a nonverbal response when possible.",
-      "teacherLanguage": [
-        "Use the signal.",
-        "Thank you for waiting.",
-        "Return quietly and join us.",
-        "Take care of your body and protect learning time."
-      ],
-      "whatToPraise": [
-        "Silent signal",
-        "Waiting patiently",
-        "Quick return",
-        "Quiet reentry"
-      ],
-      "commonMistakes": [
-        "Calling out",
-        "Leaving without permission",
-        "Taking too long",
-        "Interrupting instruction"
-      ],
-      "reteachMoments": [
-        "When students begin asking aloud",
-        "After lunch",
-        "During testing",
-        "When the pass system breaks down"
-      ],
-      "micaylaNote": "Restroom signals reduce interruptions and help the room stay calm."
+      "id": "weekly-newsletter",
+      "title": "Weekly Classroom Newsletter",
+      "category": "Weekly Newsletter",
+      "subject": "Mrs. Parrish's Weekly Classroom Update",
+      "body": "Hello Families,\n\nHere is what we are learning this week:\n\nReading:\n[Reading focus]\n\nPhonics:\n[Phonics focus]\n\nVocabulary:\n[Vocabulary focus]\n\nMath:\n[Math focus]\n\nWriting:\n[Writing focus]\n\nScience / Social Studies:\n[Content focus]\n\nImportant reminders:\n- [Reminder]\n- [Reminder]\n\nThank you for your continued support!\n\nWarmly,\nMrs. Parrish"
     },
     {
-      "id": "partner-talk",
-      "title": "Partner Talk",
-      "category": "Discussion",
-      "objective": "Students will use partner talk to rehearse ideas before sharing with the class.",
-      "materials": [
-        "Partner A/B assignments",
-        "Sentence frames",
-        "Question prompt"
-      ],
-      "anchorChart": [
-        "Face partner.",
-        "Take turns.",
-        "Listen.",
-        "Use sentence frame.",
-        "Share one idea."
-      ],
-      "iDo": "Model partner talk with a student or imaginary partner. Show listening and speaking roles.",
-      "weDo": "Practice with a simple question before using academic content.",
-      "youDo": "Students use partner talk during reading, vocabulary, writing, and math discussions.",
-      "teacherLanguage": [
-        "Partner A speaks first.",
-        "Partner B listens.",
-        "Now switch.",
-        "Be ready to share your partner\u2019s idea."
-      ],
-      "whatToPraise": [
-        "Taking turns",
-        "Using the frame",
-        "Listening body",
-        "Sharing partner\u2019s idea",
-        "Staying on topic"
-      ],
-      "commonMistakes": [
-        "Both talk at once",
-        "No one talks",
-        "Off-topic conversation",
-        "Arguing about partners"
-      ],
-      "reteachMoments": [
-        "Before academic discussions",
-        "When students call out",
-        "When whole-group participation is low"
-      ],
-      "micaylaNote": "Assign Partner A and Partner B clearly. Otherwise students waste time deciding."
-    },
-    {
-      "id": "voice-levels",
-      "title": "Voice Levels",
-      "category": "Classroom Management",
-      "objective": "Students will use appropriate voice levels for different learning activities.",
-      "materials": [
-        "Voice level chart",
-        "Practice scenarios"
-      ],
-      "anchorChart": [
-        "0 Silent.",
-        "1 Whisper.",
-        "2 Partner.",
-        "3 Presentation.",
-        "4 Outside."
-      ],
-      "iDo": "Model each voice level. Exaggerate the differences so students can hear them clearly.",
-      "weDo": "Call out a voice level and have students practice with a short phrase.",
-      "youDo": "Students use the correct voice level during centers, partner work, independent work, and presentations.",
-      "teacherLanguage": [
-        "Show me Level 1.",
-        "We are at Level 0 right now.",
-        "Partner work is Level 2.",
-        "Match your voice to the activity."
-      ],
-      "whatToPraise": [
-        "Correct volume",
-        "Quick adjustment",
-        "Quiet transitions",
-        "Respectful group work"
-      ],
-      "commonMistakes": [
-        "Using outside voice inside",
-        "Whispering during presentation",
-        "Talking during silent work",
-        "Not adjusting when signaled"
-      ],
-      "reteachMoments": [
-        "Before centers",
-        "Before group work",
-        "After recess",
-        "Anytime noise level rises"
-      ],
-      "micaylaNote": "Voice levels only work if students practice them and you refer to them constantly."
-    },
-    {
-      "id": "dismissal",
-      "title": "Dismissal Routine",
-      "category": "End of Day",
-      "objective": "Students will pack up and dismiss safely and calmly.",
-      "materials": [
-        "Dismissal list",
-        "Backpacks",
-        "Folders",
-        "Transportation notes"
-      ],
-      "anchorChart": [
-        "Pack quietly.",
-        "Clean area.",
-        "Stack chair.",
-        "Wait for group/name.",
-        "Leave safely."
-      ],
-      "iDo": "Model packing up, cleaning, and waiting quietly. Show what rushing looks like and why it is unsafe.",
-      "weDo": "Practice packing slowly with teacher directions.",
-      "youDo": "Students pack independently and wait for dismissal signal.",
-      "teacherLanguage": [
-        "Dismissal is still part of our learning day.",
-        "Pack calmly.",
-        "Check your area.",
-        "Wait until your group is called."
-      ],
-      "whatToPraise": [
-        "Clean area",
-        "Quiet packing",
-        "Safe movement",
-        "Listening for group",
-        "Helping others appropriately"
-      ],
-      "commonMistakes": [
-        "Running",
-        "Yelling",
-        "Forgetting materials",
-        "Leaving trash",
-        "Lining up too early"
-      ],
-      "reteachMoments": [
-        "First week",
-        "Fridays",
-        "Before long weekends",
-        "Whenever dismissal feels chaotic"
-      ],
-      "micaylaNote": "Start dismissal earlier than you think during the first week. Calm dismissal is taught."
+      "id": "iday-reminder",
+      "title": "iDay Reminder",
+      "category": "General Reminder",
+      "subject": "iDay reminder",
+      "body": "Hello Families,\n\nThis is a reminder that [date] is an iDay. Students should complete their assigned MobyMax work and read for 20\u201330 minutes using Beanstack.\n\nPlease contact me if you have questions or need support accessing the assignments.\n\nThank you,\nMrs. Parrish"
     }
+  ],
+  "contactLogFields": [
+    "Date",
+    "Student",
+    "Family Member",
+    "Method",
+    "Reason",
+    "Summary",
+    "Follow-Up Needed",
+    "Follow-Up Date"
+  ],
+  "methods": [
+    "Class Dojo",
+    "Email",
+    "Phone Call",
+    "In Person",
+    "Conference",
+    "Text",
+    "Other"
+  ],
+  "quickMessages": [
+    "Your child had a wonderful day today!",
+    "Please remember to return the folder tomorrow.",
+    "We are practicing reading fluency this week.",
+    "Thank you for supporting homework and reading at home.",
+    "Please contact me when you have a moment.",
+    "Your child showed kindness and leadership today."
   ]
 }

@@ -1,141 +1,150 @@
 {
-  "version": "Sprint 4 - Interactive Dashboard",
+  "version": "Dashboard Redesign Patch",
   "teacher": "Mrs. Parrish",
-  "currentPillar": "Heart",
-  "today": {
-    "focus": "Open Court Unit 1",
-    "lesson": "Lesson 1: The Mice Who Lived in a Shoe",
-    "writing": "Building the Foundation",
-    "science": "Science workbook / supplement ready",
-    "status": "Classroom Ready"
-  },
+  "title": "Mrs. Parrish\u2019s Scholar System",
+  "quote": "The influence of a good teacher can never be erased.",
+  "date": "May 16, 2024",
   "schedule": [
     [
-      "7:45\u20138:10",
-      "Breakfast"
+      "7:30 \u2013 8:00",
+      "Morning Routine"
     ],
     [
-      "8:10\u20138:20",
-      "Morning Work"
-    ],
-    [
-      "8:20\u20138:30",
-      "Morning Meeting"
-    ],
-    [
-      "8:30\u20138:40",
+      "8:00 \u2013 8:30",
       "Heggerty"
     ],
     [
-      "8:45\u20139:30",
-      "MOWR / Reading Intervention"
+      "8:30 \u2013 10:00",
+      "Open Court \u2013 ELA Block"
     ],
     [
-      "9:30\u20139:50",
-      "Phonics"
+      "10:00 \u2013 10:15",
+      "Recess"
     ],
     [
-      "9:50\u201310:00",
-      "Vocabulary"
+      "10:15 \u2013 10:45",
+      "Small Groups"
     ],
     [
-      "10:00\u201310:50",
-      "Open Court Reading"
+      "10:45 \u2013 11:30",
+      "UFLI"
     ],
     [
-      "10:50\u201311:15",
+      "11:30 \u2013 12:00",
       "Lunch"
     ],
     [
-      "11:15\u201311:35",
-      "Recess"
+      "12:00 \u2013 12:45",
+      "Eureka Math\u00b2"
     ],
     [
-      "11:35\u201312:05",
-      "Workout"
+      "12:45 \u2013 1:30",
+      "Science / Social Studies"
     ],
     [
-      "12:05\u20131:05",
-      "Math"
+      "1:30 \u2013 2:00",
+      "Intervention / MOWR"
     ],
     [
-      "1:05\u20131:35",
-      "Writing"
+      "2:00 \u2013 2:45",
+      "Centers"
     ],
     [
-      "1:35\u20132:00",
-      "Social Studies"
+      "2:45 \u2013 3:15",
+      "Read Aloud & Wrap Up"
+    ]
+  ],
+  "curriculum": [
+    [
+      "\ud83d\udcd9",
+      "Open Court"
     ],
     [
-      "2:00\u20132:15",
-      "Recess"
-    ],
-    [
-      "2:15\u20132:35",
+      "\ud83e\uddea",
       "Science"
     ],
     [
-      "2:40\u20133:00",
-      "Pack-up"
+      "\ud83d\udd24",
+      "UFLI Foundations"
     ],
     [
-      "3:00\u20133:30",
-      "Dismissal"
+      "\ud83c\udf0e",
+      "Social Studies"
+    ],
+    [
+      "\ud83d\udd35",
+      "MOWR"
+    ],
+    [
+      "\u2764\ufe0f",
+      "Health"
+    ],
+    [
+      "\ud83e\uddf1",
+      "Heggerty"
+    ],
+    [
+      "\ud83c\udfa8",
+      "Art"
+    ],
+    [
+      "\ud83d\udcd7",
+      "Eureka Math\u00b2"
+    ],
+    [
+      "\ud83c\udfb5",
+      "Music"
     ]
   ],
-  "printCenter": [
-    "Open Court Skills Practice",
-    "Phonics Assessment",
-    "Vocabulary Assessment",
-    "Comprehension Assessment",
-    "GUM Assessment",
-    "Cause and Effect Organizer"
+  "classroomLinks": [
+    "Classroom Layout",
+    "Our Procedures",
+    "Classroom Expectations",
+    "Line-Up Routines",
+    "Small Group Organization",
+    "Supply List",
+    "Classroom Jobs"
   ],
-  "quickActions": [
-    {
-      "label": "Teach Today",
-      "target": "today"
-    },
-    {
-      "label": "Document Library",
-      "target": "library"
-    },
-    {
-      "label": "Universal Search",
-      "target": "search"
-    },
-    {
-      "label": "Lesson Attachments",
-      "target": "attachments"
-    },
-    {
-      "label": "Teacher Brain",
-      "target": "brain"
-    }
+  "shortcuts": [
+    "Take Attendance",
+    "Print Center",
+    "Behavior Tracker",
+    "Timer",
+    "Student Notes",
+    "Random Grouping",
+    "Quick Email",
+    "Class Dojo"
   ],
-  "teacherBrain": [
-    "Teach vocabulary before reading.",
-    "Spend extra time on merchant.",
-    "Use partner talk before cause/effect questions.",
-    "Open Court packets are worth using because they reinforce assessment skills.",
-    "Preview videos before showing students."
-  ],
-  "planningStatus": [
-    {
-      "week": "This Week",
-      "status": "Ready to review"
-    },
-    {
-      "week": "Next Week",
-      "status": "Needs lesson selection"
-    },
-    {
-      "week": "iDay Plans",
-      "status": "MobyMax + Beanstack reminder"
-    },
-    {
-      "week": "Classroom Systems",
-      "status": "Beginning-of-year routines ready"
-    }
-  ]
+  "lowerCards": {
+    "Student Data": [
+      "Data Tracker",
+      "Assessment Data",
+      "Progress Monitoring",
+      "Intervention Notes"
+    ],
+    "Communication": [
+      "Parent Contact Log",
+      "Newsletters",
+      "Parent Conference Notes",
+      "Email Templates"
+    ],
+    "Classroom Inspiration": [
+      "Bulletin Board Ideas",
+      "Classroom Decor",
+      "Door Decor Ideas",
+      "Celebrations"
+    ],
+    "Forms & Printables": [
+      "IEP / 504 / ELL Guide",
+      "Parent Forms",
+      "Behavior Forms",
+      "Miscellaneous Forms"
+    ],
+    "Teacher Self-Care": [
+      "Self-Care Ideas",
+      "Encouragement",
+      "Gratitude",
+      "You\u2019ve Got This!"
+    ]
+  }
 }

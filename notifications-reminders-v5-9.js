@@ -1,505 +1,105 @@
 
-// TeachingHappensHere Version 5.0
-// Launch Candidate & Installation Center
-(function () {
-  "use strict";
-
-  const VERSION = "5.0";
-  const ONBOARDING_KEY = "thh-v50:onboarding-complete";
-  let deferredInstallPrompt = null;
-  let overlay = null;
-
-  const FEATURES = [
-    ["Home Dashboard", "Your classroom command center"],
-    ["Teach My Day", "Guided block-by-block teaching flow"],
-    ["Live Teaching Workspace", "One-screen instructional workspace"],
-    ["Lesson Builder", "Curriculum, groups, assessments, and print planning"],
-    ["Classroom Systems", "Procedures, anchor charts, and coaching notes"],
-    ["Classroom Launch", "First-week routine teaching support"],
-    ["Small Groups", "Red, Yellow, Blue, and Green intervention structure"],
-    ["Assessments & Data", "DIBELS, Open Court, and reteach connections"],
-    ["Smart Print Center", "Print needs organized by teaching purpose"],
-    ["Teacher Brain", "Searchable veteran-teacher reminders"],
-    ["Resource Library", "File locations, status, and lesson connections"],
-    ["Student Dashboard", "Student support overview"],
-    ["Communication Hub", "Family messages, newsletters, and contact notes"],
-    ["Universal Search", "Search the entire operating system"],
-    ["Saved Progress", "Checklists, notes, drafts, and place-saving"],
-    ["App Health", "Launch-readiness and file checks"],
-    ["Backup & Transfer", "Move saved work between devices"]
-  ];
-
-  function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  }
-
-  function isStandalone() {
-    return window.matchMedia("(display-mode: standalone)").matches ||
-      window.navigator.standalone === true;
-  }
-
-  function browserName() {
-    const ua = navigator.userAgent;
-    if (/Edg\//.test(ua)) return "Microsoft Edge";
-    if (/Chrome\//.test(ua) && !/Edg\//.test(ua)) return "Google Chrome";
-    if (/Safari\//.test(ua) && !/Chrome\//.test(ua)) return "Safari";
-    if (/Firefox\//.test(ua)) return "Firefox";
-    return "Browser";
-  }
-
-  function platformName() {
-    if (isIOS()) return /iPad/.test(navigator.userAgent) || navigator.platform === "MacIntel"
-      ? "iPad"
-      : "iPhone";
-    if (/Windows/.test(navigator.userAgent)) return "Windows";
-    if (/Macintosh/.test(navigator.userAgent)) return "Mac";
-    if (/Android/.test(navigator.userAgent)) return "Android";
-    return "Device";
-  }
-
-  function installInstructions() {
-    if (isStandalone()) {
-      return {
-        title: "TeachingHappensHere is installed",
-        steps: [
-          "Open it from your Home Screen, Dock, Start menu, or Applications.",
-          "Keep GitHub Pages available so updates can be downloaded.",
-          "Use Backup & Transfer before changing devices."
-        ]
-      };
-    }
-
-    if (isIOS()) {
-      return {
-        title: `Install on this ${platformName()}`,
-        steps: [
-          "Open TeachingHappensHere in Safari.",
-          "Tap the Share button.",
-          "Scroll down and tap Add to Home Screen.",
-          "Confirm the name and tap Add.",
-          "Open the new TeachingHappensHere icon from the Home Screen."
-        ]
-      };
-    }
-
-    return {
-      title: `Install using ${browserName()}`,
-      steps: [
-        "Look for the install icon in the browser address bar.",
-        "Select Install or Install app.",
-        "Confirm the installation.",
-        "Open TeachingHappensHere from the desktop, Start menu, Dock, or Applications.",
-        "If no install icon appears, use the browser menu and choose Install app or Apps."
-      ]
-    };
-  }
-
-  function createOverlay() {
-    overlay = document.createElement("div");
-    overlay.id = "launchCandidateOverlay";
-    overlay.className = "launch-candidate-overlay";
-
-    overlay.innerHTML = `
-      <section class="launch-candidate-dialog" role="dialog" aria-modal="true" aria-label="TeachingHappensHere launch center">
-        <header class="launch-candidate-header">
-          <div>
-            <p class="eyebrow">Version ${VERSION} Launch Candidate</p>
-            <h2>Welcome to TeachingHappensHere</h2>
-            <p>Your classroom operating system is ready for installation, testing, and daily use.</p>
-          </div>
-          <button id="closeLaunchCandidate" aria-label="Close launch center">×</button>
-        </header>
-
-        <section class="launch-candidate-hero">
-          <div class="launch-candidate-logo">THH</div>
-          <div>
-            <strong>Mrs. Parrish’s Scholar System</strong>
-            <span id="launchDeviceSummary"></span>
-          </div>
-          <button id="installTeachingHappensHere">Install App</button>
-        </section>
-
-        <div class="launch-candidate-tabs">
-          <button class="active" data-launch-tab="setup">First-Time Setup</button>
-          <button data-launch-tab="install">Install</button>
-          <button data-launch-tab="features">What’s Included</button>
-          <button data-launch-tab="readiness">Launch Readiness</button>
-        </div>
-
-        <section id="launchSetupTab" class="launch-tab-panel"></section>
-        <section id="launchInstallTab" class="launch-tab-panel hidden"></section>
-        <section id="launchFeaturesTab" class="launch-tab-panel hidden"></section>
-        <section id="launchReadinessTab" class="launch-tab-panel hidden"></section>
-
-        <footer class="launch-candidate-footer">
-          <span id="launchCandidateStatus">Launch Center ready</span>
-          <div>
-            <button id="finishOnboarding">Setup Complete</button>
-            <button id="openMyClassroom">Open My Classroom</button>
-          </div>
-        </footer>
-      </section>
-    `;
-
-    document.body.appendChild(overlay);
-
-    document.getElementById("closeLaunchCandidate").addEventListener("click", closeCenter);
-    document.getElementById("installTeachingHappensHere").addEventListener("click", installApp);
-    document.getElementById("finishOnboarding").addEventListener("click", finishOnboarding);
-    document.getElementById("openMyClassroom").addEventListener("click", openClassroom);
-
-    overlay.addEventListener("click", event => {
-      if (event.target === overlay) closeCenter();
-    });
-
-    document.querySelectorAll("[data-launch-tab]").forEach(button => {
-      button.addEventListener("click", () => showTab(button.dataset.launchTab));
-    });
-  }
-
-  function showTab(tab) {
-    const map = {
-      setup: "launchSetupTab",
-      install: "launchInstallTab",
-      features: "launchFeaturesTab",
-      readiness: "launchReadinessTab"
-    };
-
-    document.querySelectorAll("[data-launch-tab]").forEach(button => {
-      button.classList.toggle("active", button.dataset.launchTab === tab);
-    });
-
-    document.querySelectorAll(".launch-tab-panel").forEach(panel => {
-      panel.classList.add("hidden");
-    });
-
-    document.getElementById(map[tab]).classList.remove("hidden");
-  }
-
-  function renderSetup() {
-    document.getElementById("launchSetupTab").innerHTML = `
-      <div class="launch-candidate-section">
-        <h3>First-Time Setup Checklist</h3>
-        <div class="launch-setup-grid">
-          ${[
-            "Open App Health and resolve required file issues",
-            "Test Universal Search with Ctrl/Command + K",
-            "Open Teach My Day",
-            "Open Live Teaching Workspace",
-            "Confirm Classroom Systems load",
-            "Confirm Smart Print Center loads",
-            "Create a Backup & Transfer file",
-            "Install TeachingHappensHere on this device",
-            "Add available classroom resources",
-            "Practice opening the app in installed mode"
-          ].map((step, index) => `
-            <label>
-              <input type="checkbox" data-save-key="v50-setup-${index}">
-              <span>${step}</span>
-            </label>
-          `).join("")}
-        </div>
-      </div>
-
-      <div class="launch-candidate-section">
-        <h3>Recommended Launch Order</h3>
-        <div class="launch-order">
-          <article><b>1</b><strong>Check</strong><span>Run App Health.</span></article>
-          <article><b>2</b><strong>Protect</strong><span>Download a backup.</span></article>
-          <article><b>3</b><strong>Install</strong><span>Add the app to the device.</span></article>
-          <article><b>4</b><strong>Practice</strong><span>Open Teach My Day and Workspace.</span></article>
-          <article><b>5</b><strong>Launch</strong><span>Use it during a real teaching block.</span></article>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderInstall() {
-    const instructions = installInstructions();
-    const installed = isStandalone();
-
-    document.getElementById("launchInstallTab").innerHTML = `
-      <div class="launch-candidate-section">
-        <div class="install-status-card ${installed ? "installed" : ""}">
-          <span>${installed ? "✓" : "＋"}</span>
-          <div>
-            <strong>${instructions.title}</strong>
-            <p>${installed
-              ? "The application is currently running in installed mode."
-              : `Detected: ${platformName()} using ${browserName()}.`}</p>
-          </div>
-        </div>
-
-        <ol class="installation-steps">
-          ${instructions.steps.map(step => `<li>${step}</li>`).join("")}
-        </ol>
-
-        <button class="launch-primary-action" id="installFromInstructions">
-          ${installed ? "Already Installed" : "Try Install Prompt"}
-        </button>
-      </div>
-
-      <div class="launch-candidate-section">
-        <h3>After Installation</h3>
-        <div class="launch-after-install">
-          <p>Open the installed app once while online so current files can be cached.</p>
-          <p>Run App Health inside the installed app.</p>
-          <p>Use Backup & Transfer before moving to another device.</p>
-          <p>Refresh after each GitHub deployment to receive the newest version.</p>
-        </div>
-      </div>
-    `;
-
-    document.getElementById("installFromInstructions").addEventListener("click", installApp);
-  }
-
-  function renderFeatures() {
-    document.getElementById("launchFeaturesTab").innerHTML = `
-      <div class="launch-candidate-section">
-        <h3>Version 5.0 Operating System</h3>
-        <div class="launch-feature-grid">
-          ${FEATURES.map(([title, description]) => `
-            <article>
-              <span>✓</span>
-              <div><strong>${title}</strong><p>${description}</p></div>
-            </article>
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }
-
-  async function renderReadiness() {
-    const serviceWorker = await checkServiceWorker();
-    const manifest = Boolean(document.querySelector('link[rel="manifest"]'));
-    const secure = window.isSecureContext;
-    const storage = typeof localStorage !== "undefined";
-    const search = Boolean(document.getElementById("universalSearchButton"));
-    const health = Boolean(document.getElementById("appHealthButton"));
-    const backup = Boolean(document.getElementById("backupExportButton"));
-
-    const checks = [
-      ["Secure HTTPS connection", secure],
-      ["PWA manifest linked", manifest],
-      ["Service worker registered", serviceWorker],
-      ["Saved Progress available", storage],
-      ["Universal Search detected", search],
-      ["App Health detected", health],
-      ["Backup & Transfer detected", backup],
-      ["Installed app mode", isStandalone()]
-    ];
-
-    const readyCount = checks.filter(([, ready]) => ready).length;
-
-    document.getElementById("launchReadinessTab").innerHTML = `
-      <div class="launch-candidate-section">
-        <div class="launch-readiness-score">
-          <strong>${readyCount}/${checks.length}</strong>
-          <span>Launch checks ready</span>
-        </div>
-
-        <div class="launch-readiness-grid">
-          ${checks.map(([title, ready]) => `
-            <article class="${ready ? "ready" : "needs-attention"}">
-              <span>${ready ? "✓" : "!"}</span>
-              <strong>${title}</strong>
-              <small>${ready ? "Ready" : title === "Installed app mode" ? "Install when ready" : "Needs attention"}</small>
-            </article>
-          `).join("")}
-        </div>
-
-        <div class="launch-readiness-actions">
-          <button id="openHealthFromLaunch">Open App Health</button>
-          <button id="openBackupFromLaunch">Create Backup</button>
-          <button id="refreshLaunchChecks">Run Checks Again</button>
-        </div>
-      </div>
-    `;
-
-    document.getElementById("openHealthFromLaunch").addEventListener("click", () => {
-      closeCenter();
-      document.getElementById("appHealthButton")?.click();
-    });
-
-    document.getElementById("openBackupFromLaunch").addEventListener("click", () => {
-      closeCenter();
-      document.getElementById("backupExportButton")?.click();
-    });
-
-    document.getElementById("refreshLaunchChecks").addEventListener("click", renderReadiness);
-  }
-
-  async function checkServiceWorker() {
-    if (!("serviceWorker" in navigator)) return false;
-
-    try {
-      const registration = await navigator.serviceWorker.getRegistration();
-      return Boolean(
-        registration &&
-        (registration.active || registration.waiting || registration.installing)
-      );
-    } catch {
-      return false;
-    }
-  }
-
-  function installApp() {
-    if (isStandalone()) {
-      setStatus("TeachingHappensHere is already installed.");
-      showTab("install");
-      return;
-    }
-
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      deferredInstallPrompt.userChoice.then(choice => {
-        setStatus(choice.outcome === "accepted"
-          ? "Installation accepted."
-          : "Installation was dismissed.");
-        deferredInstallPrompt = null;
-        renderInstall();
-      });
-      return;
-    }
-
-    showTab("install");
-    setStatus(isIOS()
-      ? "Use Safari’s Share menu and choose Add to Home Screen."
-      : "Use the browser’s Install app option.");
-  }
-
-  function finishOnboarding() {
-    localStorage.setItem(ONBOARDING_KEY, "true");
-    setStatus("First-time setup marked complete.");
-    setTimeout(closeCenter, 500);
-  }
-
-  function openClassroom() {
-    localStorage.setItem(ONBOARDING_KEY, "true");
-    closeCenter();
-
-    const teachButton = document.querySelector('[data-page="teachday"]');
-    const dashboardButton = document.querySelector('[data-page="dashboard"]');
-
-    (teachButton || dashboardButton)?.click();
-  }
-
-  function addButton() {
-    if (document.getElementById("launchCandidateButton")) return;
-
-    const button = document.createElement("button");
-    button.id = "launchCandidateButton";
-    button.className = "launch-candidate-button";
-    button.innerHTML = `
-      <span>★</span>
-      <strong>Launch Center</strong>
-      <small>v${VERSION}</small>
-    `;
-    button.addEventListener("click", openCenter);
-
-    const backupButton = document.getElementById("backupExportButton");
-    if (backupButton) {
-      backupButton.insertAdjacentElement("afterend", button);
-      return;
-    }
-
-    const healthButton = document.getElementById("appHealthButton");
-    if (healthButton) {
-      healthButton.insertAdjacentElement("afterend", button);
-      return;
-    }
-
-    const nav = document.querySelector(".side-nav, .sidebar nav");
-    nav?.insertAdjacentElement("afterend", button);
-  }
-
-  function openCenter() {
-    overlay.classList.add("open");
-    document.body.classList.add("launch-candidate-open");
-    document.getElementById("launchDeviceSummary").textContent =
-      `${platformName()} • ${browserName()} • ${isStandalone() ? "Installed" : "Browser mode"}`;
-    renderReadiness();
-    setStatus("Launch Center ready");
-  }
-
-  function closeCenter() {
-    overlay.classList.remove("open");
-    document.body.classList.remove("launch-candidate-open");
-  }
-
-  function setStatus(message) {
-    const status = document.getElementById("launchCandidateStatus");
-    if (status) status.textContent = message;
-  }
-
-  function restoreSetupChecks() {
-    const stateValue = localStorage.getItem("thh-v46:state");
-    if (!stateValue) return;
-
-    try {
-      const state = JSON.parse(stateValue);
-      document.querySelectorAll("[data-save-key]").forEach((checkbox, index) => {
-        const matching = Object.entries(state.checkboxes || {})
-          .find(([key]) => key.includes(checkbox.dataset.saveKey));
-
-        if (matching) checkbox.checked = Boolean(matching[1]);
-      });
-    } catch {}
-  }
-
-  function start() {
-    const css = document.createElement("link");
-    css.rel = "stylesheet";
-    css.href = "style-additions-v5-0.css";
-    document.head.appendChild(css);
-
-    createOverlay();
-    renderSetup();
-    renderInstall();
-    renderFeatures();
-    renderReadiness();
-    addButton();
-
-    setTimeout(restoreSetupChecks, 500);
-
-    document.addEventListener("keydown", event => {
-      if (
-        (event.ctrlKey || event.metaKey) &&
-        event.shiftKey &&
-        event.key.toLowerCase() === "l"
-      ) {
-        event.preventDefault();
-        openCenter();
-      }
-
-      if (event.key === "Escape" && overlay.classList.contains("open")) {
-        closeCenter();
-      }
-    });
-
-    const completed = localStorage.getItem(ONBOARDING_KEY) === "true";
-    if (!completed) {
-      setTimeout(openCenter, 1200);
-    }
-  }
-
-  window.addEventListener("beforeinstallprompt", event => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
-    setStatus("Install prompt is available.");
+(function(){
+"use strict";
+const STORE="thh-v59:reminders", HISTORY="thh-v59:history";
+let data, reminders=[], history=[], overlay;
+const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+const safe=k=>{try{return JSON.parse(localStorage.getItem(k)||"null")}catch{return null}};
+const save=()=>{localStorage.setItem(STORE,JSON.stringify(reminders));localStorage.setItem(HISTORY,JSON.stringify(history));refreshBadge();};
+const statusFor=r=>{
+  if(r.status!=="Active")return r.status;
+  const value=r.snoozedUntil||r.dueDate;
+  if(!value)return"No Date";
+  const due=new Date(value.includes("T")?value:value+"T12:00:00");
+  const today=new Date();today.setHours(0,0,0,0);due.setHours(0,0,0,0);
+  if(due<today)return"Overdue";
+  if(due.getTime()===today.getTime())return"Due Today";
+  const d=Math.ceil((due-today)/86400000);
+  return d<=7?"Upcoming":"Scheduled";
+};
+async function start(){
+  const css=document.createElement("link");css.rel="stylesheet";css.href="style-additions-v5-9.css";document.head.appendChild(css);
+  data=await(await fetch("notifications-reminders-v5-9.json",{cache:"no-store"})).json();
+  try{reminders=JSON.parse(localStorage.getItem(STORE)||"[]");history=JSON.parse(localStorage.getItem(HISTORY)||"[]")}catch{}
+  if(!reminders.length){reminders=data.defaultReminders.map(x=>({...x,status:"Active",createdAt:new Date().toISOString(),snoozedUntil:""}));save()}
+  importSources();build();addButton();addDashboardCard();refreshBadge();
+}
+function importSources(){
+  const existing=new Set(reminders.map(r=>r.sourceKey).filter(Boolean));
+  const upcoming=safe("thh-v58:upcoming-events")||[];
+  upcoming.slice(0,10).forEach(e=>{
+    const key="calendar-"+e.id;if(existing.has(key))return;
+    reminders.push({id:"r-"+Date.now()+Math.random(),sourceKey:key,title:e.title,category:"Calendar",priority:e.priority||"Medium",dueDate:e.date||"",notes:e.description||"",connectedSystem:e.connectedSystem||"schoolCalendarButton",status:"Active",createdAt:new Date().toISOString(),snoozedUntil:""});
   });
-
-  window.addEventListener("appinstalled", () => {
-    deferredInstallPrompt = null;
-    setStatus("TeachingHappensHere was installed.");
-    renderInstall();
-    renderReadiness();
-  });
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", start);
-  } else {
-    start();
-  }
+  const reteach=safe("thh-v54:teachday-next-step")||safe("thh-v54:planner-next-step");
+  if(reteach&&!existing.has("reteach-current"))reminders.push({id:"reteach-current",sourceKey:"reteach-current",title:"Reteach "+(reteach.skillTitle||"current skill"),category:"Assessment & Reteach",priority:"High",dueDate:"",notes:(reteach.group||"")+" "+(reteach.action||""),connectedSystem:"assessmentReteachButton",status:"Active",createdAt:new Date().toISOString(),snoozedUntil:""});
+  const student=safe("thh-v55:teachday-support")||safe("thh-v55:small-group-support");
+  if(student&&!existing.has("student-current"))reminders.push({id:"student-current",sourceKey:"student-current",title:"Follow up with "+(student.studentName||"student"),category:"Student Follow-Up",priority:"High",dueDate:student.followUpDate||"",notes:(student.skill||"")+" — "+(student.nextStep||student.goal||""),connectedSystem:"studentSupportFamilyButton",status:"Active",createdAt:new Date().toISOString(),snoozedUntil:""});
+  const standard=safe("thh-v56:assessment-standard")||safe("thh-v56:planner-standard");
+  if(standard&&!existing.has("standard-current"))reminders.push({id:"standard-current",sourceKey:"standard-current",title:"Add evidence for "+(standard.title||"current standard"),category:"Standards Evidence",priority:standard.evidenceCount===0?"High":"Medium",dueDate:"",notes:(standard.subject||"")+" • "+(standard.status||""),connectedSystem:"standardsReportingButton",status:"Active",createdAt:new Date().toISOString(),snoozedUntil:""});
+  save();
+}
+function build(){
+  overlay=document.createElement("div");overlay.className="v59-overlay";
+  overlay.innerHTML=`<section class="v59-dialog">
+  <header><div><p>VERSION 5.9</p><h2>Notifications, Reminders & Follow-Up</h2><span>${esc(data.releaseStatus)}</span></div><button id="v59Close">×</button></header>
+  <div id="v59Stats" class="v59-stats"></div>
+  <div class="v59-toolbar"><input id="v59Search" placeholder="Search reminders..."><select id="v59Category"><option value="All">All Categories</option>${data.categories.map(c=>`<option>${esc(c)}</option>`).join("")}</select><select id="v59Filter"><option>Active</option><option>Due Today</option><option>Overdue</option><option>Upcoming</option><option>Completed</option><option>Dismissed</option><option>All</option></select><button id="v59Add">Add Reminder</button><button id="v59Refresh">Refresh Sources</button><button id="v59Print">Print</button></div>
+  <div class="v59-layout"><main id="v59List"></main><aside id="v59History"></aside></div>
+  <footer><span id="v59Status">Ready</span><span>TeachingHappensHere v5.9</span></footer></section>`;
+  document.body.appendChild(overlay);
+  v59Close.onclick=close;v59Search.oninput=render;v59Category.onchange=render;v59Filter.onchange=render;v59Add.onclick=addReminder;v59Refresh.onclick=()=>{importSources();render()};v59Print.onclick=()=>window.print();overlay.onclick=e=>{if(e.target===overlay)close()};render();
+}
+function render(){
+  const active=reminders.filter(r=>r.status==="Active");
+  const overdue=active.filter(r=>statusFor(r)==="Overdue").length,today=active.filter(r=>statusFor(r)==="Due Today").length,upcoming=active.filter(r=>statusFor(r)==="Upcoming").length,high=active.filter(r=>r.priority==="High").length,complete=reminders.filter(r=>r.status==="Completed").length;
+  v59Stats.innerHTML=`<article><strong>${active.length}</strong><span>Active</span></article><article class="${overdue?"alert":""}"><strong>${overdue}</strong><span>Overdue</span></article><article class="${today?"alert":""}"><strong>${today}</strong><span>Due Today</span></article><article><strong>${upcoming}</strong><span>Upcoming</span></article><article class="${high?"alert":""}"><strong>${high}</strong><span>High Priority</span></article><article><strong>${complete}</strong><span>Completed</span></article>`;
+  const q=v59Search.value.toLowerCase().trim(),cat=v59Category.value,filter=v59Filter.value;
+  const items=reminders.filter(r=>{
+    const s=statusFor(r), c=cat==="All"||r.category===cat, text=!q||JSON.stringify(r).toLowerCase().includes(q);
+    let f=filter==="All"||filter==="Active"&&r.status==="Active"||filter==="Completed"&&r.status==="Completed"||filter==="Dismissed"&&r.status==="Dismissed"||!["All","Active","Completed","Dismissed"].includes(filter)&&s===filter;
+    return c&&text&&f;
+  }).sort((a,b)=>({Overdue:0,"Due Today":1,Upcoming:2,Scheduled:3,"No Date":4}[statusFor(a)]??9)-({Overdue:0,"Due Today":1,Upcoming:2,Scheduled:3,"No Date":4}[statusFor(b)]??9));
+  v59List.innerHTML=items.map(r=>`<article class="v59-reminder priority-${r.priority.toLowerCase()}"><div class="v59-top"><div><span>${esc(r.category)} • ${esc(r.priority)}</span><h3>${esc(r.title)}</h3></div><b>${esc(statusFor(r))}</b></div><p>${esc(r.notes||"")}</p><small>${r.dueDate?"Due: "+esc(r.dueDate):"No due date"}</small><div class="v59-actions">${r.status==="Active"?`<button data-complete="${r.id}">Complete</button><button data-snooze="${r.id}">Snooze</button><button data-edit="${r.id}">Edit</button><button data-open="${r.connectedSystem||""}">Open System</button><button data-dismiss="${r.id}">Dismiss</button>`:`<button data-restore="${r.id}">Restore</button><button data-delete="${r.id}">Delete</button>`}</div></article>`).join("")||"<p>No reminders match.</p>";
+  wire();
+  v59History.innerHTML=`<h3>Recent Activity</h3>${history.slice(0,20).map(h=>`<article><strong>${esc(h.action)}</strong><span>${esc(h.title)}</span><small>${new Date(h.date).toLocaleString()}</small></article>`).join("")||"<p>No history yet.</p>"}<button id="v59Clear">Clear History</button>`;
+  v59Clear.onclick=()=>{if(confirm("Clear reminder history?")){history=[];save();render()}};
+  refreshBadge();updateDashboardCard();
+}
+function log(action,item){history.unshift({date:new Date().toISOString(),action,title:item.title});history=history.slice(0,100)}
+function change(id,status){const r=reminders.find(x=>x.id===id);if(!r)return;r.status=status;r.snoozedUntil="";log(status,r);save();render()}
+function wire(){
+  document.querySelectorAll("[data-complete]").forEach(b=>b.onclick=()=>change(b.dataset.complete,"Completed"));
+  document.querySelectorAll("[data-dismiss]").forEach(b=>b.onclick=()=>change(b.dataset.dismiss,"Dismissed"));
+  document.querySelectorAll("[data-restore]").forEach(b=>b.onclick=()=>change(b.dataset.restore,"Active"));
+  document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>{const r=reminders.find(x=>x.id===b.dataset.delete);if(confirm(`Delete "${r.title}"?`)){reminders=reminders.filter(x=>x.id!==r.id);log("Deleted",r);save();render()}});
+  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editReminder(b.dataset.edit));
+  document.querySelectorAll("[data-snooze]").forEach(b=>b.onclick=()=>snooze(b.dataset.snooze));
+  document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{if(!b.dataset.open)return;close();document.getElementById(b.dataset.open)?.click()});
+}
+function snooze(id){
+  const r=reminders.find(x=>x.id===id), answer=prompt(data.snoozeOptions.map((o,i)=>`${i+1}. ${o.label}`).join("\n"),"1"), option=data.snoozeOptions[Number(answer)-1];if(!option)return;
+  r.snoozedUntil=new Date(Date.now()+option.hours*3600000).toISOString();log("Snoozed: "+option.label,r);save();render();
+}
+function addReminder(){const id="r-"+Date.now();reminders.unshift({id,title:"New Reminder",category:"Personal Reminder",priority:"Medium",dueDate:"",notes:"",connectedSystem:"",status:"Active",createdAt:new Date().toISOString(),snoozedUntil:""});save();editReminder(id)}
+function editReminder(id){
+  const r=reminders.find(x=>x.id===id);
+  v59List.innerHTML=`<section class="v59-edit"><h2>Edit Reminder</h2><label>Title<input id="eTitle" value="${esc(r.title)}"></label><label>Category<select id="eCategory">${data.categories.map(c=>`<option ${c===r.category?"selected":""}>${esc(c)}</option>`).join("")}</select></label><label>Priority<select id="ePriority">${data.priorities.map(p=>`<option ${p===r.priority?"selected":""}>${p}</option>`).join("")}</select></label><label>Due Date<input id="eDue" type="date" value="${esc(r.dueDate||"")}"></label><label class="wide">Notes<textarea id="eNotes">${esc(r.notes||"")}</textarea></label><div><button id="eSave">Save</button><button id="eCancel">Cancel</button></div></section>`;
+  eSave.onclick=()=>{r.title=eTitle.value.trim()||"Untitled Reminder";r.category=eCategory.value;r.priority=ePriority.value;r.dueDate=eDue.value;r.notes=eNotes.value.trim();log("Updated",r);save();render()};eCancel.onclick=render;
+}
+function refreshBadge(){const badge=document.getElementById("v59Badge");if(!badge)return;const count=reminders.filter(r=>r.status==="Active"&&(statusFor(r)==="Overdue"||statusFor(r)==="Due Today"||r.priority==="High")).length;badge.textContent=count;badge.hidden=!count}
+function addButton(){
+  const b=document.createElement("button");b.id="notificationsReminderButton";b.className="v59-button";b.innerHTML=`<span>5.9</span><strong>Reminders</strong><small>Follow-Up</small><b id="v59Badge" hidden>0</b>`;b.onclick=open;
+  const prior=document.getElementById("schoolCalendarButton");prior?prior.insertAdjacentElement("afterend",b):document.querySelector(".side-nav,.sidebar nav")?.insertAdjacentElement("afterend",b);
+}
+function addDashboardCard(){
+  const d=document.getElementById("dashboard");if(!d||document.getElementById("v59DashboardCard"))return;
+  const card=document.createElement("section");card.id="v59DashboardCard";card.className="v59-dashboard-card";card.innerHTML=`<div><p>REMINDERS & FOLLOW-UP</p><h3 id="v59DashTitle">No urgent reminders</h3><span id="v59DashText">Upcoming actions will appear here.</span></div><button>Open Reminders</button>`;card.querySelector("button").onclick=open;
+  const prior=document.getElementById("v58DashboardCard");prior?prior.insertAdjacentElement("afterend",card):d.prepend(card);updateDashboardCard();
+}
+function updateDashboardCard(){const urgent=reminders.filter(r=>r.status==="Active"&&["Overdue","Due Today"].includes(statusFor(r))),t=document.getElementById("v59DashTitle"),x=document.getElementById("v59DashText");if(!t)return;t.textContent=urgent.length?`${urgent.length} reminder${urgent.length===1?"":"s"} need attention`:"No urgent reminders";x.textContent=urgent.length?urgent.slice(0,3).map(r=>r.title).join(" • "):"Review upcoming follow-ups and preparation."}
+function open(){overlay.classList.add("open");document.body.classList.add("v59-open");importSources();render()}
+function close(){overlay.classList.remove("open");document.body.classList.remove("v59-open")}
+document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==="n"){e.preventDefault();if(overlay)open()}if(e.key==="Escape"&&overlay?.classList.contains("open"))close()});
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
