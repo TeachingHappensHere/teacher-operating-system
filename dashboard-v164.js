@@ -242,8 +242,8 @@
           <div class="v164-lessons">
             ${lessonCard("ELA / Open Court","reading","open-court", "Select today's Open Court lesson")}
             ${lessonCard("Math / Eureka Math²","math","eureka-math", "Select today's Eureka Math² lesson")}
-            ${lessonCard("Science","science","afternoon-studios", "Select today's science workbook section")}
-            ${lessonCard("Social Studies","socialStudies","afternoon-studios", "Select today's Arizona Social Studies, iCivics, or 180 Days lesson")}
+            ${lessonCard("Science","science","science-intelligence", "Select today's science workbook section")}
+            ${lessonCard("Social Studies / Writing","socialStudies","afternoon-studios", today.writing || "Select today's writing or social studies lesson")}
           </div>
         </section>
 
@@ -361,30 +361,7 @@
     });
 
     $$("[data-go]").forEach(button => {
-      button.addEventListener("click", () => {
-        const destination = button.dataset.go;
-        const lessonLabel = button.closest(".v164-lesson-card")
-          ?.querySelector("span")
-          ?.textContent
-          ?.trim();
-
-        const requestedStudio =
-          lessonLabel === "Science" ? "science" :
-          lessonLabel === "Social Studies" ? "socialStudies" :
-          null;
-
-        if (requestedStudio && destination === "afternoon-studios") {
-          try {
-            const key = "thh-v83:afternoon-studios";
-            const saved = JSON.parse(localStorage.getItem(key) || "{}");
-            saved.activeStudio = requestedStudio;
-            localStorage.setItem(key, JSON.stringify(saved));
-          } catch {}
-          window.__THH_REQUESTED_AFTERNOON_STUDIO__ = requestedStudio;
-        }
-
-        location.hash = destination;
-      });
+      button.addEventListener("click", () => location.hash = button.dataset.go);
     });
 
     new MutationObserver(() => captureLegacyCards()).observe($("#v72Dashboard"), {
