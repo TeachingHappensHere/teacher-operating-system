@@ -1,37 +1,22 @@
 # Teacher Operating System
 
-## Version 16.6 — Morning Command Center
+## Version 16.7 — Separate Science & Social Studies Studios
 
 ### Commit message
-Version 16.6 - Morning Command Center
+Version 16.7 - Separate Science and Social Studies Studios
 
 ### Included
-- Calm all-day dashboard
-- Current and next instructional block
-- One-click Start Teaching
-- Working-date selector
-- Readiness, plan, and printing status
-- Today's four core lesson cards
-- Science opens directly to the Science studio
-- Automatic preparation priorities
-- Teacher-added daily priorities
-- Student alerts and reminders
-- Before-students-arrive checklist
-- One-click external teaching tools
-- Compact or full-day schedule
-- Auto-saving daily notes
-- End-of-day checklist and Finish Day workflow
-- Isolated JavaScript and CSS so the central router remains unchanged
+- Replaced the duplicated Social Studies / Writing card
+- Four dashboard subjects: Open Court, Eureka Math², Science, and Social Studies
+- Science opens directly to the Science tab
+- Social Studies opens directly to the Social Studies tab
+- Added Writing Studio, Science Studio, and Social Studies Studio shortcuts under Curriculum
+- Preserved the combined Daily Studios workspace
 
 ### Test
 1. Open Home Dashboard.
-2. Confirm Morning Command Center appears.
-3. Test Start Teaching.
-4. Open all four lesson cards.
-5. Confirm Science opens the Science studio.
-6. Add a priority and student alert.
-7. Complete morning checklist items and refresh.
-8. Open several quick-launch tools.
-9. Expand the full-day schedule.
-10. Save daily notes.
-11. Complete the end-of-day checklist and select Finish Day.
+2. Confirm the fourth card says Social Studies.
+3. Open Science and confirm Science remains selected.
+4. Return to Dashboard and open Social Studies.
+5. Confirm Social Studies remains selected.
+6. Expand Curriculum and test all three studio shortcuts.

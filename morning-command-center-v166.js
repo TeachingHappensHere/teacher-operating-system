@@ -164,7 +164,7 @@
       ["ELA / Open Court", plan.reading || plan.ela || "Choose today's Open Court lesson", "open-court", ""],
       ["Math / Eureka Math²", plan.math || plan.eureka || "Choose today's Eureka Math² lesson", "eureka-math", ""],
       ["Science", plan.science || "Choose today's science workbook section", "afternoon-studios", "science"],
-      ["Writing / Social Studies", plan.afternoon || plan.writing || plan.socialStudies || "Choose today's afternoon lesson", "afternoon-studios", ""]
+      ["Social Studies", plan.socialStudies || plan.afternoon || "Choose today's Arizona Social Studies, iCivics, or 180 Days lesson", "afternoon-studios", "socialStudies"]
     ];
   }
 

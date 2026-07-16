@@ -1,0 +1,6 @@
+
+.v167-subject-shortcut{border-left:3px solid transparent!important}
+.v167-subject-shortcut:hover{border-left-color:var(--accent,#c73350)!important}
+.v167-subject-shortcut[data-v167-subject-shortcut="writing"]>span{background:#f3eefb!important}
+.v167-subject-shortcut[data-v167-subject-shortcut="science"]>span{background:#eef6eb!important}
+.v167-subject-shortcut[data-v167-subject-shortcut="socialStudies"]>span{background:#edf5fb!important}

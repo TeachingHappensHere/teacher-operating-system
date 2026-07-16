@@ -1,5 +1,5 @@
 {
-  "version": "16.6 Morning Command Center",
+  "version": "16.7 Separate Science and Social Studies Studios",
   "releaseStatus": "Replaces the crowded dashboard with a calm daily command center and moves secondary workflow cards into expandable compartments.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
@@ -3006,5 +3006,19 @@
     "priorityQueue": true,
     "dailyNotes": true,
     "endOfDayChecklist": true
+  },
+  "subjectStudiosV167": {
+    "dashboardCards": [
+      "ELA / Open Court",
+      "Math / Eureka Math\u00b2",
+      "Science",
+      "Social Studies"
+    ],
+    "curriculumShortcuts": [
+      "Writing Studio",
+      "Science Studio",
+      "Social Studies Studio"
+    ],
+    "combinedStudioPreserved": true
   }
 }
