@@ -1,5 +1,5 @@
 {
-  "version": "16.4.2 Dashboard Science Route Fix",
+  "version": "16.5 Teacher Intelligence 2.0",
   "releaseStatus": "Replaces the crowded dashboard with a calm daily command center and moves secondary workflow cards into expandable compartments.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
@@ -2985,5 +2985,15 @@
     "dashboardDestination": "afternoon-studios",
     "preselectedStudio": "science",
     "routeTransitionState": true
+  },
+  "teacherIntelligenceV165": {
+    "route": "intelligence-engine",
+    "dailyCurrentAndNextBlock": true,
+    "preparationAlerts": true,
+    "lessonStudioLinks": true,
+    "dailyChecklist": true,
+    "smallGroupSummary": true,
+    "assessmentAttachmentPrintStatus": true,
+    "classroomLaunchProtection": true
   }
 }
