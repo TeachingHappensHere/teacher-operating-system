@@ -1,29 +1,25 @@
-SPRINT 4 — ADD TEACHER INTELLIGENCE
+VERSION 16.6 — TEACHER INTELLIGENCE
 
 Add:
-- teacher-intelligence-v1654.json
+- teacher-intelligence-v166.json
+- teacher-intelligence-v166.js
+- teacher-intelligence-v166.css
 
 Replace:
-- teaching-engine-v165.js
-- teaching-engine-v165.css
+- index.html
+- service-worker.js
 
-Do not replace or re-upload any other files.
+Do not upload or replace any other files.
 
 Commit message:
-Version 16.5 Sprint 4 - Add Teacher Intelligence
-
-Teacher Intelligence now checks:
-- Daily plan readiness
-- Pending print jobs
-- Missing lesson attachments
-- Assessment records needing attention
-- Small-group readiness during MOWR
+Version 16.6 - Teacher Intelligence
 
 Test:
-1. Open the Teaching Engine.
-2. Open several literacy and afternoon blocks.
-3. Confirm the Teacher Intelligence panel appears under the active block description.
-4. Verify Plan, Printing, Attachments, and Assessments status cards.
-5. Open MOWR and confirm the Small Groups status appears.
-6. Test each Open button.
-7. Confirm Sprint 2 and Sprint 3 curriculum details remain visible below the intelligence panel.
+1. Refresh twice after deployment.
+2. Open Planning > Teacher Intelligence.
+3. Confirm the readiness score appears.
+4. Review recommended next actions.
+5. Confirm curriculum readiness for ELA, Writing, Math, Science, and Social Studies.
+6. Test Print Queue, Attachments, Assessments, and Small Groups buttons.
+7. Confirm Open Teaching Engine works.
+8. Confirm existing Teaching Engine Sprint 2-4 features still work.

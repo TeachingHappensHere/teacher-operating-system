@@ -1,0 +1,21 @@
+{
+  "version": "16.6",
+  "title": "Teacher Intelligence",
+  "description": "Whole-day readiness and recommendation workspace.",
+  "sections": [
+    "Today at a Glance",
+    "Readiness Score",
+    "Recommended Next Actions",
+    "Curriculum Readiness",
+    "Production Readiness",
+    "Student Support Readiness",
+    "Assessment Readiness"
+  ],
+  "rules": {
+    "readyScoreThreshold": 85,
+    "warningScoreThreshold": 60,
+    "defaultClassCopies": 33,
+    "calendarAware": false,
+    "note": "Version 16.6 reads the current local plans and resources. Exact district pacing becomes available after pacing-guide mapping is verified."
+  }
+}
