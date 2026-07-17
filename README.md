@@ -1,29 +1,37 @@
 # Teacher Operating System
 
-## Version 16.4 — Calm Dashboard & Morning Command Center
+## Version 16.5 — Daily Teaching Engine, Sprint 1
 
 Upload the complete extracted repository to GitHub.
 
 ### Commit message
-Version 16.4 - Calm Dashboard and Morning Command Center
+Version 16.5 - Daily Teaching Engine Sprint 1
 
 ### Included
-- Calm morning greeting and current/next instructional block
-- Start Teaching button
-- Compact today's schedule with optional full-day expansion
-- Four focused lesson cards
-- Needs Your Attention panel
-- Small Groups and Intervention summary
-- Collapsed compartments for Planning, Curriculum, Students, Resources, and System Details
-- Existing injected workflow/status cards preserved inside System Details
-- Responsive iPad and phone layout
-- Isolated JavaScript and CSS so the central router remains unchanged
+- Teaching Engine navigation item
+- Dashboard Start Teaching connection
+- Start My Day and Resume My Day
+- Complete daily timeline in the correct teaching order
+- MOWR before Heggerty
+- Building the Foundation writing rule
+- Open Court science-connection rule
+- Current-block workspace
+- Previous, Next, Mark Complete, and Reopen controls
+- Daily progress tracking
+- Automatic resume on the same device
+- Reset Today
+- Responsive phone and iPad layouts
+- Isolated JavaScript and CSS
+
+### Sprint 1 limitation
+This release provides the working shell. Curriculum objectives, teacher prompts, files,
+videos, assessments, and student-group details will be connected in later sprints.
 
 ### Test
-1. Open Home Dashboard.
-2. Confirm the calm Morning Command Center appears.
-3. Expand and collapse the full schedule.
-4. Open each lesson card.
-5. Review Needs Your Attention.
-6. Expand each compartment.
-7. Open System Details and confirm older status cards are preserved there.
+1. Open Home Dashboard and select Start Teaching.
+2. Select Start My Day.
+3. Move through blocks with Previous and Next.
+4. Mark several blocks complete.
+5. Refresh and confirm it resumes your place.
+6. Reopen a completed block.
+7. Test Reset Today.

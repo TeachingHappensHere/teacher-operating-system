@@ -353,7 +353,7 @@
   }
 
   function wire() {
-    $("#v164StartTeaching")?.addEventListener("click", () => location.hash = "teachday");
+    $("#v164StartTeaching")?.addEventListener("click", () => location.hash = "teaching-engine");
     $("#v164ScheduleToggle")?.addEventListener("click", () => {
       state.scheduleExpanded = !state.scheduleExpanded;
       saveState();
