@@ -2,79 +2,347 @@
   "use strict";
 
   const ROUTE = "dashboard";
+  const STATE_KEY = "thh-v170-rc3:dashboard";
   const WEEK_STORE = "thh-v73:weekly-plan";
-  const ATTACHMENT_STORE = "thh-v74:attachments";
-  const PRINT_STORE = "thh-v74:print-center";
   const STUDENT_STORE = "thh-v140:student-records";
   const GROUP_STORE = "thh-v141:group-plans";
-  const ASSESSMENT_STORE = "thh-v142:assessment-records";
-  const STATE_STORE = "thh-v164:dashboard";
-  const PREVIEW_STORE = "thh-v170rc2:preview-date";
-  const LAUNCH_PROGRESS = "thh-v168:classroom-launch-progress";
+
   const LAUNCH_START = "2026-07-27";
   const LAUNCH_END = "2026-07-31";
   const CORE_START = "2026-08-03";
 
   const SCHEDULE = [
-    ["7:45","8:10","Breakfast","breakfast"],["8:10","8:20","Morning Work","morning"],
-    ["8:20","9:15","MOWR","mowr"],["9:15","9:25","Heggerty","heggerty"],
-    ["9:25","9:45","Phonics","phonics"],["9:45","9:55","Vocabulary","vocabulary"],
-    ["9:55","10:45","Reading (Open Court)","reading"],["10:45","11:10","Lunch & Recess","lunch"],
-    ["11:10","11:40","Writing","writing"],["11:40","12:40","Math","math"],
-    ["12:40","1:15","Workout","workout"],["1:15","1:20","Recess","recess"],
-    ["1:20","1:40","Math 2","math2"],["1:40","2:15","Science","science"],
-    ["2:15","2:55","Social Studies","socialStudies"],["2:55","3:00","Pack-up / Bus Dismissal","packup"],
-    ["3:00","3:30","Dismissal","dismissal"]
+    ["7:45", "8:10", "Breakfast"],
+    ["8:10", "8:20", "Morning Work"],
+    ["8:20", "8:30", "Morning Meeting"],
+    ["8:30", "8:40", "Heggerty"],
+    ["8:45", "9:30", "MOWR"],
+    ["9:30", "9:50", "Open Court Phonics"],
+    ["9:50", "10:00", "Vocabulary"],
+    ["10:00", "10:50", "Reading & Responding"],
+    ["10:50", "11:35", "Lunch & Recess"],
+    ["11:35", "12:05", "Workout"],
+    ["12:05", "1:05", "Eureka Math²"],
+    ["1:05", "1:35", "Building the Foundation Writing"],
+    ["1:35", "2:00", "Social Studies"],
+    ["2:00", "2:15", "Recess"],
+    ["2:15", "2:35", "Science"],
+    ["2:40", "3:00", "Pack-up"],
+    ["3:00", "3:30", "Dismissal"]
   ];
 
-  let state = { scheduleExpanded:false };
-  let launchData = { days:[] };
-  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-  const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
-  function read(k,f){try{return JSON.parse(localStorage.getItem(k)||"null")??f}catch{return f}}
-  function save(){localStorage.setItem(STATE_STORE,JSON.stringify(state))}
-  function route(){return location.hash.replace("#","")||"dashboard"}
-  function localDate(){const n=new Date();return new Date(n.getTime()-n.getTimezoneOffset()*60000).toISOString().slice(0,10)}
-  function activeDate(){return localStorage.getItem(PREVIEW_STORE)||localDate()}
-  function mode(date=activeDate()){return date>=LAUNCH_START&&date<=LAUNCH_END?"launch":date>=CORE_START?"core":"prelaunch"}
-  function dateObj(date=activeDate()){return new Date(date+"T12:00:00")}
-  function dayName(date=activeDate()){return dateObj(date).toLocaleDateString("en-US",{weekday:"long"})}
-  function longDate(date=activeDate()){return dateObj(date).toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"})}
-  function launchDay(date=activeDate()){return launchData.days?.find(d=>d.date===date)||null}
-  function timeTo24(v){let[h,m]=v.split(":").map(Number);if(h>=1&&h<=3)h+=12;return h*60+m}
-  function currentBlock(){const now=new Date(),mins=now.getHours()*60+now.getMinutes(),blocks=SCHEDULE.map(([start,end,title,key])=>({start,end,title,key,startMinutes:timeTo24(start),endMinutes:timeTo24(end)}));const active=blocks.find(b=>mins>=b.startMinutes&&mins<b.endMinutes);if(active){const i=blocks.indexOf(active);return{active,next:blocks[i+1]||null}}return{active:null,next:blocks.find(b=>mins<b.startMinutes)||null}}
-  function plan(){return read(WEEK_STORE,{days:{}})}
-  function dayPlan(){return plan().days?.[dayName()]||{}}
-  function attentionItems(){const a=read(ATTACHMENT_STORE,[]),p=read(PRINT_STORE,[]),ass=read(ASSESSMENT_STORE,[]),items=[];const ma=a.filter(x=>x.status==="Missing Link"||(!(x.url||x.fileName)&&x.print)).length;if(ma)items.push({label:`${ma} attachment${ma===1?"":"s"} need a file or link`,route:"attachments"});const pp=p.filter(x=>!x.complete).length;if(pp)items.push({label:`${pp} print item${pp===1?" is":"s are"} waiting`,route:"print-center"});const ia=ass.filter(x=>["Not Started","Needs Make-Up","Scheduled"].includes(x.status)).length;if(ia)items.push({label:`${ia} assessment record${ia===1?"":"s"} need attention`,route:"assessments"});if(mode()==="core"&&Object.keys(dayPlan()).length<3)items.push({label:"Today's core lesson plan is not fully prepared",route:"lesson-plans"});return items}
-  function launchCounts(day){const s=read(LAUNCH_PROGRESS,{completed:{},procedures:{},prep:{}});if(!day)return{done:0,total:0};const done=day.blocks.filter(b=>s.completed?.[b.id]).length+day.procedures.filter((_,i)=>s.procedures?.[`${day.day}-${i}`]).length+day.prep.filter((_,i)=>s.prep?.[`${day.day}-${i}`]).length;return{done,total:day.blocks.length+day.procedures.length+day.prep.length}}
-  function lessonCard(label,title,detail,target){return `<article class="v164-lesson-card"><span>${esc(label)}</span><strong>${esc(title)}</strong><p>${esc(detail||"")}</p><button data-go="${target}">Open</button></article>`}
-  function lessonCards(){const m=mode(),d=launchDay(),today=dayPlan();if(m==="prelaunch")return[
-    lessonCard("PRE-LAUNCH","Prepare Classroom Launch","Review the complete July 27–31 plan and first-week resources.","classroom-launch"),
-    lessonCard("READINESS","Teacher Intelligence","Check plans, printing, attachments, and preparation gaps.","teacher-intelligence"),
-    lessonCard("PLANNING","Curriculum Automation","Preview launch week and the August 3 core start.","curriculum-automation"),
-    lessonCard("RESOURCES","Print & Attachments","Finish first-week copies and linked materials.","print-center")].join("");
-    if(m==="launch"&&d)return d.blocks.slice(0,4).map(b=>lessonCard(`${b.subject} • DAY ${d.day}`,b.title,b.objective,"classroom-launch")).join("");
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const esc = value => String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+  let rendering = false;
+  let observer;
+  let state = read(STATE_KEY, { previewDate: "", fullSchedule: false });
+
+  function read(key, fallback) {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(key) || "null");
+      return parsed ?? fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  function save() {
+    localStorage.setItem(STATE_KEY, JSON.stringify(state));
+  }
+
+  function currentRoute() {
+    return location.hash.replace("#", "") || ROUTE;
+  }
+
+  function localISO(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  function activeISO() {
+    return state.previewDate || localISO();
+  }
+
+  function dateFromISO(iso) {
+    const [year, month, day] = iso.split("-").map(Number);
+    return new Date(year, month - 1, day, 12, 0, 0);
+  }
+
+  function modeFor(iso) {
+    if (iso >= LAUNCH_START && iso <= LAUNCH_END) return "launch";
+    if (iso >= CORE_START) return "core";
+    return "prelaunch";
+  }
+
+  function launchDay(iso) {
+    return Math.max(1, Math.min(5, Math.round((dateFromISO(iso) - dateFromISO(LAUNCH_START)) / 86400000) + 1));
+  }
+
+  function dateLabel(iso) {
+    return dateFromISO(iso).toLocaleDateString("en-US", {
+      weekday: "long", month: "long", day: "numeric", year: "numeric"
+    });
+  }
+
+  function greeting() {
+    const hour = new Date().getHours();
+    return hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  }
+
+  function weeklyDay(iso) {
+    const plan = read(WEEK_STORE, { days: {} });
+    const name = dateFromISO(iso).toLocaleDateString("en-US", { weekday: "long" });
+    return plan.days?.[name] || {};
+  }
+
+  function launchContent(day) {
+    const days = {
+      1: {
+        title: "Enter, Belong, and Learn the Room",
+        focus: "Welcome students, build safety and belonging, and explicitly teach how to enter, unpack, listen, and move through the classroom.",
+        lessons: [
+          ["Morning Community", "Teacher introduction, student introductions, classroom tour, and class promise", "classroom-launch"],
+          ["Open Court Getting Started", "Back to School, workshop expectations, concepts about print, and phonemic awareness", "classroom-launch"],
+          ["Getting to Know You", "Complete the first-week community activity and practice partner talk", "classroom-launch"],
+          ["Math Launch", "Introduce math materials, productive struggle, and partner routines", "classroom-launch"]
+        ]
+      },
+      2: {
+        title: "Practice Transitions",
+        focus: "Reteach movement, carpet expectations, restroom procedures, materials, and attention signals.",
+        lessons: [
+          ["Morning Community", "Review expectations and practice entering the room", "classroom-launch"],
+          ["Open Court Getting Started", "Phonemic awareness, phonics, high-frequency words, and dictation", "classroom-launch"],
+          ["Class Procedures", "Model, practice, and reflect on classroom procedures", "classroom-launch"],
+          ["Math Routines", "Practice tools, partner talk, and showing work", "classroom-launch"]
+        ]
+      },
+      3: {
+        title: "Build Independence",
+        focus: "Students practice routines with less teacher prompting and begin independent work habits.",
+        lessons: [
+          ["Morning Community", "Student-led review of classroom agreements", "classroom-launch"],
+          ["Open Court Getting Started", "Continue foundational routines and Little Red Riding Hood", "classroom-launch"],
+          ["If I Built a School", "Read, discuss, and begin the school-design response", "classroom-launch"],
+          ["Build a School Challenge", "Plan and create collaboratively using taught material routines", "classroom-launch"]
+        ]
+      },
+      4: {
+        title: "Academic Routines",
+        focus: "Practice the structures students will use during literacy, math, writing, science, and social studies.",
+        lessons: [
+          ["Literacy Practice", "Rehearse MOWR rotations, partner reading, and response routines", "classroom-launch"],
+          ["Writing Launch", "Introduce Building the Foundation notebooks, conferencing, and student pages", "classroom-launch"],
+          ["Math Practice", "Complete the first-week math lesson and practice explaining thinking", "classroom-launch"],
+          ["Assessment Routines", "Introduce calm, honest assessment expectations", "classroom-launch"]
+        ]
+      },
+      5: {
+        title: "Review, Celebrate, and Reteach",
+        focus: "Celebrate growth, assess routines, and reteach anything students still need before core instruction begins.",
+        lessons: [
+          ["Community Reflection", "Compliment circle and reflection on being a classroom family", "classroom-launch"],
+          ["Back-to-School Assessments", "Complete brief baseline assessments using practiced routines", "classroom-launch"],
+          ["Procedure Review", "Students demonstrate routines and solve common classroom scenarios", "classroom-launch"],
+          ["Launch Celebration", "Celebrate the first week and preview Monday's core curriculum", "classroom-launch"]
+        ]
+      }
+    };
+    return days[day];
+  }
+
+  function coreLessons(iso) {
+    const day = weeklyDay(iso);
     return [
-      lessonCard("ELA / OPEN COURT",today.reading||"Unit 1, Lesson 1 — The Mice Who Lived in a Shoe","Core curriculum begins August 3.","open-court"),
-      lessonCard("MATH / EUREKA MATH²",today.math||"Select today's Eureka Math² lesson","","eureka-math"),
-      lessonCard("SCIENCE",today.science||"Select today's science lesson","","science-intelligence"),
-      lessonCard("WRITING / SOCIAL STUDIES",today.socialStudies||today.writing||"Select today's writing or social studies lesson","","afternoon-studios")].join("")}
-  function statusCopy(){const m=mode(),d=launchDay();if(m==="prelaunch")return{tag:"PRE-LAUNCH PREPARATION",title:"Classroom Launch begins July 27",text:"Prepare procedures, copies, first-week resources, and the classroom environment."};if(m==="launch"&&d)return{tag:`CLASSROOM LAUNCH • DAY ${d.day}`,title:d.theme,text:d.focus};return{tag:"CORE INSTRUCTION",title:"Curriculum begins August 3",text:"Open Court Unit 1 begins with “The Mice Who Lived in a Shoe.”"}}
-  function startRoute(){return mode()==="launch"?"classroom-launch":"teaching-engine"}
-  function render(){if(route()!==ROUTE)return;const host=$("#pageHost");if(!host)return;const block=currentBlock(),attention=attentionItems(),students=read(STUDENT_STORE,[]),groups=read(GROUP_STORE,{}),status=statusCopy(),d=launchDay(),lc=launchCounts(d);
-    host.innerHTML=`<section id="v72Dashboard" class="v164-dashboard">
-      <section class="v164-preview"><label><span>PREVIEW DATE</span><input id="v164PreviewDate" type="date" value="${activeDate()}"></label><button id="v164UseToday" class="secondary-button">Use Today</button></section>
-      <section class="v164-hero"><div><p>${esc(longDate())}</p><h1>Good morning, Mrs. Parrish</h1><span>${esc(status.tag)}</span><div class="v164-mode"><strong>${esc(status.title)}</strong><p>${esc(status.text)}</p></div></div><div class="v164-hero-actions"><button id="v164StartTeaching" class="primary-button">Start Teaching</button><button data-go="calendar" class="secondary-button">Calendar</button></div></section>
-      <section class="v164-top-grid"><article class="panel v164-next-card"><span>${mode()==="launch"?"LAUNCH PROGRESS":"CURRENT / NEXT BLOCK"}</span><h2>${mode()==="launch"&&d?`${lc.done}/${lc.total} items complete`:esc(block.active?.title||block.next?.title||"Day Complete")}</h2><p>${mode()==="launch"&&d?`Day ${d.day}: ${esc(d.theme)}`:block.active?`${block.active.start}–${block.active.end}`:block.next?`Begins at ${block.next.start}`:"No more scheduled blocks today."}</p></article><article class="panel v164-ready-card ${attention.length?"needs-attention":"ready"}"><span>READINESS</span><h2>${attention.length?`${attention.length} area${attention.length===1?"":"s"} need attention`:"You're ready for today"}</h2><p>${attention.length?"Finish the preparation items below.":"Plans, materials, and teaching tools are ready."}</p></article><article class="panel v164-quick-card"><span>QUICK LAUNCH</span><div><button data-go="${startRoute()}">Live Teaching</button><button data-go="communication">ClassDojo / Messages</button><button data-go="students">Students</button></div></article></section>
-      <section class="panel v164-schedule"><div class="v164-section-heading"><div><span>TODAY'S SCHEDULE</span><h2>Instructional Timeline</h2></div><button id="v164ScheduleToggle" class="secondary-button">${state.scheduleExpanded?"Show Less":"Show Full Day"}</button></div><div class="v164-schedule-strip ${state.scheduleExpanded?"expanded":""}">${scheduleMarkup(block)}</div></section>
-      <section class="v164-section"><div class="v164-section-heading"><div><span>${esc(status.tag)}</span><h2>Open only what you need</h2></div><button data-go="${mode()==="launch"?"classroom-launch":"lesson-plans"}" class="secondary-button">${mode()==="launch"?"Open Full Launch Day":"Weekly Planning"}</button></div><div class="v164-lessons">${lessonCards()}</div></section>
-      <section class="v164-middle-grid"><article class="panel v164-attention"><div class="v164-section-heading"><div><span>NEEDS YOUR ATTENTION</span><h2>${attention.length?"Finish these items":"Everything is ready"}</h2></div></div><div class="v164-attention-list">${attention.length?attention.map(i=>`<button data-go="${i.route}"><b>!</b><span>${esc(i.label)}</span><strong>Open</strong></button>`).join(""):`<div class="v164-all-ready"><b>✓</b><span>No preparation alerts for today.</span></div>`}</div></article><article class="panel v164-groups"><div class="v164-section-heading"><div><span>SMALL GROUPS & INTERVENTION</span><h2>Today's support</h2></div></div><div class="v164-group-summary">${["Red","Yellow","Green","Blue"].map(color=>{const count=students.filter(s=>(s.readingGroup||"").startsWith(color)).length;return`<article><strong>${color}</strong><span>${count} student${count===1?"":"s"}</span><small>Plan available</small></article>`}).join("")}</div><div class="button-row"><button data-go="small-groups" class="primary-button">Open Small Groups</button><button data-go="intervention" class="secondary-button">Intervention</button></div></article></section>
-      <section class="v164-compartments">${compartment("Plan the Week","planning",[["Teacher Intelligence","teacher-intelligence"],["Curriculum Automation","curriculum-automation"],["Classroom Launch","classroom-launch"],["Weekly Planning","lesson-plans"],["Daily Lesson Packets","production"]])}${compartment("Curriculum","curriculum",[["Open Court Intelligence","open-court"],["Eureka Math Intelligence","eureka-math"],["Science Intelligence","science-intelligence"],["Writing, Science & Social Studies","afternoon-studios"]])}${compartment("Students & Data","students",[["Student Profiles","students"],["Small Groups","small-groups"],["Intervention","intervention"],["Assessments & Data","assessments"],["Communication","communication"]])}${compartment("Resources & Printing","resources",[["Lesson Attachments","attachments"],["Print Center","print-center"],["Forms & Printables","forms"],["Resources","resources"]])}</section>
-    </section>`;wire()}
-  function scheduleMarkup(block){const now=block.active?.key,next=block.next?.key,visible=state.scheduleExpanded?SCHEDULE:SCHEDULE.filter(x=>x[3]===now||x[3]===next).slice(0,2),use=visible.length?visible:SCHEDULE.slice(-2);return use.map(([s,e,t,k])=>`<article class="${k===now?"current":k===next?"next":""}"><span>${s}–${e}</span><strong>${esc(t)}</strong><small>${k===now?"Now":k===next?"Next":""}</small></article>`).join("")}
-  function compartment(title,key,items){return`<details class="panel v164-details" data-compartment="${key}"><summary><span>${esc(title)}</span><strong>${items.length} tools</strong></summary><div class="v164-tool-grid">${items.map(([l,r])=>`<button data-go="${r}">${esc(l)}</button>`).join("")}</div></details>`}
-  function wire(){$("#v164StartTeaching")?.addEventListener("click",()=>location.hash=startRoute());$("#v164ScheduleToggle")?.addEventListener("click",()=>{state.scheduleExpanded=!state.scheduleExpanded;save();render()});$("#v164PreviewDate")?.addEventListener("change",e=>{if(e.target.value)localStorage.setItem(PREVIEW_STORE,e.target.value);render()});$("#v164UseToday")?.addEventListener("click",()=>{localStorage.removeItem(PREVIEW_STORE);render()});$$('[data-go]').forEach(b=>b.addEventListener("click",()=>location.hash=b.dataset.go))}
-  async function init(){state={...state,...read(STATE_STORE,{})};try{const r=await fetch("classroom-launch-v168.json",{cache:"no-store"});if(r.ok)launchData=await r.json()}catch(e){console.error(e)}takeControl()}
-  function takeControl(){if(route()!==ROUTE)return;setTimeout(render,20);setTimeout(render,180)}
-  window.THH_RENDER_CALM_DASHBOARD=render;window.THH_ACTIVE_SCHOOL_DATE=activeDate;window.addEventListener("hashchange",takeControl);if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+      ["Morning Literacy", day.morning || "Morning Work, MOWR, Heggerty, phonics, and vocabulary", "teachday"],
+      ["Open Court Reading", day.reading || "Unit 1, Lesson 1 — The Mice Who Lived in a Shoe", "open-court"],
+      ["Eureka Math²", day.math || "Module 1 — connect today's lesson", "eureka-math"],
+      ["Building the Foundation Writing", day.writing || "Use the Building the Foundation lesson sequence", "afternoon-studios"],
+      ["Science", day.science || "Arizona Science with Open Court Science Connections", "science-intelligence"],
+      ["Social Studies", day.socialStudies || "Connect Arizona social studies to the weekly Open Court text", "afternoon-studios"]
+    ];
+  }
+
+  function prelaunchLessons() {
+    return [
+      ["Prepare Classroom Launch", "Review July 27–31 plans and first-week resources", "classroom-launch"],
+      ["Teacher Intelligence", "Check plans, printing, attachments, and preparation gaps", "intelligence-engine"],
+      ["Curriculum Automation", "Review the August 3 core-instruction week", "workflow-hub"],
+      ["Print & Attachments", "Finish first-week copies and linked resources", "attachments"]
+    ];
+  }
+
+  function render() {
+    if (currentRoute() !== ROUTE || rendering) return;
+    const host = $("#pageHost");
+    if (!host) return;
+
+    rendering = true;
+    const iso = activeISO();
+    const mode = modeFor(iso);
+    const previewing = Boolean(state.previewDate);
+    let title;
+    let subtitle;
+    let lessons;
+    let startRoute;
+
+    if (mode === "launch") {
+      const content = launchContent(launchDay(iso));
+      title = `Classroom Launch — Day ${launchDay(iso)}`;
+      subtitle = `${content.title}. ${content.focus}`;
+      lessons = content.lessons;
+      startRoute = "classroom-launch";
+    } else if (mode === "core") {
+      title = "Core Instruction";
+      subtitle = "Open Court Unit 1 begins with The Mice Who Lived in a Shoe. Building the Foundation is used for writing.";
+      lessons = coreLessons(iso);
+      startRoute = "teaching-engine";
+    } else {
+      title = "Pre-Launch Preparation";
+      subtitle = "Prepare the classroom and first-week materials. Core curriculum does not begin until August 3.";
+      lessons = prelaunchLessons();
+      startRoute = "classroom-launch";
+    }
+
+    const students = read(STUDENT_STORE, []);
+    const groups = read(GROUP_STORE, {});
+
+    host.innerHTML = `
+      <section id="v170Rc3Dashboard" class="v170rc3-dashboard" data-mode="${mode}">
+        <section class="v170rc3-hero">
+          <div>
+            <p>${esc(dateLabel(iso))}${previewing ? " • Previewing" : ""}</p>
+            <h1>${esc(greeting())}, Mrs. Parrish</h1>
+            <span>${esc(title)} — ${esc(subtitle)}</span>
+          </div>
+          <div class="v170rc3-actions">
+            <button id="v170Rc3Start" class="primary-button">${mode === "launch" ? "Open Classroom Launch" : mode === "core" ? "Start Teaching" : "Prepare Launch Week"}</button>
+            <button data-go="calendar" class="secondary-button">Calendar</button>
+          </div>
+        </section>
+
+        <section class="panel v170rc3-datebar">
+          <div>
+            <span>PREVIEW DATE</span>
+            <strong>Test the school-year experience</strong>
+          </div>
+          <label>
+            <input id="v170Rc3PreviewDate" type="date" value="${esc(iso)}">
+          </label>
+          <button id="v170Rc3UseToday" class="secondary-button">Use Today</button>
+        </section>
+
+        <section class="v170rc3-status-grid">
+          <article class="panel"><span>ACTIVE MODE</span><strong>${esc(title)}</strong><small>${mode === "prelaunch" ? "Before July 27" : mode === "launch" ? "July 27–31" : "August 3 and later"}</small></article>
+          <article class="panel"><span>CURRICULUM RULE</span><strong>${mode === "core" ? "Core instruction is active" : "Core instruction is protected"}</strong><small>${mode === "core" ? "Unit 1 may appear" : "Unit 1 must not appear yet"}</small></article>
+          <article class="panel"><span>WRITING</span><strong>Building the Foundation</strong><small>Open Court Writing is not used</small></article>
+        </section>
+
+        <section class="panel v170rc3-lessons-section">
+          <div class="v170rc3-heading">
+            <div><span>TODAY'S WORKFLOW</span><h2>Open only what you need</h2></div>
+            <button data-go="lesson-plans" class="secondary-button">Weekly Planning</button>
+          </div>
+          <div class="v170rc3-lessons">
+            ${lessons.map(([label, text, route]) => `
+              <article>
+                <span>${esc(label)}</span>
+                <strong>${esc(text)}</strong>
+                <button data-go="${esc(route)}">Open</button>
+              </article>`).join("")}
+          </div>
+        </section>
+
+        <section class="panel v170rc3-schedule">
+          <div class="v170rc3-heading">
+            <div><span>DAILY SCHEDULE</span><h2>${mode === "launch" ? "Practice routines inside the real school day" : "Instructional timeline"}</h2></div>
+            <button id="v170Rc3ScheduleToggle" class="secondary-button">${state.fullSchedule ? "Show Less" : "Show Full Day"}</button>
+          </div>
+          <div class="v170rc3-schedule-grid ${state.fullSchedule ? "expanded" : ""}">
+            ${(state.fullSchedule ? SCHEDULE : SCHEDULE.slice(0, 6)).map(([start, end, subject]) => `
+              <article><span>${start}–${end}</span><strong>${esc(subject)}</strong></article>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="v170rc3-bottom-grid">
+          <article class="panel">
+            <span>SMALL GROUP ORDER</span>
+            <h2>Red • Yellow • Green • Blue</h2>
+            <p>${students.length} student profile${students.length === 1 ? "" : "s"} connected. ${Object.keys(groups).length} group-plan record${Object.keys(groups).length === 1 ? "" : "s"} available.</p>
+            <button data-go="small-groups" class="secondary-button">Open Small Groups</button>
+          </article>
+          <article class="panel">
+            <span>QUICK TOOLS</span>
+            <div class="v170rc3-tool-grid">
+              <button data-go="intelligence-engine">Teacher Intelligence</button>
+              <button data-go="workflow-hub">Curriculum Automation</button>
+              <button data-go="attachments">Attachments</button>
+              <button data-go="print-center">Print Center</button>
+              <button data-go="communication">Communication</button>
+              <button data-go="health">System Health</button>
+            </div>
+          </article>
+        </section>
+      </section>`;
+
+    $("#v170Rc3Start")?.addEventListener("click", () => { location.hash = startRoute; });
+    $("#v170Rc3PreviewDate")?.addEventListener("change", event => {
+      state.previewDate = event.target.value;
+      save();
+      render();
+    });
+    $("#v170Rc3UseToday")?.addEventListener("click", () => {
+      state.previewDate = "";
+      save();
+      render();
+    });
+    $("#v170Rc3ScheduleToggle")?.addEventListener("click", () => {
+      state.fullSchedule = !state.fullSchedule;
+      save();
+      render();
+    });
+    $$('[data-go]', host).forEach(button => {
+      button.addEventListener("click", () => { location.hash = button.dataset.go; });
+    });
+
+    rendering = false;
+  }
+
+  function enforceSingleRenderer() {
+    if (currentRoute() !== ROUTE) return;
+    const host = $("#pageHost");
+    if (!host) return;
+    const root = $("#v170Rc3Dashboard", host);
+    if (!root || host.children.length !== 1 || host.firstElementChild !== root) {
+      render();
+    }
+  }
+
+  function start() {
+    const host = $("#pageHost");
+    if (!host) return setTimeout(start, 50);
+    observer?.disconnect();
+    observer = new MutationObserver(() => {
+      if (!rendering) requestAnimationFrame(enforceSingleRenderer);
+    });
+    observer.observe(host, { childList: true });
+    render();
+  }
+
+  window.THH_RENDER_DASHBOARD_RC3 = render;
+  window.addEventListener("hashchange", () => {
+    if (currentRoute() === ROUTE) setTimeout(render, 0);
+  });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
 })();

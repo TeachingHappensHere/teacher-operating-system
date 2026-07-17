@@ -1,81 +1,81 @@
 {
-  "version": "16.5 Daily Teaching Engine \u2014 Sprint 1",
-  "releaseStatus": "Direct dashboard integration: date-aware Pre-Launch, Classroom Launch, and Core Instruction modes. First-Week Builder retired.",
+  "version": "16.5 Daily Teaching Engine — Sprint 1",
+  "releaseStatus": "Adds the Daily Teaching Engine shell with start/resume, timeline navigation, progress tracking, block completion, and automatic local resume.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
   "pillar": "Heart",
   "schedule": [
     [
-      "7:45\u20138:10",
+      "7:45–8:10",
       "Breakfast"
     ],
     [
-      "8:10\u20138:20",
+      "8:10–8:20",
       "Morning Work"
     ],
     [
-      "8:20\u20138:30",
+      "8:20–8:30",
       "Morning Meeting"
     ],
     [
-      "8:30\u20138:40",
+      "8:30–8:40",
       "Heggerty"
     ],
     [
-      "8:45\u20139:30",
+      "8:45–9:30",
       "MOWR / Reading Intervention"
     ],
     [
-      "9:30\u20139:50",
+      "9:30–9:50",
       "Phonics"
     ],
     [
-      "9:50\u201310:00",
+      "9:50–10:00",
       "Vocabulary"
     ],
     [
-      "10:00\u201310:50",
+      "10:00–10:50",
       "Open Court Reading"
     ],
     [
-      "10:50\u201311:15",
+      "10:50–11:15",
       "Lunch"
     ],
     [
-      "11:15\u201311:35",
+      "11:15–11:35",
       "Recess"
     ],
     [
-      "11:35\u201312:05",
+      "11:35–12:05",
       "Workout"
     ],
     [
-      "12:05\u20131:05",
-      "Eureka Math\u00b2"
+      "12:05–1:05",
+      "Eureka Math²"
     ],
     [
-      "1:05\u20131:35",
+      "1:05–1:35",
       "Writing"
     ],
     [
-      "1:35\u20132:00",
+      "1:35–2:00",
       "Social Studies"
     ],
     [
-      "2:00\u20132:15",
+      "2:00–2:15",
       "Recess"
     ],
     [
-      "2:15\u20132:35",
+      "2:15–2:35",
       "Science"
     ],
     [
-      "2:40\u20133:00",
+      "2:40–3:00",
       "Pack-Up"
     ],
     [
-      "3:00\u20133:30",
+      "3:00–3:30",
       "Dismissal"
     ]
   ],
@@ -83,52 +83,52 @@
     [
       "dashboard",
       "Home Dashboard",
-      "\u2302"
+      "⌂"
     ],
     [
       "live-workspace",
       "Live Workspace",
-      "\u2605"
+      "★"
     ],
     [
       "teachday",
       "Live Teaching",
-      "\u25b6"
+      "▶"
     ],
     [
       "calendar",
       "Calendar",
-      "\u25a6"
+      "▦"
     ],
     [
       "intelligence-engine",
       "Teacher Intelligence",
-      "\ud83e\udde0"
+      "🧠"
     ],
     [
       "workflow-hub",
       "Workflow Hub",
-      "\u21bb"
+      "↻"
     ],
     [
       "lesson-builder",
       "Lesson Builder",
-      "\u2726"
+      "✦"
     ],
     [
       "lesson-plans",
       "Weekly Planning",
-      "\u25b1"
+      "▱"
     ],
     [
       "production",
       "Daily Lesson Packets",
-      "\u25a4"
+      "▤"
     ],
     [
       "classroom-launch",
       "Classroom Launch",
-      "\u2661"
+      "♡"
     ],
     [
       "curriculum-week-1",
@@ -138,87 +138,87 @@
     [
       "open-court",
       "Open Court Curriculum",
-      "\ud83d\udcda"
+      "📚"
     ],
     [
       "eureka-math",
-      "Eureka Math\u00b2",
-      "\u2797"
+      "Eureka Math²",
+      "➗"
     ],
     [
       "afternoon-studios",
       "Writing, Science & Social Studies",
-      "\u270e"
+      "✎"
     ],
     [
       "small-groups",
       "Small Groups",
-      "\u2667"
+      "♧"
     ],
     [
       "intervention",
       "Intervention",
-      "\u25ce"
+      "◎"
     ],
     [
       "assessments",
       "Assessments & Data",
-      "\u25a5"
+      "▥"
     ],
     [
       "students",
       "Students",
-      "\u2659"
+      "♙"
     ],
     [
       "communication",
       "Communication",
-      "\u2709"
+      "✉"
     ],
     [
       "classroom-systems",
       "Classroom Systems",
-      "\u25a3"
+      "▣"
     ],
     [
       "attachments",
       "Lesson Attachments",
-      "\ud83d\udcce"
+      "📎"
     ],
     [
       "print-center",
       "Print Center",
-      "\ud83d\udda8"
+      "🖨"
     ],
     [
       "forms",
       "Forms & Printables",
-      "\u25a4"
+      "▤"
     ],
     [
       "resources",
       "Resources",
-      "\u25a1"
+      "□"
     ],
     [
       "teacher-brain",
       "Teacher Brain",
-      "\u2661"
+      "♡"
     ],
     [
       "school-year-settings",
       "School-Year Dates",
-      "\ud83d\udcc5"
+      "📅"
     ],
     [
       "health",
       "Health",
-      "\u2665"
+      "♥"
     ],
     [
       "settings",
       "Settings",
-      "\u2699"
+      "⚙"
     ]
   ],
   "firstDayRoutines": [
@@ -247,7 +247,7 @@
       "category": "ELA"
     },
     {
-      "title": "Eureka Math\u00b2",
+      "title": "Eureka Math²",
       "url": "#",
       "category": "Math"
     },
@@ -328,7 +328,7 @@
       "Phonemic Awareness"
     ],
     [
-      "Eureka Math\u00b2",
+      "Eureka Math²",
       "Mathematics"
     ],
     [
@@ -424,14 +424,14 @@
     }
   ],
   "unit1Lessons": [
-    "Lesson 1 \u2014 The Mice Who Lived in a Shoe",
-    "Lesson 2 \u2014 Ants and Aphids Work Together",
-    "Lesson 3 \u2014 The Bat, Birds, and Beasts",
-    "Lesson 4 \u2014 A Cherokee Stickball Game",
-    "Lesson 5 \u2014 The Final Game",
-    "Lesson 6 \u2014 Ellie\u2019s Long Walk",
-    "Lesson 7 \u2014 Mattland",
-    "Lesson 8 \u2014 A River of Ice"
+    "Lesson 1 — The Mice Who Lived in a Shoe",
+    "Lesson 2 — Ants and Aphids Work Together",
+    "Lesson 3 — The Bat, Birds, and Beasts",
+    "Lesson 4 — A Cherokee Stickball Game",
+    "Lesson 5 — The Final Game",
+    "Lesson 6 — Ellie’s Long Walk",
+    "Lesson 7 — Mattland",
+    "Lesson 8 — A River of Ice"
   ],
   "defaultSupports": [
     "Picture-word cards",
@@ -459,7 +459,7 @@
     "UFLI",
     "Heggerty",
     "MOWR",
-    "Eureka Math\u00b2",
+    "Eureka Math²",
     "Writing / GUM",
     "Science",
     "Social Studies",
@@ -511,8 +511,8 @@
       "notes": "Add the current Heggerty week and lesson."
     },
     {
-      "title": "Eureka Math\u00b2 Lesson",
-      "category": "Eureka Math\u00b2",
+      "title": "Eureka Math² Lesson",
+      "category": "Eureka Math²",
       "type": "Teacher Guide",
       "url": "",
       "notes": "Add the current module and lesson resources."
@@ -559,7 +559,7 @@
       "writing"
     ],
     [
-      "Eureka Math\u00b2",
+      "Eureka Math²",
       "math"
     ],
     [
@@ -860,10 +860,10 @@
       "Skills Practice"
     ],
     "math": [
-      "Eureka Math\u00b2"
+      "Eureka Math²"
     ],
     "math2": [
-      "Eureka Math\u00b2",
+      "Eureka Math²",
       "Fact Fluency",
       "Intervention"
     ],
@@ -890,7 +890,7 @@
       "Oral Fluency"
     ],
     "mathTest": [
-      "Eureka Math\u00b2 Assessment"
+      "Eureka Math² Assessment"
     ],
     "scienceSocialTest": [
       "Science Assessment",
@@ -945,7 +945,7 @@
         },
         {
           "lesson": 6,
-          "title": "Ellie\u2019s Long Walk",
+          "title": "Ellie’s Long Walk",
           "skillsPracticeBook": 1,
           "assessmentBook": 1,
           "assessmentStartPage": 63,
@@ -1031,7 +1031,7 @@
         },
         {
           "lesson": 3,
-          "title": "Victor\u2019s Journal",
+          "title": "Victor’s Journal",
           "skillsPracticeBook": 1,
           "assessmentBook": 1,
           "assessmentStartPage": 163,
@@ -1244,26 +1244,26 @@
     {
       "key": "skills-1",
       "title": "Skills Practice Book 1",
-      "units": "1\u20133"
+      "units": "1–3"
     },
     {
       "key": "skills-2",
       "title": "Skills Practice Book 2",
-      "units": "4\u20136"
+      "units": "4–6"
     },
     {
       "key": "assessment-1",
       "title": "Assessment Book 1",
-      "units": "1\u20133"
+      "units": "1–3"
     },
     {
       "key": "assessment-2",
       "title": "Assessment Book 2",
-      "units": "4\u20136"
+      "units": "4–6"
     }
   ],
   "eurekaMath": {
-    "curriculum": "Eureka Math\u00b2",
+    "curriculum": "Eureka Math²",
     "grade": "Grade 2",
     "teacherPortal": "https://digital.greatminds.org/teacher?curriculaCode=em2&gradeCode=em2.g2&moduleCode=em2.g2.m1",
     "modules": [
@@ -1335,7 +1335,7 @@
   "afternoonStudios": {
     "writing": {
       "title": "Writing / GUM Studio",
-      "schedule": "11:10\u201311:40",
+      "schedule": "11:10–11:40",
       "program": "Building the Foundation / Open Court GUM",
       "lessonComponents": [
         "Mini-Lesson",
@@ -1360,7 +1360,7 @@
     },
     "science": {
       "title": "Science Studio",
-      "schedule": "1:40\u20132:15",
+      "schedule": "1:40–2:15",
       "program": "Arizona Science Standards",
       "lessonComponents": [
         "Phenomenon / Engage",
@@ -1385,7 +1385,7 @@
     },
     "socialStudies": {
       "title": "Social Studies Studio",
-      "schedule": "2:15\u20132:55",
+      "schedule": "2:15–2:55",
       "program": "Arizona Social Studies / iCivics / 180 Days",
       "lessonComponents": [
         "Essential Question",
@@ -1526,7 +1526,8 @@
       "title": "Today",
       "routes": [
         "teachday",
-        "lesson-plans"
+        "lesson-plans",
+        "first-week-builder"
       ]
     },
     {
@@ -1565,7 +1566,7 @@
       "Practice transitions and independence",
       "Complete informal readiness checks",
       "Do not begin the regular Open Court lesson sequence",
-      "Do not begin the regular Eureka Math\u00b2 lesson sequence"
+      "Do not begin the regular Eureka Math² lesson sequence"
     ]
   },
   "curriculumWeek1": {
@@ -1643,6 +1644,7 @@
         "lesson-plans",
         "production",
         "classroom-launch",
+        "first-week-builder",
         "curriculum-week-1"
       ]
     },
@@ -1685,7 +1687,7 @@
     }
   ],
   "teacherIntelligenceEngine": {
-    "schoolYear": "2026\u20132027",
+    "schoolYear": "2026–2027",
     "launchWeekStart": "2026-07-27",
     "launchWeekEnd": "2026-07-31",
     "curriculumStartDate": "2026-08-03",
@@ -1704,7 +1706,7 @@
       "Phonics",
       "Vocabulary",
       "Writing / GUM",
-      "Eureka Math\u00b2",
+      "Eureka Math²",
       "Science",
       "Social Studies"
     ],
@@ -1766,7 +1768,7 @@
       "weekOf": "2026-08-03",
       "title": "Curriculum Week 1",
       "weekType": "Curriculum Week",
-      "openCourt": "Unit 1, Lesson 1 \u2014 The Mice Who Lived in a Shoe",
+      "openCourt": "Unit 1, Lesson 1 — The Mice Who Lived in a Shoe",
       "eureka": "Module 1 begins",
       "notes": "Core curriculum begins."
     }
@@ -1780,22 +1782,22 @@
         [
           "dashboard",
           "Home Dashboard",
-          "\u2302"
+          "⌂"
         ],
         [
           "live-workspace",
           "Live Workspace",
-          "\u2605"
+          "★"
         ],
         [
           "teachday",
           "Live Teaching",
-          "\u25b6"
+          "▶"
         ],
         [
           "calendar",
           "Calendar",
-          "\u25a6"
+          "▦"
         ]
       ]
     },
@@ -1807,32 +1809,37 @@
         [
           "intelligence-engine",
           "Teacher Intelligence",
-          "\ud83e\udde0"
+          "🧠"
         ],
         [
           "workflow-hub",
           "Workflow Hub",
-          "\u21bb"
+          "↻"
         ],
         [
           "lesson-builder",
           "Lesson Builder",
-          "\u2726"
+          "✦"
         ],
         [
           "lesson-plans",
           "Weekly Planning",
-          "\u25b1"
+          "▱"
         ],
         [
           "production",
           "Daily Lesson Packets",
-          "\u25a4"
+          "▤"
         ],
         [
           "classroom-launch",
           "Classroom Launch",
-          "\u2661"
+          "♡"
+        ],
+        [
+          "first-week-builder",
+          "First-Week Builder",
+          "5"
         ],
         [
           "curriculum-week-1",
@@ -1849,17 +1856,17 @@
         [
           "open-court",
           "Open Court Curriculum",
-          "\ud83d\udcda"
+          "📚"
         ],
         [
           "eureka-math",
-          "Eureka Math\u00b2",
-          "\u2797"
+          "Eureka Math²",
+          "➗"
         ],
         [
           "afternoon-studios",
           "Writing, Science & Social Studies",
-          "\u270e"
+          "✎"
         ]
       ]
     },
@@ -1871,27 +1878,27 @@
         [
           "small-groups",
           "Small Groups",
-          "\u2667"
+          "♧"
         ],
         [
           "intervention",
           "Intervention",
-          "\u25ce"
+          "◎"
         ],
         [
           "assessments",
           "Assessments & Data",
-          "\u25a5"
+          "▥"
         ],
         [
           "students",
           "Students",
-          "\u2659"
+          "♙"
         ],
         [
           "communication",
           "Communication",
-          "\u2709"
+          "✉"
         ]
       ]
     },
@@ -1903,47 +1910,47 @@
         [
           "classroom-systems",
           "Classroom Systems",
-          "\u25a3"
+          "▣"
         ],
         [
           "attachments",
           "Lesson Attachments",
-          "\ud83d\udcce"
+          "📎"
         ],
         [
           "print-center",
           "Print Center",
-          "\ud83d\udda8"
+          "🖨"
         ],
         [
           "forms",
           "Forms & Printables",
-          "\u25a4"
+          "▤"
         ],
         [
           "resources",
           "Resources",
-          "\u25a1"
+          "□"
         ],
         [
           "teacher-brain",
           "Teacher Brain",
-          "\u2661"
+          "♡"
         ],
         [
           "school-year-settings",
           "School-Year Dates",
-          "\ud83d\udcc5"
+          "📅"
         ],
         [
           "health",
           "Health",
-          "\u2665"
+          "♥"
         ],
         [
           "settings",
           "Settings",
-          "\u2699"
+          "⚙"
         ]
       ]
     }
@@ -1956,7 +1963,7 @@
     },
     {
       "route": "eureka-math",
-      "label": "Eureka Math\u00b2",
+      "label": "Eureka Math²",
       "category": "Mathematics"
     },
     {
@@ -1988,6 +1995,11 @@
       "route": "classroom-launch",
       "label": "Morning Meeting",
       "category": "SEL / Community"
+    },
+    {
+      "route": "first-week-builder",
+      "label": "Pillar Resources",
+      "category": "School Culture"
     }
   ],
   "workflowHubV111": {
@@ -2049,6 +2061,7 @@
       "production",
       "teachday",
       "classroom-launch",
+      "first-week-builder",
       "curriculum-week-1",
       "open-court",
       "eureka-math",
@@ -2091,8 +2104,8 @@
       "Vocabulary Practice",
       "Phonics / Spelling Practice",
       "Writing / GUM Page",
-      "Eureka Math\u00b2 Lesson Materials",
-      "Eureka Math\u00b2 Exit Ticket",
+      "Eureka Math² Lesson Materials",
+      "Eureka Math² Exit Ticket",
       "Science Student Page",
       "Social Studies Student Page"
     ]
@@ -2314,7 +2327,7 @@
       "Phonics",
       "Vocabulary",
       "Writing / GUM",
-      "Eureka Math\u00b2",
+      "Eureka Math²",
       "Science",
       "Social Studies",
       "Assessment",
@@ -2360,7 +2373,7 @@
       "Phonics",
       "Vocabulary",
       "Writing / GUM",
-      "Eureka Math\u00b2",
+      "Eureka Math²",
       "Science",
       "Social Studies",
       "Assessment",
@@ -2428,6 +2441,11 @@
       "owner": "core"
     },
     {
+      "id": "first-week-builder",
+      "label": "First-Week Builder",
+      "owner": "v8.4"
+    },
+    {
       "id": "curriculum-week-1",
       "label": "Curriculum Week 1",
       "owner": "v8.7"
@@ -2439,7 +2457,7 @@
     },
     {
       "id": "eureka-math",
-      "label": "Eureka Math\u00b2",
+      "label": "Eureka Math²",
       "owner": "v8.2"
     },
     {
@@ -2549,10 +2567,10 @@
       "Gifted / Extension"
     ],
     "readingGroups": [
-      "Red \u2014 Far Below Level",
-      "Yellow \u2014 Below Level",
-      "Green \u2014 Benchmark",
-      "Blue \u2014 Above Level",
+      "Red — Far Below Level",
+      "Yellow — Below Level",
+      "Green — Benchmark",
+      "Blue — Above Level",
       "Not Assigned"
     ],
     "interventionTiers": [
@@ -2587,28 +2605,28 @@
   "interventionCenterV141": {
     "readingGroups": [
       {
-        "name": "Red \u2014 Far Below Level",
+        "name": "Red — Far Below Level",
         "frequency": "Daily",
         "minutes": 15,
         "focus": "Intensive decoding, phoneme-grapheme mapping, accuracy, and controlled-text reading"
       },
       {
-        "name": "Yellow \u2014 Below Level",
-        "frequency": "3\u20134 times weekly",
+        "name": "Yellow — Below Level",
+        "frequency": "3–4 times weekly",
         "minutes": 12,
         "focus": "Strategic decoding, accuracy, word recognition, phrasing, and supported fluency"
       },
       {
-        "name": "Green \u2014 Benchmark",
-        "frequency": "1\u20132 times weekly",
+        "name": "Green — Benchmark",
+        "frequency": "1–2 times weekly",
         "minutes": 10,
         "focus": "Benchmark-level fluency, comprehension, vocabulary, and grade-level application"
       },
       {
-        "name": "Blue \u2014 Above Level",
-        "frequency": "1\u20132 times weekly",
+        "name": "Blue — Above Level",
+        "frequency": "1–2 times weekly",
         "minutes": 10,
-        "focus": "Above-level prosody, deeper comprehension, vocabulary, author\u2019s craft, and extension"
+        "focus": "Above-level prosody, deeper comprehension, vocabulary, author’s craft, and extension"
       }
     ],
     "days": [
@@ -2639,7 +2657,7 @@
       "Vocabulary",
       "Spelling",
       "Grammar / GUM",
-      "Eureka Math\u00b2",
+      "Eureka Math²",
       "Science",
       "Social Studies",
       "Writing Rubric",
@@ -2668,7 +2686,7 @@
       "Number",
       "Percentage",
       "Words Correct",
-      "Rubric 1\u20134",
+      "Rubric 1–4",
       "Level / Letter",
       "Pass / Needs Support"
     ]
@@ -2687,37 +2705,37 @@
     "assessmentRenderer": "Version 14.2 Assessments & Progress Monitoring",
     "assetVersion": "15.0.0",
     "readingGroupHierarchy": [
-      "Red \u2014 Far Below Level",
-      "Yellow \u2014 Below Level",
-      "Green \u2014 Benchmark",
-      "Blue \u2014 Above Level"
+      "Red — Far Below Level",
+      "Yellow — Below Level",
+      "Green — Benchmark",
+      "Blue — Above Level"
     ]
   },
   "readingGroupOrderV1501": {
     "order": [
-      "Red \u2014 Far Below Level",
-      "Yellow \u2014 Below Level",
-      "Green \u2014 Benchmark",
-      "Blue \u2014 Above Level"
+      "Red — Far Below Level",
+      "Yellow — Below Level",
+      "Green — Benchmark",
+      "Blue — Above Level"
     ],
     "displayLabels": {
-      "Red \u2014 Far Below Level": "Red",
-      "Yellow \u2014 Below Level": "Yellow",
-      "Green \u2014 Benchmark": "Green",
-      "Blue \u2014 Above Level": "Blue"
+      "Red — Far Below Level": "Red",
+      "Yellow — Below Level": "Yellow",
+      "Green — Benchmark": "Green",
+      "Blue — Above Level": "Blue"
     },
-    "highestGroup": "Blue \u2014 Above Level",
-    "benchmarkGroup": "Green \u2014 Benchmark"
+    "highestGroup": "Blue — Above Level",
+    "benchmarkGroup": "Green — Benchmark"
   },
   "smallGroupsStartupV1502": {
     "rendererRegistration": "Immediate",
     "savedPlanValidation": true,
     "fallbackConfiguration": true,
     "groupOrder": [
-      "Red \u2014 Far Below Level",
-      "Yellow \u2014 Below Level",
-      "Green \u2014 Benchmark",
-      "Blue \u2014 Above Level"
+      "Red — Far Below Level",
+      "Yellow — Below Level",
+      "Green — Benchmark",
+      "Blue — Above Level"
     ]
   },
   "routeRecoveryV1503": {
@@ -2744,10 +2762,10 @@
     "launchWeekStart": "2026-07-27",
     "launchWeekEnd": "2026-07-31",
     "readingGroupOrder": [
-      "Red \u2014 Far Below Level",
-      "Yellow \u2014 Below Level",
-      "Green \u2014 Benchmark",
-      "Blue \u2014 Above Level"
+      "Red — Far Below Level",
+      "Yellow — Below Level",
+      "Green — Benchmark",
+      "Blue — Above Level"
     ],
     "defaultCopies": 33
   },
@@ -2802,7 +2820,7 @@
         6,
         1,
         6,
-        "Ellie\u2019s Long Walk"
+        "Ellie’s Long Walk"
       ],
       [
         7,
@@ -2856,7 +2874,7 @@
         15,
         3,
         3,
-        "Victor\u2019s Journal"
+        "Victor’s Journal"
       ],
       [
         16,
@@ -2967,6 +2985,5 @@
       "Reset Today"
     ],
     "curriculumConnections": "Placeholder cards in Sprint 1; detailed curriculum connections follow in later sprints."
-  },
-  "releaseVersion": "17.0-RC2"
+  }
 }
