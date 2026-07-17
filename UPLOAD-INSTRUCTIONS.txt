@@ -1,29 +1,28 @@
-VERSION 17.0 RC2 — DIRECT DASHBOARD INTEGRATION
+VERSION 17.0 RC2 HOTFIX — DASHBOARD TAKEOVER
 
 ADD:
-- classroom-launch-rc2.js
-- classroom-launch-rc2.css
+- dashboard-rc2-hotfix.js
+- dashboard-rc2-hotfix.css
 
 REPLACE:
-- dashboard-v164.js
-- dashboard-v164.css
-- app.js
-- tos-data.json
 - index.html
 - service-worker.js
 
-DO NOT upload any other files.
+Do not delete any other files.
 
-COMMIT MESSAGE:
-Version 17.0 RC2 - Rebuild dashboard integration
+GitHub upload order:
+1. dashboard-rc2-hotfix.js
+2. dashboard-rc2-hotfix.css
+3. index.html
+4. service-worker.js
 
-TEST IN AN INCOGNITO WINDOW:
-1. Confirm July 17 displays Pre-Launch Preparation and no Unit 1 lesson card.
-2. Select July 27 in Preview Date.
-3. Confirm Classroom Launch Day 1 cards appear.
-4. Click Start Teaching and confirm Classroom Launch opens.
-5. Confirm First-Week Builder is no longer in navigation.
-6. Select August 3.
-7. Confirm Core Instruction and Open Court Unit 1 appear.
-8. Click Start Teaching and confirm Teaching Engine opens.
-9. Return to Classroom Launch and mark an item complete; confirm progress remains saved.
+Commit message:
+Version 17.0 RC2 Hotfix - activate date-driven dashboard
+
+After GitHub Pages finishes deploying:
+1. Close every open tab for the Teacher Operating System.
+2. Open a new Incognito/Private window.
+3. Visit the site and press Ctrl+Shift+R once.
+4. The dashboard should show PRE-LAUNCH PREPARATION for dates before July 27.
+5. Preview July 27, 2026. It should show Classroom Launch and no Unit 1 card.
+6. Preview August 3, 2026. It should show Core Instruction and Unit 1.
