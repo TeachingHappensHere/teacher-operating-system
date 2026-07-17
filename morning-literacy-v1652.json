@@ -1,0 +1,211 @@
+{
+  "version": "16.5.2",
+  "title": "Morning Literacy Connections",
+  "classroomLaunch": {
+    "dates": "July 27-31, 2026",
+    "label": "Open Court Getting Started",
+    "unit": "Getting Started",
+    "lesson": "Classroom Launch",
+    "readingTitle": "Little Red Riding Hood",
+    "notes": [
+      "Use Open Court Getting Started rather than Unit 1.",
+      "Focus on routines, discussion rules, listening expectations, foundational skills, and classroom launch.",
+      "Open Court writing is not used."
+    ]
+  },
+  "curriculumStart": {
+    "date": "2026-08-03",
+    "unit": "Unit 1",
+    "lesson": "Lesson 1",
+    "readingTitle": "The Mice Who Lived in a Shoe"
+  },
+  "blocks": {
+    "morning-work": {
+      "objective": "Students enter, unpack, begin the posted task, and practice independent work expectations.",
+      "materials": [
+        "Morning work page or board task",
+        "Pencils",
+        "Attendance device"
+      ],
+      "teacherSteps": [
+        "Greet students at the door.",
+        "Prompt students to unpack and begin immediately.",
+        "Take attendance and complete essential morning checks.",
+        "Review the task briefly if needed."
+      ],
+      "studentTask": "Complete the morning task quietly and prepare materials for MOWR.",
+      "quickLinks": [
+        {
+          "label": "Attendance / Gradebook",
+          "route": "attendance"
+        },
+        {
+          "label": "Morning Work Resources",
+          "route": "resources"
+        }
+      ]
+    },
+    "mowr": {
+      "objective": "Students practice decoding, fluency, vocabulary, grammar, and comprehension through targeted rotations.",
+      "materials": [
+        "UFLI materials",
+        "Decodables",
+        "Fluency passages",
+        "Vocabulary cards",
+        "Group folders"
+      ],
+      "teacherSteps": [
+        "Begin with the 5-minute whole-group warm-up.",
+        "Teach the targeted UFLI routine.",
+        "Run three 10-minute rotations.",
+        "Prioritize Red daily, Yellow 3-4 times weekly, Blue 2 times weekly, and Green 1-2 times weekly.",
+        "Close with ORF reflection."
+      ],
+      "studentTask": "Rotate through assigned stations and complete the group task for today.",
+      "groups": [
+        {
+          "name": "Red",
+          "focus": "Intensive decoding and accuracy"
+        },
+        {
+          "name": "Yellow",
+          "focus": "Below-level decoding and fluency"
+        },
+        {
+          "name": "Green",
+          "focus": "Benchmark practice and application"
+        },
+        {
+          "name": "Blue",
+          "focus": "Above-level fluency, prosody, and extension"
+        }
+      ],
+      "quickLinks": [
+        {
+          "label": "Small Groups",
+          "route": "small-groups"
+        },
+        {
+          "label": "Intervention",
+          "route": "intervention"
+        },
+        {
+          "label": "UFLI Toolbox",
+          "url": "https://ufli.education.ufl.edu/foundations/toolbox/"
+        }
+      ]
+    },
+    "heggerty": {
+      "objective": "Students build phonemic awareness through oral blending, segmenting, deleting, and substituting sounds.",
+      "materials": [
+        "Heggerty teacher lesson",
+        "Sound cues or hand motions"
+      ],
+      "teacherSteps": [
+        "Keep the lesson oral and fast paced.",
+        "Model each response once.",
+        "Use consistent hand motions.",
+        "Correct immediately and have students repeat the correct response."
+      ],
+      "studentTask": "Respond orally and use the taught hand motions.",
+      "quickLinks": [
+        {
+          "label": "Heggerty",
+          "route": "heggerty"
+        }
+      ]
+    },
+    "phonics": {
+      "objective": "Students connect sounds to spellings and apply the pattern in blending, decoding, dictation, and spelling.",
+      "materials": [
+        "Open Court Teacher Edition",
+        "Sound/Spelling Cards",
+        "Skill Practice pages",
+        "Decodable"
+      ],
+      "teacherSteps": [
+        "Review the target Sound/Spelling Card.",
+        "Model blending and decoding.",
+        "Guide students through word reading.",
+        "Complete dictation or spelling practice.",
+        "Assign the aligned Skill Practice page when appropriate."
+      ],
+      "studentTask": "Read, blend, spell, and write words with the target pattern.",
+      "quickLinks": [
+        {
+          "label": "Open Court Intelligence",
+          "route": "open-court"
+        },
+        {
+          "label": "Lesson Attachments",
+          "route": "attachments"
+        },
+        {
+          "label": "Print Center",
+          "route": "print-center"
+        }
+      ]
+    },
+    "vocabulary": {
+      "objective": "Students learn and use the lesson vocabulary in speaking, reading, and discussion.",
+      "materials": [
+        "Vocabulary cards",
+        "Teacher Edition",
+        "Student-friendly definitions"
+      ],
+      "teacherSteps": [
+        "Say the word and have students repeat it.",
+        "Give a student-friendly definition.",
+        "Use the word in context.",
+        "Invite students to generate an example.",
+        "Revisit the word during reading."
+      ],
+      "studentTask": "Repeat, define, discuss, and apply the vocabulary words.",
+      "quickLinks": [
+        {
+          "label": "Open Court Intelligence",
+          "route": "open-court"
+        }
+      ]
+    },
+    "reading": {
+      "objective": "Students listen, read, discuss, and respond using the lesson comprehension focus and essential question.",
+      "materials": [
+        "Open Court Teacher Edition",
+        "Read aloud or main selection",
+        "Skill Practice pages",
+        "Decodable",
+        "Assessment"
+      ],
+      "teacherSteps": [
+        "Build background and preview the genre.",
+        "Review listening and discussion expectations.",
+        "Introduce read-aloud vocabulary.",
+        "Read the selection using the Teacher Edition prompts.",
+        "Pause for comprehension checks and discussion starters.",
+        "Return to the essential question.",
+        "Use the Open Court science connection when included.",
+        "Do not use the Open Court writing lesson."
+      ],
+      "studentTask": "Listen, read, discuss, cite details, and complete the aligned response task.",
+      "quickLinks": [
+        {
+          "label": "Teacher Edition",
+          "route": "open-court"
+        },
+        {
+          "label": "Skill Practice",
+          "route": "attachments"
+        },
+        {
+          "label": "Assessments",
+          "route": "assessments"
+        },
+        {
+          "label": "Science Connection",
+          "route": "science-intelligence"
+        }
+      ]
+    }
+  }
+}

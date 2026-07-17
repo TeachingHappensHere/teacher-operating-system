@@ -1,0 +1,13 @@
+SPRINT 2 — MORNING LITERACY CONNECTIONS
+
+Add:
+- morning-literacy-v1652.json
+
+Replace:
+- teaching-engine-v165.js
+- teaching-engine-v165.css
+
+Do not replace or re-upload any other files.
+
+Commit message:
+Version 16.5 Sprint 2 - Connect Morning Literacy

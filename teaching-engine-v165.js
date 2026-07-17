@@ -23,6 +23,8 @@
     { id:"dismissal", start:"3:00", end:"3:30", title:"Dismissal", icon:"🚌", category:"Closing", description:"Bus, parent pickup, and end-of-day dismissal routines." }
   ];
 
+  let literacyConfig = { blocks: {} };
+
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
@@ -137,13 +139,14 @@
             <div class="v165-block-label"><span>${esc(active.category)}</span><strong>${esc(active.start)}–${esc(active.end)}</strong></div>
             <div class="v165-block-title"><b>${active.icon}</b><div><p>NOW TEACHING</p><h2>${esc(active.title)}</h2></div></div>
             <p class="v165-description">${esc(active.description)}</p>
-            <section class="v165-shell-notice"><span>SPRINT 1 SHELL</span><h3>Curriculum details will connect here in the next teaching-engine sprints.</h3><p>This workspace is ready to hold objectives, materials, teacher prompts, PDFs, videos, small groups, assessments, and lesson-specific links.</p></section>
-            <section class="v165-placeholder-grid">
-              <article><span>OBJECTIVE</span><strong>Curriculum connection pending</strong></article>
-              <article><span>MATERIALS</span><strong>Lesson attachments will appear here</strong></article>
-              <article><span>TEACHER GUIDE</span><strong>Step-by-step prompts will appear here</strong></article>
-              <article><span>STUDENT TASK</span><strong>Independent and group tasks will appear here</strong></article>
-            </section>
+            ${renderLiteracyWorkspace(active) || `
+              <section class="v165-shell-notice"><span>SPRINT 1 SHELL</span><h3>This block remains ready for its curriculum connection.</h3><p>Morning Literacy is now connected. Afternoon curriculum blocks will be connected in Sprint 3.</p></section>
+              <section class="v165-placeholder-grid">
+                <article><span>OBJECTIVE</span><strong>Curriculum connection pending</strong></article>
+                <article><span>MATERIALS</span><strong>Lesson attachments will appear here</strong></article>
+                <article><span>TEACHER GUIDE</span><strong>Step-by-step prompts will appear here</strong></article>
+                <article><span>STUDENT TASK</span><strong>Independent and group tasks will appear here</strong></article>
+              </section>`}
             <section class="v165-controls">
               <button id="v165Previous" class="secondary-button" ${state.activeIndex===0?"disabled":""}>← Previous</button>
               <button id="v165Complete" class="${isComplete?"secondary-button":"primary-button"}">${isComplete?"Reopen This Block":"Mark Complete"}</button>
@@ -177,6 +180,40 @@
       state=defaultState();localStorage.removeItem(storeKey());render();
     });
     $$("[data-go]").forEach(button=>button.addEventListener("click",()=>location.hash=button.dataset.go));
+    $$("[data-external]").forEach(button=>button.addEventListener("click",()=>window.open(button.dataset.external,"_blank","noopener")));
+  }
+
+  async function loadLiteracyConfig() {
+    try {
+      const response = await fetch("morning-literacy-v1652.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Morning Literacy data failed: ${response.status}`);
+      literacyConfig = await response.json();
+    } catch (error) {
+      console.error(error);
+      literacyConfig = { blocks: {} };
+    }
+  }
+
+  function literacyDetails(blockId) {
+    return literacyConfig.blocks?.[blockId] || null;
+  }
+
+  function renderLiteracyWorkspace(block) {
+    const details = literacyDetails(block.id);
+    if (!details) return null;
+    const groups = details.groups || [];
+    const links = details.quickLinks || [];
+    return `
+      <section class="v1652-literacy-workspace">
+        <section class="v1652-info-grid">
+          <article><span>OBJECTIVE</span><strong>${esc(details.objective || "")}</strong></article>
+          <article><span>MATERIALS</span><ul>${(details.materials || []).map(item => `<li>${esc(item)}</li>`).join("")}</ul></article>
+        </section>
+        <section class="v1652-teacher-flow"><span>TEACHER FLOW</span><ol>${(details.teacherSteps || []).map(step => `<li>${esc(step)}</li>`).join("")}</ol></section>
+        ${groups.length ? `<section class="v1652-group-grid">${groups.map(group => `<article><strong>${esc(group.name)}</strong><span>${esc(group.focus)}</span></article>`).join("")}</section>` : ""}
+        <section class="v1652-student-task"><span>STUDENT TASK</span><strong>${esc(details.studentTask || "")}</strong></section>
+        <section class="v1652-quick-links">${links.map(link => link.url ? `<button data-external="${esc(link.url)}">${esc(link.label)} ↗</button>` : `<button data-go="${esc(link.route)}">${esc(link.label)}</button>`).join("")}</section>
+      </section>`;
   }
 
   function takeControl() {
@@ -189,6 +226,7 @@
 
   window.THH_RENDER_TEACHING_ENGINE=render;
   window.addEventListener("hashchange",takeControl);
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",takeControl);
-  else takeControl();
+  async function boot() { await loadLiteracyConfig(); takeControl(); }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot);
+  else boot();
 })();
