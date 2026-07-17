@@ -1,33 +1,29 @@
-VERSION 17.0 RC1 — LAUNCH EDITION
-
-Built directly from teacher-operating-system-main(2).zip.
+VERSION 17.0 RC2 — DIRECT DASHBOARD INTEGRATION
 
 ADD:
-- launch-edition-v170-rc1.js
-- launch-edition-v170-rc1.css
+- classroom-launch-rc2.js
+- classroom-launch-rc2.css
 
 REPLACE:
+- dashboard-v164.js
+- dashboard-v164.css
+- app.js
+- tos-data.json
 - index.html
 - service-worker.js
-- classroom-launch-v168.json
 
-DO NOT replace any other files.
+DO NOT upload any other files.
 
 COMMIT MESSAGE:
-Version 17.0 RC1 - Launch Edition Integration
+Version 17.0 RC2 - Rebuild dashboard integration
 
-IMPORTANT:
-Your first-week PDF and PowerPoint resources must remain in the repository root.
-
-TEST:
-1. Upload the files and commit.
-2. Open the site in a private/incognito window first.
-3. Confirm the dashboard shows Pre-Launch Preparation for July 17.
-4. Use Preview Another Date and select July 27, 2026.
-5. Confirm the dashboard changes to Classroom Launch Day 1.
-6. Click Start Teaching and confirm it opens Classroom Launch.
-7. Confirm duplicate Teacher Intelligence and First-Week Builder navigation items are gone.
-8. Select August 3, 2026.
-9. Confirm the dashboard changes to Core Instruction.
-10. Click Start Teaching and confirm it opens the Teaching Engine.
-11. Refresh twice in the normal browser after the private-window test passes.
+TEST IN AN INCOGNITO WINDOW:
+1. Confirm July 17 displays Pre-Launch Preparation and no Unit 1 lesson card.
+2. Select July 27 in Preview Date.
+3. Confirm Classroom Launch Day 1 cards appear.
+4. Click Start Teaching and confirm Classroom Launch opens.
+5. Confirm First-Week Builder is no longer in navigation.
+6. Select August 3.
+7. Confirm Core Instruction and Open Court Unit 1 appear.
+8. Click Start Teaching and confirm Teaching Engine opens.
+9. Return to Classroom Launch and mark an item complete; confirm progress remains saved.

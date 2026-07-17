@@ -1,6 +1,6 @@
 {
   "version": "16.5 Daily Teaching Engine \u2014 Sprint 1",
-  "releaseStatus": "Adds the Daily Teaching Engine shell with start/resume, timeline navigation, progress tracking, block completion, and automatic local resume.",
+  "releaseStatus": "Direct dashboard integration: date-aware Pre-Launch, Classroom Launch, and Core Instruction modes. First-Week Builder retired.",
   "teacher": "Mrs. Parrish",
   "school": "Champion Schools San Tan Valley",
   "grade": "2nd Grade",
@@ -129,11 +129,6 @@
       "classroom-launch",
       "Classroom Launch",
       "\u2661"
-    ],
-    [
-      "first-week-builder",
-      "First-Week Builder",
-      "5"
     ],
     [
       "curriculum-week-1",
@@ -1531,8 +1526,7 @@
       "title": "Today",
       "routes": [
         "teachday",
-        "lesson-plans",
-        "first-week-builder"
+        "lesson-plans"
       ]
     },
     {
@@ -1649,7 +1643,6 @@
         "lesson-plans",
         "production",
         "classroom-launch",
-        "first-week-builder",
         "curriculum-week-1"
       ]
     },
@@ -1842,11 +1835,6 @@
           "\u2661"
         ],
         [
-          "first-week-builder",
-          "First-Week Builder",
-          "5"
-        ],
-        [
           "curriculum-week-1",
           "Curriculum Week 1",
           "1"
@@ -2000,11 +1988,6 @@
       "route": "classroom-launch",
       "label": "Morning Meeting",
       "category": "SEL / Community"
-    },
-    {
-      "route": "first-week-builder",
-      "label": "Pillar Resources",
-      "category": "School Culture"
     }
   ],
   "workflowHubV111": {
@@ -2066,7 +2049,6 @@
       "production",
       "teachday",
       "classroom-launch",
-      "first-week-builder",
       "curriculum-week-1",
       "open-court",
       "eureka-math",
@@ -2444,11 +2426,6 @@
       "id": "classroom-launch",
       "label": "Classroom Launch",
       "owner": "core"
-    },
-    {
-      "id": "first-week-builder",
-      "label": "First-Week Builder",
-      "owner": "v8.4"
     },
     {
       "id": "curriculum-week-1",
@@ -2990,5 +2967,6 @@
       "Reset Today"
     ],
     "curriculumConnections": "Placeholder cards in Sprint 1; detailed curriculum connections follow in later sprints."
-  }
+  },
+  "releaseVersion": "17.0-RC2"
 }
