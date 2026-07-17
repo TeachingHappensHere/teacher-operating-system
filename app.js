@@ -394,6 +394,10 @@
   }
 
   function renderDashboard() {
+    if (typeof window.TOS_SPRINT1_RENDER_DASHBOARD === "function") {
+      window.TOS_SPRINT1_RENDER_DASHBOARD({ config, state, navigate, saveState, toast });
+      return;
+    }
     const migrated = Object.keys(state.migration || {}).length;
     const activeWeek = state.migration?.["thh-v53:active-week"];
     const reminders = state.migration?.["thh-v59:reminders"] || [];
@@ -847,6 +851,14 @@
       console.warn("Service worker registration failed.", error);
     }
   }
+
+  window.TOS_APP_BRIDGE = Object.freeze({
+    navigate: route => navigate(route),
+    getRoute: () => state.route,
+    getState: () => JSON.parse(JSON.stringify(state)),
+    saveState: patch => { state = { ...state, ...(patch || {}) }; saveState(); },
+    toast
+  });
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();

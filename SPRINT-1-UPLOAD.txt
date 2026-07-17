@@ -1,0 +1,24 @@
+VERSION 18.0.0 — SPRINT 1: CORE ARCHITECTURE
+
+ADD:
+- sprint1-config.json
+- sprint1-storage.js
+- sprint1-events.js
+- sprint1-state.js
+- sprint1-calendar.js
+- sprint1-navigation.js
+- sprint1-dashboard.js
+- sprint1-dashboard.css
+- sprint1-diagnostics.js
+- sprint1-compat.js
+
+REPLACE:
+- app.js
+- index.html
+- service-worker.js
+
+IMPORTANT:
+The replacement app.js intentionally removes the many older app versions that had been concatenated into one file and were booting multiple renderers. Existing JSON curriculum/resources remain untouched in the repository.
+
+COMMIT MESSAGE:
+Version 18.0 Sprint 1 - core architecture and single dashboard

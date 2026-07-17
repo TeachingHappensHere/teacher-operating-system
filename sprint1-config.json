@@ -1,0 +1,18 @@
+{
+  "build": "18.0.0-sprint1",
+  "schoolYear": "2026-2027",
+  "timezone": "America/Phoenix",
+  "dates": {
+    "classroomLaunchStart": "2026-07-27",
+    "classroomLaunchEnd": "2026-07-31",
+    "coreInstructionStart": "2026-08-03",
+    "firstIDay": "2026-08-07"
+  },
+  "launchDays": {
+    "2026-07-27": "Day 1 — Enter, Belong, Learn the Room",
+    "2026-07-28": "Day 2 — Practice Transitions",
+    "2026-07-29": "Day 3 — Build Independence",
+    "2026-07-30": "Day 4 — Academic Routines",
+    "2026-07-31": "Day 5 — Review, Celebrate, Reteach"
+  }
+}

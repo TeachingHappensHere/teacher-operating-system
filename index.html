@@ -5,19 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f7cbd2">
   <meta name="description" content="Mrs. Parrish's Teacher Operating System">
-  <meta name="teacher-os-build" content="17.0.0-rc3">
+  <meta name="teacher-os-build" content="18.0.0-sprint1">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192.svg">
-  <link rel="stylesheet" href="style.css?v=17.0.0-rc3">
-  <link rel="stylesheet" href="teacher-intelligence-v1602.css?v=16.0.2">
-  <link rel="stylesheet" href="open-court-intelligence-v161.css?v=16.1.0">
-  <link rel="stylesheet" href="sidebar-v162.css?v=16.2.0">
-  <link rel="stylesheet" href="science-intelligence-v163.css?v=16.3.0">
-  <link rel="stylesheet" href="dashboard-v164.css?v=17.0.0-rc3">
-  <link rel="stylesheet" href="teaching-engine-v165.css?v=16.5.0">
-  <link rel="stylesheet" href="teacher-intelligence-v166.css?v=16.6.0">
-  <link rel="stylesheet" href="curriculum-automation-v167.css?v=16.7.0">
-  <link rel="stylesheet" href="classroom-launch-v171.css?v=17.1.0">
+  <link rel="stylesheet" href="style.css?v=18.0.0-s1">
+  <link rel="stylesheet" href="sidebar-v162.css?v=18.0.0-s1">
+  <link rel="stylesheet" href="sprint1-dashboard.css?v=18.0.0-s1">
   <title>Mrs. Parrish's Teacher Operating System</title>
 </head>
 <body>
@@ -29,28 +22,20 @@
       <button id="customizeButton" class="secondary-button">⚙ Customize</button>
     </aside>
     <section class="workspace">
-      <header class="topbar">
-        <button id="menuButton" class="icon-button" aria-label="Open navigation">☰</button>
-        <div class="search-wrap"><span>⌕</span><input id="globalSearch" type="search" placeholder="Search lessons, resources, students, routines..."></div>
-        <button id="quickHealthButton" class="health-pill">✓ Health</button>
-        <button id="profileButton" class="profile-pill"><span>JP</span> Mrs. Parrish</button>
-      </header>
+      <header class="topbar"><button id="menuButton" class="icon-button" aria-label="Open navigation">☰</button><div class="search-wrap"><span>⌕</span><input id="globalSearch" type="search" placeholder="Search lessons, resources, students, routines..."></div><button id="quickHealthButton" class="health-pill">✓ Health</button><button id="profileButton" class="profile-pill"><span>JP</span> Mrs. Parrish</button></header>
       <main id="pageHost" class="page-host" tabindex="-1"></main>
-      <nav id="mobileNav" class="mobile-nav" aria-label="Mobile quick navigation">
-        <button data-route="dashboard">Home</button><button data-route="teachday">Today</button><button data-route="lesson-plans">Plans</button><button data-route="calendar">Calendar</button><button data-route="health">Health</button>
-      </nav>
+      <nav id="mobileNav" class="mobile-nav" aria-label="Mobile quick navigation"><button data-route="dashboard">Home</button><button data-route="teachday">Today</button><button data-route="lesson-plans">Plans</button><button data-route="calendar">Calendar</button><button data-route="health">Health</button></nav>
     </section>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=17.0.0-rc3"></script>
-  <script src="teacher-intelligence-v1602.js?v=16.0.2"></script>
-  <script src="open-court-intelligence-v161.js?v=16.1.0"></script>
-  <script src="sidebar-v162.js?v=16.2.0"></script>
-  <script src="science-intelligence-v163.js?v=16.3.0"></script>
-  <script src="dashboard-v164.js?v=17.0.0-rc3"></script>
-  <script src="teaching-engine-v165.js?v=16.5.0"></script>
-  <script src="teacher-intelligence-v166.js?v=16.6.0"></script>
-  <script src="curriculum-automation-v167.js?v=16.7.0"></script>
-  <script src="classroom-launch-v171.js?v=17.1.0"></script>
+  <script src="sprint1-storage.js?v=18.0.0-s1"></script>
+  <script src="sprint1-events.js?v=18.0.0-s1"></script>
+  <script src="sprint1-state.js?v=18.0.0-s1"></script>
+  <script src="sprint1-calendar.js?v=18.0.0-s1"></script>
+  <script src="sprint1-dashboard.js?v=18.0.0-s1"></script>
+  <script src="sprint1-navigation.js?v=18.0.0-s1"></script>
+  <script src="sprint1-diagnostics.js?v=18.0.0-s1"></script>
+  <script src="sprint1-compat.js?v=18.0.0-s1"></script>
+  <script src="app.js?v=18.0.0-s1"></script>
 </body>
 </html>
