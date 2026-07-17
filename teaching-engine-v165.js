@@ -3,6 +3,11 @@
   "use strict";
   const ROUTE = "teaching-engine";
   const STORE_PREFIX = "thh-v165:teaching-engine:";
+  const WEEK_STORE = "thh-v73:weekly-plan";
+  const ATTACHMENT_STORE = "thh-v74:attachments";
+  const PRINT_STORE = "thh-v74:print-center";
+  const ASSESSMENT_STORE = "thh-v142:assessment-records";
+  const GROUP_STORE = "thh-v141:group-plans";
   const BLOCKS = [
     { id:"breakfast", start:"7:45", end:"8:10", title:"Breakfast", icon:"🥣", category:"Arrival", description:"Welcome students, support breakfast routines, and prepare for the instructional day." },
     { id:"morning-work", start:"8:10", end:"8:20", title:"Morning Work", icon:"✏️", category:"Launch", description:"Students complete the morning task while you take attendance and prepare materials." },
@@ -25,6 +30,7 @@
 
   let literacyConfig = { blocks: {} };
   let afternoonConfig = { blocks: {} };
+  let teacherIntelligenceConfig = { rules: {}, messages: {} };
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -40,6 +46,15 @@
   }
 
   let state = readState();
+
+  function readLocal(key, fallback) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || "null");
+      return value ?? fallback;
+    } catch {
+      return fallback;
+    }
+  }
 
   function saveState() {
     state.lastOpenedAt = new Date().toISOString();
@@ -140,6 +155,7 @@
             <div class="v165-block-label"><span>${esc(active.category)}</span><strong>${esc(active.start)}–${esc(active.end)}</strong></div>
             <div class="v165-block-title"><b>${active.icon}</b><div><p>NOW TEACHING</p><h2>${esc(active.title)}</h2></div></div>
             <p class="v165-description">${esc(active.description)}</p>
+            ${renderTeacherIntelligence(active)}
             ${renderConnectedWorkspace(active) || `
               <section class="v165-shell-notice"><span>SPRINT 1 SHELL</span><h3>This block remains ready for its curriculum connection.</h3><p>This block remains available for a future specialized connection.</p></section>
               <section class="v165-placeholder-grid">
@@ -204,6 +220,175 @@
       console.error(error);
       afternoonConfig = { blocks: {} };
     }
+  }
+
+
+  async function loadTeacherIntelligenceConfig() {
+    try {
+      const response = await fetch("teacher-intelligence-v1654.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Teacher Intelligence data failed: ${response.status}`);
+      teacherIntelligenceConfig = await response.json();
+    } catch (error) {
+      console.error(error);
+      teacherIntelligenceConfig = { rules: {}, messages: {} };
+    }
+  }
+
+  function intelligenceFor(block) {
+    const plan = readLocal(WEEK_STORE, { days: {} });
+    const attachments = readLocal(ATTACHMENT_STORE, []);
+    const prints = readLocal(PRINT_STORE, []);
+    const assessments = readLocal(ASSESSMENT_STORE, []);
+    const groups = readLocal(GROUP_STORE, {});
+    const weekday = new Date().toLocaleDateString("en-US", { weekday: "long" });
+    const dayPlan = plan.days?.[weekday] || {};
+
+    const subjectMap = {
+      "morning-work": "morningWork",
+      "mowr": "mowr",
+      "heggerty": "heggerty",
+      "phonics": "phonics",
+      "vocabulary": "vocabulary",
+      "reading": "reading",
+      "writing": "writing",
+      "math": "math",
+      "math-2": "math2",
+      "science": "science",
+      "social-studies": "socialStudies"
+    };
+
+    const planKey = subjectMap[block.id];
+    const planReady = !planKey || Boolean(dayPlan[planKey] || dayPlan[block.id]);
+
+    const pendingPrints = Array.isArray(prints)
+      ? prints.filter(item => !item.complete && (!item.day || item.day === weekday)).length
+      : 0;
+
+    const missingAttachments = Array.isArray(attachments)
+      ? attachments.filter(item =>
+          (item.status === "Missing Link" || (!(item.url || item.fileName) && item.print)) &&
+          (!item.day || item.day === weekday)
+        ).length
+      : 0;
+
+    const assessmentAttention = Array.isArray(assessments)
+      ? assessments.filter(item =>
+          ["Not Started", "Needs Make-Up", "Scheduled"].includes(item.status)
+        ).length
+      : 0;
+
+    const groupReady = Object.keys(groups || {}).some(key => key.endsWith("|" + weekday));
+
+    const alerts = [];
+
+    if (!planReady) {
+      alerts.push({
+        type: "planning",
+        label: teacherIntelligenceConfig.messages?.noPlan || "This block does not yet have a connected daily plan.",
+        route: teacherIntelligenceConfig.rules?.planning?.route || "lesson-plans",
+        priority: "high"
+      });
+    }
+
+    if (pendingPrints > 0) {
+      alerts.push({
+        type: "printing",
+        label: `${pendingPrints} ${pendingPrints === 1 ? "print item is" : "print items are"} waiting.`,
+        route: teacherIntelligenceConfig.rules?.printQueue?.route || "print-center",
+        priority: "high"
+      });
+    }
+
+    if (missingAttachments > 0) {
+      alerts.push({
+        type: "attachments",
+        label: `${missingAttachments} ${missingAttachments === 1 ? "attachment needs" : "attachments need"} a file or link.`,
+        route: teacherIntelligenceConfig.rules?.attachments?.route || "attachments",
+        priority: "high"
+      });
+    }
+
+    if (assessmentAttention > 0 && ["phonics","vocabulary","reading","math","science"].includes(block.id)) {
+      alerts.push({
+        type: "assessments",
+        label: `${assessmentAttention} assessment ${assessmentAttention === 1 ? "record needs" : "records need"} attention.`,
+        route: teacherIntelligenceConfig.rules?.assessments?.route || "assessments",
+        priority: "medium"
+      });
+    }
+
+    if (block.id === "mowr") {
+      alerts.push({
+        type: "groups",
+        label: groupReady
+          ? (teacherIntelligenceConfig.messages?.smallGroupsReady || "Small-group support is available.")
+          : (teacherIntelligenceConfig.messages?.smallGroupsMissing || "Today's small-group plan may need preparation."),
+        route: teacherIntelligenceConfig.rules?.smallGroups?.route || "small-groups",
+        priority: groupReady ? "low" : "medium",
+        ready: groupReady
+      });
+    }
+
+    return {
+      planReady,
+      pendingPrints,
+      missingAttachments,
+      assessmentAttention,
+      groupReady,
+      alerts
+    };
+  }
+
+  function renderTeacherIntelligence(block) {
+    const info = intelligenceFor(block);
+    const highPriority = info.alerts.filter(alert => alert.priority === "high").length;
+    const ready = highPriority === 0 && info.planReady;
+
+    return `
+      <section class="v1654-intelligence ${ready ? "ready" : "attention"}">
+        <div class="v1654-intelligence-heading">
+          <div>
+            <span>TEACHER INTELLIGENCE</span>
+            <h3>${ready
+              ? (teacherIntelligenceConfig.messages?.allReady || "You're ready for this block.")
+              : `${info.alerts.length} item${info.alerts.length === 1 ? "" : "s"} to review`}</h3>
+          </div>
+          <b>${ready ? "✓" : "!"}</b>
+        </div>
+
+        <div class="v1654-status-grid">
+          <article class="${info.planReady ? "ready" : "attention"}">
+            <span>PLAN</span>
+            <strong>${info.planReady ? "Ready" : "Needs Review"}</strong>
+          </article>
+          <article class="${info.pendingPrints === 0 ? "ready" : "attention"}">
+            <span>PRINTING</span>
+            <strong>${info.pendingPrints === 0 ? "Clear" : `${info.pendingPrints} Waiting`}</strong>
+          </article>
+          <article class="${info.missingAttachments === 0 ? "ready" : "attention"}">
+            <span>ATTACHMENTS</span>
+            <strong>${info.missingAttachments === 0 ? "Ready" : `${info.missingAttachments} Missing`}</strong>
+          </article>
+          <article class="${info.assessmentAttention === 0 ? "ready" : "attention"}">
+            <span>ASSESSMENTS</span>
+            <strong>${info.assessmentAttention === 0 ? "Clear" : `${info.assessmentAttention} Open`}</strong>
+          </article>
+        </div>
+
+        ${info.alerts.length ? `
+          <div class="v1654-alert-list">
+            ${info.alerts.map(alert => `
+              <button data-go="${esc(alert.route)}" class="${alert.ready ? "ready" : alert.priority}">
+                <b>${alert.ready ? "✓" : alert.priority === "high" ? "!" : "•"}</b>
+                <span>${esc(alert.label)}</span>
+                <strong>Open</strong>
+              </button>`).join("")}
+          </div>` : `
+          <div class="v1654-all-ready">
+            <b>✓</b>
+            <span>No preparation alerts for this block.</span>
+          </div>`}
+      </section>`;
   }
 
   function connectedDetails(blockId) {

@@ -1,7 +1,7 @@
-SPRINT 3 — CONNECT THE AFTERNOON
+SPRINT 4 — ADD TEACHER INTELLIGENCE
 
 Add:
-- afternoon-curriculum-v1653.json
+- teacher-intelligence-v1654.json
 
 Replace:
 - teaching-engine-v165.js
@@ -10,30 +10,20 @@ Replace:
 Do not replace or re-upload any other files.
 
 Commit message:
-Version 16.5 Sprint 3 - Connect the Afternoon
+Version 16.5 Sprint 4 - Add Teacher Intelligence
 
-Connected blocks:
-- Writing
-- Eureka Math²
-- Workout
-- Math 2
-- Science
-- Social Studies
-- Pack-Up
-- Dismissal
-
-Important curriculum rules preserved:
-- Building the Foundation replaces Open Court writing.
-- Open Court GUM may still support grammar.
-- Open Court science connections enrich the standards-based science lesson.
-- MOWR remains before Heggerty.
+Teacher Intelligence now checks:
+- Daily plan readiness
+- Pending print jobs
+- Missing lesson attachments
+- Assessment records needing attention
+- Small-group readiness during MOWR
 
 Test:
-1. Open Teaching Engine and resume the day.
-2. Open Writing and confirm Building the Foundation is named.
-3. Open Eureka Math² and test the Great Minds link.
-4. Open Workout and Math 2.
-5. Open Science and confirm the Open Court science-connection rule.
-6. Open Social Studies.
-7. Open Pack-Up and Dismissal.
-8. Confirm Morning Literacy blocks from Sprint 2 still work.
+1. Open the Teaching Engine.
+2. Open several literacy and afternoon blocks.
+3. Confirm the Teacher Intelligence panel appears under the active block description.
+4. Verify Plan, Printing, Attachments, and Assessments status cards.
+5. Open MOWR and confirm the Small Groups status appears.
+6. Test each Open button.
+7. Confirm Sprint 2 and Sprint 3 curriculum details remain visible below the intelligence panel.

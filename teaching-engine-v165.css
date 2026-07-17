@@ -35,3 +35,30 @@
 .v1653-program-banner strong{font-size:15px;color:#62468e}
 .v1653-curriculum-rule{display:grid;gap:6px;padding:13px 14px;border-radius:11px;background:#fff8ed;border:1px solid #ead2a2}
 .v1653-curriculum-rule strong{line-height:1.45;color:#6e5330}
+
+
+/* Sprint 4 — Teacher Intelligence */
+.v1654-intelligence{display:grid;gap:10px;margin:16px 0;padding:14px;border-radius:13px;border:1px solid var(--line)}
+.v1654-intelligence.ready{background:#f6fbf4;border-color:#bed8b7}
+.v1654-intelligence.attention{background:#fffaf0;border-color:#ead2a2}
+.v1654-intelligence-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.v1654-intelligence-heading span,.v1654-status-grid span{color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.06em}
+.v1654-intelligence-heading h3{margin:4px 0 0}
+.v1654-intelligence-heading>b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#5c9a63;color:#fff;font-size:18px}
+.v1654-intelligence.attention .v1654-intelligence-heading>b{background:#c9902c}
+.v1654-status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.v1654-status-grid article{padding:9px;border-radius:9px;background:#fff}
+.v1654-status-grid article.ready{border-left:4px solid #5c9a63}
+.v1654-status-grid article.attention{border-left:4px solid #c9902c}
+.v1654-status-grid strong{display:block;margin-top:4px;font-size:12px}
+.v1654-alert-list{display:grid;gap:6px}
+.v1654-alert-list button{display:grid;grid-template-columns:26px minmax(0,1fr) auto;align-items:center;gap:8px;padding:9px;border:1px solid var(--line);border-radius:9px;background:#fff;text-align:left}
+.v1654-alert-list button>b{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#9b203a;color:#fff}
+.v1654-alert-list button.medium>b{background:#c9902c}
+.v1654-alert-list button.low>b,.v1654-alert-list button.ready>b{background:#5c9a63}
+.v1654-alert-list button span{line-height:1.35}
+.v1654-alert-list button strong{color:var(--accent)}
+.v1654-all-ready{display:flex;align-items:center;gap:9px;padding:10px;border-radius:9px;background:#eef6eb}
+.v1654-all-ready>b{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:#5c9a63;color:#fff}
+@media(max-width:900px){.v1654-status-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.v1654-status-grid{grid-template-columns:1fr}.v1654-alert-list button{grid-template-columns:26px minmax(0,1fr)}.v1654-alert-list button strong{grid-column:2}}

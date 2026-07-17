@@ -1,0 +1,40 @@
+{
+  "version": "16.5.4",
+  "title": "Teacher Intelligence",
+  "rules": {
+    "printQueue": {
+      "label": "Print Queue",
+      "route": "print-center",
+      "priority": "high"
+    },
+    "attachments": {
+      "label": "Lesson Attachments",
+      "route": "attachments",
+      "priority": "high"
+    },
+    "planning": {
+      "label": "Weekly Planning",
+      "route": "lesson-plans",
+      "priority": "high"
+    },
+    "assessments": {
+      "label": "Assessments & Data",
+      "route": "assessments",
+      "priority": "medium"
+    },
+    "smallGroups": {
+      "label": "Small Groups",
+      "route": "small-groups",
+      "priority": "medium"
+    }
+  },
+  "messages": {
+    "allReady": "You're ready for this block.",
+    "noPlan": "This block does not yet have a connected daily plan.",
+    "pendingPrints": "Print items are still waiting.",
+    "missingAttachments": "One or more lesson attachments need a file or link.",
+    "assessmentDue": "Assessment records need attention.",
+    "smallGroupsReady": "Small-group support is available.",
+    "smallGroupsMissing": "Today's small-group plan may need preparation."
+  }
+}
