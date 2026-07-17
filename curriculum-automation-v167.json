@@ -1,0 +1,68 @@
+{
+  "version": "16.7",
+  "schoolYear": "2026-2027",
+  "launchWindow": {
+    "start": "2026-07-27",
+    "end": "2026-07-31",
+    "title": "Classroom Launch",
+    "openCourt": "Getting Started \u2014 Little Red Riding Hood",
+    "writing": "Building the Foundation routines and notebook setup",
+    "math": "Eureka Math\u00b2 routines and manipulatives",
+    "science": "Science routines, safety, observation, and notebook setup",
+    "socialStudies": "Classroom community and responsible citizenship"
+  },
+  "coreStartDate": "2026-08-03",
+  "instructionDays": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday"
+  ],
+  "idays": [
+    "2026-08-07"
+  ],
+  "nonSchoolDates": [],
+  "openCourtTitles": [
+    "The Mice Who Lived in a Shoe",
+    "Ants and Aphids Work Together",
+    "The Bat, Birds, and Beasts",
+    "A Cherokee Stickball Game",
+    "The Final Game",
+    "Ellie's Long Walk",
+    "Mattland",
+    "A River of Ice",
+    "What Makes the Earth Shake?",
+    "All About Earthquakes",
+    "In My Own Backyard",
+    "Volcano Rising",
+    "Gross Jobs",
+    "My Community and Me",
+    "Victor's Journal",
+    "Night Shift",
+    "The Art of Storytelling",
+    "Aesop and His Fables",
+    "Storytelling: A Zulu Tradition",
+    "Cinderella Tales",
+    "Cinderlad",
+    "The Green Grass Grew All Around",
+    "Winston and George",
+    "A Brand-New American Family"
+  ],
+  "scienceSequence": [
+    "Science routines and observation",
+    "Weather and severe weather solutions",
+    "Glaciers and Earth's surface",
+    "Earthquakes",
+    "Volcanoes",
+    "Matter",
+    "Life science and habitats"
+  ],
+  "socialStudiesSequence": [
+    "Classroom community and citizenship",
+    "Maps and geographic models",
+    "Weather and climate influence",
+    "Communities and institutions",
+    "Earning, spending, and saving",
+    "Leadership and working together"
+  ]
+}

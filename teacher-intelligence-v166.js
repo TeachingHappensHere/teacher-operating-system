@@ -10,6 +10,7 @@
   const GROUP_STORE = "thh-v141:group-plans";
   const STUDENT_STORE = "thh-v140:student-records";
   const ENGINE_PREFIX = "thh-v165:teaching-engine:";
+  const GENERATED_CURRICULUM_STORE = "thh-v167:generated-lessons";
 
   let config = { rules: {} };
 
@@ -84,6 +85,8 @@
     const engine = read(ENGINE_PREFIX + dateKey(), {
       started:false, completed:{}, activeIndex:0
     });
+    const generatedCurriculum = read(GENERATED_CURRICULUM_STORE, {});
+    const generatedToday = generatedCurriculum[dateKey()] || null;
 
     const curriculumKeys = [
       ["reading","ELA / Open Court"],
@@ -96,8 +99,8 @@
     const curriculum = curriculumKeys.map(([key,label]) => ({
       key,
       label,
-      ready: Boolean(dayPlan[key]),
-      value: dayPlan[key] || ""
+      ready: Boolean(dayPlan[key] || generatedToday),
+      value: dayPlan[key] || (key === "reading" ? [generatedToday?.openCourt, generatedToday?.readingTitle].filter(Boolean).join(" — ") : key === "writing" ? generatedToday?.writing : key === "math" ? generatedToday?.math : key === "science" ? generatedToday?.science : key === "socialStudies" ? generatedToday?.socialStudies : "") || ""
     }));
 
     const pendingPrints = Array.isArray(prints)
@@ -182,6 +185,10 @@
         detail:`${assessmentAttention} record${assessmentAttention === 1 ? "" : "s"} need attention.`,
         route:"assessments"
       });
+    }
+
+    if (curriculum.some(item => !item.ready)) {
+      actions.unshift({priority:"high",title:"Run Curriculum Automation",detail:"Generate or update today's curriculum assignments.",route:"curriculum-automation"});
     }
 
     if (!actions.length) {

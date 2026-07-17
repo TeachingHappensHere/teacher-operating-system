@@ -1,25 +1,26 @@
-VERSION 16.6 — TEACHER INTELLIGENCE
+VERSION 16.7 — CURRICULUM AUTOMATION
 
 Add:
-- teacher-intelligence-v166.json
-- teacher-intelligence-v166.js
-- teacher-intelligence-v166.css
+- curriculum-automation-v167.json
+- curriculum-automation-v167.js
+- curriculum-automation-v167.css
 
 Replace:
+- teacher-intelligence-v166.js
 - index.html
 - service-worker.js
 
 Do not upload or replace any other files.
 
 Commit message:
-Version 16.6 - Teacher Intelligence
+Version 16.7 - Curriculum Automation
 
 Test:
 1. Refresh twice after deployment.
-2. Open Planning > Teacher Intelligence.
-3. Confirm the readiness score appears.
-4. Review recommended next actions.
-5. Confirm curriculum readiness for ELA, Writing, Math, Science, and Social Studies.
-6. Test Print Queue, Attachments, Assessments, and Small Groups buttons.
-7. Confirm Open Teaching Engine works.
-8. Confirm existing Teaching Engine Sprint 2-4 features still work.
+2. Open Planning > Curriculum Automation.
+3. Select July 27, 2026 and confirm Classroom Launch.
+4. Select August 3, 2026 and confirm Open Court Unit 1 Lesson 1 begins August 3.
+5. Confirm August 7 displays iDay.
+6. Edit a lesson and confirm a manual override.
+7. Send the week to Weekly Planning.
+8. Open Teacher Intelligence and confirm curriculum readiness updates.
