@@ -1,26 +1,33 @@
-VERSION 17.0 — LAUNCH EDITION (INTEGRATION RELEASE)
+VERSION 17.0 RC1 — LAUNCH EDITION
+
+Built directly from teacher-operating-system-main(2).zip.
 
 ADD:
-- launch-edition-v170.js
-- launch-edition-v170.css
+- launch-edition-v170-rc1.js
+- launch-edition-v170-rc1.css
 
 REPLACE:
 - index.html
 - service-worker.js
+- classroom-launch-v168.json
 
 DO NOT replace any other files.
 
-This release was built directly from teacher-operating-system-main(2).zip.
-It uses the classroom-launch-v168.json file already in the repository.
-
 COMMIT MESSAGE:
-Version 17.0 - Launch Edition Integration Release
+Version 17.0 RC1 - Launch Edition Integration
+
+IMPORTANT:
+Your first-week PDF and PowerPoint resources must remain in the repository root.
 
 TEST:
-1. Refresh twice after GitHub finishes deploying.
-2. On the dashboard, confirm the current July date shows Pre-Launch Preparation instead of Open Court Unit 1.
-3. Use Preview Another Date and choose July 27, 2026. Confirm the dashboard changes to Classroom Launch Day 1.
-4. Choose August 3, 2026. Confirm the dashboard changes to Core Instruction.
-5. Click Classroom Launch and test Day 1 through Day 5.
-6. Mark lessons, procedures, and preparation items complete. Confirm progress remains saved.
-7. Confirm Start Teaching opens Classroom Launch during July 27-31 and Teaching Engine during core instruction.
+1. Upload the files and commit.
+2. Open the site in a private/incognito window first.
+3. Confirm the dashboard shows Pre-Launch Preparation for July 17.
+4. Use Preview Another Date and select July 27, 2026.
+5. Confirm the dashboard changes to Classroom Launch Day 1.
+6. Click Start Teaching and confirm it opens Classroom Launch.
+7. Confirm duplicate Teacher Intelligence and First-Week Builder navigation items are gone.
+8. Select August 3, 2026.
+9. Confirm the dashboard changes to Core Instruction.
+10. Click Start Teaching and confirm it opens the Teaching Engine.
+11. Refresh twice in the normal browser after the private-window test passes.

@@ -1,0 +1,14 @@
+
+/* Version 17.0 RC1 — Launch Edition Integration */
+.v170rc1-status{display:grid;gap:3px;margin-top:10px;padding:10px 12px;border:1px solid #eadde2;border-radius:10px;background:rgba(255,255,255,.72)}
+.v170rc1-status>span,.v170rc1-preview label>span,.v170rc1-card>span{color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.06em}
+.v170rc1-status>strong{font-size:15px}.v170rc1-status>p,.v170rc1-card>p{margin:0;color:var(--muted);line-height:1.4}
+.v170rc1-preview{display:flex;justify-content:flex-end;align-items:end;gap:7px;max-width:1500px;margin:0 auto 9px;padding:8px 10px;border:1px solid #eadde2;border-radius:10px;background:#fff}
+.v170rc1-preview label{display:grid;gap:4px}.v170rc1-preview input{min-height:36px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.v170rc1-preview button{min-height:36px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:7px 10px;color:var(--accent);font-weight:800}
+.v170rc1-card{display:grid;align-content:start;gap:6px;height:100%}.v170rc1-card>strong{font-size:14px;line-height:1.3}.v170rc1-card>button{align-self:end;margin-top:auto;border:0;border-radius:8px;background:#f2eafa;padding:8px;color:#6d3f91;font-weight:800}
+[data-v170-hidden-unit-one="true"]{display:none!important}
+html[data-school-mode="prelaunch"] #v170rc1Status{background:#fffaf0;border-color:#ead2a2}
+html[data-school-mode="launch"] #v170rc1Status{background:#fff3f5;border-color:#e3a8b6}
+html[data-school-mode="core"] #v170rc1Status{background:#f4f9f1;border-color:#bfd8b8}
+@media(max-width:700px){.v170rc1-preview{align-items:stretch;flex-direction:column}.v170rc1-preview label,.v170rc1-preview input,.v170rc1-preview button{width:100%}}
