@@ -1,5 +1,5 @@
 
-const CACHE = "teaching-happens-here-v16-7-curriculum-automation";
+const CACHE = "teaching-happens-here-v17-0-launch-edition";
 const CORE = [
   "./",
   "./index.html",
