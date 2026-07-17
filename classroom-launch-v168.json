@@ -1,0 +1,624 @@
+{
+  "version": "16.8",
+  "title": "Classroom Launch Experience",
+  "schoolYear": "2026\u20132027",
+  "dates": {
+    "start": "2026-07-27",
+    "end": "2026-07-31"
+  },
+  "coreCurriculumStart": "2026-08-03",
+  "classSize": 33,
+  "resourceLocation": "repository-root",
+  "days": [
+    {
+      "day": 1,
+      "date": "2026-07-27",
+      "theme": "Welcome to Our Classroom",
+      "focus": "Safety, belonging, entering the room, and learning how our classroom works.",
+      "readAloud": "If I Built a School",
+      "blocks": [
+        {
+          "id": "d1-morning",
+          "subject": "Morning Work",
+          "title": "If I Were an Animal Today",
+          "duration": "15\u201320 minutes",
+          "objective": "Students independently complete a low-risk drawing and writing response while practicing arrival expectations.",
+          "steps": [
+            "Greet students at the door.",
+            "Model where backpacks, water bottles, folders, and supplies belong.",
+            "Direct students to begin the animal-feelings page.",
+            "Circulate and learn names while students work."
+          ],
+          "resources": [
+            "Morning Work.pdf"
+          ]
+        },
+        {
+          "id": "d1-community",
+          "subject": "Community",
+          "title": "Get to Know You: Four Corners",
+          "duration": "20\u201325 minutes",
+          "objective": "Students learn classmates\u2019 interests while practicing listening, movement, personal space, and respectful responses.",
+          "steps": [
+            "Explain that each corner represents one answer.",
+            "Model walking safely and quietly.",
+            "Read several questions.",
+            "Invite students from different corners to share."
+          ],
+          "resources": [
+            "Get to Know You Activity.pdf"
+          ]
+        },
+        {
+          "id": "d1-read",
+          "subject": "Read Aloud",
+          "title": "If I Built a School",
+          "duration": "25\u201330 minutes",
+          "objective": "Students listen actively, discuss creative school ideas, and connect the story to their own classroom community.",
+          "steps": [
+            "Preview listening expectations.",
+            "Read the story aloud.",
+            "Pause for predictions and reactions.",
+            "Complete the My Dream School poem orally or in writing."
+          ],
+          "resources": [
+            "Read Aloud - If I Built a School.pdf"
+          ]
+        },
+        {
+          "id": "d1-writing",
+          "subject": "Writing Workshop",
+          "title": "Lesson 1: What Will Writing Workshop Look and Sound Like?",
+          "duration": "30 minutes",
+          "objective": "Students identify expectations for the mini lesson, independent work time, and sharing time.",
+          "steps": [
+            "Introduce students as authors.",
+            "Explain the three parts of writing workshop.",
+            "Complete the look-and-sound anchor chart.",
+            "Practice a brief independent writing period and partner share."
+          ],
+          "resources": [
+            "Getting Started with Writing Workshop.pdf",
+            "Getting Started Anchor Charts.pptx"
+          ]
+        },
+        {
+          "id": "d1-procedures",
+          "subject": "Procedures",
+          "title": "Arrival, Carpet, Attention Signal, and Restroom",
+          "duration": "Taught throughout the day",
+          "objective": "Students correctly demonstrate the four highest-priority classroom procedures.",
+          "steps": [
+            "Model the procedure incorrectly.",
+            "Ask students to identify what needs to change.",
+            "Model it correctly.",
+            "Have small groups practice.",
+            "Repeat until the class can perform it successfully."
+          ],
+          "resources": [
+            "Class Procedures Review.pdf"
+          ]
+        }
+      ],
+      "procedures": [
+        "Entering the classroom",
+        "Unpacking and storing belongings",
+        "Beginning morning work",
+        "Attention signal",
+        "Carpet expectations",
+        "Restroom signal",
+        "Walking in the classroom",
+        "Lunch and recess transition",
+        "Pack-up and dismissal"
+      ],
+      "prep": [
+        "Place Morning Work on desks",
+        "Choose and label the Four Corners",
+        "Prepare the read-aloud",
+        "Open Writing Workshop Lesson 1 slides",
+        "Post arrival and carpet anchor charts"
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2026-07-28",
+      "theme": "Writers and Responsible Learners",
+      "focus": "Materials, transitions, partnerships, and caring for classroom tools.",
+      "blocks": [
+        {
+          "id": "d2-morning",
+          "subject": "Morning Work",
+          "title": "Independent Arrival Practice",
+          "duration": "15\u201320 minutes",
+          "objective": "Students repeat the complete arrival routine with less teacher prompting.",
+          "steps": [
+            "Greet and observe.",
+            "Prompt only when necessary.",
+            "Pause to celebrate routines performed correctly.",
+            "Review one routine that needs improvement."
+          ],
+          "resources": [
+            "Morning Work.pdf"
+          ]
+        },
+        {
+          "id": "d2-writing",
+          "subject": "Writing Workshop",
+          "title": "Lesson 2: Writing Materials",
+          "duration": "30 minutes",
+          "objective": "Students identify, select, use, and return writing materials appropriately.",
+          "steps": [
+            "Tour the writing-material locations.",
+            "Explain pencil and supply procedures.",
+            "Allow students to sample approved writing tools.",
+            "Practice retrieving and returning materials."
+          ],
+          "resources": [
+            "Getting Started with Writing Workshop.pdf",
+            "Getting Started Anchor Charts.pptx",
+            "Digital Writing Notebook.pdf"
+          ]
+        },
+        {
+          "id": "d2-math",
+          "subject": "Math",
+          "title": "Math Launch and Partner Expectations",
+          "duration": "45\u201360 minutes",
+          "objective": "Students learn math discussion, manipulatives, partner work, and cleanup routines.",
+          "steps": [
+            "Introduce the math block structure.",
+            "Model how to use and return manipulatives.",
+            "Practice partner talk.",
+            "Use a selected activity from the Math PowerPoint."
+          ],
+          "resources": [
+            "Math PowerPoint (2).pptx"
+          ]
+        },
+        {
+          "id": "d2-assessment",
+          "subject": "Assessment",
+          "title": "Back-to-School Assessment Rotation",
+          "duration": "20\u201340 minutes",
+          "objective": "Students demonstrate independent work expectations while the teacher begins required assessments.",
+          "steps": [
+            "Review quiet testing expectations.",
+            "Explain what students do when finished.",
+            "Assess students individually or in small groups.",
+            "Use independent reading stamina or an approved activity for waiting students."
+          ],
+          "resources": [
+            "Back-to-School Assessments.pdf"
+          ]
+        },
+        {
+          "id": "d2-procedures",
+          "subject": "Procedures",
+          "title": "Materials, Partner Talk, Line-Up, and Hallway",
+          "duration": "Taught throughout the day",
+          "objective": "Students safely manage materials and transitions.",
+          "steps": [
+            "Review Day 1 procedures.",
+            "Add procedures for supplies and partners.",
+            "Practice line-up and hallway movement.",
+            "Reteach any procedure needing support."
+          ],
+          "resources": [
+            "Class Procedures Review.pdf"
+          ]
+        }
+      ],
+      "procedures": [
+        "Writing-material procedures",
+        "Pencil procedures",
+        "Partner A and Partner B",
+        "Turn-and-talk",
+        "Lining up",
+        "Hallway expectations",
+        "Returning materials",
+        "Independent reading stamina"
+      ],
+      "prep": [
+        "Organize writing tools for student sampling",
+        "Open Writing Workshop Lesson 2",
+        "Prepare math manipulatives",
+        "Choose assessment students and independent tasks",
+        "Prepare hallway and line-up practice"
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2026-07-29",
+      "theme": "Independent Learners",
+      "focus": "Choosing productive workspaces, solving small problems, and building stamina.",
+      "blocks": [
+        {
+          "id": "d3-morning",
+          "subject": "Morning Work",
+          "title": "Arrival Routine With Independence",
+          "duration": "15\u201320 minutes",
+          "objective": "Students complete arrival and morning work with minimal reminders.",
+          "steps": [
+            "Observe the routine.",
+            "Record procedures that need review.",
+            "Give specific praise.",
+            "Hold a quick reflection."
+          ],
+          "resources": [
+            "Morning Work.pdf"
+          ]
+        },
+        {
+          "id": "d3-writing",
+          "subject": "Writing Workshop",
+          "title": "Lesson 3: Finding Your Writing Place",
+          "duration": "30 minutes",
+          "objective": "Students choose a productive writing location and practice writing stamina.",
+          "steps": [
+            "Discuss what makes a good writing space.",
+            "Model productive and unproductive choices.",
+            "Assign or approve writing locations.",
+            "Practice a short writing period and reflect."
+          ],
+          "resources": [
+            "Getting Started with Writing Workshop.pdf",
+            "Getting Started Anchor Charts.pptx",
+            "Digital Writing Notebook.pdf"
+          ]
+        },
+        {
+          "id": "d3-math",
+          "subject": "Math",
+          "title": "Racing Facts Partner Game",
+          "duration": "30\u201345 minutes",
+          "objective": "Students practice addition or subtraction facts while following partner-game expectations.",
+          "steps": [
+            "Model rolling, solving, checking, and taking turns.",
+            "Assign differentiated boards.",
+            "Monitor math language and sportsmanship.",
+            "Practice game cleanup."
+          ],
+          "resources": [
+            "Math Fact Games.pdf"
+          ]
+        },
+        {
+          "id": "d3-assessment",
+          "subject": "Assessment",
+          "title": "Continue Back-to-School Assessments",
+          "duration": "20\u201340 minutes",
+          "objective": "Students sustain independent work while the teacher gathers baseline information.",
+          "steps": [
+            "Restate testing expectations.",
+            "Continue individual assessments.",
+            "Check independent reading stamina.",
+            "Note students needing additional support."
+          ],
+          "resources": [
+            "Back-to-School Assessments.pdf"
+          ]
+        },
+        {
+          "id": "d3-procedures",
+          "subject": "Procedures",
+          "title": "Centers, Technology, Early Finishers, and Asking for Help",
+          "duration": "Taught throughout the day",
+          "objective": "Students know what to do without interrupting instruction.",
+          "steps": [
+            "Teach how to ask for help.",
+            "Teach what to do when finished.",
+            "Practice technology handling.",
+            "Practice a short center rotation."
+          ],
+          "resources": [
+            "Class Procedures Review.pdf"
+          ]
+        }
+      ],
+      "procedures": [
+        "Choosing a work location",
+        "Asking for help",
+        "What to do when finished",
+        "Using classroom technology",
+        "Working with a partner",
+        "Center rotations",
+        "Game materials",
+        "Cleanup signal"
+      ],
+      "prep": [
+        "Choose Racing Facts pages",
+        "Prepare dice and markers",
+        "Open Writing Workshop Lesson 3",
+        "Prepare independent assessment work",
+        "Set up a short practice center"
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2026-07-30",
+      "theme": "Creative Thinkers and Teammates",
+      "focus": "Paper setup, collaborative planning, building, presenting, and cleanup.",
+      "blocks": [
+        {
+          "id": "d4-writing",
+          "subject": "Writing Workshop",
+          "title": "Lesson 4: Setting Up My Paper",
+          "duration": "30 minutes",
+          "objective": "Students prepare writing paper with room for revision and editing.",
+          "steps": [
+            "Explain why writers need revision space.",
+            "Model skipping lines.",
+            "Model writing only on the front.",
+            "Model folding or leaving a revision column.",
+            "Complete the student printable together."
+          ],
+          "resources": [
+            "Writing Lesson Plan.pdf",
+            "Setting Up My Paper - Anchor Chart.pdf",
+            "Setting Up My Paper - Student Printable.pdf",
+            "Getting Started Anchor Charts.pptx"
+          ]
+        },
+        {
+          "id": "d4-stem",
+          "subject": "STEM and Community",
+          "title": "Build a School Challenge",
+          "duration": "45\u201360 minutes",
+          "objective": "Students collaborate to plan, construct, name, and present a model dream school.",
+          "steps": [
+            "Reconnect to If I Built a School.",
+            "Assign small groups.",
+            "Allow ten minutes for sketching and planning.",
+            "Build with provided materials.",
+            "Label important features.",
+            "Present models and complete cleanup."
+          ],
+          "resources": [
+            "Build a School Challenge.pdf",
+            "Read Aloud - If I Built a School.pdf"
+          ]
+        },
+        {
+          "id": "d4-assessment",
+          "subject": "Assessment",
+          "title": "Complete Priority Back-to-School Assessments",
+          "duration": "20\u201340 minutes",
+          "objective": "The teacher gathers additional baseline information while students work independently.",
+          "steps": [
+            "Review testing behavior.",
+            "Complete priority assessments.",
+            "Identify make-up needs.",
+            "Organize results for grouping."
+          ],
+          "resources": [
+            "Back-to-School Assessments.pdf"
+          ]
+        },
+        {
+          "id": "d4-procedures",
+          "subject": "Procedures",
+          "title": "Group Work, Sharing Materials, Presenting, and Cleanup",
+          "duration": "Taught throughout the day",
+          "objective": "Students contribute responsibly to a collaborative project.",
+          "steps": [
+            "Assign or teach group roles.",
+            "Model sharing materials.",
+            "Practice presentation listening.",
+            "Use a timed cleanup routine."
+          ],
+          "resources": [
+            "Class Procedures Review.pdf"
+          ]
+        }
+      ],
+      "procedures": [
+        "Group roles",
+        "Sharing supplies",
+        "Using glue and tape",
+        "Voice levels",
+        "Disagreeing respectfully",
+        "Presenting to the class",
+        "Listening to presenters",
+        "Project cleanup"
+      ],
+      "prep": [
+        "Copy Setting Up My Paper printable",
+        "Prepare the anchor chart or PowerPoint",
+        "Create STEM material bins",
+        "Prepare construction paper, glue, tape, straws, and pipe cleaners",
+        "Choose assessment students"
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2026-07-31",
+      "theme": "We Are Ready to Learn",
+      "focus": "Solving classroom problems, telling time, reviewing procedures, and celebrating growth.",
+      "blocks": [
+        {
+          "id": "d5-writing",
+          "subject": "Writing Workshop",
+          "title": "Lesson 5: Solving Writing Workshop Problems",
+          "duration": "30 minutes",
+          "objective": "Students independently solve common problems that occur during writing time.",
+          "steps": [
+            "Identify common writing-workshop problems.",
+            "Model appropriate solutions.",
+            "Create or review a problem-solving chart.",
+            "Practice using the solutions during work time."
+          ],
+          "resources": [
+            "Getting Started with Writing Workshop.pdf",
+            "Getting Started Anchor Charts.pptx",
+            "Digital Writing Notebook.pdf"
+          ]
+        },
+        {
+          "id": "d5-math",
+          "subject": "Math",
+          "title": "Telling Time to the Hour and Half Hour",
+          "duration": "45\u201360 minutes",
+          "objective": "Students tell and write time to the hour and half hour.",
+          "steps": [
+            "Review the hour and minute hands.",
+            "Model writing time to the hour.",
+            "Model writing time to the half hour.",
+            "Use the PowerPoint for guided practice.",
+            "Complete the clock-domino activity in pairs or groups."
+          ],
+          "resources": [
+            "Math Lesson Plan.pdf",
+            "Math PowerPoint (2).pptx"
+          ]
+        },
+        {
+          "id": "d5-review",
+          "subject": "Classroom Launch",
+          "title": "Procedure Review and Student Demonstrations",
+          "duration": "30\u201345 minutes",
+          "objective": "Students demonstrate the routines needed for core instruction to begin successfully.",
+          "steps": [
+            "Select procedures needing review.",
+            "Model one incorrectly.",
+            "Invite students to explain corrections.",
+            "Have groups model procedures correctly.",
+            "Celebrate progress and set a goal for Monday."
+          ],
+          "resources": [
+            "Class Procedures Review.pdf"
+          ]
+        },
+        {
+          "id": "d5-reflection",
+          "subject": "Community",
+          "title": "First-Week Reflection and Compliment Circle",
+          "duration": "20\u201330 minutes",
+          "objective": "Students reflect on their learning, recognize classmates, and prepare for the beginning of core curriculum.",
+          "steps": [
+            "Reflect on one routine students improved.",
+            "Share one favorite first-week activity.",
+            "Complete a compliment circle.",
+            "Preview Monday's core curriculum start."
+          ],
+          "resources": [
+            "Morning Work.pdf"
+          ]
+        }
+      ],
+      "procedures": [
+        "Full arrival routine",
+        "Full literacy transition",
+        "Full lunch and recess transition",
+        "Math-material routine",
+        "Independent work",
+        "Partner work",
+        "Pack-up",
+        "Dismissal"
+      ],
+      "prep": [
+        "Open Writing Workshop Lesson 5",
+        "Open the telling-time PowerPoint",
+        "Prepare clock-domino materials",
+        "List procedures requiring final review",
+        "Prepare compliment-circle prompts"
+      ]
+    }
+  ],
+  "resourceCatalog": [
+    {
+      "file": "Back-to-School Assessments.pdf",
+      "type": "PDF",
+      "category": "Assessment"
+    },
+    {
+      "file": "Build a School Challenge.pdf",
+      "type": "PDF",
+      "category": "STEM"
+    },
+    {
+      "file": "Class Procedures Review.pdf",
+      "type": "PDF",
+      "category": "Procedures"
+    },
+    {
+      "file": "Get to Know You Activity.pdf",
+      "type": "PDF",
+      "category": "Community"
+    },
+    {
+      "file": "Math Fact Games.pdf",
+      "type": "PDF",
+      "category": "Math"
+    },
+    {
+      "file": "Math Lesson Plan.pdf",
+      "type": "PDF",
+      "category": "Math"
+    },
+    {
+      "file": "Math PowerPoint (2).pptx",
+      "type": "PPTX",
+      "category": "Math"
+    },
+    {
+      "file": "Morning Work.pdf",
+      "type": "PDF",
+      "category": "Morning Work"
+    },
+    {
+      "file": "Read Aloud - If I Built a School.pdf",
+      "type": "PDF",
+      "category": "Read Aloud"
+    },
+    {
+      "file": "Setting Up My Paper - Anchor Chart.pdf",
+      "type": "PDF",
+      "category": "Writing"
+    },
+    {
+      "file": "Setting Up My Paper - Student Printable.pdf",
+      "type": "PDF",
+      "category": "Writing"
+    },
+    {
+      "file": "Writing Lesson Plan.pdf",
+      "type": "PDF",
+      "category": "Writing"
+    },
+    {
+      "file": "Conferencing Materials.pdf",
+      "type": "PDF",
+      "category": "Writing"
+    },
+    {
+      "file": "Digital Writing Notebook.pdf",
+      "type": "PDF",
+      "category": "Writing"
+    },
+    {
+      "file": "Getting Started Anchor Charts.pptx",
+      "type": "PPTX",
+      "category": "Writing"
+    },
+    {
+      "file": "Getting Started with Writing Workshop.pdf",
+      "type": "PDF",
+      "category": "Writing"
+    },
+    {
+      "file": "Personal Narrative Prompt Task Cards.pdf",
+      "type": "PDF",
+      "category": "Writing"
+    },
+    {
+      "file": "Personal Narrative Unit at a Glance.pdf",
+      "type": "PDF",
+      "category": "Writing"
+    },
+    {
+      "file": "Start Here Teacher Directions.pdf",
+      "type": "PDF",
+      "category": "Writing"
+    }
+  ]
+}
