@@ -1,7 +1,7 @@
-SPRINT 2 — MORNING LITERACY CONNECTIONS
+SPRINT 3 — CONNECT THE AFTERNOON
 
 Add:
-- morning-literacy-v1652.json
+- afternoon-curriculum-v1653.json
 
 Replace:
 - teaching-engine-v165.js
@@ -10,4 +10,30 @@ Replace:
 Do not replace or re-upload any other files.
 
 Commit message:
-Version 16.5 Sprint 2 - Connect Morning Literacy
+Version 16.5 Sprint 3 - Connect the Afternoon
+
+Connected blocks:
+- Writing
+- Eureka Math²
+- Workout
+- Math 2
+- Science
+- Social Studies
+- Pack-Up
+- Dismissal
+
+Important curriculum rules preserved:
+- Building the Foundation replaces Open Court writing.
+- Open Court GUM may still support grammar.
+- Open Court science connections enrich the standards-based science lesson.
+- MOWR remains before Heggerty.
+
+Test:
+1. Open Teaching Engine and resume the day.
+2. Open Writing and confirm Building the Foundation is named.
+3. Open Eureka Math² and test the Great Minds link.
+4. Open Workout and Math 2.
+5. Open Science and confirm the Open Court science-connection rule.
+6. Open Social Studies.
+7. Open Pack-Up and Dismissal.
+8. Confirm Morning Literacy blocks from Sprint 2 still work.

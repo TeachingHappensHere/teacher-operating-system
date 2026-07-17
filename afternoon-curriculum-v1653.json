@@ -1,0 +1,265 @@
+{
+  "version": "16.5.3",
+  "title": "Afternoon Curriculum Connections",
+  "blocks": {
+    "writing": {
+      "program": "Building the Foundation",
+      "objective": "Students develop grade-level writing through explicit genre instruction, modeling, guided practice, independent writing, conferencing, and sharing.",
+      "materials": [
+        "Building the Foundation lesson",
+        "Writer's notebook or composition notebook",
+        "Mentor text or model",
+        "Pencils and writing tools"
+      ],
+      "teacherSteps": [
+        "Name the writing genre and today's focus.",
+        "Model the skill with a clear think-aloud.",
+        "Complete guided practice with the class.",
+        "Release students to independent writing.",
+        "Conference with individuals or a small group.",
+        "Close with sharing or reflection."
+      ],
+      "studentTask": "Plan, draft, revise, edit, or publish using the current Building the Foundation lesson.",
+      "curriculumRule": "Do not use the Open Court writing lesson. Open Court GUM may still support grammar instruction.",
+      "quickLinks": [
+        {
+          "label": "Writing Curriculum",
+          "route": "afternoon-studios"
+        },
+        {
+          "label": "Lesson Attachments",
+          "route": "attachments"
+        },
+        {
+          "label": "Print Center",
+          "route": "print-center"
+        }
+      ]
+    },
+    "math": {
+      "program": "Eureka Math\u00b2",
+      "objective": "Students build conceptual understanding, procedural fluency, and application through the selected Eureka Math\u00b2 lesson.",
+      "materials": [
+        "Eureka Math\u00b2 Teacher Edition",
+        "Student workbook pages",
+        "Fluency materials",
+        "Application problem",
+        "Exit ticket"
+      ],
+      "teacherSteps": [
+        "Begin with fluency practice.",
+        "Present the application problem.",
+        "Teach the concept-development sequence.",
+        "Guide students through problem solving and discussion.",
+        "Complete the student debrief.",
+        "Use the exit ticket to check understanding."
+      ],
+      "studentTask": "Solve, explain, model, and discuss the lesson's mathematical ideas.",
+      "quickLinks": [
+        {
+          "label": "Eureka Math Intelligence",
+          "route": "eureka-math"
+        },
+        {
+          "label": "Great Minds \u2197",
+          "url": "https://digital.greatminds.org/teacher?curriculaCode=em2&gradeCode=em2.g2&moduleCode=em2.g2.m1"
+        },
+        {
+          "label": "Lesson Attachments",
+          "route": "attachments"
+        },
+        {
+          "label": "Print Center",
+          "route": "print-center"
+        }
+      ]
+    },
+    "workout": {
+      "program": "Champion Workout",
+      "objective": "Students participate safely and actively in the daily movement and fitness block.",
+      "materials": [
+        "Workout plan",
+        "Water access",
+        "Outdoor or indoor equipment as needed"
+      ],
+      "teacherSteps": [
+        "Review the workout and safety expectations.",
+        "Model movements before beginning.",
+        "Monitor pacing, hydration, and student health needs.",
+        "Provide modifications as needed.",
+        "Cool down and transition calmly."
+      ],
+      "studentTask": "Participate safely, use appropriate effort, and follow movement expectations.",
+      "quickLinks": [
+        {
+          "label": "Health & Safety",
+          "route": "health"
+        },
+        {
+          "label": "Classroom Procedures",
+          "route": "procedures"
+        }
+      ]
+    },
+    "math-2": {
+      "program": "Math Recap / Intervention / Extension",
+      "objective": "Students reinforce the core math lesson through targeted review, intervention, practice, or enrichment.",
+      "materials": [
+        "Core lesson data",
+        "Exit-ticket results",
+        "Practice task",
+        "Manipulatives or extension materials"
+      ],
+      "teacherSteps": [
+        "Review evidence from the core lesson.",
+        "Choose recap, intervention, practice, or extension.",
+        "Group students by immediate need.",
+        "Model one example.",
+        "Provide targeted practice and feedback.",
+        "Record any students needing follow-up."
+      ],
+      "studentTask": "Complete targeted math practice matched to today's learning needs.",
+      "quickLinks": [
+        {
+          "label": "Eureka Math Intelligence",
+          "route": "eureka-math"
+        },
+        {
+          "label": "Intervention",
+          "route": "intervention"
+        },
+        {
+          "label": "Assessments & Data",
+          "route": "assessments"
+        }
+      ]
+    },
+    "science": {
+      "program": "Arizona Science + McGraw-Hill + Open Court Connections",
+      "objective": "Students investigate grade-level science concepts using Arizona standards, workbook resources, discussion, observation, and Open Court science connections.",
+      "materials": [
+        "Science Intelligence lesson",
+        "Corrected McGraw-Hill workbook pages",
+        "Science notebook",
+        "Investigation materials",
+        "Open Court science connection when applicable"
+      ],
+      "teacherSteps": [
+        "Launch with a phenomenon, question, image, or Open Court connection.",
+        "State the Arizona science objective.",
+        "Teach vocabulary and background knowledge.",
+        "Guide the investigation, model, discussion, or workbook task.",
+        "Connect evidence back to the lesson question.",
+        "Close with an exit ticket or oral reflection."
+      ],
+      "studentTask": "Observe, investigate, discuss, record evidence, and complete the aligned workbook or science-notebook task.",
+      "curriculumRule": "Use Open Court science connections as a literacy-to-science bridge, not as a replacement for the standards-based science lesson.",
+      "quickLinks": [
+        {
+          "label": "Science Intelligence",
+          "route": "science-intelligence"
+        },
+        {
+          "label": "Open Court Connection",
+          "route": "open-court"
+        },
+        {
+          "label": "Lesson Attachments",
+          "route": "attachments"
+        },
+        {
+          "label": "Print Center",
+          "route": "print-center"
+        }
+      ]
+    },
+    "social-studies": {
+      "program": "Arizona Social Studies + iCivics + 180 Days",
+      "objective": "Students build knowledge of civics, geography, history, economics, and community through Arizona-aligned instruction.",
+      "materials": [
+        "Arizona social studies lesson",
+        "iCivics or 180 Days resource",
+        "Map, image, primary source, or text",
+        "Student response page"
+      ],
+      "teacherSteps": [
+        "Connect the lesson to the weekly Open Court theme or story when appropriate.",
+        "Introduce the essential question and vocabulary.",
+        "Use a map, text, image, or source to build knowledge.",
+        "Guide discussion and collaborative reasoning.",
+        "Complete the aligned response task.",
+        "Close with a civic, geographic, historical, or economic takeaway."
+      ],
+      "studentTask": "Read, discuss, analyze, map, compare, and respond using evidence.",
+      "quickLinks": [
+        {
+          "label": "Social Studies",
+          "route": "afternoon-studios"
+        },
+        {
+          "label": "Resources",
+          "route": "resources"
+        },
+        {
+          "label": "Lesson Attachments",
+          "route": "attachments"
+        }
+      ]
+    },
+    "pack-up": {
+      "program": "Closing Routine",
+      "objective": "Students organize materials, record homework or reminders, and prepare calmly for dismissal.",
+      "materials": [
+        "Backpacks",
+        "Folders",
+        "Homework or notices",
+        "Dismissal materials"
+      ],
+      "teacherSteps": [
+        "Call students or tables in an orderly sequence.",
+        "Check folders, notices, and take-home materials.",
+        "Review homework or family reminders.",
+        "Confirm dismissal changes.",
+        "Move students to dismissal readiness."
+      ],
+      "studentTask": "Pack materials, clean the area, and wait quietly for dismissal directions.",
+      "quickLinks": [
+        {
+          "label": "Communication",
+          "route": "communication"
+        },
+        {
+          "label": "Classroom Procedures",
+          "route": "procedures"
+        }
+      ]
+    },
+    "dismissal": {
+      "program": "Dismissal Routine",
+      "objective": "Students dismiss safely through the correct transportation or pickup procedure.",
+      "materials": [
+        "Dismissal list",
+        "Transportation changes",
+        "Walkie-talkie or communication device as applicable"
+      ],
+      "teacherSteps": [
+        "Review transportation changes.",
+        "Dismiss students by the school's required sequence.",
+        "Verify each student leaves through the correct process.",
+        "Document unresolved transportation concerns.",
+        "Complete the end-of-day room check."
+      ],
+      "studentTask": "Listen for dismissal directions and leave through the correct procedure.",
+      "quickLinks": [
+        {
+          "label": "Communication",
+          "route": "communication"
+        },
+        {
+          "label": "Calendar",
+          "route": "calendar"
+        }
+      ]
+    }
+  }
+}

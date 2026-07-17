@@ -24,6 +24,7 @@
   ];
 
   let literacyConfig = { blocks: {} };
+  let afternoonConfig = { blocks: {} };
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -139,8 +140,8 @@
             <div class="v165-block-label"><span>${esc(active.category)}</span><strong>${esc(active.start)}–${esc(active.end)}</strong></div>
             <div class="v165-block-title"><b>${active.icon}</b><div><p>NOW TEACHING</p><h2>${esc(active.title)}</h2></div></div>
             <p class="v165-description">${esc(active.description)}</p>
-            ${renderLiteracyWorkspace(active) || `
-              <section class="v165-shell-notice"><span>SPRINT 1 SHELL</span><h3>This block remains ready for its curriculum connection.</h3><p>Morning Literacy is now connected. Afternoon curriculum blocks will be connected in Sprint 3.</p></section>
+            ${renderConnectedWorkspace(active) || `
+              <section class="v165-shell-notice"><span>SPRINT 1 SHELL</span><h3>This block remains ready for its curriculum connection.</h3><p>This block remains available for a future specialized connection.</p></section>
               <section class="v165-placeholder-grid">
                 <article><span>OBJECTIVE</span><strong>Curriculum connection pending</strong></article>
                 <article><span>MATERIALS</span><strong>Lesson attachments will appear here</strong></article>
@@ -194,12 +195,23 @@
     }
   }
 
-  function literacyDetails(blockId) {
-    return literacyConfig.blocks?.[blockId] || null;
+  async function loadAfternoonConfig() {
+    try {
+      const response = await fetch("afternoon-curriculum-v1653.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Afternoon Curriculum data failed: ${response.status}`);
+      afternoonConfig = await response.json();
+    } catch (error) {
+      console.error(error);
+      afternoonConfig = { blocks: {} };
+    }
   }
 
-  function renderLiteracyWorkspace(block) {
-    const details = literacyDetails(block.id);
+  function connectedDetails(blockId) {
+    return literacyConfig.blocks?.[blockId] || afternoonConfig.blocks?.[blockId] || null;
+  }
+
+  function renderConnectedWorkspace(block) {
+    const details = connectedDetails(block.id);
     if (!details) return null;
     const groups = details.groups || [];
     const links = details.quickLinks || [];
