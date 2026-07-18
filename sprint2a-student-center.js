@@ -2,7 +2,8 @@
   "use strict";
 
   const STORAGE_KEY = "thh-s2a:student-roster";
-  const VERSION = 2;
+  const VERSION = 3;
+  const EMERGENCY_ROSTER_URL = "mrs-parrish-roster-private.json";
   const GROUPS = ["Unassigned", "Red", "Yellow", "Green", "Blue"];
   const esc = value => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
   const now = () => new Date().toISOString();
@@ -105,6 +106,25 @@
     const clean = { ...blankRoster(), ...roster, version: VERSION, initialized: true };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
     window.dispatchEvent(new CustomEvent("tos:student-roster-changed", { detail: clean }));
+  }
+
+
+  async function recoverFromPublishedPrivateFile() {
+    const current = readRoster();
+    if (current.students.length) return { recovered: 0, source: "existing" };
+    try {
+      const response = await fetch(`${EMERGENCY_ROSTER_URL}?recovery=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) return { recovered: 0, source: "not-found" };
+      const parsed = await response.json();
+      const source = Array.isArray(parsed) ? parsed : (parsed.students || parsed.roster || []);
+      const imported = dedupe(source.map((student, index) => normalizeStudent(student, index, "emergency published roster recovery")));
+      if (!imported.length) return { recovered: 0, source: "empty" };
+      const roster = { ...blankRoster(), initialized: true, students: imported, seating: imported.map(student => student.id), recoveredAt: now(), recoveredFromPublishedFile: true };
+      writeRoster(roster);
+      return { recovered: imported.length, source: "published-private-file" };
+    } catch {
+      return { recovered: 0, source: "error" };
+    }
   }
 
   function activeCount() { return readRoster().students.length; }
@@ -281,5 +301,13 @@
     });
   }
 
-  window.TOS_SPRINT2A_STUDENTS = { render, activeCount, readRoster, scanBrowserForEarlierRoster };
+  window.TOS_SPRINT2A_STUDENTS = { render, activeCount, readRoster, scanBrowserForEarlierRoster, recoverFromPublishedPrivateFile };
+
+  // Emergency one-time recovery for repositories where the private roster file was accidentally published.
+  // After recovery, remove mrs-parrish-roster-private.json from GitHub and keep future backups off-repository.
+  if (activeCount() === 0) {
+    recoverFromPublishedPrivateFile().then(result => {
+      if (result.recovered) window.dispatchEvent(new CustomEvent("tos:student-roster-recovered", { detail: result }));
+    });
+  }
 })();
