@@ -1,0 +1,31 @@
+SPRINT 2A — BATCH 1 COMPLETION UPDATE
+Version 18.2.1
+
+CHANGED
+- Completed the privacy-safe Student Roster foundation.
+- Added local-browser student profiles with name, birthday, reading group, and teacher notes.
+- Added Add Student and paste-roster workflows.
+- Added archive, restore, and permanent-delete controls for enrollment changes.
+- Added roster search and archived-student view.
+- Connected the Command Center roster metric to the actual local active-student count.
+- Updated cache/version identifiers so GitHub Pages serves the new files.
+
+PRIVACY
+No student names, birthdays, addresses, parent information, or contact details are included in these GitHub files. Student data entered in the app is stored in localStorage on the browser/device being used.
+
+UPLOAD/REPLACE THESE FILES
+1. app.js
+2. index.html
+3. service-worker.js
+4. sprint2a-command-center.js
+5. sprint2a-command-center.json
+6. sprint2a-student-center.js (new)
+7. sprint2a-student-center.css (new)
+
+TEST
+1. Open Student Center.
+2. Choose Paste Roster List or Add Student.
+3. Add a birthday and assign a reading group.
+4. Archive one test student, show archived, then restore the student.
+5. Return to Dashboard and confirm the active roster count updates.
+6. Refresh the browser and confirm the roster remains on that device.

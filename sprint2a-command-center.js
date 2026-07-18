@@ -114,7 +114,7 @@
           <button class="secondary-button" id="s2aUseToday">Use Today</button>
         </section>
         <section class="s2a-metrics">
-          <article><span>Class Roster</span><strong>25 Students</strong><small>Student details stay in this browser.</small></article>
+          <article><span>Class Roster</span><strong><span id="s2aRosterCount">${window.TOS_SPRINT2A_STUDENTS?.activeCount?.() || 0}</span> Students</strong><small>Student details stay in this browser.</small></article>
           <article><span>Current Pillar</span><strong>Heart</strong><small>August 2026</small></article>
           <article><span>Writing</span><strong>Building the Foundation</strong><small>Separate from Open Court grammar.</small></article>
           <article><span>Reading Groups</span><strong>Red • Yellow • Green • Blue</strong><small>Ready for beginning-of-year data.</small></article>

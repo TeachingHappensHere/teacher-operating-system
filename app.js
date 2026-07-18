@@ -235,6 +235,10 @@
       },
       "classroom-systems": renderClassroomSystems,
       students: () => {
+        if (window.TOS_SPRINT2A_STUDENTS?.render) {
+          window.TOS_SPRINT2A_STUDENTS.render({ config, state, navigate, saveState, toast });
+          return;
+        }
         if (typeof window.THH_RENDER_STUDENT_DATA === "function") {
           window.THH_RENDER_STUDENT_DATA();
           return;

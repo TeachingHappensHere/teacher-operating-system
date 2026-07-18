@@ -1,5 +1,5 @@
 {
-  "version": "18.2.0",
+  "version": "18.2.1",
   "release": "Sprint 2A Batch 1",
   "openFirst": [
     {"id":"attendance","title":"Attendance / Gradebook","icon":"✓","kind":"setup","category":"Open First","description":"Add the school gradebook URL once it is available."},
