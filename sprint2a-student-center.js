@@ -12,13 +12,70 @@
     return { version: VERSION, initialized: false, students: [], archived: [] };
   }
 
+  function normalizeGroup(value) {
+    const text = String(value || "").toLowerCase();
+    if (text.includes("red")) return "Red";
+    if (text.includes("yellow")) return "Yellow";
+    if (text.includes("green")) return "Green";
+    if (text.includes("blue")) return "Blue";
+    return "Unassigned";
+  }
+
+  function normalizeLegacyStudent(student, index = 0) {
+    const name = String(student?.name || student?.studentName || "").trim();
+    if (!name || name.toLowerCase().includes("sample student")) return null;
+    return {
+      id: String(student?.id || `student-migrated-${Date.now()}-${index}-${Math.random().toString(16).slice(2)}`),
+      name,
+      birthday: String(student?.birthday || student?.birthdate || ""),
+      group: normalizeGroup(student?.group || student?.readingGroup),
+      status: "Active",
+      notes: String(student?.notesText || student?.teacherNotes || student?.nextStep || student?.goal || ""),
+      createdAt: String(student?.createdAt || new Date().toISOString()),
+      migratedFrom: "earlier TOS roster"
+    };
+  }
+
+  function migrateEarlierRoster() {
+    const candidates = [];
+
+    try {
+      const v7 = JSON.parse(localStorage.getItem("thh-v7:state") || "null");
+      if (Array.isArray(v7?.students)) candidates.push(...v7.students);
+    } catch {}
+
+    try {
+      const v55 = JSON.parse(localStorage.getItem("thh-v55:student-support-profiles") || "null");
+      if (Array.isArray(v55)) candidates.push(...v55);
+    } catch {}
+
+    const seen = new Set();
+    const students = candidates
+      .map(normalizeLegacyStudent)
+      .filter(Boolean)
+      .filter(student => {
+        const key = student.name.toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+    if (!students.length) return blankRoster();
+
+    const migrated = { version: VERSION, initialized: true, students, archived: [], migratedAt: new Date().toISOString() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+    return migrated;
+  }
+
   function readRoster() {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-      if (!saved || !Array.isArray(saved.students) || !Array.isArray(saved.archived)) return blankRoster();
-      return { ...blankRoster(), ...saved };
+      if (saved && Array.isArray(saved.students) && Array.isArray(saved.archived)) {
+        return { ...blankRoster(), ...saved };
+      }
+      return migrateEarlierRoster();
     } catch {
-      return blankRoster();
+      return migrateEarlierRoster();
     }
   }
 
