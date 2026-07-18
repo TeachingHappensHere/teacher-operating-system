@@ -1,14 +1,45 @@
-const CACHE = "mrs-parrish-tos-v18-2-2-roster-recovery";
-const CORE = ["./","./index.html","./style.css?v=18.2.2-s2a","./sidebar-v162.css?v=18.2.2-s2a","./sprint1-dashboard.css?v=18.2.2-s2a","./sprint2a-command-center.css?v=18.2.2-s2a","./sprint2a-student-center.css?v=18.2.2-s2a","./app.js?v=18.2.2-s2a","./sprint1-storage.js?v=18.2.2-s2a","./sprint1-events.js?v=18.2.2-s2a","./sprint1-state.js?v=18.2.2-s2a","./sprint1-calendar.js?v=18.2.2-s2a","./sprint1-dashboard.js?v=18.2.2-s2a","./sprint2a-command-center.js?v=18.2.2-s2a","./sprint2a-student-center.js?v=18.2.2-s2a","./sprint1-navigation.js?v=18.2.2-s2a","./sprint1-diagnostics.js?v=18.2.2-s2a","./sprint1-compat.js?v=18.2.2-s2a","./sprint1-config.json","./sprint2a-command-center.json","./tos-data.json","./manifest.json","./icon-192.svg","./icon-512.svg"];
-self.addEventListener("install", event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE))); self.skipWaiting(); });
-self.addEventListener("activate", event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))); self.clients.claim(); });
-self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
-  const request = event.request;
-  const url = new URL(request.url);
-  if (url.origin === location.origin && (request.mode === "navigate" || url.pathname.endsWith(".js") || url.pathname.endsWith(".json") || url.pathname.endsWith(".css"))) {
-    event.respondWith(fetch(request, { cache: "no-store" }).then(response => { const copy = response.clone(); caches.open(CACHE).then(cache => cache.put(request, copy)); return response; }).catch(() => caches.match(request).then(hit => hit || caches.match("./index.html"))));
-    return;
-  }
-  event.respondWith(caches.match(request).then(hit => hit || fetch(request)));
-});
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7cbd2">
+  <meta name="description" content="Mrs. Parrish's Teacher Operating System">
+  <meta name="teacher-os-build" content="18.3.0-sprint2a-batch2">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.svg">
+  <link rel="stylesheet" href="style.css?v=18.3.0-s2a">
+  <link rel="stylesheet" href="sidebar-v162.css?v=18.3.0-s2a">
+  <link rel="stylesheet" href="sprint1-dashboard.css?v=18.3.0-s2a">
+  <link rel="stylesheet" href="sprint2a-command-center.css?v=18.3.0-s2a">
+  <link rel="stylesheet" href="sprint2a-student-center.css?v=18.3.0-s2a">
+  <title>Mrs. Parrish's Teacher Operating System</title>
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside id="sidebar" class="sidebar">
+      <div class="brand"><div class="brand-mark">📝</div><div><h1>Mrs. Parrish's</h1><p>TEACHER OPERATING SYSTEM ♡</p></div></div>
+      <nav id="mainNav" class="main-nav" aria-label="Main navigation"></nav>
+      <div class="sidebar-reminder"><span>♡</span><strong>TODAY'S REMINDER</strong><p>You are making a difference every single day. Keep going!</p></div>
+      <button id="customizeButton" class="secondary-button">⚙ Customize</button>
+    </aside>
+    <section class="workspace">
+      <header class="topbar"><button id="menuButton" class="icon-button" aria-label="Open navigation">☰</button><div class="search-wrap"><span>⌕</span><input id="globalSearch" type="search" placeholder="Search lessons, resources, students, routines..."></div><button id="quickHealthButton" class="health-pill">✓ Health</button><button id="profileButton" class="profile-pill"><span>JP</span> Mrs. Parrish</button></header>
+      <main id="pageHost" class="page-host" tabindex="-1"></main>
+      <nav id="mobileNav" class="mobile-nav" aria-label="Mobile quick navigation"><button data-route="dashboard">Home</button><button data-route="teachday">Today</button><button data-route="lesson-plans">Plans</button><button data-route="calendar">Calendar</button><button data-route="health">Health</button></nav>
+    </section>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="sprint1-storage.js?v=18.3.0-s2a"></script>
+  <script src="sprint1-events.js?v=18.3.0-s2a"></script>
+  <script src="sprint1-state.js?v=18.3.0-s2a"></script>
+  <script src="sprint1-calendar.js?v=18.3.0-s2a"></script>
+  <script src="sprint1-dashboard.js?v=18.3.0-s2a"></script>
+  <script src="sprint2a-command-center.js?v=18.3.0-s2a"></script>
+  <script src="sprint2a-student-center.js?v=18.3.0-s2a"></script>
+  <script src="sprint1-navigation.js?v=18.3.0-s2a"></script>
+  <script src="sprint1-diagnostics.js?v=18.3.0-s2a"></script>
+  <script src="sprint1-compat.js?v=18.3.0-s2a"></script>
+  <script src="app.js?v=18.3.0-s2a"></script>
+</body>
+</html>
