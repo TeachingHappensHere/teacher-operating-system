@@ -1,0 +1,35 @@
+MRS. PARRISH'S TEACHER OPERATING SYSTEM
+Sprint 2A — Batch 1
+Version 18.2.0
+
+CHANGED FILES
+- index.html
+- app.js
+- service-worker.js
+- sprint2a-command-center.js (new)
+- sprint2a-command-center.css (new)
+- sprint2a-command-center.json (new)
+
+WHAT IS INCLUDED
+- New Teacher Command Center dashboard
+- Open First teacher launchpad
+- Favorites saved in the current browser
+- Resource Hub organized by instructional area
+- Searchable resource cards
+- External resources open in a new tab
+- Attendance/Gradebook and Heggerty custom-link setup stored locally
+- August 3 curriculum-start guardrail retained
+- Dashboard shows current roster count without publishing student names
+- Mobile and iPad responsive layout
+
+PRIVACY
+Student names, birthdays, addresses, phone numbers, and parent contact information were not placed in GitHub files. Student details should remain in local browser storage and will be handled in the Student Management batch.
+
+DEPLOYMENT
+Upload all six changed/new web files to the repository root, replacing index.html, app.js, and service-worker.js. Keep the three sprint2a files in the repository root beside index.html.
+
+AFTER DEPLOYMENT
+1. Wait for GitHub Pages to finish publishing.
+2. Open the site and hard refresh once (Ctrl+Shift+R on Windows).
+3. Test Home, Resources, Favorites, Chalkie, ClassDojo, UFLI, and internal routes.
+4. Use + Link on Attendance/Gradebook or Heggerty to save a secure URL locally.

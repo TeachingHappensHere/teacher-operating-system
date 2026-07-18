@@ -1,0 +1,47 @@
+{
+  "version": "18.2.0",
+  "release": "Sprint 2A Batch 1",
+  "openFirst": [
+    {"id":"attendance","title":"Attendance / Gradebook","icon":"✓","kind":"setup","category":"Open First","description":"Add the school gradebook URL once it is available."},
+    {"id":"chalkie","title":"Chalkie","icon":"✦","kind":"external","url":"https://app.chalkie.ai/","category":"Open First","description":"Open teaching slides and lesson materials."},
+    {"id":"classdojo","title":"ClassDojo","icon":"💬","kind":"external","url":"https://www.classdojo.com/","category":"Open First","description":"Family communication and classroom updates."},
+    {"id":"today-plan","title":"Today's Lesson Plan","icon":"▱","kind":"internal","route":"lesson-plans","category":"Open First","description":"Open the current weekly plan."},
+    {"id":"daily-checklist","title":"Daily Checklist","icon":"☑","kind":"internal","route":"teachday","category":"Open First","description":"Open the live teaching timeline."}
+  ],
+  "sections": [
+    {"id":"literacy","title":"Literacy","icon":"📚","items":[
+      {"id":"open-court","title":"Open Court","kind":"internal","route":"open-court","description":"Curriculum, weekly intelligence, skills, and assessments."},
+      {"id":"heggerty","title":"Heggerty","kind":"setup","description":"Add your Heggerty portal URL."},
+      {"id":"ufli","title":"UFLI Toolbox","kind":"external","url":"https://ufli.education.ufl.edu/foundations/toolbox/","description":"Foundational skills lessons and resources."},
+      {"id":"mowr","title":"MOWR / Small Groups","kind":"internal","route":"small-groups","description":"Reading groups, rotations, and intervention support."},
+      {"id":"building-foundation","title":"Building the Foundation Writing","kind":"internal","route":"afternoon-studios","description":"Writing curriculum and classroom resources."},
+      {"id":"beanstack","title":"Beanstack","kind":"external","url":"https://www.beanstack.com/","description":"Reading logs and challenges."}
+    ]},
+    {"id":"math","title":"Math","icon":"➗","items":[
+      {"id":"eureka","title":"Eureka Math²","kind":"internal","route":"eureka-math","description":"Lessons, materials, debriefs, and supports."},
+      {"id":"math-packets","title":"Daily Lesson Packets","kind":"internal","route":"production","description":"Print-ready lesson materials."},
+      {"id":"math-assessments","title":"Assessments","kind":"internal","route":"assessments","description":"Track checks for understanding and reteach needs."}
+    ]},
+    {"id":"science","title":"Science","icon":"🔬","items":[
+      {"id":"science-studio","title":"Science Studio","kind":"internal","route":"afternoon-studios","description":"Arizona science lessons and Open Court connections."},
+      {"id":"science-resources","title":"Science Resources","kind":"internal","route":"resources","description":"Vocabulary, labs, printables, and supporting files."}
+    ]},
+    {"id":"social-studies","title":"Social Studies","icon":"🌎","items":[
+      {"id":"icivics","title":"iCivics","kind":"external","url":"https://www.icivics.org/","description":"Civics lessons and interactive resources."},
+      {"id":"ss-studio","title":"Social Studies Studio","kind":"internal","route":"afternoon-studios","description":"Arizona standards and Open Court connections."}
+    ]},
+    {"id":"student-programs","title":"Student Programs","icon":"🎯","items":[
+      {"id":"clever","title":"Clever","kind":"external","url":"https://clever.com/","description":"Student application launchpad."},
+      {"id":"mobymax","title":"MobyMax","kind":"external","url":"https://www.mobymax.com/","description":"Practice and iDay assignments."},
+      {"id":"amplify","title":"Amplify","kind":"external","url":"https://amplify.com/","description":"mCLASS and DIBELS data."},
+      {"id":"students","title":"Student Center","kind":"internal","route":"students","description":"Roster and support profiles. Data stays in this browser."}
+    ]},
+    {"id":"teacher-resources","title":"Teacher Resources","icon":"🗂","items":[
+      {"id":"google-drive","title":"Google Drive","kind":"external","url":"https://drive.google.com/","description":"Teacher files and shared curriculum folders."},
+      {"id":"attachments","title":"Lesson Attachments","kind":"internal","route":"attachments","description":"Files connected to lessons and plans."},
+      {"id":"print-center","title":"Print Center","kind":"internal","route":"print-center","description":"Print packets, forms, and classroom materials."},
+      {"id":"standards","title":"Standards & Evidence","kind":"internal","route":"assessments","description":"Standards evidence and progress reporting."},
+      {"id":"teacher-brain","title":"Teacher Brain","kind":"internal","route":"teacher-brain","description":"Save reminders, decisions, and future ideas."}
+    ]}
+  ]
+}

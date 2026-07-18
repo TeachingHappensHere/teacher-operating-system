@@ -669,10 +669,14 @@
   }
 
   function renderResources() {
+    if (typeof window.TOS_SPRINT2A_RENDER_RESOURCES === "function") {
+      window.TOS_SPRINT2A_RENDER_RESOURCES({ config, state, navigate, saveState, toast });
+      return;
+    }
     $("#pageHost").innerHTML = `
       ${pageHeader("RESOURCES", "Curriculum & Resource Library", "Open public resources and track local curriculum files.")}
       <section class="resource-library">${config.resourceLinks.map(link => `
-        <a href="${esc(link.url)}" target="_blank" rel="noopener"><span>${esc(link.category)}</span><strong>${esc(link.title)}</strong></a>
+        <a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer"><span>${esc(link.category)}</span><strong>${esc(link.title)}</strong></a>
       `).join("")}</section>`;
   }
 
