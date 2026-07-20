@@ -1,28 +1,13 @@
-VERSION 17.0 RC2 HOTFIX — DASHBOARD TAKEOVER
+TOS v19.2 — Functional Core
 
-ADD:
-- dashboard-rc2-hotfix.js
-- dashboard-rc2-hotfix.css
+Upload these 5 files to the ROOT of the GitHub repository.
+Choose "Commit changes" after the upload.
 
-REPLACE:
+Files:
 - index.html
+- app.js
 - service-worker.js
+- functional-core-v192.js
+- functional-core-v192.css
 
-Do not delete any other files.
-
-GitHub upload order:
-1. dashboard-rc2-hotfix.js
-2. dashboard-rc2-hotfix.css
-3. index.html
-4. service-worker.js
-
-Commit message:
-Version 17.0 RC2 Hotfix - activate date-driven dashboard
-
-After GitHub Pages finishes deploying:
-1. Close every open tab for the Teacher Operating System.
-2. Open a new Incognito/Private window.
-3. Visit the site and press Ctrl+Shift+R once.
-4. The dashboard should show PRE-LAUNCH PREPARATION for dates before July 27.
-5. Preview July 27, 2026. It should show Classroom Launch and no Unit 1 card.
-6. Preview August 3, 2026. It should show Core Instruction and Unit 1.
+After GitHub Pages updates, refresh once. On iPad, close and reopen the installed app if the old version remains cached.

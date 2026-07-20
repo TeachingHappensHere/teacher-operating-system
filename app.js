@@ -126,9 +126,13 @@
     const renderers = {
       dashboard: renderDashboard,
       teachday: () => {
+        if (typeof window.TOS_V192_RENDER_TEACHDAY === "function") {
+          window.TOS_V192_RENDER_TEACHDAY({ config, state, navigate, saveState, toast });
+          return;
+        }
         $("#pageHost").innerHTML = `
           <section id="v120RouteLoading" class="v120-route-loading">
-            <strong>Opening Live Teaching Center…</strong>
+            <strong>Opening Teach Today…</strong>
           </section>`;
       },
       "lesson-builder": renderLessonBuilder,
