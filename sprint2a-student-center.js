@@ -2,7 +2,8 @@
   "use strict";
 
   const STORAGE_KEY = "thh-s2a:student-roster";
-  const VERSION = 4;
+  const VERSION = 3;
+  const EMERGENCY_ROSTER_URL = "mrs-parrish-roster-private.json";
   const GROUPS = ["Unassigned", "Red", "Yellow", "Green", "Blue"];
   const esc = value => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
   const now = () => new Date().toISOString();
@@ -108,6 +109,24 @@
   }
 
 
+  async function recoverFromPublishedPrivateFile() {
+    const current = readRoster();
+    if (current.students.length) return { recovered: 0, source: "existing" };
+    try {
+      const response = await fetch(`${EMERGENCY_ROSTER_URL}?recovery=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) return { recovered: 0, source: "not-found" };
+      const parsed = await response.json();
+      const source = Array.isArray(parsed) ? parsed : (parsed.students || parsed.roster || []);
+      const imported = dedupe(source.map((student, index) => normalizeStudent(student, index, "emergency published roster recovery")));
+      if (!imported.length) return { recovered: 0, source: "empty" };
+      const roster = { ...blankRoster(), initialized: true, students: imported, seating: imported.map(student => student.id), recoveredAt: now(), recoveredFromPublishedFile: true };
+      writeRoster(roster);
+      return { recovered: imported.length, source: "published-private-file" };
+    } catch {
+      return { recovered: 0, source: "error" };
+    }
+  }
+
   function activeCount() { return readRoster().students.length; }
   function sortStudents(students) { return [...students].sort((a, b) => (a.name || "").localeCompare(b.name || "")); }
   function createStudent(name) { return normalizeStudent({ name }, 0, "manual entry"); }
@@ -211,7 +230,7 @@
       <header class="s2a-student-hero"><div><p>SPRINT 2A • BATCH 2</p><h2>Student Data & Classroom Profiles</h2><span>Roster, groups, birthdays, seating, and private backups stay in this browser.</span></div><button id="s2aAddStudent" class="primary-button">Add Student</button></header>
       <section class="s2a-student-metrics"><article><span>Active Students</span><strong>${students.length}</strong><small>Current enrollment</small></article><article><span>Archived</span><strong>${archived.length}</strong><small>Enrollment history</small></article><article><span>Assigned to Groups</span><strong>${students.filter(student => student.group !== "Unassigned").length}</strong><small>Red • Yellow • Green • Blue</small></article></section>
       <nav class="s2a-tabs">${[["roster","Roster"],["groups","Reading Groups"],["birthdays","Birthdays"],["seating","Seating Chart"],["backup","Backup & Recovery"]].map(([id,label]) => `<button class="${activeTab === id ? "active" : ""}" data-student-tab="${id}">${label}</button>`).join("")}</nav>
-      ${activeTab === "roster" ? `<section class="s2a-student-toolbar"><label><span>⌕</span><input id="s2aStudentSearch" type="search" placeholder="Search students..."></label><div><button id="s2aImportRosterQuick" class="secondary-button">Import Roster</button><button id="s2aToggleArchived" class="text-button">Show archived (${archived.length})</button></div></section><section id="s2aStudentList" class="s2a-student-list">${students.length ? students.map(studentCard).join("") : `<div class="s2a-student-empty"><strong>No students are listed.</strong><span>Use Import Roster to merge the complete private roster file. Existing students and notes will be preserved.</span><div><button id="s2aEmptyImport" class="primary-button">Import Roster</button><button id="s2aEmptyScan" class="secondary-button">Scan Browser</button></div></div>`}</section><section id="s2aArchivedSection" class="s2a-archived-section" hidden><div class="s2a-section-heading"><div><p>ENROLLMENT HISTORY</p><h3>Archived Students</h3></div></div><div class="s2a-student-list">${archived.length ? archived.map(student => `<article class="s2a-student-card is-archived"><div class="s2a-student-avatar">${esc(student.name.charAt(0))}</div><div class="s2a-student-summary"><strong>${esc(student.name)}</strong><span>Archived</span></div><div class="s2a-student-actions"><button data-restore-student="${esc(student.id)}">Restore</button><button class="danger" data-delete-student="${esc(student.id)}">Delete</button></div></article>`).join("") : `<div class="s2a-student-empty"><strong>No archived students.</strong></div>`}</div></section>` : ""}
+      ${activeTab === "roster" ? `<section class="s2a-student-toolbar"><label><span>⌕</span><input id="s2aStudentSearch" type="search" placeholder="Search students..."></label><div><button id="s2aImportRosterQuick" class="secondary-button">Import Roster</button><button id="s2aToggleArchived" class="text-button">Show archived (${archived.length})</button></div></section><section id="s2aStudentList" class="s2a-student-list">${students.length ? students.map(studentCard).join("") : `<div class="s2a-student-empty"><strong>No students are listed.</strong><span>Use Import Roster to restore the private roster file, or scan the browser for earlier records.</span><div><button id="s2aEmptyImport" class="primary-button">Import Roster</button><button id="s2aEmptyScan" class="secondary-button">Scan Browser</button></div></div>`}</section><section id="s2aArchivedSection" class="s2a-archived-section" hidden><div class="s2a-section-heading"><div><p>ENROLLMENT HISTORY</p><h3>Archived Students</h3></div></div><div class="s2a-student-list">${archived.length ? archived.map(student => `<article class="s2a-student-card is-archived"><div class="s2a-student-avatar">${esc(student.name.charAt(0))}</div><div class="s2a-student-summary"><strong>${esc(student.name)}</strong><span>Archived</span></div><div class="s2a-student-actions"><button data-restore-student="${esc(student.id)}">Restore</button><button class="danger" data-delete-student="${esc(student.id)}">Delete</button></div></article>`).join("") : `<div class="s2a-student-empty"><strong>No archived students.</strong></div>`}</div></section>` : ""}
       ${activeTab === "groups" ? groupsPanel(students) : ""}${activeTab === "birthdays" ? birthdaysPanel(students) : ""}${activeTab === "seating" ? seatingPanel(roster) : ""}${activeTab === "backup" ? backupPanel(roster) : ""}
       <input id="s2aSharedRosterFile" type="file" accept="application/json,.json" hidden>
     </section>`;
@@ -259,27 +278,9 @@
         const source = Array.isArray(parsed) ? parsed : (parsed.students || parsed.roster || []);
         const imported = dedupe(source.map((student, index) => normalizeStudent(student, index, "private roster import")));
         if (!imported.length) throw new Error("No student records were found in that file.");
-        const current = readRoster();
-        const existing = new Map(current.students.map(student => [student.name.toLowerCase().replace(/\s+/g, " ").trim(), student]));
-        let added = 0;
-        let updated = 0;
-        imported.forEach(student => {
-          const key = student.name.toLowerCase().replace(/\s+/g, " ").trim();
-          const match = existing.get(key);
-          if (match) {
-            Object.assign(match, student, { id: match.id });
-            updated += 1;
-          } else {
-            current.students.push(student);
-            existing.set(key, student);
-            added += 1;
-          }
-        });
-        current.students = dedupe(current.students);
-        current.seating = current.students.map(student => student.id);
-        writeRoster(current);
-        context.toast?.(`Roster repaired: ${added} added, ${updated} matched, ${current.students.length} active.`);
-        rerender();
+        const current = readRoster(); const existing = new Map(current.students.map(student => [student.name.toLowerCase(), student]));
+        imported.forEach(student => { const match = existing.get(student.name.toLowerCase()); if (match) Object.assign(match, student, { id: match.id }); else current.students.push(student); });
+        current.seating = current.students.map(student => student.id); writeRoster(current); context.toast?.(`${imported.length} students imported.`); rerender();
       } catch (error) { alert(`Roster import failed: ${error.message}`); }
     });
   }
@@ -300,5 +301,13 @@
     });
   }
 
-  window.TOS_SPRINT2A_STUDENTS = { render, activeCount, readRoster, scanBrowserForEarlierRoster };
+  window.TOS_SPRINT2A_STUDENTS = { render, activeCount, readRoster, scanBrowserForEarlierRoster, recoverFromPublishedPrivateFile };
+
+  // Emergency one-time recovery for repositories where the private roster file was accidentally published.
+  // After recovery, remove mrs-parrish-roster-private.json from GitHub and keep future backups off-repository.
+  if (activeCount() === 0) {
+    recoverFromPublishedPrivateFile().then(result => {
+      if (result.recovered) window.dispatchEvent(new CustomEvent("tos:student-roster-recovered", { detail: result }));
+    });
+  }
 })();
