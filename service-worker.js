@@ -1,5 +1,5 @@
 
-const CACHE = "teaching-happens-here-v18-0-master-schedule";
+const CACHE = "teaching-happens-here-v18-1-schedule-workspace";
 const CORE = [
   "./",
   "./index.html",
@@ -7,6 +7,8 @@ const CORE = [
   "./teacher-intelligence-v1602.css?v=16.0.2",
   "./style-additions-v7-1.css",
   "./master-schedule-v180.js?v=18.0.0",
+  "./schedule-workspace-v181.js?v=18.1.0",
+  "./schedule-workspace-v181.css?v=18.1.0",
   "./app.js?v=16.5.0",
   "./teacher-intelligence-v1602.js?v=16.0.2",
   "./launch-stabilization-v7-1.js",

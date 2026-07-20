@@ -1,24 +1,26 @@
-VERSION 18.0 — MASTER SCHEDULE UPDATE
+VERSION 18.1 — SCHEDULE WORKSPACE
 
 ADD:
-- master-schedule-v180.js
+- schedule-workspace-v181.js
+- schedule-workspace-v181.css
 
 REPLACE:
 - index.html
 - service-worker.js
 
-DO NOT replace any other files.
-
-This update preserves Version 17.0 Launch Edition and changes the schedule from one central source before the main TOS loads.
+KEEP:
+- master-schedule-v180.js from Version 18.0
+- every other repository file
 
 COMMIT MESSAGE:
-Version 18.0 - Updated Second Grade Master Schedule
+Version 18.1 - Schedule Workspace and Daily Mode Controls
 
 TEST:
-1. Upload the three files to the repository root.
-2. Commit and wait for deployment.
-3. Refresh twice, or open the site once in a private/incognito window.
-4. Preview Monday–Thursday and confirm the day begins at 8:00 with Breakfast / Phonemic Awareness.
-5. Confirm MOWR is 8:20–9:15 and Core Reading is 9:15–10:45.
-6. Confirm Writing is 11:10–11:40, Math is 11:40–12:40, Science is 1:40–2:15, and Social Studies is 2:15–2:55.
-7. Preview Friday and confirm the half-day assessment schedule ends with 12:00 dismissal.
+1. Upload the four files to the repository root.
+2. Wait for GitHub Pages to deploy.
+3. Refresh twice or open the site in a private window.
+4. Confirm a Master Schedule card appears at the top of the dashboard.
+5. Open Schedule and switch between Monday–Thursday and Friday Half Day.
+6. Confirm the selected mode remains after refreshing.
+7. Test the floating Schedule button on a phone or iPad.
+8. Test Print Schedule.
