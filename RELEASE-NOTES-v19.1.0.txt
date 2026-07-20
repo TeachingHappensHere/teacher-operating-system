@@ -1,0 +1,21 @@
+TEACHER OPERATING SYSTEM v19.1.0 — RESOURCE HUB
+
+CHANGED FILES (5)
+1. index.html
+2. service-worker.js
+3. resource-hub-v1.css
+4. resource-hub-v1.js
+5. RELEASE-NOTES-v19.1.0.txt
+
+WHAT IS NEW
+- New categorized Resource Hub for daily teaching platforms.
+- Includes ClassDojo, Google Classroom, Chalkie, Open Court, UFLI, Heggerty, Amplify, Eureka Math², iCivics, Beanstack, MobyMax, and Google Drive.
+- Add or edit website links directly in the app.
+- Resource links save on the current device.
+- Filter resources by category.
+- Responsive desktop, iPad, and phone layout.
+
+GITHUB INSTALLATION
+Upload all five files to the repository root. Choose "Commit changes." GitHub will replace index.html and service-worker.js and add the new Resource Hub files.
+
+After deployment, refresh the site twice so the updated service worker activates.
