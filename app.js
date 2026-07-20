@@ -501,6 +501,7 @@
   }
 
   function renderClassroomLaunch() {
+    if (typeof window.TOS_V1_RENDER_CLASSROOM_LAUNCH === "function") { window.TOS_V1_RENDER_CLASSROOM_LAUNCH({ config, state, navigate, saveState, toast }); return; }
     $("#pageHost").innerHTML = `
       ${pageHeader("CLASSROOM LAUNCH", "First Week: Enter, Belong, Learn the Room", "A compact routine-launch workspace that replaces Version 3.2.")}
       <section class="launch-grid">
@@ -529,6 +530,7 @@
   }
 
   function renderLessonPlans() {
+    if (typeof window.TOS_V1_RENDER_WEEKLY_PLANNER === "function") { window.TOS_V1_RENDER_WEEKLY_PLANNER({ config, state, navigate, saveState, toast }); return; }
     $("#pageHost").innerHTML = `
       ${pageHeader("LESSON PLANS", "Saved Lesson Plans", "Plans created in the unified Version 7.0 Lesson Builder.",
         `<button class="primary-button" data-jump="lesson-builder">New Lesson</button>`)}
