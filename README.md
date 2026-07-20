@@ -1,37 +1,36 @@
-# Teacher Operating System
+# Teacher Operating System — Version 18.0
 
-## Version 16.5 — Daily Teaching Engine, Sprint 1
+This delta updates the official 2026–2027 second-grade schedule without replacing the full repository.
 
-Upload the complete extracted repository to GitHub.
+## Files
 
-### Commit message
-Version 16.5 - Daily Teaching Engine Sprint 1
+- `master-schedule-v180.js` — single source of truth for full-day and Friday half-day schedules
+- `index.html` — loads the schedule patch before the main application
+- `service-worker.js` — updates the cache and includes the schedule patch
+- `UPLOAD-INSTRUCTIONS.txt` — deployment and testing steps
 
-### Included
-- Teaching Engine navigation item
-- Dashboard Start Teaching connection
-- Start My Day and Resume My Day
-- Complete daily timeline in the correct teaching order
-- MOWR before Heggerty
-- Building the Foundation writing rule
-- Open Court science-connection rule
-- Current-block workspace
-- Previous, Next, Mark Complete, and Reopen controls
-- Daily progress tracking
-- Automatic resume on the same device
-- Reset Today
-- Responsive phone and iPad layouts
-- Isolated JavaScript and CSS
+## Full Day, Monday–Thursday
 
-### Sprint 1 limitation
-This release provides the working shell. Curriculum objectives, teacher prompts, files,
-videos, assessments, and student-group details will be connected in later sprints.
+- 8:00–8:15 Breakfast / Phonemic Awareness
+- 8:15–8:20 Heggerty
+- 8:20–9:15 MOWR / Tier II
+- 9:15–10:45 Tier I Core Reading
+- 10:45–11:10 Lunch / Recess
+- 11:10–11:40 Writing
+- 11:40–12:40 Math
+- 12:40–1:10 Workout
+- 1:10–1:20 Recess / Snack
+- 1:20–1:40 Math Fluency / Intervention
+- 1:40–2:15 Science
+- 2:15–2:55 Social Studies
+- 2:55–3:00 Pack-Up / Clean-Up
+- 3:00 Dismissal
 
-### Test
-1. Open Home Dashboard and select Start Teaching.
-2. Select Start My Day.
-3. Move through blocks with Previous and Next.
-4. Mark several blocks complete.
-5. Refresh and confirm it resumes your place.
-6. Reopen a completed block.
-7. Test Reset Today.
+## Friday Half Day
+
+- 8:00–8:30 Breakfast / Bellwork / Phonemic Awareness
+- 8:30–10:30 ELA Assessments
+- 10:30–10:50 Lunch
+- 10:50–11:10 Transition / Recess
+- 11:10–12:00 Science / Social Studies
+- 12:00 Dismissal

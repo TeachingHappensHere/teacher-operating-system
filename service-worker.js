@@ -1,5 +1,64 @@
-const CACHE = "mrs-parrish-tos-v19-2-functional-core";
-const CORE = ["./","./index.html","./style.css?v=19.0.0","./sidebar-v162.css?v=19.0.0","./sprint1-dashboard.css?v=19.0.0","./sprint2a-command-center.css?v=19.0.0","./sprint2a-student-center.css?v=19.0.0","./classroom-launch-v1.css?v=19.0.0","./functional-core-v192.css?v=19.2.0","./app.js?v=19.0.0","./sprint1-storage.js?v=19.0.0","./sprint1-events.js?v=19.0.0","./sprint1-state.js?v=19.0.0","./sprint1-calendar.js?v=19.0.0","./sprint1-dashboard.js?v=19.0.0","./classroom-launch-v1.js?v=19.0.0","./weekly-planner-v1.js?v=19.0.0","./sprint2a-command-center.js?v=19.0.0","./sprint2a-student-center.js?v=19.0.0","./functional-core-v192.js?v=19.2.0","./sprint1-navigation.js?v=19.0.0","./sprint1-diagnostics.js?v=19.0.0","./sprint1-compat.js?v=19.0.0","./sprint1-config.json","./sprint2a-command-center.json","./tos-data.json","./manifest.json","./icon-192.svg","./icon-512.svg"];
-self.addEventListener("install", event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE))); self.skipWaiting(); });
-self.addEventListener("activate", event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))); self.clients.claim(); });
-self.addEventListener("fetch", event => { if(event.request.method!=="GET")return; const request=event.request; const url=new URL(request.url); if(url.origin===location.origin&&(request.mode==="navigate"||/\.(js|json|css)$/.test(url.pathname))){event.respondWith(fetch(request,{cache:"no-store"}).then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(request,copy));return response}).catch(()=>caches.match(request).then(hit=>hit||caches.match("./index.html"))));return;} event.respondWith(caches.match(request).then(hit=>hit||fetch(request))); });
+
+const CACHE = "teaching-happens-here-v18-0-master-schedule";
+const CORE = [
+  "./",
+  "./index.html",
+  "./style.css?v=16.5.0",
+  "./teacher-intelligence-v1602.css?v=16.0.2",
+  "./style-additions-v7-1.css",
+  "./master-schedule-v180.js?v=18.0.0",
+  "./app.js?v=16.5.0",
+  "./teacher-intelligence-v1602.js?v=16.0.2",
+  "./launch-stabilization-v7-1.js",
+  "./tos-data.json",
+  "./manifest.json",
+  "./icon-192.svg",
+  "./icon-512.svg"
+];
+
+self.addEventListener("install", event => {
+  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)));
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(keys.map(key => key === CACHE ? null : caches.delete(key))))
+  );
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
+
+  const url = new URL(event.request.url);
+  const isCore =
+    url.pathname.endsWith("/app.js?v=16.5.0") ||
+    url.pathname.endsWith("/style.css?v=16.5.0") ||
+    url.pathname.endsWith("/tos-data.json") ||
+    url.pathname.endsWith("/index.html") ||
+    url.pathname.endsWith("/");
+
+  if (isCore) {
+    event.respondWith(
+      fetch(event.request, { cache: "no-store" })
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE).then(cache => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then(cached =>
+      cached || fetch(event.request).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE).then(cache => cache.put(event.request, copy));
+        return response;
+      })
+    )
+  );
+});

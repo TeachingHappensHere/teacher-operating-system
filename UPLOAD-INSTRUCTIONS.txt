@@ -1,13 +1,24 @@
-TOS v19.2 — Functional Core
+VERSION 18.0 — MASTER SCHEDULE UPDATE
 
-Upload these 5 files to the ROOT of the GitHub repository.
-Choose "Commit changes" after the upload.
+ADD:
+- master-schedule-v180.js
 
-Files:
+REPLACE:
 - index.html
-- app.js
 - service-worker.js
-- functional-core-v192.js
-- functional-core-v192.css
 
-After GitHub Pages updates, refresh once. On iPad, close and reopen the installed app if the old version remains cached.
+DO NOT replace any other files.
+
+This update preserves Version 17.0 Launch Edition and changes the schedule from one central source before the main TOS loads.
+
+COMMIT MESSAGE:
+Version 18.0 - Updated Second Grade Master Schedule
+
+TEST:
+1. Upload the three files to the repository root.
+2. Commit and wait for deployment.
+3. Refresh twice, or open the site once in a private/incognito window.
+4. Preview Monday–Thursday and confirm the day begins at 8:00 with Breakfast / Phonemic Awareness.
+5. Confirm MOWR is 8:20–9:15 and Core Reading is 9:15–10:45.
+6. Confirm Writing is 11:10–11:40, Math is 11:40–12:40, Science is 1:40–2:15, and Social Studies is 2:15–2:55.
+7. Preview Friday and confirm the half-day assessment schedule ends with 12:00 dismissal.
