@@ -1,31 +1,32 @@
-VERSION 20.0 — STUDENT INTELLIGENCE ENGINE
+VERSION 20.1 — ASSESSMENT INTELLIGENCE ENGINE
 
 ADD:
-- student-intelligence-v200.js
-- student-intelligence-v200.css
+- assessment-intelligence-v201.js
+- assessment-intelligence-v201.css
 
 REPLACE:
 - index.html
 - service-worker.js
 
-KEEP every existing file from Versions 16.0 through 19.2.
-Do not remove the schedule, planning, curriculum-map, or resource-center files.
+KEEP every existing file from Versions 16.0 through 20.0.
+Do not remove Student Intelligence or any planning, schedule, teaching, curriculum, or resource files.
 
 COMMIT MESSAGE:
-Version 20.0 - Student Intelligence Engine
+Version 20.1 - Assessment Intelligence Engine
 
 TEST:
 1. Upload the two new files and replace index.html and service-worker.js.
-2. Wait for GitHub Pages to finish deploying, then refresh twice.
-3. Open Students from the sidebar.
-4. Add a student and confirm the profile remains after a refresh.
-5. Assign a reading group and confirm the classroom group count updates.
-6. Add an accommodation, medical alert, contact, goal, intervention, assessment, communication, and note.
-7. Test CSV export and a small CSV import.
-8. Test the layout on phone and iPad widths.
+2. Wait for deployment and refresh twice.
+3. Confirm Assessments appears directly after Students in the sidebar.
+4. Create an assessment and enter several class scores.
+5. Confirm percentages and mastery labels update while typing.
+6. Select Save All Scores, refresh, and confirm results remain saved.
+7. Open a student's profile and confirm the assessment appears in the student's assessment history.
+8. Test reading-group and student-name filters.
+9. Add a score note, class reflection, and next steps.
+10. Export the assessment CSV and test phone/iPad layouts.
 
-PRIVACY NOTE:
-Version 20.0 stores entered student data locally in the browser on the current device.
-It does not send student data to a server. Device/browser storage should still be protected
-in accordance with school policy. Do not enter highly sensitive medical documentation;
-store only the minimum classroom alert needed for safe instruction.
+DATA NOTE:
+This release stores assessment information locally in the browser on the current device.
+Saving class scores also writes a linked summary into each student's Version 20.0 profile.
+No information is transmitted to a server.

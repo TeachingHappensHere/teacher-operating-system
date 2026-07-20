@@ -1,4 +1,4 @@
-const CACHE = "teaching-happens-here-v20-0-student-intelligence";
+const CACHE = "teaching-happens-here-v20-1-assessment-intelligence";
 const CORE = [
   "./",
   "./index.html",
@@ -20,7 +20,11 @@ const CORE = [
   "./tos-data.json",
   "./manifest.json",
   "./icon-192.svg",
-  "./icon-512.svg"
+  "./icon-512.svg",
+  "./student-intelligence-v200.js?v=20.0.0",
+  "./student-intelligence-v200.css?v=20.0.0",
+  "./assessment-intelligence-v201.js?v=20.1.0",
+  "./assessment-intelligence-v201.css?v=20.1.0"
 ];
 self.addEventListener("install", event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE))); self.skipWaiting(); });
 self.addEventListener("activate", event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(key => key === CACHE ? null : caches.delete(key))))); self.clients.claim(); });

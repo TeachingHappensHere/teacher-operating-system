@@ -1,46 +1,20 @@
-# Teacher Operating System — Version 20.0
+# Version 20.1 — Assessment Intelligence Engine
 
-## Student Intelligence Engine
+This delta adds the first working assessment and mastery engine to Mrs. Parrish's Teacher Operating System.
 
-This release creates the working student-data foundation that future assessment,
-small-group, Teacher Brain, and reporting modules will use.
+## Core capabilities
 
-### Included
+- Create reusable assessment score sheets
+- Enter whole-class results from one gradebook
+- Calculate percentages automatically
+- Classify results as Mastered, Approaching, Reteach, or Missing
+- Filter by reading group or student name
+- Build automatic mastery groups
+- Add student-level score evidence notes
+- Save whole-class reflections and planned instructional responses
+- Export assessment results to CSV
+- Synchronize results into Version 20.0 student profiles
 
-- Student roster and searchable student profiles
-- Reading, math, and writing group placement
-- Red, Yellow, Green, and Blue reading-group dashboard
-- Daily local attendance status
-- IEP, 504, EL, accommodation, and medical-alert indicators
-- Family contacts
-- Student goals
-- Assessments, interventions, family communication, and teacher notes
-- Unified student timeline
-- CSV roster import and export
-- Local autosave
-- Phone, iPad, desktop, and print layouts
+## Supported assessment families
 
-### Storage architecture
-
-The engine uses a versioned local-storage record:
-
-`thh:v20:student-intelligence`
-
-No student information is seeded into the release. The roster begins empty.
-
-### Future connection points
-
-The public API is exposed as:
-
-`window.THH_STUDENT_INTELLIGENCE_V200`
-
-Later releases can use this engine to connect students and groups to:
-
-- Teach My Day
-- Tier II small-group lessons
-- DIBELS and ORF records
-- Open Court assessments
-- Eureka Math mastery
-- intervention reports
-- parent-conference summaries
-- Teacher Brain recommendations
+DIBELS ORF, DIBELS Maze, Open Court Phonics, Vocabulary, Comprehension and GUM, Eureka Math², Writing Rubrics, Science, and Social Studies. Custom assessment types are also allowed.
