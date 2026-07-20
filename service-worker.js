@@ -1,4 +1,4 @@
-const CACHE = "teaching-happens-here-v19-2-resource-center";
+const CACHE = "teaching-happens-here-v20-0-student-intelligence";
 const CORE = [
   "./",
   "./index.html",
@@ -9,6 +9,8 @@ const CORE = [
   "./curriculum-map-v191.js?v=19.1.0",
   "./resource-center-v192.css?v=19.2.0",
   "./resource-center-v192.js?v=19.2.0",
+  "./student-intelligence-v200.css?v=20.0.0",
+  "./student-intelligence-v200.js?v=20.0.0",
   "./master-schedule-v180.js?v=18.0.0",
   "./schedule-workspace-v181.js?v=18.1.0",
   "./schedule-workspace-v181.css?v=18.1.0",

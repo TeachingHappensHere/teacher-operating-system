@@ -1,25 +1,31 @@
-VERSION 19.2 — RESOURCE & ATTACHMENT CENTER
+VERSION 20.0 — STUDENT INTELLIGENCE ENGINE
 
 ADD:
-- resource-center-v192.js
-- resource-center-v192.css
+- student-intelligence-v200.js
+- student-intelligence-v200.css
 
 REPLACE:
 - index.html
 - service-worker.js
 
-DO NOT replace or remove earlier version files.
-Keep all Version 18.0, 18.1, 18.2, 19.0, and 19.1 files.
+KEEP every existing file from Versions 16.0 through 19.2.
+Do not remove the schedule, planning, curriculum-map, or resource-center files.
 
 COMMIT MESSAGE:
-Version 19.2 - Resource and Attachment Center
+Version 20.0 - Student Intelligence Engine
 
 TEST:
-1. Refresh twice after deployment.
-2. Open Resources from the sidebar.
-3. Add a resource to the entire week.
-4. Add a resource to one daily lesson.
-5. Confirm links open in a new tab.
-6. Save a resource to the reusable library and attach it to the week.
-7. Add and complete attachment-checklist items.
-8. Refresh and confirm all entries remain saved.
+1. Upload the two new files and replace index.html and service-worker.js.
+2. Wait for GitHub Pages to finish deploying, then refresh twice.
+3. Open Students from the sidebar.
+4. Add a student and confirm the profile remains after a refresh.
+5. Assign a reading group and confirm the classroom group count updates.
+6. Add an accommodation, medical alert, contact, goal, intervention, assessment, communication, and note.
+7. Test CSV export and a small CSV import.
+8. Test the layout on phone and iPad widths.
+
+PRIVACY NOTE:
+Version 20.0 stores entered student data locally in the browser on the current device.
+It does not send student data to a server. Device/browser storage should still be protected
+in accordance with school policy. Do not enter highly sensitive medical documentation;
+store only the minimum classroom alert needed for safe instruction.

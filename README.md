@@ -1,19 +1,46 @@
-# Teacher Operating System Version 19.2
+# Teacher Operating System — Version 20.0
 
-## Resource & Attachment Center
+## Student Intelligence Engine
 
-This delta connects the lesson-planning framework to the materials used to teach it.
+This release creates the working student-data foundation that future assessment,
+small-group, Teacher Brain, and reporting modules will use.
 
 ### Included
 
-- Weekly and lesson-level resource attachments
-- Slides, video, printable, assessment, teacher-guide, student-page, anchor-chart, and website categories
-- Subject tagging and resource search
-- Links that open safely in a new tab
-- Reusable Resource Library
-- Weekly attachment checklist
-- Lesson-resource readiness calculation
-- Local persistence using the existing Version 19 planning store
-- Responsive phone, iPad, desktop, and print layouts
+- Student roster and searchable student profiles
+- Reading, math, and writing group placement
+- Red, Yellow, Green, and Blue reading-group dashboard
+- Daily local attendance status
+- IEP, 504, EL, accommodation, and medical-alert indicators
+- Family contacts
+- Student goals
+- Assessments, interventions, family communication, and teacher notes
+- Unified student timeline
+- CSV roster import and export
+- Local autosave
+- Phone, iPad, desktop, and print layouts
 
-This release stores resource links and descriptive information in the browser. It does not upload or copy the underlying files.
+### Storage architecture
+
+The engine uses a versioned local-storage record:
+
+`thh:v20:student-intelligence`
+
+No student information is seeded into the release. The roster begins empty.
+
+### Future connection points
+
+The public API is exposed as:
+
+`window.THH_STUDENT_INTELLIGENCE_V200`
+
+Later releases can use this engine to connect students and groups to:
+
+- Teach My Day
+- Tier II small-group lessons
+- DIBELS and ORF records
+- Open Court assessments
+- Eureka Math mastery
+- intervention reports
+- parent-conference summaries
+- Teacher Brain recommendations
