@@ -1,23 +1,25 @@
-VERSION 19.1 — WEEKLY CURRICULUM MAP
+VERSION 19.2 — RESOURCE & ATTACHMENT CENTER
 
 ADD:
-- curriculum-map-v191.js
-- curriculum-map-v191.css
+- resource-center-v192.js
+- resource-center-v192.css
 
 REPLACE:
 - index.html
 - service-worker.js
 
-KEEP all Version 18.0, 18.1, 18.2, and 19.0 files.
+DO NOT replace or remove earlier version files.
+Keep all Version 18.0, 18.1, 18.2, 19.0, and 19.1 files.
 
 COMMIT MESSAGE:
-Version 19.1 - Weekly Curriculum Map and Framework Builder
+Version 19.2 - Resource and Attachment Center
 
 TEST:
 1. Refresh twice after deployment.
-2. Open Curriculum Map from the sidebar.
-3. Confirm Monday–Thursday and Friday schedules match the updated master schedule.
-4. Select Build Week from Framework.
-5. Open Lesson Studio and confirm blank lesson fields were populated without replacing existing entries.
-6. Add, check, and remove an item in the Copy & Materials Queue.
-7. Test on phone and iPad widths.
+2. Open Resources from the sidebar.
+3. Add a resource to the entire week.
+4. Add a resource to one daily lesson.
+5. Confirm links open in a new tab.
+6. Save a resource to the reusable library and attach it to the week.
+7. Add and complete attachment-checklist items.
+8. Refresh and confirm all entries remain saved.
