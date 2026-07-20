@@ -1,26 +1,28 @@
-VERSION 18.1 — SCHEDULE WORKSPACE
+VERSION 18.2 — LIVE DAILY TIMELINE
 
 ADD:
-- schedule-workspace-v181.js
-- schedule-workspace-v181.css
+- daily-timeline-v182.js
+- daily-timeline-v182.css
 
 REPLACE:
 - index.html
 - service-worker.js
 
-KEEP:
-- master-schedule-v180.js from Version 18.0
-- every other repository file
+KEEP all Version 18.0 and 18.1 files, including:
+- master-schedule-v180.js
+- schedule-workspace-v181.js
+- schedule-workspace-v181.css
+
+DO NOT replace any other files.
 
 COMMIT MESSAGE:
-Version 18.1 - Schedule Workspace and Daily Mode Controls
+Version 18.2 - Live Daily Timeline Sync
 
 TEST:
-1. Upload the four files to the repository root.
-2. Wait for GitHub Pages to deploy.
-3. Refresh twice or open the site in a private window.
-4. Confirm a Master Schedule card appears at the top of the dashboard.
-5. Open Schedule and switch between Monday–Thursday and Friday Half Day.
-6. Confirm the selected mode remains after refreshing.
-7. Test the floating Schedule button on a phone or iPad.
-8. Test Print Schedule.
+1. Upload the four files to the repository root and commit.
+2. Refresh twice after deployment.
+3. Confirm the dashboard shows the current schedule block and next block.
+4. Open Schedule and confirm the current row is highlighted.
+5. Switch between Full Day and Friday Half Day and confirm the live card updates.
+6. Click Teach This Block and confirm Teach My Day opens.
+7. Test on phone/iPad width and confirm the card stacks vertically.
