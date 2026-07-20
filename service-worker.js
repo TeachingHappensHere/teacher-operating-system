@@ -3,6 +3,8 @@ const CACHE = "teaching-happens-here-v18-1-schedule-workspace";
 const CORE = [
   "./",
   "./index.html",
+  "./planning-framework-v190.css?v=19.0.0",
+  "./planning-framework-v190.js?v=19.0.0",
   "./style.css?v=16.5.0",
   "./teacher-intelligence-v1602.css?v=16.0.2",
   "./style-additions-v7-1.css",

@@ -1,28 +1,25 @@
-VERSION 18.2 — LIVE DAILY TIMELINE
+VERSION 19.0 — CONNECTED LESSON PLANNING FOUNDATION
 
 ADD:
-- daily-timeline-v182.js
-- daily-timeline-v182.css
+- planning-framework-v190.js
+- planning-framework-v190.css
 
 REPLACE:
 - index.html
 - service-worker.js
 
-KEEP all Version 18.0 and 18.1 files, including:
-- master-schedule-v180.js
-- schedule-workspace-v181.js
-- schedule-workspace-v181.css
-
-DO NOT replace any other files.
+KEEP all Version 18.0, 18.1, and 18.2 files.
 
 COMMIT MESSAGE:
-Version 18.2 - Live Daily Timeline Sync
+Version 19.0 - Connected Lesson Planning Foundation
 
 TEST:
-1. Upload the four files to the repository root and commit.
-2. Refresh twice after deployment.
-3. Confirm the dashboard shows the current schedule block and next block.
-4. Open Schedule and confirm the current row is highlighted.
-5. Switch between Full Day and Friday Half Day and confirm the live card updates.
-6. Click Teach This Block and confirm Teach My Day opens.
-7. Test on phone/iPad width and confirm the card stacks vertically.
+1. Refresh twice after deployment.
+2. Open Planning Center from the sidebar.
+3. Edit the Weekly Hub and confirm changes remain after refresh.
+4. Switch days and subjects in Lesson Studio.
+5. Enter an objective, Arizona standard, and I Do / We Do / You Do steps.
+6. Mark a lesson Ready and confirm the readiness percentage changes.
+7. Duplicate the week and confirm the new week opens.
+8. Export Planbook Text and confirm a text file downloads.
+9. Test on phone and iPad widths.
