@@ -1,0 +1,25 @@
+TeachingHappensHere TOS v21.0.0 — Subject Planner + Diamond Board
+
+CHANGED FILES
+- index.html
+- app.js
+- service-worker.js
+
+NEW FILES
+- subject-planner-v210.js
+- subject-planner-v210.css
+- RELEASE-NOTES-v21.0.0.txt
+
+WHAT WORKS NOW
+- Planner organized by subject, with Monday-Friday lesson tabs.
+- Required I Can statement with one-click generation from the objective.
+- Required Planbook lesson sections: Objective, Lesson/Instruction, Differentiation/Accommodations, Homework/Evidence, Materials/Resources/Technology, Notes/Reflection, Instructional Strategies, Standard ID, and Standard Description.
+- Separate required ELL, IEP, and 504 differentiation fields for every daily lesson.
+- Autosave to browser storage.
+- Live weekly Diamond Board generated from the same lesson records.
+- Printable Diamond Board.
+- Subject-based Planbook export copied to the clipboard.
+- Copy-week control.
+
+INSTALL
+Upload these files to the root of the GitHub repository, replacing index.html, app.js, and service-worker.js when prompted. Then refresh the published site twice so the new service worker takes control.

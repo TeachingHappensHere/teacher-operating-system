@@ -534,6 +534,7 @@
   }
 
   function renderLessonPlans() {
+    if (typeof window.TOS_V210_RENDER_SUBJECT_PLANNER === "function") { window.TOS_V210_RENDER_SUBJECT_PLANNER({ config, state, navigate, saveState, toast }); return; }
     if (typeof window.TOS_V1_RENDER_WEEKLY_PLANNER === "function") { window.TOS_V1_RENDER_WEEKLY_PLANNER({ config, state, navigate, saveState, toast }); return; }
     $("#pageHost").innerHTML = `
       ${pageHeader("LESSON PLANS", "Saved Lesson Plans", "Plans created in the unified Version 7.0 Lesson Builder.",
