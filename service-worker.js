@@ -1,8 +1,8 @@
-const CACHE = "teaching-happens-here-v21-1-classroom-display";
+const CACHE = "teaching-happens-here-v22-0-planner-launch";
 const CORE = [
   "./",
   "./index.html",
-  "./style.css?v=16.5.0",
+  "./style.css?v=22.0.0",
   "./planning-framework-v190.css?v=19.0.0",
   "./planning-framework-v190.js?v=19.0.0",
   "./curriculum-map-v191.css?v=19.1.0",
@@ -16,7 +16,7 @@ const CORE = [
   "./schedule-workspace-v181.css?v=18.1.0",
   "./daily-timeline-v182.js?v=18.2.0",
   "./daily-timeline-v182.css?v=18.2.0",
-  "./app.js?v=16.5.0",
+  "./app.js?v=22.0.0",
   "./tos-data.json",
   "./manifest.json",
   "./icon-192.svg",

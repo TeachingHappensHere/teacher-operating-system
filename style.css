@@ -3825,3 +3825,9 @@ body {
     min-width: 150px;
   }
 }
+
+
+/* Version 22.0 planner launch */
+.v220-planner-launch{display:flex;align-items:center;justify-content:space-between;gap:22px;margin:0 auto 16px;max-width:1180px;padding:20px 22px;border:1px solid #dfc8ff;border-radius:18px;background:linear-gradient(135deg,#fff 0%,#fbf7ff 56%,#f3eaff 100%);box-shadow:0 10px 30px rgba(84,48,140,.10)}
+.v220-planner-copy{max-width:760px}.v220-eyebrow{display:block;margin-bottom:6px;color:#7041b5;font-size:12px;font-weight:900;letter-spacing:.08em}.v220-planner-launch h2{margin:0 0 6px;font-size:24px;line-height:1.15;color:#24143d}.v220-planner-launch p{margin:0;color:#62566f;line-height:1.5}.v220-planner-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.v220-planner-actions button{border-radius:11px;padding:11px 14px;font-weight:900;cursor:pointer}.v220-open-planner{border:1px solid #7041b5;background:#7041b5;color:#fff}.v220-open-board{border:1px solid #cbb5ee;background:#fff;color:#5c3596}
+@media(max-width:780px){.v220-planner-launch{align-items:flex-start;flex-direction:column}.v220-planner-actions{width:100%;justify-content:flex-start}.v220-planner-actions button{flex:1}}

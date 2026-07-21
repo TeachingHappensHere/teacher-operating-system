@@ -373,7 +373,32 @@
     };
 
     (renderers[route] || renderDashboard)();
+    if (route === "dashboard") window.setTimeout(ensurePlannerLaunch, 0);
     $("#pageHost").focus({ preventScroll: true });
+  }
+
+  function ensurePlannerLaunch() {
+    const host = $("#pageHost");
+    if (!host || host.querySelector("#v220PlannerLaunch")) return;
+    const launch = document.createElement("section");
+    launch.id = "v220PlannerLaunch";
+    launch.className = "v220-planner-launch";
+    launch.innerHTML = `
+      <div class="v220-planner-copy">
+        <span class="v220-eyebrow">VERSION 22 PLANNING WORKSPACE</span>
+        <h2>Plan once. Build the Diamond Board automatically.</h2>
+        <p>Open the subject-based planner for Reading, Math, Writing, Science, Social Studies, MOWR, Heggerty, and Morning Meeting.</p>
+      </div>
+      <div class="v220-planner-actions">
+        <button class="v220-open-planner" type="button">Open Subject Planner</button>
+        <button class="v220-open-board" type="button">Open Diamond Board</button>
+      </div>`;
+    host.prepend(launch);
+    launch.querySelector(".v220-open-planner").addEventListener("click", () => navigate("lesson-plans"));
+    launch.querySelector(".v220-open-board").addEventListener("click", () => {
+      navigate("lesson-plans");
+      window.setTimeout(() => document.querySelector("#spBoard")?.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+    });
   }
 
   function renderFeatureLoading(title) {

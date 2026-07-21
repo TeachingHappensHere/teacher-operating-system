@@ -1,0 +1,14 @@
+TOS v22.0.0 — Planner Access Repair
+
+This release fixes the main reason the Diamond Board was not visible from the dashboard.
+
+Changes:
+- Renames Weekly Planning to Subject Planner & Diamond Board in the main navigation.
+- Adds a prominent Version 22 planning banner to the Home Dashboard.
+- Adds direct Open Subject Planner and Open Diamond Board buttons.
+- Keeps all existing dashboard, curriculum, student, assessment, and teaching modules.
+- Updates cache/version identifiers so GitHub Pages loads the new files.
+
+Open the TOS, then use either:
+1. Home Dashboard > Open Subject Planner
+2. Left navigation > Subject Planner & Diamond Board
