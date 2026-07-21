@@ -1,0 +1,11 @@
+TOS v22.1.0 — Connected Subject Planner Workspace
+
+CHANGES
+- Makes Subject Planner & Diamond Board a clearly labeled main-navigation destination.
+- Adds a prominent Version 22 planner launch card to the active dashboard.
+- Converts the planner into a desktop three-column workspace: subjects, lesson editor, live Diamond Board.
+- Keeps one shared lesson record for autosave, Classroom Display, print, and Planbook export.
+- Updates service-worker cache keys so GitHub Pages receives the new interface.
+
+UPLOAD
+Upload every file in this ZIP to the repository root and replace matching files.

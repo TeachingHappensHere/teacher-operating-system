@@ -373,32 +373,7 @@
     };
 
     (renderers[route] || renderDashboard)();
-    if (route === "dashboard") window.setTimeout(ensurePlannerLaunch, 0);
     $("#pageHost").focus({ preventScroll: true });
-  }
-
-  function ensurePlannerLaunch() {
-    const host = $("#pageHost");
-    if (!host || host.querySelector("#v220PlannerLaunch")) return;
-    const launch = document.createElement("section");
-    launch.id = "v220PlannerLaunch";
-    launch.className = "v220-planner-launch";
-    launch.innerHTML = `
-      <div class="v220-planner-copy">
-        <span class="v220-eyebrow">VERSION 22 PLANNING WORKSPACE</span>
-        <h2>Plan once. Build the Diamond Board automatically.</h2>
-        <p>Open the subject-based planner for Reading, Math, Writing, Science, Social Studies, MOWR, Heggerty, and Morning Meeting.</p>
-      </div>
-      <div class="v220-planner-actions">
-        <button class="v220-open-planner" type="button">Open Subject Planner</button>
-        <button class="v220-open-board" type="button">Open Diamond Board</button>
-      </div>`;
-    host.prepend(launch);
-    launch.querySelector(".v220-open-planner").addEventListener("click", () => navigate("lesson-plans"));
-    launch.querySelector(".v220-open-board").addEventListener("click", () => {
-      navigate("lesson-plans");
-      window.setTimeout(() => document.querySelector("#spBoard")?.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
-    });
   }
 
   function renderFeatureLoading(title) {
@@ -439,6 +414,7 @@
     $("#pageHost").innerHTML = `
       ${pageHeader("TEACHER OPERATING SYSTEM 7.0", `Good ${greeting()}, Mrs. Parrish!`, "One clean system for planning, teaching, students, communication, and classroom launch.",
         `<button class="primary-button" data-jump="teachday">Start My Day</button>`)}
+      <section class="v221-planner-launch"><div><span>NEW • VERSION 22</span><h3>Subject Planner + Live Diamond Board</h3><p>Plan by subject, edit Monday through Friday, and watch the Diamond Board update from the same lesson record.</p></div><button class="primary-button" data-jump="lesson-plans">Open Subject Planner</button></section>
       <section class="dashboard-grid">
         <article class="metric-card"><span>Current Pillar</span><strong>${esc(config.pillar)}</strong></article>
         <article class="metric-card"><span>Literacy</span><strong>Open Court Unit 1</strong></article>
@@ -448,7 +424,7 @@
       <section class="dashboard-main">
         ${card("Today at a Glance", `<div class="schedule-list">${config.schedule.map(([time, subject]) => `<div><strong>${esc(time)}</strong><span>${esc(subject)}</span></div>`).join("")}</div>`)}
         ${card("Teacher Shortcuts", `<div class="shortcut-grid">
-          <button data-jump="lesson-plans">Lesson Plans</button>
+          <button data-jump="lesson-plans">Subject Planner</button>
           <button data-jump="small-groups">Small Groups</button>
           <button data-jump="assessments">Assessments</button>
           <button data-jump="calendar">Calendar</button>

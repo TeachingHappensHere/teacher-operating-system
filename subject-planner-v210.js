@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='21.1.0';
+  const VERSION='22.1.0';
   const KEY='thh:subject-planner:v210';
   const SUBJECTS=[
     ['reading','📚','Reading'],['math','🔢','Math'],['writing','✍️','Writing'],['science','🔬','Science'],['social-studies','🌎','Social Studies'],['mowr','🧠','MOWR'],['heggerty','🔤','Heggerty'],['morning-meeting','☀️','Morning Meeting']
@@ -28,10 +28,10 @@
     const l=lesson();
     host.innerHTML=`<div class="sp-shell">
       <section class="sp-top">
-        <div class="sp-title-row"><div class="sp-title"><h2>${SUBJECTS.find(s=>s[0]===model.subject)?.[1]} ${esc(subjectName())} Planner</h2><p>Plan by subject. Teach by day. Enter it once.</p></div><div class="sp-actions"><button class="sp-btn" id="spCopyWeek">Copy Week</button><button class="sp-btn" id="spExport">Export to Planbook</button><button class="sp-btn" id="spClassroomDisplay">▣ Classroom Display</button><button class="sp-btn primary" id="spBoardFocus">◇ Diamond Board</button></div></div>
-        <div class="sp-subjects">${SUBJECTS.map(([id,icon,name])=>`<button class="sp-subject ${id===model.subject?'active':''}" data-subject="${id}">${icon} ${name}</button>`).join('')}</div>
+        <div class="sp-title-row"><div class="sp-title"><p class="sp-kicker">VERSION 22 • SUBJECT PLANNING WORKSPACE</p><h2>${SUBJECTS.find(s=>s[0]===model.subject)?.[1]} ${esc(subjectName())} Planner</h2><p>Plan by subject. Teach by day. Enter it once.</p></div><div class="sp-actions"><button class="sp-btn" id="spCopyWeek">Copy Week</button><button class="sp-btn" id="spExport">Export to Planbook</button><button class="sp-btn" id="spClassroomDisplay">▣ Classroom Display</button><button class="sp-btn primary" id="spBoardFocus">◇ Diamond Board</button></div></div>
         <div class="sp-week-row"><div class="sp-week-control"><button class="sp-btn" data-week-shift="-7">←</button><input id="spWeek" type="date" value="${model.weekStart}"><strong>Week of ${weekLabel()}</strong><button class="sp-btn" data-week-shift="7">→</button></div><span class="sp-status">✓ Autosaves in this browser</span></div>
       </section>
+      <aside class="sp-subject-rail" aria-label="Subject planner navigation"><div class="sp-rail-title">Planner by Subject</div><div class="sp-subjects">${SUBJECTS.map(([id,icon,name])=>`<button class="sp-subject ${id===model.subject?'active':''}" data-subject="${id}"><span>${icon}</span><strong>${name}</strong></button>`).join('')}</div><div class="sp-rail-note"><strong>One lesson record</strong><span>Diamond Board, classroom display, print, and Planbook export all update from the same plan.</span></div></aside>
       <section class="sp-editor">
         <div class="sp-editor-head"><h3>${esc(model.day)} — ${esc(l.lessonTitle||'New Lesson')}</h3><span class="sp-status" id="spSaved">${l.updatedAt?'✓ Saved':'Not saved yet'}</span></div>
         <div class="sp-day-tabs">${DAYS.map(d=>`<button class="sp-day ${d===model.day?'active':''}" data-day="${d}">${d}<br><small>${lesson(model.subject,d).lessonTitle||'Lesson'}</small></button>`).join('')}</div>
