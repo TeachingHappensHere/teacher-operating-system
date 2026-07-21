@@ -1,4 +1,4 @@
-const CACHE = "teaching-happens-here-v22-2-live-diamond-board";
+const CACHE = "teaching-happens-here-v23-0-lesson-engine";
 const CORE = [
   "./",
   "./index.html",

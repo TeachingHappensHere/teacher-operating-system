@@ -1,21 +1,23 @@
 # Production Backlog
 
-## Completed
-- [x] Sprint 23: Shared Lesson Engine
-- [x] Save and load lessons
-- [x] Edit with autosave
-- [x] Delete lesson
-- [x] Duplicate lesson
-- [x] Shared lesson model/API
+## Current operational priority
 
-## Next — Sprint 24
-- [ ] Verify Diamond Board live updates for every lesson field
-- [ ] Full-screen Diamond Board
-- [ ] Print Diamond Board
-- [ ] Confirm Classroom Display reads the shared lesson engine
+- [x] Shared lesson record storage
+- [x] Autosave
+- [x] Manual save
+- [x] Edit/load existing lesson
+- [x] Duplicate a daily lesson
+- [x] Delete a daily lesson
+- [x] Lesson backup download
+- [x] Live Diamond Board reads the same lesson model
+- [ ] Restore/import backup through the user interface
+- [ ] Teacher Mode reads `TOS_LESSON_STORE`
+- [ ] Launch Lesson button
+- [ ] End-to-end browser test on deployed GitHub Pages
 
-## Deferred Until Core Is Operational
-- [ ] Teacher Mode
-- [ ] Launch Lesson
-- [ ] Resource attachments
-- [ ] Search and backup user interface
+## Frozen until core operation is stable
+
+- Parent communication automation
+- Student analytics expansion
+- Additional dashboard redesigns
+- New planning layouts

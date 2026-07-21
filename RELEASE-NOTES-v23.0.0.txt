@@ -1,24 +1,22 @@
-TOS VERSION 23.0.0 — SPRINT 23 LESSON ENGINE
+TOS v23.0.0 — OPERATIONAL LESSON ENGINE
 
-UPLOAD THE CONTENTS OF THIS ZIP TO THE ROOT OF THE GITHUB REPOSITORY.
-Replace matching files.
+Upload the included files to the root of the GitHub repository and replace files with matching names.
 
-COMPLETED:
-- Save Lesson
-- Load/Edit Lesson
-- Delete Lesson
-- Duplicate Lesson
-- Autosave
-- Shared lesson model and API
-- Browser backup/import engine methods
-
-FILES CHANGED:
+Changed files:
+- index.html
 - subject-planner-v210.js
 - subject-planner-v210.css
-- index.html
 - service-worker.js
 - CHANGELOG.md
 - BACKLOG.md
 - RELEASE-NOTES-v23.0.0.txt
 
 After GitHub Pages deploys, press Ctrl+Shift+R once.
+
+Operational checks:
+1. Open Subject Planner & Diamond Board.
+2. Enter a lesson title and objective; confirm Saving changes to Saved.
+3. Refresh the browser; confirm the lesson reloads.
+4. Use Duplicate Day and verify the copied lesson opens.
+5. Use Delete Day and verify only that selected day clears.
+6. Open Classroom Display and verify it shows the same lesson data.
