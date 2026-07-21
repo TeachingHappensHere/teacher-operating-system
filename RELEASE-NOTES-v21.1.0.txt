@@ -1,0 +1,20 @@
+TOS v21.1.0 — Classroom Display Center
+
+Changed files:
+- index.html
+- service-worker.js
+- subject-planner-v210.js
+
+New files:
+- classroom-display-v211.js
+- classroom-display-v211.css
+
+What works now:
+- Open Classroom Display directly from the subject planner.
+- Large student-friendly I Can statement.
+- Objective, standard, vocabulary, essential question, task/skill, and evidence of learning.
+- Monday-Friday lesson focus strip.
+- Day switching without leaving display mode.
+- Full-screen SmartBoard mode.
+- Print-ready classroom display.
+- Reads the same saved lesson records as the subject planner.

@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='21.0.0';
+  const VERSION='21.1.0';
   const KEY='thh:subject-planner:v210';
   const SUBJECTS=[
     ['reading','📚','Reading'],['math','🔢','Math'],['writing','✍️','Writing'],['science','🔬','Science'],['social-studies','🌎','Social Studies'],['mowr','🧠','MOWR'],['heggerty','🔤','Heggerty'],['morning-meeting','☀️','Morning Meeting']
@@ -28,7 +28,7 @@
     const l=lesson();
     host.innerHTML=`<div class="sp-shell">
       <section class="sp-top">
-        <div class="sp-title-row"><div class="sp-title"><h2>${SUBJECTS.find(s=>s[0]===model.subject)?.[1]} ${esc(subjectName())} Planner</h2><p>Plan by subject. Teach by day. Enter it once.</p></div><div class="sp-actions"><button class="sp-btn" id="spCopyWeek">Copy Week</button><button class="sp-btn" id="spExport">Export to Planbook</button><button class="sp-btn primary" id="spBoardFocus">◇ Diamond Board</button></div></div>
+        <div class="sp-title-row"><div class="sp-title"><h2>${SUBJECTS.find(s=>s[0]===model.subject)?.[1]} ${esc(subjectName())} Planner</h2><p>Plan by subject. Teach by day. Enter it once.</p></div><div class="sp-actions"><button class="sp-btn" id="spCopyWeek">Copy Week</button><button class="sp-btn" id="spExport">Export to Planbook</button><button class="sp-btn" id="spClassroomDisplay">▣ Classroom Display</button><button class="sp-btn primary" id="spBoardFocus">◇ Diamond Board</button></div></div>
         <div class="sp-subjects">${SUBJECTS.map(([id,icon,name])=>`<button class="sp-subject ${id===model.subject?'active':''}" data-subject="${id}">${icon} ${name}</button>`).join('')}</div>
         <div class="sp-week-row"><div class="sp-week-control"><button class="sp-btn" data-week-shift="-7">←</button><input id="spWeek" type="date" value="${model.weekStart}"><strong>Week of ${weekLabel()}</strong><button class="sp-btn" data-week-shift="7">→</button></div><span class="sp-status">✓ Autosaves in this browser</span></div>
       </section>
@@ -96,6 +96,7 @@
     document.querySelectorAll('[data-week-shift]').forEach(b=>b.onclick=()=>{const d=new Date(`${model.weekStart}T12:00:00`);d.setDate(d.getDate()+Number(b.dataset.weekShift));model.weekStart=localISO(d);saveSilent();render()});
     document.querySelector('#spPrint').onclick=()=>window.print();
     document.querySelector('#spBoardFocus').onclick=()=>document.querySelector('#spBoard').scrollIntoView({behavior:'smooth'});
+    document.querySelector('#spClassroomDisplay').onclick=()=>window.TOS_V211_CLASSROOM_DISPLAY?.open?.({subject:model.subject,weekStart:model.weekStart});
     document.querySelector('#spCopyWeek').onclick=copyWeek;
     document.querySelector('#spExport').onclick=exportPlanbook;
   }
