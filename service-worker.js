@@ -1,10 +1,10 @@
-const CACHE = "teaching-happens-here-v22-1-planner-workspace";
+const CACHE = "teaching-happens-here-v22-2-live-diamond-board";
 const CORE = [
   "./",
   "./index.html",
-  "./style.css?v=22.1.0",
-  "./planning-framework-v190.css?v=19.0.0",
-  "./planning-framework-v190.js?v=19.0.0",
+  "./style.css?v=16.5.0",
+  "./planning-framework-v190.css?v=22.2.0",
+  "./planning-framework-v190.js?v=22.2.0",
   "./curriculum-map-v191.css?v=19.1.0",
   "./curriculum-map-v191.js?v=19.1.0",
   "./resource-center-v192.css?v=19.2.0",
@@ -16,9 +16,7 @@ const CORE = [
   "./schedule-workspace-v181.css?v=18.1.0",
   "./daily-timeline-v182.js?v=18.2.0",
   "./daily-timeline-v182.css?v=18.2.0",
-  "./sprint1-dashboard.js?v=22.1.0",
-  "./sprint1-dashboard.css?v=22.1.0",
-  "./app.js?v=22.1.0",
+  "./app.js?v=16.5.0",
   "./tos-data.json",
   "./manifest.json",
   "./icon-192.svg",
@@ -27,10 +25,10 @@ const CORE = [
   "./student-intelligence-v200.css?v=20.0.0",
   "./assessment-intelligence-v201.js?v=20.1.0",
   "./assessment-intelligence-v201.css?v=20.1.0",
-  "./subject-planner-v210.js?v=22.1.0",
-  "./subject-planner-v210.css?v=22.1.0",
-  "./classroom-display-v211.js?v=22.1.0",
-  "./classroom-display-v211.css?v=22.1.0"
+  "./subject-planner-v210.js?v=21.1.0",
+  "./subject-planner-v210.css?v=21.1.0",
+  "./classroom-display-v211.js?v=21.1.0",
+  "./classroom-display-v211.css?v=21.1.0"
 ];
 self.addEventListener("install", event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE))); self.skipWaiting(); });
 self.addEventListener("activate", event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(key => key === CACHE ? null : caches.delete(key))))); self.clients.claim(); });

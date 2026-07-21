@@ -1,0 +1,23 @@
+TOS v22.2.0 — Live Diamond Board UX Sprint
+
+CHANGED
+- planning-framework-v190.js
+- planning-framework-v190.css
+- index.html
+- service-worker.js
+
+NEW
+- True three-column Subject Planner workspace
+- Live weekly Diamond Board preview
+- Subject color coding and larger subject/day tabs
+- Mandatory I Can Statement and complete Planbook sections
+- Collapsible lesson sections
+- ELL, IEP, and 504 differentiation fields
+- Per-subject completeness meter and missing-fields guidance
+- Full-screen and printable Diamond Board
+- Subject-specific Planbook text export
+- Existing local lesson data is migrated instead of erased
+
+INSTALL
+Upload all files in this release ZIP to the repository root and replace matching files.
+After GitHub Pages deploys, press Ctrl+Shift+R once.
