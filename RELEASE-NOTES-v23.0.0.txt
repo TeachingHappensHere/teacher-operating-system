@@ -1,0 +1,24 @@
+TOS VERSION 23.0.0 — SPRINT 23 LESSON ENGINE
+
+UPLOAD THE CONTENTS OF THIS ZIP TO THE ROOT OF THE GITHUB REPOSITORY.
+Replace matching files.
+
+COMPLETED:
+- Save Lesson
+- Load/Edit Lesson
+- Delete Lesson
+- Duplicate Lesson
+- Autosave
+- Shared lesson model and API
+- Browser backup/import engine methods
+
+FILES CHANGED:
+- subject-planner-v210.js
+- subject-planner-v210.css
+- index.html
+- service-worker.js
+- CHANGELOG.md
+- BACKLOG.md
+- RELEASE-NOTES-v23.0.0.txt
+
+After GitHub Pages deploys, press Ctrl+Shift+R once.

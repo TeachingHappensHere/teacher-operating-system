@@ -25,10 +25,10 @@ const CORE = [
   "./student-intelligence-v200.css?v=20.0.0",
   "./assessment-intelligence-v201.js?v=20.1.0",
   "./assessment-intelligence-v201.css?v=20.1.0",
-  "./subject-planner-v210.js?v=21.1.0",
-  "./subject-planner-v210.css?v=21.1.0",
-  "./classroom-display-v211.js?v=21.1.0",
-  "./classroom-display-v211.css?v=21.1.0"
+  "./subject-planner-v210.js?v=23.0.0",
+  "./subject-planner-v210.css?v=23.0.0",
+  "./classroom-display-v211.js?v=23.0.0",
+  "./classroom-display-v211.css?v=23.0.0"
 ];
 self.addEventListener("install", event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE))); self.skipWaiting(); });
 self.addEventListener("activate", event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(key => key === CACHE ? null : caches.delete(key))))); self.clients.claim(); });

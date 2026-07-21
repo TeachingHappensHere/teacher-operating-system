@@ -1,21 +1,32 @@
 (function(){
   'use strict';
-  const VERSION='22.1.0';
+  const VERSION='23.0.0';
   const KEY='thh:subject-planner:v210';
   const SUBJECTS=[
     ['reading','📚','Reading'],['math','🔢','Math'],['writing','✍️','Writing'],['science','🔬','Science'],['social-studies','🌎','Social Studies'],['mowr','🧠','MOWR'],['heggerty','🔤','Heggerty'],['morning-meeting','☀️','Morning Meeting']
   ];
   const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday'];
-  const DEFAULTS={subject:'reading',day:'Monday',weekStart:nextMondayISO(),lessons:{}};
+  const DEFAULTS={subject:'reading',day:'Monday',weekStart:nextMondayISO(),lessons:{},deletedLessons:{},schemaVersion:23};
+  let autosaveTimer=null;
   let model=load();
 
   function nextMondayISO(){const d=new Date();const diff=(d.getDay()+6)%7;d.setDate(d.getDate()-diff);return localISO(d)}
   function localISO(d){return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)}
   function esc(v=''){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-  function load(){try{return {...DEFAULTS,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{return structuredClone(DEFAULTS)}}
-  function save(){localStorage.setItem(KEY,JSON.stringify(model));window.TOS_APP_BRIDGE?.toast?.('Lesson saved.');}
+  function load(){
+    try{
+      const raw=JSON.parse(localStorage.getItem(KEY)||'{}');
+      return {...structuredClone(DEFAULTS),...raw,lessons:{...(raw.lessons||{})},deletedLessons:{...(raw.deletedLessons||{})},schemaVersion:23};
+    }catch{return structuredClone(DEFAULTS)}
+  }
+  function persist({toast=false,reason='save'}={}){
+    localStorage.setItem(KEY,JSON.stringify(model));
+    window.dispatchEvent(new CustomEvent('tos:lesson-model-changed',{detail:{reason,subject:model.subject,day:model.day,weekStart:model.weekStart,key:lessonKey()}}));
+    if(toast)window.TOS_APP_BRIDGE?.toast?.('Lesson saved.');
+  }
+  function save(){persist({toast:true,reason:'manual-save'});updateSavedStatus('✓ Saved now');}
   function lessonKey(subject=model.subject,day=model.day){return `${model.weekStart}|${subject}|${day}`}
-  function blank(){return {objective:'',ican:'',standardId:'',standardDesc:'',lessonTitle:'',instruction:'',ell:'',iep:'',s504:'',materials:'',strategies:'',evidence:'',homework:'',notes:'',contentVocabulary:'',academicVocabulary:'',essentialQuestion:'',weeklyTask:'',skills:'',updatedAt:''}}
+  function blank(){return {id:crypto.randomUUID?.()||`lesson-${Date.now()}-${Math.random().toString(16).slice(2)}`,objective:'',ican:'',standardId:'',standardDesc:'',lessonTitle:'',instruction:'',ell:'',iep:'',s504:'',materials:'',strategies:'',evidence:'',homework:'',notes:'',contentVocabulary:'',academicVocabulary:'',essentialQuestion:'',weeklyTask:'',skills:'',createdAt:new Date().toISOString(),updatedAt:''}}
   function lesson(subject=model.subject,day=model.day){const k=lessonKey(subject,day);model.lessons[k]=model.lessons[k]||blank();return model.lessons[k]}
   function subjectName(){return SUBJECTS.find(s=>s[0]===model.subject)?.[2]||'Reading'}
   function generatedICan(obj){let text=(obj.objective||'').trim();if(!text)return '';text=text.replace(/^students?\s+(will|are able to|can)\s+/i,'').replace(/^the student\s+(will|can)\s+/i,'');text=text.charAt(0).toLowerCase()+text.slice(1);text=text.replace(/\.$/,'');return `I can ${text}.`}
@@ -33,7 +44,7 @@
       </section>
       <aside class="sp-subject-rail" aria-label="Subject planner navigation"><div class="sp-rail-title">Planner by Subject</div><div class="sp-subjects">${SUBJECTS.map(([id,icon,name])=>`<button class="sp-subject ${id===model.subject?'active':''}" data-subject="${id}"><span>${icon}</span><strong>${name}</strong></button>`).join('')}</div><div class="sp-rail-note"><strong>One lesson record</strong><span>Diamond Board, classroom display, print, and Planbook export all update from the same plan.</span></div></aside>
       <section class="sp-editor">
-        <div class="sp-editor-head"><h3>${esc(model.day)} — ${esc(l.lessonTitle||'New Lesson')}</h3><span class="sp-status" id="spSaved">${l.updatedAt?'✓ Saved':'Not saved yet'}</span></div>
+        <div class="sp-editor-head"><h3>${esc(model.day)} — ${esc(l.lessonTitle||'New Lesson')}</h3><div class="sp-actions"><button class="sp-btn success" id="spSaveLesson" type="button">Save Lesson</button><button class="sp-btn" id="spDuplicateLesson" type="button">Duplicate</button><button class="sp-btn danger" id="spDeleteLesson" type="button">Delete</button><span class="sp-status" id="spSaved">${l.updatedAt?'✓ Saved':'Not saved yet'}</span></div></div>
         <div class="sp-day-tabs">${DAYS.map(d=>`<button class="sp-day ${d===model.day?'active':''}" data-day="${d}">${d}<br><small>${lesson(model.subject,d).lessonTitle||'Lesson'}</small></button>`).join('')}</div>
         <form class="sp-form" id="spForm">
           ${section('1. Objective & I Can Statement',objectiveFields(l),false)}
@@ -90,8 +101,11 @@
     document.querySelectorAll('[data-subject]').forEach(b=>b.onclick=()=>{model.subject=b.dataset.subject;model.day='Monday';saveSilent();render()});
     document.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{model.day=b.dataset.day;saveSilent();render()});
     document.querySelectorAll('.sp-section-head').forEach(b=>b.onclick=()=>b.closest('.sp-section').classList.toggle('collapsed'));
-    document.querySelectorAll('[data-field]').forEach(el=>{el.addEventListener('input',()=>{const l=lesson();l[el.dataset.field]=el.value;l.updatedAt=new Date().toISOString();saveSilent();refreshLive()});el.addEventListener('change',refreshLive)});
+    document.querySelectorAll('[data-field]').forEach(el=>{el.addEventListener('input',()=>{const l=lesson();l[el.dataset.field]=el.value;l.updatedAt=new Date().toISOString();scheduleAutosave();refreshLive()});el.addEventListener('change',()=>{scheduleAutosave(0);refreshLive()})});
     document.querySelector('#spGenerateICan').onclick=()=>{const l=lesson();l.ican=generatedICan(l);l.updatedAt=new Date().toISOString();save();render()};
+    document.querySelector('#spSaveLesson').onclick=save;
+    document.querySelector('#spDuplicateLesson').onclick=duplicateLesson;
+    document.querySelector('#spDeleteLesson').onclick=deleteLesson;
     document.querySelector('#spWeek').onchange=e=>{model.weekStart=e.target.value||nextMondayISO();saveSilent();render()};
     document.querySelectorAll('[data-week-shift]').forEach(b=>b.onclick=()=>{const d=new Date(`${model.weekStart}T12:00:00`);d.setDate(d.getDate()+Number(b.dataset.weekShift));model.weekStart=localISO(d);saveSilent();render()});
     document.querySelector('#spPrint').onclick=()=>window.print();
@@ -100,7 +114,24 @@
     document.querySelector('#spCopyWeek').onclick=copyWeek;
     document.querySelector('#spExport').onclick=exportPlanbook;
   }
-  function saveSilent(){localStorage.setItem(KEY,JSON.stringify(model))}
+  function saveSilent(){persist({reason:'silent-save'})}
+  function updateSavedStatus(text){const el=document.querySelector('#spSaved');if(el)el.textContent=text}
+  function scheduleAutosave(delay=500){
+    clearTimeout(autosaveTimer);updateSavedStatus('Saving…');
+    autosaveTimer=setTimeout(()=>{persist({reason:'autosave'});updateSavedStatus('✓ Autosaved')},delay);
+  }
+  function duplicateLesson(){
+    const source=structuredClone(lesson());
+    const targetDay=prompt('Duplicate this lesson to which day?',model.day);
+    if(!targetDay||!DAYS.includes(targetDay)){if(targetDay)alert('Use Monday, Tuesday, Wednesday, Thursday, or Friday.');return}
+    const copy={...source,id:crypto.randomUUID?.()||`lesson-${Date.now()}`,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),lessonTitle:source.lessonTitle?`${source.lessonTitle} (Copy)`:''};
+    model.lessons[lessonKey(model.subject,targetDay)]=copy;model.day=targetDay;persist({toast:true,reason:'duplicate'});render();
+  }
+  function deleteLesson(){
+    const key=lessonKey();const current=lesson();
+    if(!confirm(`Delete ${model.day}'s ${subjectName()} lesson${current.lessonTitle?` “${current.lessonTitle}”`:''}?`))return;
+    model.deletedLessons[key]={...structuredClone(current),deletedAt:new Date().toISOString()};delete model.lessons[key];persist({reason:'delete'});window.TOS_APP_BRIDGE?.toast?.('Lesson deleted.');render();
+  }
   function refreshLive(){const l=lesson();document.querySelector('#spSaved').textContent='✓ Saved';const c=document.querySelector('#spComplete');c.className=`sp-complete ${complete(l)?'':'sp-incomplete'}`;c.textContent=complete(l)?'✓ All required fields are complete.':'Complete the required fields before exporting to Planbook.';document.querySelector('#spBoardCanvas').innerHTML=boardHTML()}
   function copyWeek(){const next=prompt('Copy this subject week to another Monday (YYYY-MM-DD):','');if(!next)return;DAYS.forEach(d=>{model.lessons[`${next}|${model.subject}|${d}`]={...lesson(model.subject,d),updatedAt:new Date().toISOString()}});save();}
   function exportPlanbook(){const missing=DAYS.filter(d=>!complete(lesson(model.subject,d)));if(missing.length&&!confirm(`${missing.join(', ')} are incomplete. Export anyway?`))return;const text=DAYS.map(d=>planbookText(d,lesson(model.subject,d))).join('\n\n==============================\n\n');navigator.clipboard?.writeText(text).then(()=>window.TOS_APP_BRIDGE?.toast?.('Planbook-ready week copied to clipboard.')).catch(()=>downloadText(text));}
@@ -108,5 +139,16 @@
   function downloadText(text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=`${model.subject}-${model.weekStart}-planbook.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 
   window.TOS_V210_RENDER_SUBJECT_PLANNER=render;
-  window.TOS_V210={version:VERSION,render,getModel:()=>JSON.parse(JSON.stringify(model))};
+  window.TOS_LESSON_ENGINE={
+    version:VERSION,
+    getModel:()=>JSON.parse(JSON.stringify(model)),
+    getLesson:({weekStart=model.weekStart,subject=model.subject,day=model.day}={})=>JSON.parse(JSON.stringify(model.lessons[`${weekStart}|${subject}|${day}`]||blank())),
+    listLessons:()=>Object.entries(model.lessons).map(([key,value])=>({key,...JSON.parse(JSON.stringify(value))})),
+    saveLesson:({weekStart=model.weekStart,subject=model.subject,day=model.day,lesson:data})=>{model.lessons[`${weekStart}|${subject}|${day}`]={...blank(),...data,updatedAt:new Date().toISOString()};persist({reason:'api-save'});return true},
+    deleteLesson:({weekStart=model.weekStart,subject=model.subject,day=model.day}={})=>{const key=`${weekStart}|${subject}|${day}`;if(model.lessons[key]){model.deletedLessons[key]={...model.lessons[key],deletedAt:new Date().toISOString()};delete model.lessons[key];persist({reason:'api-delete'})}return true},
+    duplicateLesson:({from,to})=>{const source=model.lessons[from];if(!source||!to)return false;model.lessons[to]={...structuredClone(source),id:crypto.randomUUID?.()||`lesson-${Date.now()}`,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};persist({reason:'api-duplicate'});return true},
+    exportBackup:()=>JSON.stringify(model,null,2),
+    importBackup:(json)=>{const incoming=typeof json==='string'?JSON.parse(json):json;if(!incoming||typeof incoming!=='object'||!incoming.lessons)throw new Error('Invalid lesson backup');model={...structuredClone(DEFAULTS),...incoming,schemaVersion:23};persist({reason:'import'});render();return true}
+  };
+  window.TOS_V210={version:VERSION,render,getModel:()=>window.TOS_LESSON_ENGINE.getModel()};
 })();
