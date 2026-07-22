@@ -1,4 +1,4 @@
-const CACHE = "teaching-happens-here-v23-1-accommodations";
+const CACHE = "teaching-happens-here-v23-3-accommodations";
 const CORE = [
   "./",
   "./index.html",
@@ -10,8 +10,10 @@ const CORE = [
   "./resource-center-v192.css?v=19.2.0",
   "./resource-center-v192.js?v=19.2.0",
   "./student-intelligence-v200.css?v=20.0.0",
-  "./student-accommodations-v231.js?v=23.1.0",
-  "./student-accommodations-v231.css?v=23.1.0",
+  "./student-accommodations-v233.js?v=23.3.0",
+  "./student-accommodations-v233.css?v=23.3.0",
+  "./planbook-export-v232.js?v=23.3.0",
+  "./planbook-export-v232.css?v=23.3.0",
   "./student-intelligence-v200.js?v=20.0.0",
   "./master-schedule-v180.js?v=18.0.0",
   "./schedule-workspace-v181.js?v=18.1.0",
@@ -27,8 +29,8 @@ const CORE = [
   "./student-intelligence-v200.css?v=20.0.0",
   "./assessment-intelligence-v201.js?v=20.1.0",
   "./assessment-intelligence-v201.css?v=20.1.0",
-  "./subject-planner-v210.js?v=23.0.0",
-  "./subject-planner-v210.css?v=23.0.0",
+  "./subject-planner-v210.js?v=23.2.0",
+  "./subject-planner-v210.css?v=23.2.0",
   "./classroom-display-v211.js?v=23.0.0",
   "./classroom-display-v211.css?v=23.0.0"
 ];

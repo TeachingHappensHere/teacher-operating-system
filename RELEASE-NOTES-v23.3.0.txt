@@ -1,0 +1,14 @@
+Teacher Operating System v23.3.0
+
+CHANGED FILES: 7
+
+Added:
+- Apply Micah G. IEP supports to the current lesson.
+- Apply Micah G. IEP supports to all five days for the selected subject.
+- Add a clear “No active 504 accommodations” status when appropriate.
+- Planbook CSV automatically includes Micah's subject-specific IEP supports when a lesson's IEP field is blank.
+- Planbook CSV automatically includes the current no-504 status when the 504 field is blank.
+
+Privacy:
+- Student accommodations remain inside teacher planning and export tools.
+- No accommodation data is added to classroom display screens.
