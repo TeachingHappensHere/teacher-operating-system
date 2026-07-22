@@ -1,0 +1,19 @@
+Teacher Operating System v23.1.0
+Student Accommodations Engine
+
+WHAT CHANGED
+- Added Micah G.'s active IEP classroom accommodations profile.
+- Added an "Apply Micah G. IEP Supports" button beneath the IEP field in the Subject Planner.
+- The generated supports adjust automatically for reading, MOWR, Heggerty, writing, and math lessons.
+- Universal classroom and assessment accommodations are included in the generated lesson-plan text.
+- Updated offline caching and build metadata.
+
+HOW TO USE
+1. Open Lesson Plans.
+2. Choose the subject and day.
+3. Open section 3: Differentiation / Accommodations.
+4. Select "Apply Micah G. IEP Supports."
+5. Review the inserted text and adjust only when the lesson requires a more specific support.
+
+PRIVACY
+The accommodations control appears only in teacher planning screens. It is not added to the classroom display.

@@ -1,0 +1,4 @@
+.sa-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;margin:.55rem 0 0}
+.sa-apply{border:1px solid #222;background:#fff4bf;color:#191919;border-radius:10px;padding:.65rem .85rem;font-weight:800;cursor:pointer}
+.sa-apply:hover,.sa-apply:focus-visible{background:#ffe67a;outline:2px solid #222;outline-offset:2px}
+.sa-actions small{color:#6b6254;max-width:32rem}
