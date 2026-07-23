@@ -468,6 +468,10 @@
   }
 
   function renderLessonBuilder() {
+    if (typeof window.TOS_V241_RENDER_LESSON_BUILDER === "function") {
+      window.TOS_V241_RENDER_LESSON_BUILDER({ config, state, navigate, saveState, toast });
+      return;
+    }
     $("#pageHost").innerHTML = `
       ${pageHeader("LESSON BUILDER", "Build a Complete Lesson", "Create an I Do, We Do, You Do plan with supports and print needs.")}
       <section class="form-panel">

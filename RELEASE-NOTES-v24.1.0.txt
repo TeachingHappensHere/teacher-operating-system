@@ -1,0 +1,13 @@
+Teacher Operating System v24.1.0
+Lesson Builder 2.1
+
+This update adds a working automated lesson builder for Open Court reading lessons. It generates the core planning fields and saves the completed lesson directly into the existing weekly subject planner.
+
+Included:
+- Arizona standard and description
+- Teacher objective and student I Can statement
+- Essential question and vocabulary
+- I Do, We Do, You Do, and closure
+- Micah G. accommodations
+- Materials and assessment
+- Planbook-ready copy

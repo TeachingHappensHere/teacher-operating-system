@@ -1,0 +1,14 @@
+UPLOAD ALL 8 FILES TO THE ROOT OF THE GITHUB REPOSITORY.
+
+Replace existing files when prompted:
+- index.html
+- app.js
+- service-worker.js
+- CHANGELOG.md
+
+Add new files:
+- lesson-builder-v241.js
+- lesson-builder-v241.css
+- RELEASE-NOTES-v24.1.0.txt
+
+After committing, refresh the site. If the old version remains, perform one hard refresh.

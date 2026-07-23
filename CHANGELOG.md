@@ -1,5 +1,14 @@
 # Changelog
 
+## 24.1.0 — Lesson Builder 2.1
+
+- Added an automated Open Court lesson builder.
+- Added Arizona standard, objective, I Can statement, essential question, vocabulary, instructional sequence, accommodations, materials, and assessment generation.
+- Added direct saving into the existing weekly subject planner through `TOS_LESSON_STORE`.
+- Added Planbook-ready clipboard export.
+- Added Micah G.’s verified classroom supports to generated differentiation.
+- Added responsive desktop, iPad, and phone layouts.
+
 ## 24.0.0 — Teacher Dashboard 2.0
 
 - Added a live **Teach Now** card with the current schedule block, countdown, and progress bar.
