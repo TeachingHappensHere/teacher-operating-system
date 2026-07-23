@@ -1,0 +1,16 @@
+TEACHER OPERATING SYSTEM v26.0.0 — ADMIN CENTER
+
+WHAT IS NEW
+- Replaces the basic Settings page with a full Admin Center.
+- Edit teacher, school, grade, school year, and protected launch dates.
+- Edit the daily bell schedule without touching code.
+- Manage Open First dashboard links.
+- Add, edit, and delete curriculum registry records.
+- Includes the initial Open Court record for The Cowardly Lion and Arizona Standard 2.RL.1.
+- Export and import an Admin Center JSON backup.
+- Reset Admin Center data without deleting lessons, students, or assessments.
+- Exposes TOS_ADMIN_CONFIG so future modules can use one shared configuration.
+- Responsive desktop, iPad, and phone layout.
+
+DATA & PRIVACY
+Admin Center changes remain in local browser storage. Export a backup before clearing browser data or changing devices.

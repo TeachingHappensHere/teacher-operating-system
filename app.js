@@ -136,10 +136,6 @@
           </section>`;
       },
       "lesson-builder": renderLessonBuilder,
-      "auto-week-builder": () => {
-        if (typeof window.TOS_V250_RENDER_AUTO_WEEK_BUILDER === "function") window.TOS_V250_RENDER_AUTO_WEEK_BUILDER();
-        else renderFeatureLoading("Auto Week Builder");
-      },
       "classroom-launch": renderClassroomLaunch,
       "lesson-plans": renderLessonPlans,
       "small-groups": () => {
@@ -317,7 +313,7 @@
       forms: renderForms,
       "teacher-brain": renderTeacherBrain,
       health: renderHealth,
-      settings: renderSettings,
+      settings: () => { if (typeof window.TOS_V260_RENDER_ADMIN_CENTER === "function") { window.TOS_V260_RENDER_ADMIN_CENTER(); return; } renderSettings(); },
       "live-workspace": () => renderFeatureLoading("Live Workspace"),
       "intelligence-engine": () => {
         if (typeof window.THH_RENDER_TEACHER_INTELLIGENCE === "function") {
@@ -429,7 +425,6 @@
         ${card("Today at a Glance", `<div class="schedule-list">${config.schedule.map(([time, subject]) => `<div><strong>${esc(time)}</strong><span>${esc(subject)}</span></div>`).join("")}</div>`)}
         ${card("Teacher Shortcuts", `<div class="shortcut-grid">
           <button data-jump="lesson-plans">Subject Planner</button>
-          <button data-jump="auto-week-builder">Auto Week Builder</button>
           <button data-jump="small-groups">Small Groups</button>
           <button data-jump="assessments">Assessments</button>
           <button data-jump="calendar">Calendar</button>

@@ -1,0 +1,26 @@
+VERSION 26.0.0 — ADMIN CENTER
+
+Upload these 8 files to the ROOT of the GitHub repository:
+
+ADD
+- admin-center-v260.js
+- admin-center-v260.css
+- RELEASE-NOTES-v26.0.0.txt
+- UPLOAD-v26.0.0.txt
+
+REPLACE
+- index.html
+- app.js
+- tos-data.json
+- service-worker.js
+
+COMMIT MESSAGE
+Version 26.0 - Admin Center
+
+AFTER GITHUB FINISHES DEPLOYING
+1. Close every open TOS tab.
+2. Reopen the site and press Ctrl+Shift+R once.
+3. Open Resources & Administration, then Admin Center.
+4. Test School & Dates, Bell Schedule, Quick Links, and Curriculum.
+5. Select Save All.
+6. Export an Admin Backup and keep it somewhere safe.
