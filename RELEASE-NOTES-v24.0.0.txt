@@ -1,0 +1,23 @@
+TEACHER OPERATING SYSTEM v24.0.0
+Teacher Dashboard 2.0
+
+WHAT IS NEW
+- Live current-block countdown and progress bar
+- Current and next lesson shortcuts
+- Objective, materials, and standards pulled from saved lessons
+- Date-based daily priority checklist
+- Micah G. accommodation reminder panel
+- Quick launch for Open Court, UFLI, Heggerty, Eureka Math², ClassDojo, Planbook, Amplify/DIBELS, and Google Classroom
+- Current schedule window or full-day schedule
+- Responsive desktop, iPad, and phone layout
+
+FILES IN THIS UPDATE
+1. index.html
+2. dashboard-v240.js
+3. dashboard-v240.css
+4. service-worker.js
+5. CHANGELOG.md
+6. RELEASE-NOTES-v24.0.0.txt
+7. UPLOAD-v24.0.0.txt
+
+This update contains 7 files and stays below the 100-file GitHub upload limit.

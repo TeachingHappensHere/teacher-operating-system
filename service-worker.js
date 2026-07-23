@@ -1,4 +1,4 @@
-const CACHE = "teaching-happens-here-v23-3-accommodations";
+const CACHE = "teaching-happens-here-v24-0-dashboard";
 const CORE = [
   "./",
   "./index.html",
@@ -21,6 +21,8 @@ const CORE = [
   "./daily-timeline-v182.js?v=18.2.0",
   "./daily-timeline-v182.css?v=18.2.0",
   "./app.js?v=16.5.0",
+  "./dashboard-v240.js?v=24.0.0",
+  "./dashboard-v240.css?v=24.0.0",
   "./tos-data.json",
   "./manifest.json",
   "./icon-192.svg",

@@ -1,5 +1,17 @@
 # Changelog
 
+## 24.0.0 — Teacher Dashboard 2.0
+
+- Added a live **Teach Now** card with the current schedule block, countdown, and progress bar.
+- Added the next lesson, lesson materials, and saved lesson objective display.
+- Added daily priority checkboxes saved by date.
+- Added Micah G.’s classroom accommodation reminder panel.
+- Added automatic standards display from lessons saved through `TOS_LESSON_STORE`.
+- Added quick-launch buttons for core teaching tools and internal workspaces.
+- Added a current/full schedule view and date preview control.
+- Added responsive layouts for desktop, iPad, and phone.
+- Updated the PWA build and service-worker cache to 24.0.0.
+
 ## 23.0.0 — Operational Lesson Engine
 
 - Added explicit **Save Now** control.
