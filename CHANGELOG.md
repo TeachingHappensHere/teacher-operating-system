@@ -1,25 +1,12 @@
 # Changelog
 
-## 24.1.0 — Lesson Builder 2.1
+## 25.0.0 — Auto Week Builder
+- Added a five-day Open Court Reading week generator.
+- Added The Cowardly Lion with Arizona standard 2.RL.1, vocabulary, objectives, I Can statements, instructional sequence, assessment, materials, and Micah G. accommodations.
+- Saves all five days directly into the existing Subject Planner lesson store.
+- Added a dashboard shortcut and responsive phone/iPad layout.
+- Updated the offline cache.
 
-- Added an automated Open Court lesson builder.
-- Added Arizona standard, objective, I Can statement, essential question, vocabulary, instructional sequence, accommodations, materials, and assessment generation.
-- Added direct saving into the existing weekly subject planner through `TOS_LESSON_STORE`.
-- Added Planbook-ready clipboard export.
-- Added Micah G.’s verified classroom supports to generated differentiation.
-- Added responsive desktop, iPad, and phone layouts.
-
-## 24.0.0 — Teacher Dashboard 2.0
-
-- Added a live **Teach Now** card with the current schedule block, countdown, and progress bar.
-- Added the next lesson, lesson materials, and saved lesson objective display.
-- Added daily priority checkboxes saved by date.
-- Added Micah G.’s classroom accommodation reminder panel.
-- Added automatic standards display from lessons saved through `TOS_LESSON_STORE`.
-- Added quick-launch buttons for core teaching tools and internal workspaces.
-- Added a current/full schedule view and date preview control.
-- Added responsive layouts for desktop, iPad, and phone.
-- Updated the PWA build and service-worker cache to 24.0.0.
 
 ## 23.0.0 — Operational Lesson Engine
 

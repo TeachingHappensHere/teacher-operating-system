@@ -1,0 +1,24 @@
+TEACHER OPERATING SYSTEM v25.0.0
+AUTO WEEK BUILDER
+
+NEW
+- Auto Week Builder route and dashboard shortcut.
+- Five complete Reading lessons generated from one weekly story selection.
+- Initial story: The Cowardly Lion.
+- Arizona standard 2.RL.1 and weekly vocabulary included.
+- Daily objectives, I Can statements, I Do/We Do/You Do instruction, assessments, materials, and homework included.
+- Micah G. accommodations automatically included in each lesson.
+- Saves directly to the existing Subject Planner for Planbook export.
+
+FILES IN THIS UPDATE
+1. auto-week-builder-v250.js (new)
+2. auto-week-builder-v250.css (new)
+3. index.html
+4. app.js
+5. tos-data.json
+6. service-worker.js
+7. CHANGELOG.md
+8. RELEASE-NOTES-v25.0.0.txt (new)
+
+UPLOAD
+Upload all eight files to the repository root and replace files with matching names.

@@ -136,6 +136,10 @@
           </section>`;
       },
       "lesson-builder": renderLessonBuilder,
+      "auto-week-builder": () => {
+        if (typeof window.TOS_V250_RENDER_AUTO_WEEK_BUILDER === "function") window.TOS_V250_RENDER_AUTO_WEEK_BUILDER();
+        else renderFeatureLoading("Auto Week Builder");
+      },
       "classroom-launch": renderClassroomLaunch,
       "lesson-plans": renderLessonPlans,
       "small-groups": () => {
@@ -425,6 +429,7 @@
         ${card("Today at a Glance", `<div class="schedule-list">${config.schedule.map(([time, subject]) => `<div><strong>${esc(time)}</strong><span>${esc(subject)}</span></div>`).join("")}</div>`)}
         ${card("Teacher Shortcuts", `<div class="shortcut-grid">
           <button data-jump="lesson-plans">Subject Planner</button>
+          <button data-jump="auto-week-builder">Auto Week Builder</button>
           <button data-jump="small-groups">Small Groups</button>
           <button data-jump="assessments">Assessments</button>
           <button data-jump="calendar">Calendar</button>
@@ -468,10 +473,6 @@
   }
 
   function renderLessonBuilder() {
-    if (typeof window.TOS_V241_RENDER_LESSON_BUILDER === "function") {
-      window.TOS_V241_RENDER_LESSON_BUILDER({ config, state, navigate, saveState, toast });
-      return;
-    }
     $("#pageHost").innerHTML = `
       ${pageHeader("LESSON BUILDER", "Build a Complete Lesson", "Create an I Do, We Do, You Do plan with supports and print needs.")}
       <section class="form-panel">

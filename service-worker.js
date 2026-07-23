@@ -1,4 +1,4 @@
-const CACHE = "teaching-happens-here-v24-1-lesson-builder";
+const CACHE = "teaching-happens-here-v25-auto-week-builder";
 const CORE = [
   "./",
   "./index.html",
@@ -21,10 +21,6 @@ const CORE = [
   "./daily-timeline-v182.js?v=18.2.0",
   "./daily-timeline-v182.css?v=18.2.0",
   "./app.js?v=16.5.0",
-  "./dashboard-v240.js?v=24.0.0",
-  "./dashboard-v240.css?v=24.0.0",
-  "./lesson-builder-v241.js?v=24.1.0",
-  "./lesson-builder-v241.css?v=24.1.0",
   "./tos-data.json",
   "./manifest.json",
   "./icon-192.svg",
@@ -36,7 +32,9 @@ const CORE = [
   "./subject-planner-v210.js?v=23.2.0",
   "./subject-planner-v210.css?v=23.2.0",
   "./classroom-display-v211.js?v=23.0.0",
-  "./classroom-display-v211.css?v=23.0.0"
+  "./classroom-display-v211.css?v=23.0.0",
+  "./auto-week-builder-v250.js?v=25.0.0",
+  "./auto-week-builder-v250.css?v=25.0.0"
 ];
 self.addEventListener("install", event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE))); self.skipWaiting(); });
 self.addEventListener("activate", event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(key => key === CACHE ? null : caches.delete(key))))); self.clients.claim(); });

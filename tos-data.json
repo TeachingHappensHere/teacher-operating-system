@@ -2426,6 +2426,11 @@
       "owner": "core"
     },
     {
+      "id": "auto-week-builder",
+      "label": "Auto Week Builder",
+      "group": "Planning"
+    },
+    {
       "id": "lesson-plans",
       "label": "Subject Planner & Diamond Board",
       "owner": "v22.1"
